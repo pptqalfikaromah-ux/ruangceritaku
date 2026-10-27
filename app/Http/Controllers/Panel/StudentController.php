@@ -69,6 +69,10 @@ class StudentController extends Controller
 
         try {
             DB::transaction(function () use ($request, $studentData) {
+                // Bersihkan record lama di tempat sampah jika ada NISN / username yang sama
+                Student::onlyTrashed()->where('nisn', $studentData['nisn'])->forceDelete();
+                User::onlyTrashed()->where('username', $request->input('username'))->forceDelete();
+
                 // 1. Buat User Account Murid (Langsung Aktif)
                 $user = User::create([
                     'name' => $studentData['name'],
@@ -182,14 +186,20 @@ class StudentController extends Controller
     {
         $this->authorize('delete', $murid);
 
-        if ($murid->photo && Storage::disk('public')->exists($murid->photo)) {
-            Storage::disk('public')->delete($murid->photo);
+        $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
+        if ($murid->photo && Storage::disk($disk)->exists($murid->photo)) {
+            Storage::disk($disk)->delete($murid->photo);
         }
 
-        $murid->delete();
+        // Hapus akun user terkait jika ada
+        if ($murid->user) {
+            $murid->user->forceDelete();
+        }
+
+        $murid->forceDelete();
 
         return redirect()->route('panel.murid.index')
-            ->with('success', 'Data murid berhasil dihapus.');
+            ->with('success', 'Data murid & akun login berhasil dihapus.');
     }
 
     public function downloadTemplate(): StreamedResponse
