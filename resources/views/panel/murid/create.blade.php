@@ -77,6 +77,22 @@
                         </div>
                     </div>
 
+                    <h6 class="fw-bold text-slate-800 border-bottom pb-2 mb-3 mt-4">
+                        <i class="bi bi-key-fill me-1 text-primary"></i>Akun Login Murid
+                    </h6>
+                    <div class="alert alert-info small py-2 mb-3">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Username & password ini akan digunakan murid untuk login ke sistem. Akun langsung aktif setelah disimpan.
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <x-form-input name="username" label="Username" placeholder="Contoh: murid.anisa2025" required help="Harus unik, tidak boleh sama dengan user lain" />
+                        </div>
+                        <div class="col-md-6">
+                            <x-form-input name="password" label="Password" type="password" placeholder="Minimal 6 karakter" required />
+                        </div>
+                    </div>
+
                     <h6 class="fw-bold text-slate-800 border-bottom pb-2 mb-3 mt-4">Penempatan & Status</h6>
                     <div class="row">
                         <div class="col-md-6">

@@ -35,6 +35,19 @@ class StudentRequest extends FormRequest
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'status' => ['required', 'in:aktif,lulus,pindah,nonaktif'],
             'classroom_id' => ['nullable', 'exists:classrooms,id'],
+            'username' => [
+                $studentId ? 'nullable' : 'required',
+                'string',
+                'min:3',
+                'max:50',
+                'alpha_dash',
+                Rule::unique('users', 'username')->ignore($this->route('murid')?->user_id),
+            ],
+            'password' => [
+                $studentId ? 'nullable' : 'required',
+                'string',
+                'min:4',
+            ],
         ];
     }
 
@@ -47,6 +60,12 @@ class StudentRequest extends FormRequest
             'gender.required' => 'Jenis kelamin wajib dipilih.',
             'photo.image' => 'File foto harus berupa gambar.',
             'photo.max' => 'Ukuran foto maksimal 2MB.',
+            'username.required' => 'Username akun login murid wajib diisi.',
+            'username.unique' => 'Username ini sudah digunakan oleh akun lain.',
+            'username.min' => 'Username minimal 3 karakter.',
+            'username.alpha_dash' => 'Username hanya boleh berisi huruf, angka, tanda hubung (-), dan garis bawah (_).',
+            'password.required' => 'Password akun login murid wajib diisi.',
+            'password.min' => 'Password minimal 4 karakter.',
         ];
     }
 }

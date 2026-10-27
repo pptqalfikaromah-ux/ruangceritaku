@@ -8,10 +8,13 @@ use App\Http\Requests\StudentRequest;
 use App\Models\AcademicYear;
 use App\Models\Classroom;
 use App\Models\Student;
+use App\Models\User;
 use App\Services\StudentCsvService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -56,24 +59,39 @@ class StudentController extends Controller
     {
         $this->authorize('create', Student::class);
 
-        $data = $request->safe()->except(['photo', 'classroom_id']);
+        $studentData = $request->safe()->except(['photo', 'classroom_id', 'username', 'password']);
 
+        $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('photos/students', 'public');
+            $studentData['photo'] = $request->file('photo')->store('photos/students', $disk);
         }
 
-        $student = Student::create($data);
-
-        // Tambah ke rombel jika dipilih
-        if ($request->filled('classroom_id')) {
-            $classroom = Classroom::findOrFail($request->classroom_id);
-            $student->classrooms()->attach($classroom->id, [
-                'academic_year_id' => $classroom->academic_year_id,
+        DB::transaction(function () use ($request, $studentData) {
+            // 1. Buat User Account Murid (Langsung Aktif)
+            $user = User::create([
+                'name' => $studentData['name'],
+                'username' => $request->input('username'),
+                'password' => Hash::make($request->input('password')),
+                'role' => 'murid',
+                'is_active' => true,
+                'must_change_password' => false,
             ]);
-        }
+
+            // 2. Hubungkan Student ke User
+            $studentData['user_id'] = $user->id;
+            $student = Student::create($studentData);
+
+            // 3. Tambah ke rombel jika dipilih
+            if ($request->filled('classroom_id')) {
+                $classroom = Classroom::findOrFail($request->classroom_id);
+                $student->classrooms()->attach($classroom->id, [
+                    'academic_year_id' => $classroom->academic_year_id,
+                ]);
+            }
+        });
 
         return redirect()->route('panel.murid.index')
-            ->with('success', 'Data murid baru berhasil disimpan.');
+            ->with('success', 'Data murid & akun login berhasil dibuat. Murid dapat langsung login.');
     }
 
     public function show(Student $murid): View
