@@ -45,7 +45,7 @@
     "APP_NAME": "Ruang Ceritaku",
     "APP_ENV": "production",
     "APP_KEY": "base64:Tcc8axyTHH+W+ueenesmKVLSmS+do0EHJQjN631OhyU=",
-    "APP_DEBUG": "false",
+    "APP_DEBUG": "true",
     "APP_URL": "https://ruangceritaku.vercel.app",
     "APP_CONFIG_CACHE": "/tmp/config.php",
     "APP_EVENTS_CACHE": "/tmp/events.php",

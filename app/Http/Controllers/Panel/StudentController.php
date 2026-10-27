@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -66,32 +67,42 @@ class StudentController extends Controller
             $studentData['photo'] = $request->file('photo')->store('photos/students', $disk);
         }
 
-        DB::transaction(function () use ($request, $studentData) {
-            // 1. Buat User Account Murid (Langsung Aktif)
-            $user = User::create([
-                'name' => $studentData['name'],
-                'username' => $request->input('username'),
-                'password' => Hash::make($request->input('password')),
-                'role' => 'murid',
-                'is_active' => true,
-                'must_change_password' => false,
-            ]);
-
-            // 2. Hubungkan Student ke User
-            $studentData['user_id'] = $user->id;
-            $student = Student::create($studentData);
-
-            // 3. Tambah ke rombel jika dipilih
-            if ($request->filled('classroom_id')) {
-                $classroom = Classroom::findOrFail($request->classroom_id);
-                $student->classrooms()->attach($classroom->id, [
-                    'academic_year_id' => $classroom->academic_year_id,
+        try {
+            DB::transaction(function () use ($request, $studentData) {
+                // 1. Buat User Account Murid (Langsung Aktif)
+                $user = User::create([
+                    'name' => $studentData['name'],
+                    'username' => $request->input('username'),
+                    'password' => Hash::make($request->input('password')),
+                    'role' => 'murid',
+                    'is_active' => true,
+                    'must_change_password' => false,
                 ]);
-            }
-        });
 
-        return redirect()->route('panel.murid.index')
-            ->with('success', 'Data murid & akun login berhasil dibuat. Murid dapat langsung login.');
+                // 2. Hubungkan Student ke User
+                $studentData['user_id'] = $user->id;
+                $student = Student::create($studentData);
+
+                // 3. Tambah ke rombel jika dipilih
+                if ($request->filled('classroom_id')) {
+                    $classroom = Classroom::find($request->classroom_id);
+                    if ($classroom) {
+                        $student->classrooms()->attach($classroom->id, [
+                            'academic_year_id' => $classroom->academic_year_id ?? active_academic_year()?->id,
+                        ]);
+                    }
+                }
+            });
+
+            return redirect()->route('panel.murid.index')
+                ->with('success', 'Data murid & akun login berhasil dibuat. Murid dapat langsung login.');
+        } catch (\Throwable $e) {
+            Log::error('Gagal tambah murid: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Gagal menyimpan data murid: ' . $e->getMessage());
+        }
     }
 
     public function show(Student $murid): View
@@ -117,28 +128,54 @@ class StudentController extends Controller
     {
         $this->authorize('update', $murid);
 
-        $data = $request->safe()->except(['photo', 'classroom_id']);
+        $data = $request->safe()->except(['photo', 'classroom_id', 'username', 'password']);
+        $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
 
         if ($request->hasFile('photo')) {
-            if ($murid->photo && Storage::disk('public')->exists($murid->photo)) {
-                Storage::disk('public')->delete($murid->photo);
+            if ($murid->photo && Storage::disk($disk)->exists($murid->photo)) {
+                Storage::disk($disk)->delete($murid->photo);
             }
-            $data['photo'] = $request->file('photo')->store('photos/students', 'public');
+            $data['photo'] = $request->file('photo')->store('photos/students', $disk);
         }
 
-        $murid->update($data);
+        try {
+            DB::transaction(function () use ($request, $murid, $data) {
+                $murid->update($data);
 
-        // Update rombel di tahun ajaran aktif
-        if ($request->filled('classroom_id')) {
-            $classroom = Classroom::findOrFail($request->classroom_id);
-            $murid->classrooms()->wherePivot('academic_year_id', $classroom->academic_year_id)->detach();
-            $murid->classrooms()->attach($classroom->id, [
-                'academic_year_id' => $classroom->academic_year_id,
-            ]);
+                // Update akun user jika ada
+                if ($murid->user) {
+                    $userUpdates = ['name' => $data['name'] ?? $murid->name];
+                    if ($request->filled('username')) {
+                        $userUpdates['username'] = $request->input('username');
+                    }
+                    if ($request->filled('password')) {
+                        $userUpdates['password'] = Hash::make($request->input('password'));
+                    }
+                    $murid->user->update($userUpdates);
+                }
+
+                // Update rombel di tahun ajaran aktif
+                if ($request->filled('classroom_id')) {
+                    $classroom = Classroom::find($request->classroom_id);
+                    if ($classroom) {
+                        $ayId = $classroom->academic_year_id ?? active_academic_year()?->id;
+                        $murid->classrooms()->wherePivot('academic_year_id', $ayId)->detach();
+                        $murid->classrooms()->attach($classroom->id, [
+                            'academic_year_id' => $ayId,
+                        ]);
+                    }
+                }
+            });
+
+            return redirect()->route('panel.murid.index')
+                ->with('success', 'Data murid berhasil diperbarui.');
+        } catch (\Throwable $e) {
+            Log::error('Gagal update murid: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Gagal memperbarui data murid: ' . $e->getMessage());
         }
-
-        return redirect()->route('panel.murid.index')
-            ->with('success', 'Data murid berhasil diperbarui.');
     }
 
     public function destroy(Student $murid): RedirectResponse
