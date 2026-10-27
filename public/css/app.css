@@ -1,0 +1,901 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    /* Reference Color Palette: Vibrant Mint Green + Sunny Honey Gold */
+    --emis-teal: #00B894;
+    --emis-teal-dark: #008F72;
+    --emis-teal-light: #E6FAF5;
+    --emis-teal-subtle: #D1F5ED;
+    --emis-accent: #FFB800;
+    --emis-gold: #FFB800;
+    --emis-gold-hover: #E5A600;
+    --emis-gold-light: #FFF8E6;
+    --emis-gold-subtle: #FEF3C7;
+    --emis-sidebar-bg: #00A887;
+    --emis-sidebar-width: 250px;
+    --emis-topbar-height: 72px;
+    --emis-body-bg: #F4FBF9;
+    --emis-card-border: #E2ECE9;
+    --emis-text-dark: #1E293B;
+    --emis-text-muted: #64748B;
+    --emis-badge-blue-bg: #E0F2FE;
+    --emis-badge-blue-text: #0369A1;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--emis-body-bg) !important;
+    color: var(--emis-text-dark);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* =========================================
+   EMIS GTK TOPBAR (Full Width Top Header)
+   ========================================= */
+.emis-topbar {
+    height: var(--emis-topbar-height);
+    background-color: #ffffff !important;
+    border-bottom: 2px solid var(--emis-teal) !important;
+    position: sticky;
+    top: 0;
+    z-index: 1040;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.75rem;
+    /* Cyan wave graphic lines identical to EMIS GTK header */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 80' preserveAspectRatio='none'%3E%3Cpath d='M 250,80 C 400,10 600,70 800,20 C 1000,-30 1120,50 1200,10' fill='none' stroke='%2326c6da' stroke-width='2' stroke-opacity='0.45'/%3E%3Cpath d='M 300,80 C 450,25 650,80 850,30 C 1050,-20 1150,60 1200,25' fill='none' stroke='%2300876c' stroke-width='1.5' stroke-opacity='0.3'/%3E%3Cpath d='M 350,80 C 500,40 700,90 900,40 C 1080,-10 1180,70 1200,40' fill='none' stroke='%2380deea' stroke-width='1.2' stroke-opacity='0.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: cover;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.emis-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 0.85rem;
+}
+
+.emis-brand-logo {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+}
+
+.emis-brand-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--emis-teal) !important;
+    line-height: 1;
+    margin: 0;
+}
+
+.emis-brand-subtitle {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    display: block;
+    margin-top: 2px;
+}
+
+/* User Profile Widget in Topbar (EMIS GTK Format) */
+.emis-user-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    cursor: pointer;
+}
+
+.emis-user-name {
+    font-size: 0.875rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.emis-user-institution {
+    font-size: 0.725rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+}
+
+.emis-role-badge {
+    background-color: var(--emis-badge-blue-bg) !important;
+    color: var(--emis-badge-blue-text) !important;
+    font-size: 0.68rem;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border: 1px solid rgba(43, 80, 170, 0.15);
+}
+
+/* =========================================
+   EMIS GTK SIDEBAR (Deep Emerald Teal Background)
+   ========================================= */
+.panel-container {
+    display: flex;
+    min-height: calc(100vh - var(--emis-topbar-height));
+    background-color: var(--emis-body-bg);
+}
+
+.emis-sidebar {
+    width: var(--emis-sidebar-width) !important;
+    background-color: #00876c !important;
+    background: #00876c !important;
+    color: #ffffff !important;
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    top: var(--emis-topbar-height) !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    z-index: 1030 !important;
+    transition: transform 0.25s ease !important;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08) !important;
+    /* Islamic / Mandala Watermark at the bottom of the sidebar */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300' opacity='0.08'%3E%3Ccircle cx='50' cy='250' r='140' stroke='%23ffffff' stroke-width='2' fill='none'/%3E%3Ccircle cx='50' cy='250' r='100' stroke='%23ffffff' stroke-width='1.5' fill='none'/%3E%3Ccircle cx='50' cy='250' r='60' stroke='%23ffffff' stroke-width='1' fill='none'/%3E%3Cpath d='M50,110 L50,390 M-90,250 L190,250 M-49,151 L149,349 M-49,349 L149,151' stroke='%23ffffff' stroke-width='1' fill='none'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: left bottom !important;
+    background-size: 260px 260px !important;
+}
+
+.emis-sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem 1rem !important;
+}
+
+.emis-sidebar-content::-webkit-scrollbar {
+    width: 4px;
+}
+.emis-sidebar-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+}
+
+/* Active Year & Semester Box in Sidebar (Semi-transparent darker box) */
+.emis-period-card {
+    background: rgba(0, 0, 0, 0.16) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    border-radius: 0.65rem !important;
+    padding: 0.75rem 0.95rem !important;
+    margin-bottom: 1.25rem !important;
+    color: #ffffff !important;
+}
+
+.emis-period-row {
+    font-size: 0.825rem !important;
+    font-weight: 500 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    line-height: 1.4 !important;
+}
+
+.emis-period-row strong {
+    font-weight: 800 !important;
+    color: #ffffff !important;
+}
+
+/* Sidebar Menu Headers (Collapsible Labels like PORTOFOLIO, ADMINISTRASI) */
+.emis-menu-header {
+    font-size: 0.75rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.06em !important;
+    color: rgba(255, 255, 255, 0.88) !important;
+    padding: 1rem 0.65rem 0.35rem !important;
+    text-transform: uppercase !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+.emis-menu-header i {
+    font-size: 0.7rem !important;
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Sidebar Menu Links */
+.emis-menu-link {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.65rem 0.95rem !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    border-radius: 0.5rem !important;
+    margin-bottom: 0.25rem !important;
+    transition: all 0.15s ease-in-out !important;
+}
+
+.emis-menu-link i {
+    font-size: 1.15rem !important;
+    margin-right: 0.75rem !important;
+    width: 20px !important;
+    text-align: center !important;
+    color: #ffffff !important;
+    opacity: 0.95 !important;
+}
+
+.emis-menu-link:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+/* Active Menu Item: WHITE PILL BUTTON with TEAL TEXT & ICON */
+.emis-menu-link.active {
+    background-color: #ffffff !important;
+    color: #00876c !important;
+    font-weight: 700 !important;
+    border-radius: 999px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+}
+
+.emis-menu-link.active i {
+    color: #00876c !important;
+    opacity: 1 !important;
+}
+
+/* Sidebar Footer (Copyright at bottom) */
+.emis-sidebar-footer {
+    padding: 0.85rem 1rem !important;
+    font-size: 0.68rem !important;
+    color: rgba(255, 255, 255, 0.75) !important;
+    line-height: 1.35 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+    background: transparent !important;
+}
+
+/* =========================================
+   MAIN CONTENT AREA & BREADCRUMB
+   ========================================= */
+.emis-main {
+    flex: 1;
+    margin-left: var(--emis-sidebar-width);
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - var(--emis-topbar-height));
+    background-color: var(--emis-body-bg);
+}
+
+.emis-content-body {
+    padding: 1.5rem 2rem;
+    flex: 1;
+}
+
+/* Breadcrumb White Card (EMIS GTK Style) */
+.emis-breadcrumb-card {
+    background: #ffffff !important;
+    border: 1px solid var(--emis-card-border) !important;
+    border-radius: 0.75rem !important;
+    padding: 0.75rem 1.25rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    font-size: 0.875rem !important;
+    margin-bottom: 1.5rem !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+}
+
+.emis-breadcrumb-card a {
+    color: var(--emis-teal) !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+}
+
+.emis-breadcrumb-card .divider {
+    color: #94a3b8 !important;
+    font-size: 0.8rem !important;
+}
+
+.emis-breadcrumb-card .current {
+    color: var(--emis-teal) !important;
+    font-weight: 700 !important;
+}
+
+/* EMIS Pill Buttons (like "Daftar Menu" & "Panduan Flow") */
+.btn-emis-pill {
+    border-radius: 999px !important;
+    padding: 0.5rem 1.25rem !important;
+    font-weight: 700 !important;
+    font-size: 0.875rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-emis-pill-active {
+    background-color: #00876c !important;
+    color: #ffffff !important;
+    border: 1px solid #00876c !important;
+    box-shadow: 0 2px 6px rgba(0, 135, 108, 0.25) !important;
+}
+
+.btn-emis-pill-active:hover {
+    background-color: var(--emis-teal-dark) !important;
+    color: #ffffff !important;
+}
+
+.btn-emis-pill-outline {
+    background-color: transparent !important;
+    color: #475569 !important;
+    border: 1px solid transparent !important;
+}
+
+.btn-emis-pill-outline:hover {
+    color: #00876c !important;
+    background-color: rgba(0, 135, 108, 0.08) !important;
+}
+
+/* =========================================
+   EMIS SITEMAP & FEATURE GRID CARDS
+   ========================================= */
+.emis-section-title {
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    margin-top: 1.75rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.emis-section-title i {
+    color: #00B894 !important;
+}
+
+.emis-feature-card {
+    background: #ffffff !important;
+    border: 1px solid var(--emis-card-border) !important;
+    border-radius: 1rem !important;
+    padding: 1.25rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    text-decoration: none !important;
+    color: var(--emis-text-dark) !important;
+    transition: all 0.2s ease-in-out !important;
+    box-shadow: 0 4px 16px -2px rgba(0, 184, 148, 0.05) !important;
+    height: 100% !important;
+}
+
+.emis-feature-card:hover {
+    border-color: #00B894 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 20px -3px rgba(0, 184, 148, 0.12) !important;
+    color: var(--emis-text-dark) !important;
+}
+
+.emis-feature-icon-box {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 0.85rem !important;
+    background-color: #E6FAF5 !important;
+    color: #00B894 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.4rem !important;
+    flex-shrink: 0 !important;
+    margin-right: 1rem !important;
+}
+
+.emis-feature-info {
+    flex: 1;
+}
+
+.emis-feature-title {
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    margin-bottom: 0.15rem !important;
+}
+
+.emis-feature-desc {
+    font-size: 0.775rem !important;
+    color: #64748b !important;
+    line-height: 1.35 !important;
+    margin: 0 !important;
+}
+
+.emis-feature-arrow {
+    color: #94a3b8 !important;
+    font-size: 1.1rem !important;
+    margin-left: 0.75rem !important;
+    transition: transform 0.15s ease !important;
+}
+
+.emis-feature-card:hover .emis-feature-arrow {
+    color: #00B894 !important;
+    transform: translateX(3px) !important;
+}
+
+/* =========================================
+   APP CARDS, BUTTONS & TABLES
+   ========================================= */
+.card-app {
+    background: #ffffff !important;
+    border: 1px solid var(--emis-card-border) !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 4px 16px -2px rgba(0, 184, 148, 0.05) !important;
+}
+
+.btn-primary {
+    background-color: #00B894 !important;
+    border-color: #00B894 !important;
+    font-weight: 600;
+    border-radius: 0.65rem;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #008F72 !important;
+    border-color: #008F72 !important;
+    box-shadow: 0 4px 14px rgba(0, 184, 148, 0.25) !important;
+}
+
+.btn-outline-primary {
+    color: #00B894 !important;
+    border-color: #00B894 !important;
+    border-radius: 0.65rem;
+}
+
+.btn-outline-primary:hover {
+    background-color: #00B894 !important;
+    border-color: #00B894 !important;
+    color: #ffffff !important;
+}
+
+.text-primary-teal, .text-teal {
+    color: #008F72 !important;
+}
+
+.bg-teal-subtle {
+    background-color: #E6FAF5 !important;
+    color: #008F72 !important;
+}
+
+.bg-primary-teal {
+    background-color: #00B894 !important;
+    color: #ffffff !important;
+}
+
+/* HTML/CSS Bar Charts */
+.chart-bar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.chart-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.chart-bar-label {
+    width: 100px;
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: #475569;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chart-bar-track {
+    flex: 1;
+    height: 12px;
+    background-color: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.chart-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00876c, #2dd4bf);
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chart-bar-value {
+    width: 45px;
+    text-align: right;
+    font-size: 0.825rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+/* Empty State */
+.empty-state {
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+
+.empty-state-icon {
+    font-size: 3.5rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 991.98px) {
+    .emis-sidebar {
+        transform: translateX(-100%);
+    }
+    .emis-sidebar.show {
+        transform: translateX(0);
+    }
+    .emis-main {
+        margin-left: 0;
+    }
+    .emis-content-body {
+        padding: 1rem;
+    }
+    .emis-topbar {
+        padding: 0 1rem;
+    }
+}
+
+/* =========================================
+   BERANDA & DASHBOARD CARDS (Modern Mint & Gold)
+   ========================================= */
+.emis-profile-banner {
+    background: linear-gradient(135deg, #00B894 0%, #008F72 60%, #00705a 100%);
+    border-radius: 16px;
+    padding: 1.6rem 2rem;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 24px -4px rgba(0, 184, 148, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.emis-profile-banner::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: 340px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' opacity='0.12'%3E%3Cpath d='M0,120 Q150,0 300,120' fill='none' stroke='%23ffffff' stroke-width='4'/%3E%3Cpath d='M50,120 Q200,20 300,80' fill='none' stroke='%23ffffff' stroke-width='2'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    pointer-events: none;
+}
+
+.emis-profile-avatar-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2.5px solid #FFB800;
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #ffffff;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.emis-profile-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 3px;
+}
+
+.emis-profile-role {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 2px;
+}
+
+.emis-profile-school {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #FFD15C;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.emis-attr-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.78);
+    margin-bottom: 2px;
+}
+
+.emis-attr-value {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #ffffff;
+    word-break: break-all;
+}
+
+.emis-badge-cert {
+    background-color: #FFB800;
+    color: #1e293b;
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 999px;
+    display: inline-block;
+    letter-spacing: 0.02em;
+}
+
+/* KPI Stat Cards (Modern 4-Cards Grid) */
+.emis-kpi-card {
+    background: #ffffff;
+    border: 1px solid #E2ECE9;
+    border-radius: 16px;
+    padding: 1.25rem 1.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 4px 16px -2px rgba(0, 184, 148, 0.06);
+}
+
+.emis-kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -4px rgba(0, 184, 148, 0.12);
+    border-color: #00B894;
+}
+
+.emis-kpi-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.emis-kpi-value {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.emis-kpi-subtext {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    margin-top: 3px;
+    font-weight: 500;
+}
+
+.emis-kpi-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+/* Horizontal Checklist Row */
+.emis-checklist-card {
+    background: #ffffff;
+    border: 1px solid #E2ECE9;
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 16px -2px rgba(0, 184, 148, 0.06);
+}
+
+.emis-checklist-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 0.85rem;
+}
+
+.emis-checklist-item {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #334155;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.emis-checklist-item i {
+    font-size: 1.1rem;
+    color: #00B894;
+}
+
+/* Promotion Banner Card */
+.emis-promo-card {
+    background: #ffffff;
+    border: 1px solid #E2ECE9;
+    border-radius: 16px;
+    padding: 1.35rem 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 16px -2px rgba(0, 184, 148, 0.06);
+}
+
+.emis-promo-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #E6FAF5;
+    color: #00B894;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.55rem;
+    flex-shrink: 0;
+    margin-right: 1.25rem;
+}
+
+.emis-promo-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.emis-promo-desc {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 0;
+    margin-top: 3px;
+    line-height: 1.5;
+}
+
+.btn-emis-action {
+    background-color: #FFB800;
+    color: #1e293b;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.825rem;
+    padding: 0.6rem 1.5rem;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(255, 184, 0, 0.25);
+}
+
+.btn-emis-action:hover {
+    background-color: #E5A600;
+    color: #0f172a;
+    box-shadow: 0 4px 14px rgba(255, 184, 0, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Table Card */
+.emis-card-table {
+    background: #ffffff;
+    border: 1px solid #E2ECE9;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 16px -2px rgba(0, 184, 148, 0.06);
+}
+
+.emis-card-table-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.emis-card-table .table {
+    margin-bottom: 0;
+}
+
+.emis-card-table thead th {
+    background-color: #F4FBF9;
+    color: #008F72;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #E2ECE9;
+    padding: 0.95rem 1.5rem;
+}
+
+.emis-card-table tbody td {
+    padding: 1rem 1.5rem;
+    vertical-align: middle;
+    font-size: 0.86rem;
+    border-bottom: 1px solid #f8fafc;
+}
+
+/* ========================================================
+   Vibrant Mint & Sunny Gold Modern Design System Utilities
+   ======================================================== */
+.btn-emerald, .btn-mint {
+    background-color: #00B894 !important;
+    border-color: #00B894 !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.btn-emerald:hover, .btn-mint:hover {
+    background-color: #009E7F !important;
+    border-color: #009E7F !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(0, 184, 148, 0.3) !important;
+}
+
+.btn-gold, .btn-yellow-cta {
+    background-color: #FFB800 !important;
+    border-color: #FFB800 !important;
+    color: #1e293b !important;
+    font-weight: 700 !important;
+    transition: all 0.2s ease;
+}
+.btn-gold:hover, .btn-yellow-cta:hover {
+    background-color: #E5A600 !important;
+    border-color: #E5A600 !important;
+    color: #0f172a !important;
+    box-shadow: 0 4px 14px rgba(255, 184, 0, 0.35) !important;
+}
+
+.bg-emerald, .bg-mint {
+    background-color: #00B894 !important;
+}
+.bg-emerald-subtle, .bg-mint-subtle {
+    background-color: #E6FAF5 !important;
+    color: #008F72 !important;
+}
+.text-emerald, .text-mint {
+    color: #00B894 !important;
+}
+.border-emerald, .border-mint {
+    border-color: #00B894 !important;
+}
+
+.bg-gold {
+    background-color: #FFB800 !important;
+    color: #1e293b !important;
+}
+.bg-gold-subtle {
+    background-color: #FFF8E6 !important;
+    color: #B45309 !important;
+}
+.text-gold {
+    color: #FFB800 !important;
+}
+.border-gold {
+    border-color: #FFB800 !important;
+}
