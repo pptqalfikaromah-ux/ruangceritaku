@@ -11,33 +11,42 @@
 
 @section('content')
 <div class="space-y-4">
-    <!-- Notice Pemisahan Konseling Pribadi vs Hasil IMS -->
-    <div class="alert alert-info bg-info-subtle border-info shadow-sm rounded-3 d-flex align-items-center justify-content-between p-3 mb-4">
-        <div class="d-flex align-items-center gap-3">
-            <i class="bi bi-info-circle-fill fs-3 text-info"></i>
-            <div class="small">
-                <strong>Form Ini Khusus Konseling Pribadi (Mandiri):</strong> Kamu bisa menceritakan keluhan, curhat, atau masalah pribadi yang sedang kamu alami di luar instrumen angket.
-                <div class="mt-0.5 text-muted">Jika ingin berkonsultasi mengenai butir-butir masalah yang kamu tandai di lembar IMS, silakan gunakan menu khusus tindak lanjut IMS.</div>
+    <!-- Notice Pemisahan Konseling Pribadi vs Hasil IMS (Responsif & Rapi di Mobile) -->
+    <div class="card border-0 shadow-sm rounded-4 mb-3 mb-md-4 overflow-hidden" style="background: #f0fdfa; border: 1.5px solid #ccfbf1 !important;">
+        <div class="p-3 p-sm-3.5 d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
+            <div class="d-flex align-items-start gap-2.5 min-w-0">
+                <div class="rounded-3 bg-teal-subtle text-mint d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px; font-size: 1.25rem;">
+                    <i class="bi bi-info-circle-fill"></i>
+                </div>
+                <div>
+                    <div class="fw-bold text-dark fs-sm mb-0.5">Form Ini Khusus Konseling Pribadi (Mandiri)</div>
+                    <div class="text-muted fs-xs" style="line-height: 1.5;">
+                        Kamu bisa leluasa menceritakan keluhan, curhat, atau masalah pribadi yang sedang kamu alami di luar instrumen angket.
+                        <span class="d-block mt-0.5 text-secondary">Jika ingin berkonsultasi mengenai butir-butir masalah yang ditandai di lembar IMS, silakan gunakan menu khusus tindak lanjut IMS.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 w-md-auto text-end flex-shrink-0">
+                <a href="{{ route('murid.ims.counseling.create') }}" class="btn btn-sm rounded-pill px-3 py-1.5 fw-bold w-100 w-md-auto d-inline-flex align-items-center justify-content-center gap-1.5 shadow-xs" style="background: #ffffff; border: 1.5px solid #8b5cf6; color: #7c3aed;">
+                    <i class="bi bi-clipboard2-check"></i> Jadwalkan dari Masalah IMS
+                </a>
             </div>
         </div>
-        <a href="{{ route('murid.ims.counseling.create') }}" class="btn btn-sm btn-outline-purple text-nowrap rounded-pill px-3" style="border-color: #7c3aed; color: #7c3aed;">
-            <i class="bi bi-clipboard2-check me-1"></i> Jadwalkan dari Masalah IMS
-        </a>
     </div>
 
-    <div class="row g-4">
+    <div class="row g-3 g-md-4">
         <!-- Form Utama -->
         <div class="col-lg-8">
-            <div class="card border-0 shadow-sm rounded-3 bg-white">
-                <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+            <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
+                <div class="card-header bg-white py-3 px-3 px-sm-4 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
                     <span class="fw-bold text-dark fs-sm">
-                        <i class="bi bi-person-heart text-emerald me-1"></i> Formulir Pengajuan Konseling Pribadi (Curhat Mandiri)
+                        <i class="bi bi-person-heart text-emerald me-1"></i> Formulir Pengajuan Konseling Pribadi
                     </span>
-                    <span class="badge bg-light text-muted border fs-xs">
+                    <span class="badge bg-light text-muted border fs-xs rounded-pill px-2.5 py-1">
                         <i class="bi bi-shield-lock text-success me-1"></i> Rahasia & Aman
                     </span>
                 </div>
-                <div class="card-body p-4">
+                <div class="card-body p-3 p-sm-4">
                     <form method="POST" action="{{ route('murid.konseling.store') }}" class="space-y-4">
                         @csrf
 
@@ -208,12 +217,12 @@
                                    placeholder="Contoh: Ingin konseling secara tatap muka di ruang BK pribadi...">
                         </div>
 
-                        <!-- Buttons -->
-                        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-                            <a href="{{ route('murid.konseling.index') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
-                                <i class="bi bi-arrow-left me-1"></i> Kembali
+                        <!-- Buttons: Responsif Mobile -->
+                        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-stretch align-items-sm-center gap-2 pt-3 border-top">
+                            <a href="{{ route('murid.konseling.index') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3.5 py-2 text-center order-2 order-sm-1">
+                                <i class="bi bi-arrow-left me-1"></i> Kembali ke Riwayat
                             </a>
-                            <button type="submit" class="btn btn-emerald btn-sm rounded-pill px-4 py-2 fw-bold shadow-sm">
+                            <button type="submit" class="btn btn-emerald btn-sm rounded-pill px-4 py-2.5 fw-bold shadow-sm order-1 order-sm-2">
                                 <i class="bi bi-send-check me-1"></i> Kirimkan Pengajuan Konseling
                             </button>
                         </div>
@@ -223,9 +232,9 @@
         </div>
 
         <!-- Kolom Informasi & Bantuan -->
-        <div class="col-lg-4 space-y-4">
-            <div class="card border-0 shadow-sm rounded-3 bg-white p-4 mb-4">
-                <div class="d-flex align-items-center gap-2 mb-3">
+        <div class="col-lg-4 space-y-3">
+            <div class="card border-0 shadow-sm rounded-4 bg-white p-3.5 p-sm-4 mb-3">
+                <div class="d-flex align-items-center gap-2 mb-2.5">
                     <i class="bi bi-shield-check text-emerald fs-4"></i>
                     <h5 class="fw-bold text-dark mb-0 fs-sm">Asas Kerahasiaan BK</h5>
                 </div>
@@ -250,9 +259,9 @@
             </div>
 
             <!-- Bantuan Kontak -->
-            <div class="card border-0 shadow-sm rounded-3 bg-white p-4">
-                <h6 class="fw-bold text-dark mb-2 fs-sm"><i class="bi bi-geo-alt text-emerald me-1"></i> Ruang BK Madrasah</h6>
-                <p class="text-muted fs-xs mb-0">
+            <div class="card border-0 shadow-sm rounded-4 bg-white p-3.5 p-sm-4">
+                <h6 class="fw-bold text-dark mb-1.5 fs-sm"><i class="bi bi-geo-alt text-emerald me-1"></i> Ruang BK Madrasah</h6>
+                <p class="text-muted fs-xs mb-0" style="line-height: 1.5;">
                     Kamu juga bisa langsung datang ke <strong>Ruang Bimbingan Konseling (BK)</strong> pada jam istirahat sekolah jika membutuhkan pendampingan segera.
                 </p>
             </div>

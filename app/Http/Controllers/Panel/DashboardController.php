@@ -24,63 +24,22 @@ class DashboardController extends Controller
         $activeYear = active_academic_year();
         $counselor = Counselor::where('user_id', $user->id)->first();
 
-        if ($isAdmin) {
-            // Data untuk Admin (seluruh madrasah/sekolah)
-            $totalStudents = Student::where('status', 'aktif')->count();
-            $totalClassrooms = Classroom::count();
-            $totalCounselors = Counselor::where('status', 'aktif')->count();
+        // Data statistik madrasah/sekolah untuk Admin & seluruh Guru BK
+        $totalStudents = Student::where('status', 'aktif')->count();
+        $totalClassrooms = Classroom::count();
+        $totalCounselors = Counselor::where('status', 'aktif')->count();
 
-            // Komposisi Gender
-            $maleCount = Student::where('status', 'aktif')->where('gender', 'L')->count();
-            $femaleCount = Student::where('status', 'aktif')->where('gender', 'P')->count();
+        // Komposisi Gender
+        $maleCount = Student::where('status', 'aktif')->where('gender', 'L')->count();
+        $femaleCount = Student::where('status', 'aktif')->where('gender', 'P')->count();
 
-            // Rombel & murid per rombel untuk grafik HTML/CSS
-            $classroomsData = Classroom::withCount('students')
-                ->when($activeYear, fn ($q) => $q->where('academic_year_id', $activeYear->id))
-                ->take(8)
-                ->get();
+        // Rombel & murid per rombel untuk grafik HTML/CSS
+        $classroomsData = Classroom::withCount('students')
+            ->when($activeYear, fn ($q) => $q->where('academic_year_id', $activeYear->id))
+            ->take(8)
+            ->get();
 
-            // Penugasan Guru BK terbaru
-            $recentAssignments = CounselorAssignment::with(['counselor', 'classroom', 'semester.academicYear'])
-                ->latest()
-                ->take(6)
-                ->get();
-        } else {
-            // Data untuk Guru BK (rombel binaannya saja)
-            $assignedClassroomIds = [];
-
-            if ($counselor && $activeSemester) {
-                $assignedClassroomIds = CounselorAssignment::where('counselor_id', $counselor->id)
-                    ->where('semester_id', $activeSemester->id)
-                    ->pluck('classroom_id')
-                    ->toArray();
-            }
-
-            $totalClassrooms = count($assignedClassroomIds);
-
-            // Hitung murid di rombel binaan
-            $studentsQuery = Student::where('status', 'aktif')
-                ->whereHas('classrooms', function ($q) use ($assignedClassroomIds, $activeYear) {
-                    $q->whereIn('classrooms.id', $assignedClassroomIds)
-                      ->when($activeYear, fn ($sub) => $sub->where('classroom_student.academic_year_id', $activeYear->id));
-                });
-
-            $totalStudents = $studentsQuery->count();
-            $totalCounselors = Counselor::where('status', 'aktif')->count();
-
-            $maleCount = (clone $studentsQuery)->where('gender', 'L')->count();
-            $femaleCount = (clone $studentsQuery)->where('gender', 'P')->count();
-
-            $classroomsData = Classroom::whereIn('id', $assignedClassroomIds)
-                ->withCount('students')
-                ->get();
-
-            $recentAssignments = CounselorAssignment::with(['counselor', 'classroom', 'semester.academicYear'])
-                ->where('counselor_id', $counselor?->id ?? 0)
-                ->latest()
-                ->take(6)
-                ->get();
-        }
+        $recentAssignments = collect();
 
         $totalGender = $maleCount + $femaleCount;
         $malePercentage = $totalGender > 0 ? round(($maleCount / $totalGender) * 100) : 0;

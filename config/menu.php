@@ -53,13 +53,7 @@ return [
                     'active' => 'panel.penugasan-wali-kelas.*',
                     'roles' => ['admin'],
                 ],
-                [
-                    'label' => 'Penugasan Guru BK',
-                    'icon' => 'bi-diagram-3',
-                    'route' => 'panel.penugasan.index',
-                    'active' => 'panel.penugasan.*',
-                    'roles' => ['admin', 'guru_bk'],
-                ],
+
                 [
                     'label' => 'Data Wali Kelas',
                     'icon' => 'bi-person-video3',

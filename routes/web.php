@@ -127,13 +127,10 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
         Route::delete('/guru-bk/{guru_bk}', [CounselorController::class, 'destroy'])->name('guru-bk.destroy');
     });
 
-    // 5. Penugasan Guru BK
-    Route::get('/penugasan', [CounselorAssignmentController::class, 'index'])->name('penugasan.index');
-    Route::middleware('role:admin')->group(function () {
-        Route::get('/penugasan/create', [CounselorAssignmentController::class, 'create'])->name('penugasan.create');
-        Route::post('/penugasan', [CounselorAssignmentController::class, 'store'])->name('penugasan.store');
-        Route::delete('/penugasan/{penugasan}', [CounselorAssignmentController::class, 'destroy'])->name('penugasan.destroy');
-    });
+    // 5. Penugasan Guru BK (Dinonaktifkan: semua akun BK dapat mengakses seluruh rombel dan murid)
+    Route::get('/penugasan', function () {
+        return redirect()->route('panel.dashboard')->with('info', 'Penugasan rombel telah dinonaktifkan. Semua akun Guru BK dapat membina dan mengakses seluruh rombel serta murid.');
+    })->name('penugasan.index');
 
     // 5b. Data Wali Kelas & Penugasan Wali Kelas (Khusus Admin)
     Route::middleware('role:admin')->group(function () {

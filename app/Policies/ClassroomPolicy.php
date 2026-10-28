@@ -16,25 +16,8 @@ class ClassroomPolicy
 
     public function view(User $user, Classroom $classroom): bool
     {
-        if ($user->isAdmin()) {
+        if ($user->isAdmin() || $user->isGuruBk()) {
             return true;
-        }
-
-        if ($user->isGuruBk()) {
-            $counselor = Counselor::where('user_id', $user->id)->first();
-            if (!$counselor) {
-                return false;
-            }
-
-            $activeSemester = active_semester();
-            if (!$activeSemester) {
-                return false;
-            }
-
-            return CounselorAssignment::where('counselor_id', $counselor->id)
-                ->where('classroom_id', $classroom->id)
-                ->where('semester_id', $activeSemester->id)
-                ->exists();
         }
 
         return false;

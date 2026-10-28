@@ -205,11 +205,11 @@
         @media (max-width: 991.98px) {
             .sk-sidebar { transform: translateX(-100%); }
             .sk-sidebar.open { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,.15); }
-            .sk-main { margin-left: 0 !important; width: 100%; padding: 16px 14px 76px; }
+            .sk-main { margin-left: 0 !important; width: 100%; padding: 12px 14px 76px; }
             .sk-bottom-nav { display: flex; }
             .sk-period-badge { display: none !important; }
             .sk-user-text { display: none !important; }
-            .sk-breadbar { padding: 6px 12px; }
+            .sk-breadbar { display: none !important; }
         }
         @media (min-width: 992px) { .sk-burger { display: none !important; } }
         .pagination svg, nav[role="navigation"] svg { width: .9rem !important; height: .9rem !important; }

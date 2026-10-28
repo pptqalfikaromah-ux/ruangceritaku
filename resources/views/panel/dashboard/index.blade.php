@@ -221,20 +221,7 @@
                 <i class="bi bi-arrow-right emis-feature-arrow"></i>
             </a>
         </div>
-        <div class="col-md-6 col-lg-4">
-            <a href="{{ route('panel.penugasan.index') }}" class="emis-feature-card">
-                <div class="d-flex align-items-center">
-                    <div class="emis-feature-icon-box">
-                        <i class="bi bi-diagram-3"></i>
-                    </div>
-                    <div class="emis-feature-info">
-                        <div class="emis-feature-title">Penugasan Guru BK</div>
-                        <p class="emis-feature-desc">Distribusi penugasan binaan rombel semester</p>
-                    </div>
-                </div>
-                <i class="bi bi-arrow-right emis-feature-arrow"></i>
-            </a>
-        </div>
+
         @if($isAdmin)
             <div class="col-md-6 col-lg-4">
                 <a href="{{ route('panel.guru-bk.index') }}" class="emis-feature-card">
@@ -583,66 +570,7 @@
         </div>
     </div>
 
-    <!-- Table: Penugasan Guru BK Terbaru -->
-    <div class="card card-app mb-4">
-        <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
-            <h6 class="fw-bold mb-0 text-slate-800">
-                <i class="bi bi-diagram-3 me-1 text-teal"></i>
-                {{ $isAdmin ? 'Penugasan Guru BK Terbaru' : 'Penugasan Anda pada Semester Ini' }}
-            </h6>
-            @if($isAdmin)
-                <a href="{{ route('panel.penugasan.index') }}" class="btn btn-sm btn-link text-teal text-decoration-none">
-                    Lihat Semua <i class="bi bi-arrow-right"></i>
-                </a>
-            @endif
-        </div>
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light">
-                    <tr>
-                        <th class="ps-4">Guru BK</th>
-                        <th>Rombel / Kelas</th>
-                        <th>Tingkat</th>
-                        <th>Semester</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($recentAssignments as $assignment)
-                        <tr>
-                            <td class="ps-4">
-                                <div class="d-flex align-items-center gap-2">
-                                    <img src="{{ $assignment->counselor->photo_url }}" alt="{{ $assignment->counselor->name }}" class="rounded-circle" width="32" height="32" style="object-fit: cover;">
-                                    <div>
-                                        <div class="fw-semibold text-slate-800">{{ $assignment->counselor->full_name_with_title }}</div>
-                                        <div class="text-muted smaller">NIP: {{ $assignment->counselor->nip_nuptk ?? '-' }}</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="badge bg-light text-dark border fw-semibold px-2.5 py-1.5">
-                                    {{ $assignment->classroom->name }}
-                                </span>
-                            </td>
-                            <td>Kelas {{ $assignment->classroom->level }}</td>
-                            <td>{{ $assignment->semester->full_name }}</td>
-                            <td>
-                                <span class="badge bg-success-subtle text-success border border-success-subtle">
-                                    Aktif
-                                </span>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="text-center py-4 text-muted">
-                                Belum ada penugasan untuk ditampilkan.
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
+
 </div>
 @endsection
 

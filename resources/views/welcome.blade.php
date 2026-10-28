@@ -418,63 +418,20 @@
             <!-- Navigation Links -->
             <nav class="d-none d-lg-flex align-items-center gap-4">
                 <a href="#beranda" class="text-decoration-none text-dark fw-bold small">Beranda</a>
-                <a href="#pilih-portal" class="text-decoration-none text-muted fw-bold small">Pilihan Portal</a>
                 <a href="#fitur" class="text-decoration-none text-muted fw-bold small">Layanan BK</a>
                 <a href="#alur" class="text-decoration-none text-muted fw-bold small">Alur Konseling</a>
             </nav>
 
-            <!-- Action Button -->
+            <!-- Action Button: Cukup 1 di pojok kanan atas -->
             <div class="d-flex align-items-center gap-2">
                 @auth
-                    <a href="{{ auth()->user()->role === 'murid' ? route('murid.dashboard') : route('panel.dashboard') }}" class="btn btn-mint btn-sm rounded-pill px-3 py-2 fw-bold">
+                    <a href="{{ auth()->user()->role === 'murid' ? route('murid.dashboard') : (auth()->user()->role === 'wali_kelas' ? route('walikelas.dashboard') : route('panel.dashboard')) }}" class="btn btn-mint btn-sm rounded-pill px-3.5 py-2 fw-bold">
                         <i class="bi bi-speedometer2 me-1"></i> Buka Dashboard
                     </a>
                 @else
-                    <div class="dropdown">
-                        <button class="btn btn-mint rounded-pill px-3.5 py-2 fw-bold dropdown-toggle d-flex align-items-center gap-1.5 shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-box-arrow-in-right"></i> Masuk Login
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3 p-2 mt-2" style="min-width: 210px; border: 1px solid var(--border-color) !important;">
-                            <li><h6 class="dropdown-header text-uppercase text-muted fw-extrabold fs-xs">Pilih Akses Masuk</h6></li>
-                            <li>
-                                <a class="dropdown-item rounded-2 py-2 d-flex align-items-center gap-2" href="{{ route('login.murid') }}">
-                                    <div class="p-1 rounded bg-teal-subtle text-mint"><i class="bi bi-person-heart"></i></div>
-                                    <div>
-                                        <div class="fw-bold small text-dark">Portal Murid</div>
-                                        <div class="text-muted fs-xs">Konseling & Masalah Siswa</div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item rounded-2 py-2 d-flex align-items-center gap-2" href="{{ route('login.admin') }}">
-                                    <div class="p-1 rounded bg-primary-subtle text-primary"><i class="bi bi-shield-check"></i></div>
-                                    <div>
-                                        <div class="fw-bold small text-dark">Admin / Guru BK</div>
-                                        <div class="text-muted fs-xs">Konselor & Manajemen</div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item rounded-2 py-2 d-flex align-items-center gap-2" href="{{ route('login.wali-kelas') }}">
-                                    <div class="p-1 rounded bg-warning-subtle text-warning-emphasis"><i class="bi bi-mortarboard-fill"></i></div>
-                                    <div>
-                                        <div class="fw-bold small text-dark">Wali Kelas</div>
-                                        <div class="text-muted fs-xs">Pendidik & Monitoring Rombel</div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider my-1"></li>
-                            <li>
-                                <a class="dropdown-item rounded-2 py-2 d-flex align-items-center gap-2 text-mint fw-bold" href="{{ route('register.murid') }}">
-                                    <div class="p-1 rounded bg-teal-subtle text-mint"><i class="bi bi-person-plus-fill"></i></div>
-                                    <div>
-                                        <div class="small">Daftar Akun Siswa Baru</div>
-                                        <div class="text-muted fs-xs fw-normal">Registrasi mandiri khusus murid</div>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <a href="{{ route('login') }}" class="btn btn-mint rounded-pill px-3.5 py-2 fw-bold shadow-sm d-flex align-items-center gap-1.5">
+                        <i class="bi bi-box-arrow-in-right"></i> Masuk
+                    </a>
                 @endauth
             </div>
         </div>
@@ -514,57 +471,14 @@
                         Aplikasi resmi layanan <strong>Bimbingan dan Konseling</strong> sekolah untuk pengisian instrumen masalah siswa (IMS 180), konsultasi privat rahasia, pencegahan perundungan, dan pendampingan tumbuh kembang peserta didik.
                     </p>
 
-                    <!-- 3 TOMBOL LOGIN UTAMA (SESUAI PERMINTAAN USER) -->
-                    <div class="hero-login-box p-3 p-sm-4 rounded-4 bg-white border shadow-sm mb-4">
-                        <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
-                            <span class="small fw-extrabold text-dark text-uppercase tracking-wide">
-                                <i class="bi bi-box-arrow-in-right text-mint me-1.5"></i> Pilih Akses Masuk Login
-                            </span>
-                            <span class="badge rounded-pill bg-teal-subtle text-mint px-2.5 py-1 small fw-bold">3 Pilihan Peran</span>
-                        </div>
-
-                        <div class="row g-2">
-                            <!-- Tombol 1: Login Murid -->
-                            <div class="col-4">
-                                <a href="{{ route('login.murid') }}" class="btn-role-action btn-role-murid w-100 d-flex flex-column align-items-center justify-content-center text-center p-2 p-sm-3 rounded-3 text-decoration-none h-100">
-                                    <div class="role-action-icon mb-1.5">
-                                        <i class="bi bi-person-heart"></i>
-                                    </div>
-                                    <div class="role-action-title">Murid</div>
-                                    <div class="role-action-desc d-none d-md-block">Akses Siswa & Konseling</div>
-                                </a>
-                            </div>
-
-                            <!-- Tombol 2: Login Admin / Guru BK -->
-                            <div class="col-4">
-                                <a href="{{ route('login.admin') }}" class="btn-role-action btn-role-admin w-100 d-flex flex-column align-items-center justify-content-center text-center p-2 p-sm-3 rounded-3 text-decoration-none h-100">
-                                    <div class="role-action-icon mb-1.5">
-                                        <i class="bi bi-shield-check"></i>
-                                    </div>
-                                    <div class="role-action-title">Admin / BK</div>
-                                    <div class="role-action-desc d-none d-md-block">Konselor & Manajemen</div>
-                                </a>
-                            </div>
-
-                            <!-- Tombol 3: Login Wali Kelas -->
-                            <div class="col-4">
-                                <a href="{{ route('login.wali-kelas') }}" class="btn-role-action btn-role-walikelas w-100 d-flex flex-column align-items-center justify-content-center text-center p-2 p-sm-3 rounded-3 text-decoration-none h-100">
-                                    <div class="role-action-icon mb-1.5">
-                                        <i class="bi bi-mortarboard-fill"></i>
-                                    </div>
-                                    <div class="role-action-title">Wali Kelas</div>
-                                    <div class="role-action-desc d-none d-md-block">Pendidik & Monitoring</div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Registration Prompt for Students -->
-                        <div class="mt-3 pt-2.5 text-center border-top border-light-subtle d-flex flex-wrap align-items-center justify-content-center gap-1.5">
-                            <span class="text-muted small">Murid baru belum memiliki akun?</span>
-                            <a href="{{ route('register.murid') }}" class="small fw-bold text-mint text-decoration-none hover-teal">
-                                <i class="bi bi-person-plus-fill me-0.5"></i> Daftar Akun Siswa Baru
-                            </a>
-                        </div>
+                    <!-- TOMBOL UTAMA DI HERO: HANYA 1 TOMBOL MASUK UTAMA -->
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-3 mb-4">
+                        <a href="{{ route('login') }}" class="btn btn-mint btn-lg rounded-pill px-4 py-2.5 fw-bold shadow-sm d-inline-flex align-items-center gap-2">
+                            <i class="bi bi-box-arrow-in-right"></i> Masuk ke Aplikasi
+                        </a>
+                        <a href="{{ route('register.murid') }}" class="btn btn-outline-secondary btn-lg rounded-pill px-3.5 py-2.5 fw-bold d-inline-flex align-items-center gap-2 bg-white">
+                            <i class="bi bi-person-plus text-mint"></i> Daftar Murid Baru
+                        </a>
                     </div>
 
                     <!-- Trust indicators -->
@@ -611,116 +525,10 @@
                                 <div class="small text-muted">Bimbingan Pribadi, Sosial, Belajar & Masa Depan.</div>
                             </div>
 
-                            <a href="#pilih-portal" class="btn btn-mint w-100 py-2.5 rounded-pill fw-bold">
-                                Buka Pintu Masuk Sekarang <i class="bi bi-arrow-right ms-1"></i>
+                            <a href="{{ route('login') }}" class="btn btn-mint w-100 py-2.5 rounded-pill fw-bold">
+                                Masuk ke Aplikasi <i class="bi bi-arrow-right ms-1"></i>
                             </a>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION: PILIH PORTAL MASUK (PINTU MASUK UTAMA) -->
-    <section class="py-5" id="pilih-portal" style="background: #ffffff; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
-        <div class="container py-4">
-            <div class="text-center max-w-700 mx-auto mb-5">
-                <span class="badge rounded-pill px-3 py-1.5 fw-bold mb-2" style="background: var(--primary-bg); color: var(--primary-dark); border: 1px solid var(--primary-light);">
-                    <i class="bi bi-door-open me-1"></i> Pintu Masuk Portal
-                </span>
-                <h2 class="fw-extrabold text-dark" style="font-size: clamp(1.8rem, 3vw, 2.4rem); letter-spacing: -0.02em;">
-                    Pilih Portal Akses Sesuai Peran Anda
-                </h2>
-                <p class="text-muted">
-                    Masuk ke ruang kerja atau ruang cerita Anda dengan satu sentuhan mudah.
-                </p>
-            </div>
-
-            <div class="row g-4 justify-content-center">
-                <!-- 1. PORTAL MURID -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="portal-card card-murid">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div class="portal-icon-wrap icon-murid">
-                                <i class="bi bi-person-heart"></i>
-                            </div>
-                            <span class="portal-badge" style="background: var(--primary-bg); color: var(--primary-dark); border: 1px solid var(--primary-light);">
-                                Siswa / Murid
-                            </span>
-                        </div>
-
-                        <h4 class="fw-extrabold text-dark mb-1">Portal Siswa</h4>
-                        <div class="small fw-semibold text-mint mb-2.5">Ruang Curahan Hati & Konseli</div>
-                        
-                        <p class="text-muted small mb-4 flex-grow-1">
-                            Akses pengisian Instrumen Masalah (IMS 180 butir), ajukan jadwal bimbingan konseling privat, dan kirim pengaduan aman terlindungi.
-                        </p>
-
-                        <div class="p-2.5 rounded-3 mb-3 bg-light border small text-muted">
-                            <i class="bi bi-key me-1 text-mint"></i> Masuk menggunakan <strong>NISN</strong> siswa
-                        </div>
-
-                        <a href="{{ route('login.murid') }}" class="btn btn-mint w-100 py-2.5 rounded-pill fw-bold shadow-sm">
-                            <i class="bi bi-box-arrow-in-right me-1.5"></i> Masuk Portal Siswa
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 2. PORTAL GURU BK / ADMIN -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="portal-card card-bk">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div class="portal-icon-wrap icon-bk">
-                                <i class="bi bi-shield-check"></i>
-                            </div>
-                            <span class="portal-badge" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd;">
-                                Guru BK & Admin
-                            </span>
-                        </div>
-
-                        <h4 class="fw-extrabold text-dark mb-1">Portal Guru BK / Admin</h4>
-                        <div class="small fw-semibold text-primary mb-2.5">Konselor & Manajemen Sekolah</div>
-                        
-                        <p class="text-muted small mb-4 flex-grow-1">
-                            Kelola pemetaan masalah siswa, agenda sesi konseling, tindak lanjut pengaduan, program RPL BK, dan rekapitulasi laporan resmi.
-                        </p>
-
-                        <div class="p-2.5 rounded-3 mb-3 bg-light border small text-muted">
-                            <i class="bi bi-person-badge me-1 text-primary"></i> Masuk dengan <strong>Username / Email</strong>
-                        </div>
-
-                        <a href="{{ route('login.admin') }}" class="btn btn-primary w-100 py-2.5 rounded-pill fw-bold shadow-sm">
-                            <i class="bi bi-box-arrow-in-right me-1.5"></i> Masuk Portal Guru BK / Admin
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 3. PORTAL WALI KELAS -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="portal-card card-walikelas">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div class="portal-icon-wrap icon-walikelas">
-                                <i class="bi bi-mortarboard-fill"></i>
-                            </div>
-                            <span class="portal-badge" style="background: var(--gold-light); color: #92400e; border: 1px solid #fde68a;">
-                                Wali Kelas / Guru
-                            </span>
-                        </div>
-
-                        <h4 class="fw-extrabold text-dark mb-1">Portal Wali Kelas</h4>
-                        <div class="small fw-semibold text-warning-emphasis mb-2.5">Pemantauan & Kolaborasi Kelas</div>
-                        
-                        <p class="text-muted small mb-4 flex-grow-1">
-                            Kolaborasi bimbingan perkembangan siswa di rombel binaan Anda, informasi pendampingan, serta sinergi bersama konselor sekolah.
-                        </p>
-
-                        <div class="p-2.5 rounded-3 mb-3 bg-light border small text-muted">
-                            <i class="bi bi-person-workspace me-1 text-warning"></i> Masuk dengan <strong>Akun Pendidik</strong>
-                        </div>
-
-                        <a href="{{ route('login.wali-kelas') }}" class="btn btn-gold w-100 py-2.5 rounded-pill fw-bold shadow-sm">
-                            <i class="bi bi-box-arrow-in-right me-1.5"></i> Masuk Portal Wali Kelas
-                        </a>
                     </div>
                 </div>
             </div>
@@ -857,7 +665,7 @@
                         </p>
                     </div>
                     <div class="col-lg-4 text-center text-lg-end">
-                        <a href="#pilih-portal" class="btn btn-gold btn-lg px-4 py-3 rounded-pill fw-bold shadow">
+                        <a href="{{ route('login') }}" class="btn btn-gold btn-lg px-4 py-3 rounded-pill fw-bold shadow">
                             <i class="bi bi-box-arrow-in-right me-1.5"></i> Masuk Sekarang
                         </a>
                     </div>
@@ -886,41 +694,7 @@
         </div>
     </footer>
 
-    <!-- MOBILE QUICK ACCESS BOTTOM BAR -->
-    <div class="mobile-quick-bar">
-        <a href="{{ route('login.murid') }}" class="btn btn-mint btn-sm flex-grow-1 rounded-pill py-2 fw-bold text-truncate">
-            <i class="bi bi-person-heart me-1"></i> Murid
-        </a>
-        <a href="{{ route('login.admin') }}" class="btn btn-outline-primary btn-sm flex-grow-1 rounded-pill py-2 fw-bold text-truncate">
-            <i class="bi bi-shield-check me-1"></i> Admin / BK
-        </a>
-        <a href="{{ route('login.wali-kelas') }}" class="btn btn-gold btn-sm flex-grow-1 rounded-pill py-2 fw-bold text-truncate">
-            <i class="bi bi-mortarboard-fill me-1"></i> Wali Kelas
-        </a>
-    </div>
-
     <!-- Bootstrap 5 JS Bundle CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-    <!-- Script Kontrol Floating Mobile Bar (Hanya Muncul Saat Scroll Lewat Hero) -->
-    <script>
-        (function() {
-            var bar = document.querySelector('.mobile-quick-bar');
-            var heroBox = document.querySelector('.hero-login-box');
-            if (bar && heroBox) {
-                function checkBarVisibility() {
-                    var rect = heroBox.getBoundingClientRect();
-                    if (rect.bottom < 80) {
-                        bar.classList.add('show');
-                    } else {
-                        bar.classList.remove('show');
-                    }
-                }
-                window.addEventListener('scroll', checkBarVisibility, { passive: true });
-                window.addEventListener('resize', checkBarVisibility);
-                checkBarVisibility();
-            }
-        })();
-    </script>
 </body>
 </html>

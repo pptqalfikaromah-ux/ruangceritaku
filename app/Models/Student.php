@@ -123,34 +123,16 @@ class Student extends Model
 
     /**
      * Scope untuk menyaring murid:
-     * - Jika Guru BK, hanya murid di rombel binaannya pada semester aktif
-     * - Jika Admin, tampilkan semua
+     * Seluruh akun Guru BK dan Admin dapat mengakses semua murid
      */
     public function scopeBinaan($query)
     {
-        $user = Auth::user();
-        if (!$user || $user->role !== 'guru_bk') {
-            return $query;
-        }
+        return $query;
+    }
 
-        $counselor = Counselor::where('user_id', $user->id)->first();
-        if (!$counselor) {
-            return $query->whereRaw('1 = 0');
-        }
-
-        $activeSemester = active_semester();
-        if (!$activeSemester) {
-            return $query->whereRaw('1 = 0');
-        }
-
-        $classroomIds = CounselorAssignment::where('counselor_id', $counselor->id)
-            ->where('semester_id', $activeSemester->id)
-            ->pluck('classroom_id');
-
-        return $query->whereHas('classrooms', function ($q) use ($classroomIds, $activeSemester) {
-            $q->whereIn('classrooms.id', $classroomIds)
-              ->where('classroom_student.academic_year_id', $activeSemester->academic_year_id);
-        });
+    public function scopeForCounselor($query, User $user)
+    {
+        return $query;
     }
 
     public function scopeFilter($query, array $filters)

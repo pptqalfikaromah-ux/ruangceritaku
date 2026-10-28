@@ -62,30 +62,15 @@ class Classroom extends Model
 
     /**
      * Scope untuk menyaring rombel:
-     * - Jika Guru BK, hanya tampilkan rombel binaan di semester aktif
-     * - Jika Admin, tampilkan semua
+     * Seluruh akun Guru BK dan Admin dapat mengakses semua rombel
      */
     public function scopeBinaan($query)
     {
-        $user = Auth::user();
-        if (!$user || $user->role !== 'guru_bk') {
-            return $query;
-        }
+        return $query;
+    }
 
-        $counselor = Counselor::where('user_id', $user->id)->first();
-        if (!$counselor) {
-            return $query->whereRaw('1 = 0'); // Tidak ada rombel
-        }
-
-        $activeSemester = active_semester();
-        if (!$activeSemester) {
-            return $query->whereRaw('1 = 0');
-        }
-
-        $classroomIds = CounselorAssignment::where('counselor_id', $counselor->id)
-            ->where('semester_id', $activeSemester->id)
-            ->pluck('classroom_id');
-
-        return $query->whereIn('classrooms.id', $classroomIds);
+    public function scopeForCounselor($query, User $user)
+    {
+        return $query;
     }
 }
