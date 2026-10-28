@@ -536,11 +536,11 @@
             <i class="bi bi-list fs-4"></i>
         </button>
 
-        <a href="{{ route('panel.dashboard') }}" class="sk-brand">
-            <img src="{{ app_logo() }}" alt="{{ app_setting('app_name', 'Ruang Ceritaku') }}" style="height: 38px; width: auto; max-width: 48px; object-fit: contain; margin-right: 6px;">
-            <div class="d-none d-sm-block">
+        <a href="{{ route('panel.dashboard') }}" class="sk-brand text-decoration-none">
+            <img src="{{ app_logo() }}" alt="{{ app_setting('app_name', 'Ruang Ceritaku') }}" style="height: 36px; width: auto; max-width: 44px; object-fit: contain; margin-right: 6px;">
+            <div class="d-flex flex-column justify-content-center">
                 <div class="sk-brand-name">{{ app_setting('app_name', 'Ruang Ceritaku') }}</div>
-                <div class="sk-brand-sub">{{ app_setting('school_name', $portalLabel) }}</div>
+                <div class="sk-brand-sub d-none d-sm-block">{{ app_setting('school_name', $portalLabel) }}</div>
             </div>
         </a>
 
