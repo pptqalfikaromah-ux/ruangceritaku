@@ -147,7 +147,7 @@
                 <span class="text-muted small">Belum memiliki akun siswa?</span>
                 <div class="mt-1">
                     <a href="{{ route('register.murid') }}" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1 fw-bold" style="font-size: 0.8rem;">
-                        <i class="bi bi-person-plus-fill me-1"></i> Daftar Akun Siswa Baru
+                        <i class="bi bi-person-plus-fill me-1"></i> Daftar Akun
                     </a>
                 </div>
             </div>

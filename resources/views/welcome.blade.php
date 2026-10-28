@@ -422,7 +422,7 @@
                 <a href="#alur" class="text-decoration-none text-muted fw-bold small">Alur Konseling</a>
             </nav>
 
-            <!-- Action Button: Cukup 1 di pojok kanan atas -->
+            <!-- Action Button: HANYA di pojok kanan atas -->
             <div class="d-flex align-items-center gap-2">
                 @auth
                     <a href="{{ auth()->user()->role === 'murid' ? route('murid.dashboard') : (auth()->user()->role === 'wali_kelas' ? route('walikelas.dashboard') : route('panel.dashboard')) }}" class="btn btn-mint btn-sm rounded-pill px-3.5 py-2 fw-bold">
@@ -430,7 +430,7 @@
                     </a>
                 @else
                     <a href="{{ route('login') }}" class="btn btn-mint rounded-pill px-3.5 py-2 fw-bold shadow-sm d-flex align-items-center gap-1.5">
-                        <i class="bi bi-box-arrow-in-right"></i> Masuk
+                        <i class="bi bi-box-arrow-in-right"></i> Masuk ke Aplikasi
                     </a>
                 @endauth
             </div>
@@ -471,13 +471,10 @@
                         Aplikasi resmi layanan <strong>Bimbingan dan Konseling</strong> sekolah untuk pengisian instrumen masalah siswa (IMS 180), konsultasi privat rahasia, pencegahan perundungan, dan pendampingan tumbuh kembang peserta didik.
                     </p>
 
-                    <!-- TOMBOL UTAMA DI HERO: HANYA 1 TOMBOL MASUK UTAMA -->
+                    <!-- TOMBOL DAFTAR AKUN DI HERO (TOMBOL MASUK HANYA DI POJOK KANAN ATAS) -->
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-3 mb-4">
-                        <a href="{{ route('login') }}" class="btn btn-mint btn-lg rounded-pill px-4 py-2.5 fw-bold shadow-sm d-inline-flex align-items-center gap-2">
-                            <i class="bi bi-box-arrow-in-right"></i> Masuk ke Aplikasi
-                        </a>
-                        <a href="{{ route('register.murid') }}" class="btn btn-outline-secondary btn-lg rounded-pill px-3.5 py-2.5 fw-bold d-inline-flex align-items-center gap-2 bg-white">
-                            <i class="bi bi-person-plus text-mint"></i> Daftar Murid Baru
+                        <a href="{{ route('register.murid') }}" class="btn btn-mint btn-lg rounded-pill px-4 py-2.5 fw-bold shadow-sm d-inline-flex align-items-center gap-2">
+                            <i class="bi bi-person-plus-fill"></i> Daftar Akun
                         </a>
                     </div>
 
@@ -525,8 +522,8 @@
                                 <div class="small text-muted">Bimbingan Pribadi, Sosial, Belajar & Masa Depan.</div>
                             </div>
 
-                            <a href="{{ route('login') }}" class="btn btn-mint w-100 py-2.5 rounded-pill fw-bold">
-                                Masuk ke Aplikasi <i class="bi bi-arrow-right ms-1"></i>
+                            <a href="{{ route('register.murid') }}" class="btn btn-outline-mint w-100 py-2.5 rounded-pill fw-bold">
+                                <i class="bi bi-person-plus-fill me-1"></i> Daftar Akun
                             </a>
                         </div>
                     </div>
@@ -665,8 +662,8 @@
                         </p>
                     </div>
                     <div class="col-lg-4 text-center text-lg-end">
-                        <a href="{{ route('login') }}" class="btn btn-gold btn-lg px-4 py-3 rounded-pill fw-bold shadow">
-                            <i class="bi bi-box-arrow-in-right me-1.5"></i> Masuk Sekarang
+                        <a href="{{ route('register.murid') }}" class="btn btn-gold btn-lg px-4 py-3 rounded-pill fw-bold shadow">
+                            <i class="bi bi-person-plus-fill me-1.5"></i> Daftar Akun
                         </a>
                     </div>
                 </div>

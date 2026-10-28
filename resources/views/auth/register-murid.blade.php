@@ -1,6 +1,6 @@
 @extends('layouts.guest')
 
-@section('title', 'Pendaftaran Akun Murid Baru - ' . app_setting('app_name', 'Ruang Ceritaku'))
+@section('title', 'Daftar Akun - ' . app_setting('app_name', 'Ruang Ceritaku'))
 
 @section('content')
 <div class="min-vh-100 d-flex flex-column justify-content-center align-items-center py-4 px-3" style="background: radial-gradient(circle at 50% 10%, rgba(204, 251, 241, 0.45) 0%, rgba(240, 253, 250, 0.7) 40%, rgba(241, 245, 249, 1) 100%);">
@@ -27,7 +27,7 @@
                     <span class="text-muted small fs-xs">{{ app_setting('school_name', 'Madrasah / Sekolah') }}</span>
                 </a>
                 <div class="mt-2">
-                    <h5 class="fw-extrabold text-dark mb-1">Formulir Pendaftaran Murid Baru</h5>
+                    <h5 class="fw-extrabold text-dark mb-1">Formulir Pendaftaran Akun</h5>
                     <p class="text-muted small mb-0">Lengkapi data diri dan ajukan username akun Anda untuk memulai bimbingan konseling.</p>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                     <i class="bi bi-shield-lock-fill fs-5"></i>
                 </div>
                 <div class="small">
-                    <span class="fw-bold text-dark d-block" style="font-size: 0.82rem;">Pendaftaran Khusus Siswa / Murid</span>
+                    <span class="fw-bold text-dark d-block" style="font-size: 0.82rem;">Daftar Akun Siswa</span>
                     <span class="text-muted" style="font-size: 0.72rem;">Akun Guru BK dan Wali Kelas dikelola langsung oleh Administrator madrasah/sekolah.</span>
                 </div>
             </div>
@@ -303,7 +303,7 @@
                 <!-- Submit Button -->
                 <div class="d-grid mb-3">
                     <button type="submit" class="btn btn-mint py-2.5 rounded-pill fw-bold shadow-sm" style="font-size: 0.95rem; letter-spacing: 0.02em;">
-                        <i class="bi bi-person-plus-fill me-1.5"></i> DAFTAR SEBAGAI MURID BARU
+                        <i class="bi bi-person-plus-fill me-1.5"></i> DAFTAR AKUN
                     </button>
                 </div>
             </form>
