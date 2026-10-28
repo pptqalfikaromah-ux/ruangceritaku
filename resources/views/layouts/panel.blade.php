@@ -493,8 +493,7 @@
             }
             .sk-period-badge { display: none !important; }
             .sk-user-text { display: none !important; }
-            .sk-breadbar { padding: 8px 12px !important; margin-bottom: 14px !important; }
-            .sk-breadbar .sk-bpage { font-size: 0.95rem !important; }
+            .sk-breadbar { display: none !important; }
         }
         @media (max-width: 767.98px) {
             .table-responsive { border-radius: 8px; }

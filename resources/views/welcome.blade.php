@@ -369,18 +369,36 @@
             display: none;
             position: fixed;
             bottom: 0; left: 0; right: 0;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-top: 1px solid var(--border-color);
-            padding: 10px 14px;
+            padding: 8px 12px;
             z-index: 1040;
             box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+            transform: translateY(105%);
+            transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-quick-bar.show {
+            transform: translateY(0);
         }
 
         @media (max-width: 991.98px) {
-            .hero-section { padding-top: 105px; padding-bottom: 50px; }
+            .hero-section { padding-top: 85px; padding-bottom: 40px; }
             .mobile-quick-bar { display: flex; gap: 8px; }
-            body { padding-bottom: 65px; }
+            .landing-nav { height: 62px; }
+            .brand-title { font-size: 1.05rem; }
+            .brand-subtitle { font-size: 0.65rem; }
+        }
+        @media (max-width: 575.98px) {
+            .hero-section { padding-top: 75px !important; padding-bottom: 25px !important; }
+            .hero-title { font-size: 1.6rem !important; line-height: 1.22 !important; margin-bottom: 12px !important; }
+            .hero-desc { font-size: 0.86rem !important; line-height: 1.48 !important; margin-bottom: 18px !important; }
+            .hero-badge { font-size: 0.72rem !important; padding: 4px 12px !important; margin-bottom: 12px !important; }
+            .role-action-icon { width: 38px !important; height: 38px !important; font-size: 1.15rem !important; border-radius: 10px !important; }
+            .role-action-title { font-size: 0.76rem !important; font-weight: 800 !important; }
+            .role-action-desc { display: none !important; }
+            .hero-login-box { padding: 12px !important; }
         }
     </style>
 </head>
@@ -505,37 +523,37 @@
                             <span class="badge rounded-pill bg-teal-subtle text-mint px-2.5 py-1 small fw-bold">3 Pilihan Peran</span>
                         </div>
 
-                        <div class="row g-2.5">
+                        <div class="row g-2">
                             <!-- Tombol 1: Login Murid -->
-                            <div class="col-12 col-sm-4">
-                                <a href="{{ route('login.murid') }}" class="btn-role-action btn-role-murid w-100 d-flex flex-column align-items-center justify-content-center text-center p-3 rounded-3 text-decoration-none h-100">
-                                    <div class="role-action-icon mb-2">
+                            <div class="col-4">
+                                <a href="{{ route('login.murid') }}" class="btn-role-action btn-role-murid w-100 d-flex flex-column align-items-center justify-content-center text-center p-2 p-sm-3 rounded-3 text-decoration-none h-100">
+                                    <div class="role-action-icon mb-1.5">
                                         <i class="bi bi-person-heart"></i>
                                     </div>
-                                    <div class="role-action-title">Login Murid</div>
-                                    <div class="role-action-desc">Akses Siswa & Konseling</div>
+                                    <div class="role-action-title">Murid</div>
+                                    <div class="role-action-desc d-none d-md-block">Akses Siswa & Konseling</div>
                                 </a>
                             </div>
 
                             <!-- Tombol 2: Login Admin / Guru BK -->
-                            <div class="col-12 col-sm-4">
-                                <a href="{{ route('login.admin') }}" class="btn-role-action btn-role-admin w-100 d-flex flex-column align-items-center justify-content-center text-center p-3 rounded-3 text-decoration-none h-100">
-                                    <div class="role-action-icon mb-2">
+                            <div class="col-4">
+                                <a href="{{ route('login.admin') }}" class="btn-role-action btn-role-admin w-100 d-flex flex-column align-items-center justify-content-center text-center p-2 p-sm-3 rounded-3 text-decoration-none h-100">
+                                    <div class="role-action-icon mb-1.5">
                                         <i class="bi bi-shield-check"></i>
                                     </div>
-                                    <div class="role-action-title">Login Admin / BK</div>
-                                    <div class="role-action-desc">Konselor & Manajemen</div>
+                                    <div class="role-action-title">Admin / BK</div>
+                                    <div class="role-action-desc d-none d-md-block">Konselor & Manajemen</div>
                                 </a>
                             </div>
 
                             <!-- Tombol 3: Login Wali Kelas -->
-                            <div class="col-12 col-sm-4">
-                                <a href="{{ route('login.wali-kelas') }}" class="btn-role-action btn-role-walikelas w-100 d-flex flex-column align-items-center justify-content-center text-center p-3 rounded-3 text-decoration-none h-100">
-                                    <div class="role-action-icon mb-2">
+                            <div class="col-4">
+                                <a href="{{ route('login.wali-kelas') }}" class="btn-role-action btn-role-walikelas w-100 d-flex flex-column align-items-center justify-content-center text-center p-2 p-sm-3 rounded-3 text-decoration-none h-100">
+                                    <div class="role-action-icon mb-1.5">
                                         <i class="bi bi-mortarboard-fill"></i>
                                     </div>
-                                    <div class="role-action-title">Login Wali Kelas</div>
-                                    <div class="role-action-desc">Pendidik & Monitoring Rombel</div>
+                                    <div class="role-action-title">Wali Kelas</div>
+                                    <div class="role-action-desc d-none d-md-block">Pendidik & Monitoring</div>
                                 </a>
                             </div>
                         </div>
@@ -883,5 +901,26 @@
 
     <!-- Bootstrap 5 JS Bundle CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Script Kontrol Floating Mobile Bar (Hanya Muncul Saat Scroll Lewat Hero) -->
+    <script>
+        (function() {
+            var bar = document.querySelector('.mobile-quick-bar');
+            var heroBox = document.querySelector('.hero-login-box');
+            if (bar && heroBox) {
+                function checkBarVisibility() {
+                    var rect = heroBox.getBoundingClientRect();
+                    if (rect.bottom < 80) {
+                        bar.classList.add('show');
+                    } else {
+                        bar.classList.remove('show');
+                    }
+                }
+                window.addEventListener('scroll', checkBarVisibility, { passive: true });
+                window.addEventListener('resize', checkBarVisibility);
+                checkBarVisibility();
+            }
+        })();
+    </script>
 </body>
 </html>

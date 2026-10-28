@@ -6,11 +6,11 @@
 <div class="space-y-3 space-y-md-4">
     <!-- Header -->
     <div class="card border-0 shadow-sm rounded-4 mb-2 mb-md-3">
-        <div class="card-body p-3 p-md-4">
-            <div class="d-flex align-items-center justify-content-between gap-3">
-                <div class="d-flex align-items-center gap-2.5">
-                    <div class="p-2 p-md-2.5 rounded-3 bg-teal-subtle text-mint d-inline-flex flex-shrink-0">
-                        <i class="bi bi-calendar2-heart fs-4 fs-md-3"></i>
+        <div class="card-body p-2.5 p-md-4">
+            <div class="d-flex align-items-center justify-content-between gap-2">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="p-1.5 p-md-2.5 rounded-3 bg-teal-subtle text-mint d-inline-flex flex-shrink-0">
+                        <i class="bi bi-calendar2-heart fs-5 fs-md-3"></i>
                     </div>
                     <div>
                         <div class="d-none d-sm-flex align-items-center gap-2 mb-1">
@@ -21,7 +21,7 @@
                         <p class="text-muted small mb-0 mt-0.5 d-none d-md-block">Kelola, tinjau keluhan, setujui rencana jadwal, dan pantau seluruh sesi konseling siswa.</p>
                     </div>
                 </div>
-                <div class="badge bg-light text-muted border px-2.5 py-1.5 rounded-pill fs-xs text-nowrap">
+                <div class="badge bg-light text-muted border px-2.5 py-1 rounded-pill fs-xxs fs-md-xs text-nowrap">
                     {{ $requests->total() }} Sesi
                 </div>
             </div>
