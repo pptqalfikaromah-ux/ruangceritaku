@@ -21,7 +21,7 @@
                 <div class="text-muted fs-xs">Laporan ini akan langsung masuk ke panel Guru BK & Admin Madrasah untuk ditinjau dan ditindaklanjuti.</div>
             </div>
 
-            <div class="card-body p-4">
+            <div class="card-body p-3 p-md-4">
                 <form action="{{ route('walikelas.aduan.store') }}" method="POST">
                     @csrf
 
@@ -92,8 +92,8 @@
                         @error('teacher_notes') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
 
-                    <div class="d-flex justify-content-end gap-2">
-                        <a href="{{ route('walikelas.aduan.index') }}" class="btn btn-light border rounded-pill px-4 fw-bold">Batal</a>
+                    <div class="d-flex flex-column-reverse flex-sm-row justify-content-end gap-2">
+                        <a href="{{ route('walikelas.aduan.index') }}" class="btn btn-light border rounded-pill px-4 fw-bold text-center">Batal</a>
                         <button type="submit" class="btn btn-warning rounded-pill px-4 fw-bold text-dark shadow-sm">
                             <i class="bi bi-send-fill me-1.5"></i> Kirim Laporan ke Guru BK
                         </button>

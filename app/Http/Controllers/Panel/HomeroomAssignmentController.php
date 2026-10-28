@@ -53,6 +53,13 @@ class HomeroomAssignmentController extends Controller
             'notes' => ['nullable', 'string', 'max:500'],
         ]);
 
+        // Pastikan guru tidak memiliki penugasan ganda di kelas lain pada semester aktif
+        HomeroomAssignment::where('academic_year_id', $activeYear->id)
+            ->where('semester_id', $activeSemester->id)
+            ->where('teacher_id', $validated['teacher_id'])
+            ->where('classroom_id', '!=', $validated['classroom_id'])
+            ->delete();
+
         HomeroomAssignment::updateOrCreate(
             [
                 'academic_year_id' => $activeYear->id,

@@ -6,33 +6,33 @@
 
 @section('content')
 {{-- 1. WELCOME PROFILE BANNER --}}
-<div style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%); border-radius: 14px; padding: 22px 26px; margin-bottom: 22px; color: #ffffff; position: relative; overflow: hidden; box-shadow: 0 4px 14px rgba(217, 119, 6, 0.25);">
+<div class="p-3 p-md-4 mb-3 mb-md-4 position-relative overflow-hidden text-white" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%); border-radius: 14px; box-shadow: 0 4px 14px rgba(217, 119, 6, 0.25);">
     <div style="position: absolute; width: 220px; height: 220px; background: rgba(255, 255, 255, 0.08); border-radius: 50%; top: -60px; right: 60px;"></div>
     <div style="position: absolute; width: 140px; height: 140px; background: rgba(13, 148, 136, 0.25); border-radius: 50%; bottom: -40px; right: 20px;"></div>
 
     <div class="row align-items-center g-3 position-relative z-1">
         <div class="col-auto">
-            <div class="d-flex align-items-center justify-content-center rounded-circle" style="width: 70px; height: 70px; background: #ffffff; color: #d97706; font-size: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+            <div class="d-flex align-items-center justify-content-center rounded-circle" style="width: 54px; height: 54px; background: #ffffff; color: #d97706; font-size: 1.6rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
                 <i class="bi bi-mortarboard-fill"></i>
             </div>
         </div>
         <div class="col">
-            <div class="badge rounded-pill bg-white text-warning-emphasis fw-extrabold px-3 py-1 mb-2 shadow-xs">
+            <div class="badge rounded-pill bg-white text-warning-emphasis fw-extrabold px-2.5 py-1 mb-1 shadow-xs fs-xxs fs-sm-xs">
                 PORTAL WALI KELAS &bull; {{ $classroom ? 'KELAS ' . $classroom->name : 'BELUM ADA ROMBEL' }}
             </div>
-            <h3 class="fw-extrabold mb-1" style="font-size: 1.45rem;">
+            <h3 class="fw-extrabold mb-1 fs-5 fs-md-4">
                 Selamat Datang, {{ $teacher?->name ?? $user->name }}!
             </h3>
-            <div class="small opacity-90">
+            <div class="small opacity-90 fs-xs">
                 <i class="bi bi-building me-1"></i>{{ app_setting('school_name', 'Madrasah / Sekolah') }}
                 @if($classroom)
-                    &bull; {{ $totalStudents }} Murid Terdaftar
+                    &bull; {{ $totalStudents }} Murid
                 @endif
             </div>
         </div>
-        <div class="col-md-auto text-md-end">
-            <a href="{{ route('walikelas.aduan.create') }}" class="btn btn-light rounded-pill px-3.5 py-2 fw-bold text-warning-emphasis shadow-sm">
-                <i class="bi bi-plus-circle-fill text-warning me-1.5"></i> Lapor Kasus Murid ke BK
+        <div class="col-12 col-md-auto text-md-end mt-2 mt-md-0">
+            <a href="{{ route('walikelas.aduan.create') }}" class="btn btn-light rounded-pill px-3.5 py-2 fw-bold text-warning-emphasis shadow-sm w-100 w-md-auto d-inline-flex align-items-center justify-content-center gap-1.5">
+                <i class="bi bi-plus-circle-fill text-warning"></i> Lapor Kasus Murid ke BK
             </a>
         </div>
     </div>
@@ -42,68 +42,68 @@
 <x-pamphlet-carousel />
 <x-announcements-widget />
 
-{{-- 2. STATS CARDS --}}
-<div class="row g-3 mb-4">
-    <div class="col-sm-6 col-lg-3">
-        <div class="card-app p-3 d-flex align-items-center gap-3">
-            <div class="p-3 rounded-3 bg-teal-subtle text-mint fs-3">
+{{-- 2. STATS CARDS (2x2 di Mobile, 4 Kolom di Desktop) --}}
+<div class="row g-2 g-md-3 mb-3 mb-md-4">
+    <div class="col-6 col-lg-3">
+        <div class="card-app p-2.5 p-sm-3 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2 gap-sm-3 h-100">
+            <div class="p-2 p-sm-2.5 rounded-3 bg-teal-subtle text-mint fs-4 flex-shrink-0">
                 <i class="bi bi-people-fill"></i>
             </div>
             <div>
-                <div class="text-muted fs-xs fw-bold text-uppercase">Total Murid Rombel</div>
-                <div class="fs-4 fw-extrabold text-dark">{{ $totalStudents }}</div>
-                <div class="text-muted fs-xxs">Peserta Didik Aktif</div>
+                <div class="text-muted fs-xxs fw-bold text-uppercase">Murid Rombel</div>
+                <div class="fs-5 fs-sm-4 fw-extrabold text-dark">{{ $totalStudents }}</div>
+                <div class="text-muted fs-xxs d-none d-sm-block">Peserta Didik Aktif</div>
             </div>
         </div>
     </div>
 
-    <div class="col-sm-6 col-lg-3">
-        <div class="card-app p-3 d-flex align-items-center gap-3">
-            <div class="p-3 rounded-3 bg-primary-subtle text-primary fs-3">
+    <div class="col-6 col-lg-3">
+        <div class="card-app p-2.5 p-sm-3 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2 gap-sm-3 h-100">
+            <div class="p-2 p-sm-2.5 rounded-3 bg-primary-subtle text-primary fs-4 flex-shrink-0">
                 <i class="bi bi-chat-heart-fill"></i>
             </div>
             <div>
-                <div class="text-muted fs-xs fw-bold text-uppercase">Total Konseling</div>
-                <div class="fs-4 fw-extrabold text-dark">{{ $totalCounseling }}</div>
-                <div class="text-muted fs-xxs">Pengajuan Siswa</div>
+                <div class="text-muted fs-xxs fw-bold text-uppercase">Total Konseling</div>
+                <div class="fs-5 fs-sm-4 fw-extrabold text-dark">{{ $totalCounseling }}</div>
+                <div class="text-muted fs-xxs d-none d-sm-block">Pengajuan Siswa</div>
             </div>
         </div>
     </div>
 
-    <div class="col-sm-6 col-lg-3">
-        <div class="card-app p-3 d-flex align-items-center gap-3">
-            <div class="p-3 rounded-3 bg-warning-subtle text-warning-emphasis fs-3">
+    <div class="col-6 col-lg-3">
+        <div class="card-app p-2.5 p-sm-3 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2 gap-sm-3 h-100">
+            <div class="p-2 p-sm-2.5 rounded-3 bg-warning-subtle text-warning-emphasis fs-4 flex-shrink-0">
                 <i class="bi bi-hourglass-split"></i>
             </div>
             <div>
-                <div class="text-muted fs-xs fw-bold text-uppercase">Konseling Berjalan</div>
-                <div class="fs-4 fw-extrabold text-warning-emphasis">{{ $activeCounselingCount }}</div>
-                <div class="text-muted fs-xxs">Perlu Pemantauan</div>
+                <div class="text-muted fs-xxs fw-bold text-uppercase">Berjalan</div>
+                <div class="fs-5 fs-sm-4 fw-extrabold text-warning-emphasis">{{ $activeCounselingCount }}</div>
+                <div class="text-muted fs-xxs d-none d-sm-block">Perlu Dipantau</div>
             </div>
         </div>
     </div>
 
-    <div class="col-sm-6 col-lg-3">
-        <div class="card-app p-3 d-flex align-items-center gap-3">
-            <div class="p-3 rounded-3 bg-danger-subtle text-danger fs-3">
+    <div class="col-6 col-lg-3">
+        <div class="card-app p-2.5 p-sm-3 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2 gap-sm-3 h-100">
+            <div class="p-2 p-sm-2.5 rounded-3 bg-danger-subtle text-danger fs-4 flex-shrink-0">
                 <i class="bi bi-exclamation-octagon-fill"></i>
             </div>
             <div>
-                <div class="text-muted fs-xs fw-bold text-uppercase">Aduan Kasus Diajukan</div>
-                <div class="fs-4 fw-extrabold text-danger">{{ $totalComplaints }}</div>
-                <div class="text-muted fs-xxs">Ke Guru BK</div>
+                <div class="text-muted fs-xxs fw-bold text-uppercase">Aduan Kasus</div>
+                <div class="fs-5 fs-sm-4 fw-extrabold text-danger">{{ $totalComplaints }}</div>
+                <div class="text-muted fs-xxs d-none d-sm-block">Ke Guru BK</div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row g-4 mb-4">
+<div class="row g-3 g-md-4 mb-4">
     {{-- 3. DAFTAR MURID ROMBEL BINAAN --}}
     <div class="col-lg-7">
         <div class="card card-app h-100">
-            <div class="card-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between">
+            <div class="card-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between flex-wrap gap-2">
                 <h6 class="fw-bold mb-0 text-dark">
-                    <i class="bi bi-people me-1.5 text-warning"></i> Daftar Murid di Rombel {{ $classroom?->name ?? '' }}
+                    <i class="bi bi-people me-1.5 text-warning"></i> Daftar Murid {{ $classroom?->name ?? '' }}
                 </h6>
                 <span class="badge rounded-pill bg-light text-muted border px-2.5 py-1">{{ $totalStudents }} Siswa</span>
             </div>
@@ -112,29 +112,30 @@
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light fs-xs text-muted">
                             <tr>
-                                <th style="width: 50px;" class="text-center">No</th>
+                                <th style="width: 45px;" class="text-center">No</th>
                                 <th>Nama Siswa</th>
-                                <th>NISN</th>
-                                <th class="text-center">L/P</th>
-                                <th class="text-center">Aksi</th>
+                                <th class="d-none d-sm-table-cell">NISN</th>
+                                <th class="text-center" style="width: 50px;">L/P</th>
+                                <th class="text-center" style="width: 100px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($students as $index => $stu)
                                 <tr>
-                                    <td class="text-center fw-bold text-muted">{{ $index + 1 }}</td>
+                                    <td class="text-center fw-bold text-muted fs-xs">{{ $index + 1 }}</td>
                                     <td>
-                                        <div class="fw-bold text-dark">{{ $stu->name }}</div>
+                                        <div class="fw-bold text-dark fs-sm">{{ $stu->name }}</div>
+                                        <div class="d-sm-none text-muted font-monospace fs-xxs">NISN: {{ $stu->nisn }}</div>
                                     </td>
-                                    <td class="font-monospace small text-muted">{{ $stu->nisn }}</td>
+                                    <td class="font-monospace small text-muted d-none d-sm-table-cell">{{ $stu->nisn }}</td>
                                     <td class="text-center">
-                                        <span class="badge {{ $stu->gender === 'L' ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger' }} rounded-pill">
+                                        <span class="badge {{ $stu->gender === 'L' ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger' }} rounded-pill fs-xxs px-2">
                                             {{ $stu->gender }}
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ route('walikelas.aduan.create', ['student_id' => $stu->id]) }}" class="btn btn-outline-warning btn-sm rounded-pill px-2.5 py-1 fw-bold" title="Lapor Kasus Anak Ini">
-                                            <i class="bi bi-flag-fill me-1"></i> Lapor Kasus
+                                        <a href="{{ route('walikelas.aduan.create', ['student_id' => $stu->id]) }}" class="btn btn-outline-warning btn-sm rounded-pill px-2.5 py-1 fw-bold fs-xs" title="Lapor Kasus Anak Ini">
+                                            <i class="bi bi-flag-fill me-0.5"></i> Lapor
                                         </a>
                                     </td>
                                 </tr>

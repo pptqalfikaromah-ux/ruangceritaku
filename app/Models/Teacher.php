@@ -33,8 +33,11 @@ class Teacher extends Model
     public function currentAssignment()
     {
         $activeSemester = active_semester();
-        return $this->hasOne(HomeroomAssignment::class)
-            ->where('semester_id', $activeSemester?->id ?? 0);
+        $query = $this->hasOne(HomeroomAssignment::class);
+        if ($activeSemester) {
+            $query->where('semester_id', $activeSemester->id);
+        }
+        return $query->whereHas('classroom')->latest('id');
     }
 
     public function complaints()

@@ -14,7 +14,7 @@
             <div class="text-muted fs-xs">Wali kelas dapat memantau siswa binaan yang mengajukan atau sedang menjalani bimbingan konseling bersama Guru BK.</div>
         </div>
 
-        <form method="GET" class="d-flex align-items-center gap-2">
+        <form method="GET" class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2 w-100 w-md-auto">
             <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
                 <option value="">Semua Status</option>
                 <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Menunggu Peninjauan</option>
@@ -23,13 +23,16 @@
                 <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Selesai</option>
                 <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
             </select>
-            <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari nama / tiket..." value="{{ request('search') }}">
-            <button type="submit" class="btn btn-warning btn-sm text-dark fw-bold px-3">Cari</button>
+            <div class="input-group input-group-sm">
+                <input type="text" name="search" class="form-control" placeholder="Cari nama / tiket..." value="{{ request('search') }}">
+                <button type="submit" class="btn btn-warning text-dark fw-bold px-3">Cari</button>
+            </div>
         </form>
     </div>
 
     <div class="card-body p-0">
-        <div class="table-responsive">
+        {{-- DESKTOP TABLE VIEW --}}
+        <div class="table-responsive d-none d-md-block">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light fs-xs text-muted">
                     <tr>
@@ -88,6 +91,49 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+
+        {{-- MOBILE CARDS VIEW --}}
+        <div class="d-md-none p-3">
+            @forelse($counselings as $counseling)
+                <div class="card border rounded-3 p-3 mb-2.5 shadow-xs bg-white">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-1 mb-2">
+                        <span class="font-monospace fw-bold text-primary fs-xs">#{{ $counseling->ticket_number }}</span>
+                        <span class="badge rounded-pill bg-teal-subtle text-mint px-2.5 py-1 fs-xxs">
+                            {{ ucfirst(str_replace('_', ' ', $counseling->status)) }}
+                        </span>
+                    </div>
+
+                    <div class="fw-bold text-dark fs-sm mb-0.5">{{ $counseling->student?->name }}</div>
+                    <div class="text-muted fs-xxs mb-2">NISN: {{ $counseling->student?->nisn }} &bull; {{ $counseling->service?->name ?? 'Layanan Mandiri' }}</div>
+
+                    <div class="small text-muted bg-light p-2 rounded-2 mb-2 fs-xs">
+                        {{ Str::limit($counseling->purpose, 80) }}
+                    </div>
+
+                    <div class="d-flex flex-column gap-1 fs-xxs text-muted mb-2.5">
+                        <div>
+                            <i class="bi bi-person-badge text-primary me-1"></i>Konselor: <strong>{{ $counseling->assignedCounselor?->name ?? 'Belum Ditentukan' }}</strong>
+                        </div>
+                        @if($counseling->schedule)
+                            <div>
+                                <i class="bi bi-calendar-event text-warning me-1"></i>Jadwal: {{ $counseling->schedule->counseling_date?->format('d M Y') }} ({{ $counseling->schedule->start_time }} - {{ $counseling->schedule->end_time }})
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="pt-2 border-top">
+                        <a href="{{ route('walikelas.monitoring.show', $counseling) }}" class="btn btn-outline-secondary btn-sm w-100 rounded-pill fw-bold fs-xs">
+                            <i class="bi bi-eye me-1"></i> Rincian Konseling
+                        </a>
+                    </div>
+                </div>
+            @empty
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-chat-square-text fs-1 d-block mb-2 text-muted opacity-50"></i>
+                    Belum ada catatan aktivitas konseling dari murid rombel binaan Anda.
+                </div>
+            @endforelse
         </div>
     </div>
 

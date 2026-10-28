@@ -11,18 +11,18 @@
     </a>
 </div>
 
-<div class="row g-4">
+<div class="row g-3 g-md-4">
     <div class="col-lg-8">
         <div class="card card-app mb-4">
-            <div class="card-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between">
-                <h6 class="fw-bold mb-0 text-dark">
+            <div class="card-header bg-white py-3 border-bottom d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2">
+                <h6 class="fw-bold mb-0 text-dark fs-6">
                     <i class="bi bi-card-text me-1.5 text-primary"></i> Rincian Pengajuan Bimbingan Siswa
                 </h6>
-                <span class="badge rounded-pill bg-teal-subtle text-mint px-3 py-1.5 fw-bold">
+                <span class="badge rounded-pill bg-teal-subtle text-mint px-3 py-1.5 fw-bold fs-xs">
                     Status: {{ ucfirst(str_replace('_', ' ', $konseling->status)) }}
                 </span>
             </div>
-            <div class="card-body p-4">
+            <div class="card-body p-3 p-md-4">
                 <div class="mb-3">
                     <label class="text-muted fs-xs fw-bold text-uppercase">Kebutuhan / Tujuan Konseling</label>
                     <div class="p-3 rounded-3 bg-light border fw-semibold text-dark mt-1">

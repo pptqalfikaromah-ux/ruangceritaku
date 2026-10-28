@@ -5,12 +5,12 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-lg-8">
-        <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-3">
             <div>
-                <h4 class="fw-bold text-dark mb-0.5">Profil Data Diri</h4>
-                <p class="text-muted small mb-0">Kelola informasi data diri Anda sebagai Wali Kelas {{ $classroom?->name ?? '' }}.</p>
+                <h4 class="fw-bold text-dark mb-0.5 fs-5 fs-sm-4">Profil Data Diri</h4>
+                <p class="text-muted small mb-0 fs-xs">Kelola informasi data diri Anda sebagai Wali Kelas {{ $classroom?->name ?? '' }}.</p>
             </div>
-            <a href="{{ route('walikelas.dashboard') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+            <a href="{{ route('walikelas.dashboard') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3 w-100 w-sm-auto text-center">
                 <i class="bi bi-arrow-left me-1"></i> Kembali
             </a>
         </div>
@@ -34,20 +34,57 @@
         @endif
 
         <div class="card card-app shadow-sm border-0 rounded-4 bg-white overflow-hidden">
-            <div class="p-3.5 bg-teal-subtle border-bottom d-flex align-items-center gap-3">
-                <div class="rounded-circle bg-white text-primary-teal d-flex align-items-center justify-content-center fw-bold fs-3 shadow-xs" style="width: 60px; height: 60px;">
+            <div class="p-3 p-sm-3.5 bg-teal-subtle border-bottom d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-white text-primary-teal d-flex align-items-center justify-content-center fw-bold fs-3 shadow-xs flex-shrink-0" style="width: 54px; height: 54px;">
                     {{ strtoupper(substr($user->name, 0, 1)) }}
                 </div>
-                <div>
-                    <h5 class="fw-bold text-dark mb-0">{{ $user->name }}</h5>
-                    <div class="d-flex align-items-center gap-2 mt-0.5">
-                        <span class="badge bg-primary text-white fs-xs">{{ $classroom ? 'Wali Kelas ' . $classroom->name : 'Wali Kelas' }}</span>
-                        <span class="text-muted small">Username: <code>{{ $user->username }}</code></span>
+                <div class="min-w-0">
+                    <h5 class="fw-bold text-dark mb-0 fs-6 fs-sm-5 text-truncate">{{ $user->name }}</h5>
+                    <div class="d-flex align-items-center flex-wrap gap-2 mt-0.5">
+                        <span class="badge {{ $classroom ? 'bg-primary' : 'bg-secondary' }} text-white fs-xxs">
+                            {{ $classroom ? 'Wali Kelas ' . $classroom->name : 'Wali Kelas (Belum Ditugaskan)' }}
+                        </span>
+                        <span class="text-muted small fs-xs">Username: <code>{{ $user->username }}</code></span>
                     </div>
                 </div>
             </div>
 
-            <div class="card-body p-4">
+            {{-- INFORMASI PENUGASAN AKTIF --}}
+            <div class="p-3 bg-light border-bottom">
+                <div class="row g-2 align-items-center">
+                    <div class="col-12 col-sm-6">
+                        <div class="d-flex align-items-center gap-2.5">
+                            <div class="p-2 rounded-3 bg-warning-subtle text-warning-emphasis fs-4 flex-shrink-0">
+                                <i class="bi bi-mortarboard-fill"></i>
+                            </div>
+                            <div>
+                                <div class="text-muted fs-xxs fw-bold text-uppercase">Status Penugasan Rombel</div>
+                                <div class="fw-bold text-dark fs-sm">
+                                    @if($classroom)
+                                        <span class="text-success fw-extrabold">
+                                            <i class="bi bi-check-circle-fill me-1"></i>Kelas {{ $classroom->name }}
+                                        </span>
+                                    @else
+                                        <span class="text-danger fw-semibold">
+                                            <i class="bi bi-exclamation-triangle-fill me-1"></i>Belum Ditugaskan ke Rombel
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <div class="text-muted fs-xxs fw-bold text-uppercase">Tahun / Semester</div>
+                        <div class="small fw-bold text-dark">{{ $activeYear?->name ?? '2026/2027' }} &bull; {{ $activeSem?->name ?? 'Ganjil' }}</div>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <div class="text-muted fs-xxs fw-bold text-uppercase">Siswa di Rombel</div>
+                        <div class="small fw-bold text-dark">{{ $studentsCount }} Siswa</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-3 p-md-4">
                 <form action="{{ route('walikelas.profile.update') }}" method="POST">
                     @csrf
                     @method('PUT')
@@ -93,7 +130,7 @@
                     </div>
 
                     <div class="d-flex justify-content-end mt-4 pt-3 border-top">
-                        <button type="submit" class="btn btn-primary px-4 fw-bold">
+                        <button type="submit" class="btn btn-primary px-4 fw-bold w-100 w-sm-auto">
                             <i class="bi bi-save me-1"></i> Simpan Perubahan
                         </button>
                     </div>

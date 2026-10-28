@@ -11,22 +11,22 @@
     </a>
 </div>
 
-<div class="row g-4">
+<div class="row g-3 g-md-4">
     <div class="col-lg-8">
         <div class="card card-app mb-4">
-            <div class="card-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between">
+            <div class="card-header bg-white py-3 border-bottom d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2">
                 <div>
-                    <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 mb-1">
+                    <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1 mb-1 fs-xxs">
                         {{ $aduan->category_label }}
                     </span>
-                    <h5 class="fw-bold text-dark mb-0">{{ $aduan->title }}</h5>
+                    <h5 class="fw-bold text-dark mb-0 fs-6 fs-md-5">{{ $aduan->title }}</h5>
                 </div>
-                <span class="badge {{ $aduan->status_badge_class }} rounded-pill px-3 py-1.5 fw-bold">
+                <span class="badge {{ $aduan->status_badge_class }} rounded-pill px-3 py-1.5 fw-bold fs-xs flex-shrink-0">
                     {{ $aduan->status_label }}
                 </span>
             </div>
 
-            <div class="card-body p-4">
+            <div class="card-body p-3 p-md-4">
                 <div class="mb-4">
                     <label class="text-muted fs-xs fw-bold text-uppercase">Kronologi & Deskripsi Kejadian</label>
                     <div class="p-3 rounded-3 bg-light border text-dark mt-1" style="white-space: pre-line;">

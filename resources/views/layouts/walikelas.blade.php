@@ -119,11 +119,45 @@
         .sk-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,.55); z-index: 1025; backdrop-filter: blur(2px); }
         .sk-overlay.show { display: block; }
 
+        /* MOBILE BOTTOM NAV */
+        .sk-bottom-nav {
+            display: none; position: fixed; bottom: 0; left: 0; right: 0;
+            height: 60px; background: #ffffff; border-top: 1px solid var(--border-color);
+            box-shadow: 0 -2px 14px rgba(0,0,0,.07); z-index: 1040;
+            align-items: center; justify-content: space-around;
+        }
+        .sk-btab {
+            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-decoration: none; color: var(--text-muted);
+            font-size: .63rem; font-weight: 700; gap: 3px; height: 100%;
+            transition: color .2s; position: relative;
+        }
+        .sk-btab i { font-size: 1.25rem; transition: transform .2s, color .2s; }
+        .sk-btab.active { color: var(--gold-dark); }
+        .sk-btab.active i { transform: translateY(-2px); color: var(--gold); }
+        .sk-btab.active::after {
+            content: ''; position: absolute; top: 4px; width: 20px; height: 3px;
+            background: var(--gold); border-radius: 3px;
+        }
+
+        /* UTILITY HELPERS */
+        .fs-xs { font-size: .75rem !important; }
+        .fs-xxs { font-size: .68rem !important; }
+        .fw-extrabold { font-weight: 800 !important; }
+        .bg-teal-subtle { background-color: #ccfbf1 !important; }
+        .text-mint { color: #0f766e !important; }
+        .shadow-xs { box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important; }
+
         @media (max-width: 991.98px) {
             .sk-sidebar { transform: translateX(-100%); }
             .sk-sidebar.open { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,.15); }
-            .sk-main { margin-left: 0 !important; padding: 14px 12px 60px !important; }
+            .sk-main { margin-left: 0 !important; padding: 12px 12px 84px !important; }
+            .sk-bottom-nav { display: flex; }
             .sk-period-badge, .sk-user-text { display: none !important; }
+            .sk-breadbar { padding: 8px 12px; margin-bottom: 12px; font-size: .78rem; }
+            .sk-breadbar .fs-6 { font-size: .88rem !important; }
+            .sk-brand-name { font-size: .88rem; max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .sk-brand-sub { font-size: .63rem; max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         }
         @media (min-width: 992px) { .sk-burger { display: none !important; } }
     </style>
@@ -210,6 +244,10 @@
                 <i class="bi bi-grid-1x2-fill"></i>
                 <span>Beranda & Siswa</span>
             </a>
+            <a href="{{ route('walikelas.monitoring.index') }}" class="sk-nav-item {{ request()->routeIs('walikelas.monitoring.*') ? 'active' : '' }}">
+                <i class="bi bi-chat-heart-fill"></i>
+                <span>Monitoring Konseling</span>
+            </a>
 
             <div class="sk-nav-heading">LAYANAN & ADUAN</div>
             <a href="{{ route('walikelas.aduan.index') }}" class="sk-nav-item {{ request()->routeIs('walikelas.aduan.*') ? 'active' : '' }}">
@@ -218,6 +256,10 @@
             </a>
 
             <div class="sk-nav-heading">AKUN & SISTEM</div>
+            <a href="{{ route('walikelas.profile.index') }}" class="sk-nav-item {{ request()->routeIs('walikelas.profile.*') ? 'active' : '' }}">
+                <i class="bi bi-person-gear"></i>
+                <span>Profil Saya</span>
+            </a>
             <form action="{{ route('logout') }}" method="POST" class="px-1 mt-2">
                 @csrf
                 <button type="submit" class="btn btn-outline-danger w-100 btn-sm rounded-pill py-2 fw-bold d-flex align-items-center justify-content-center gap-1.5">
@@ -248,6 +290,26 @@
 
         @yield('content')
     </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="sk-bottom-nav d-lg-none">
+        <a href="{{ route('walikelas.dashboard') }}" class="sk-btab {{ request()->routeIs('walikelas.dashboard*') ? 'active' : '' }}">
+            <i class="bi bi-grid-1x2{{ request()->routeIs('walikelas.dashboard*') ? '-fill' : '' }}"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="{{ route('walikelas.monitoring.index') }}" class="sk-btab {{ request()->routeIs('walikelas.monitoring.*') ? 'active' : '' }}">
+            <i class="bi bi-chat-heart{{ request()->routeIs('walikelas.monitoring.*') ? '-fill' : '' }}"></i>
+            <span>Monitoring</span>
+        </a>
+        <a href="{{ route('walikelas.aduan.index') }}" class="sk-btab {{ request()->routeIs('walikelas.aduan.*') ? 'active' : '' }}">
+            <i class="bi bi-exclamation-octagon{{ request()->routeIs('walikelas.aduan.*') ? '-fill' : '' }}"></i>
+            <span>Aduan BK</span>
+        </a>
+        <a href="{{ route('walikelas.profile.index') }}" class="sk-btab {{ request()->routeIs('walikelas.profile.*') ? 'active' : '' }}">
+            <i class="bi bi-person{{ request()->routeIs('walikelas.profile.*') ? '-fill' : '' }}"></i>
+            <span>Profil</span>
+        </a>
+    </nav>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>

@@ -91,6 +91,49 @@ class User extends Authenticatable
         return $this->hasOne(Teacher::class, 'user_id');
     }
 
+    public function getTeacherAttribute()
+    {
+        if ($this->relationLoaded('teacher')) {
+            $existing = $this->getRelationValue('teacher');
+            if ($existing) {
+                return $existing;
+            }
+        }
+
+        $relation = $this->teacher()->first();
+        if ($relation) {
+            $this->setRelation('teacher', $relation);
+            return $relation;
+        }
+
+        // Fallback: cari berdasarkan email atau nama jika user_id belum terhubung
+        $fallback = Teacher::where('email', $this->email)
+            ->orWhere('name', $this->name)
+            ->first();
+
+        if ($fallback) {
+            if ($fallback->user_id !== $this->id) {
+                $fallback->user_id = $this->id;
+                $fallback->saveQuietly();
+            }
+            $this->setRelation('teacher', $fallback);
+            return $fallback;
+        }
+
+        if ($this->role === 'wali_kelas') {
+            $newTeacher = Teacher::create([
+                'user_id' => $this->id,
+                'name' => $this->name,
+                'email' => $this->email,
+                'status' => 'aktif',
+            ]);
+            $this->setRelation('teacher', $newTeacher);
+            return $newTeacher;
+        }
+
+        return null;
+    }
+
     public function isAdmin(): bool
     {
         return $this->role === 'admin';

@@ -95,6 +95,9 @@ class ClassroomController extends Controller
             return back()->with('error', 'Rombel tidak dapat dihapus karena masih memiliki anggota murid.');
         }
 
+        // Hapus penugasan wali kelas yang melekat pada rombel ini
+        \App\Models\HomeroomAssignment::where('classroom_id', $rombel->id)->delete();
+
         $rombel->delete();
 
         return redirect()->route('panel.rombel.index')

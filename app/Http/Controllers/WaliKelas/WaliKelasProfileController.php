@@ -19,8 +19,11 @@ class WaliKelasProfileController extends Controller
         $user = Auth::user();
         $teacher = $user->teacher;
         $classroom = $teacher?->currentAssignment?->classroom;
+        $activeYear = active_academic_year();
+        $activeSem = active_semester();
+        $studentsCount = $classroom ? $classroom->students()->count() : 0;
 
-        return view('walikelas.profile.index', compact('user', 'teacher', 'classroom'));
+        return view('walikelas.profile.index', compact('user', 'teacher', 'classroom', 'activeYear', 'activeSem', 'studentsCount'));
     }
 
     /**
