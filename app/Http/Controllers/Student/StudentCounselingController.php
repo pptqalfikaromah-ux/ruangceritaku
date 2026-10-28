@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\Counselor;
 use App\Models\CounselingRequest;
 use App\Models\CounselingRequestHistory;
 use App\Models\GuidanceField;
+use App\Models\ImsStatement;
 use App\Models\ServiceType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,12 +44,33 @@ class StudentCounselingController extends Controller
     }
 
     /**
-     * Pengajuan konseling diarahkan melalui Instrumen Masalah Siswa (IMS)
+     * Hub Pemilihan Jalur Konseling: Konseling Pribadi vs Konseling Melalui IMS
      */
-    public function create(Request $request): RedirectResponse
+    public function ajukan(): View
     {
-        return redirect()->route('murid.ims.index')
-            ->with('info', 'Pengajuan konseling dilakukan melalui Instrumen Masalah Siswa (IMS). Silakan pilih kategori layanan dan butir masalah yang sedang Anda hadapi.');
+        $student = Auth::user()->student;
+        abort_unless($student, 403);
+
+        return view('student.konseling.ajukan', compact('student'));
+    }
+
+    /**
+     * Formulir Pengajuan Konseling Pribadi (Mandiri)
+     */
+    public function create(Request $request): View
+    {
+        $student = Auth::user()->student;
+        abort_unless($student, 403);
+
+        $guidanceFields = GuidanceField::all();
+        $serviceTypes = ServiceType::layanan()->get();
+        $counselors = Counselor::with('user')->get();
+        $allImsStatements = ImsStatement::with(['guidanceField', 'serviceType'])
+            ->where('is_active', true)
+            ->orderBy('statement_number')
+            ->get();
+
+        return view('student.konseling.create', compact('student', 'guidanceFields', 'serviceTypes', 'counselors', 'allImsStatements'));
     }
 
     /**
@@ -67,7 +90,10 @@ class StudentCounselingController extends Controller
             'description' => ['required', 'string', 'max:2000'],
             'preferred_schedule' => ['nullable', 'string', 'max:255'],
             'additional_notes' => ['nullable', 'string', 'max:1000'],
+            'counselor_id' => ['nullable', 'exists:counselors,id'],
             'assigned_counselor_id' => ['nullable', 'exists:counselors,id'],
+            'attached_statements' => ['nullable', 'array'],
+            'attached_statements.*' => ['integer', 'exists:ims_statements,id'],
         ]);
 
         // Pencegahan pengajuan ganda untuk topik yang masih berstatus pending / needs_information
@@ -86,7 +112,10 @@ class StudentCounselingController extends Controller
         $randomSeq = strtoupper(substr(bin2hex(random_bytes(2)), 0, 4));
         $ticketNumber = "AGD-{$dateStr}-{$randomSeq}";
 
-        DB::transaction(function () use ($request, $student, $ticketNumber) {
+        $counselorId = $request->input('counselor_id') ?? $request->input('assigned_counselor_id');
+        $attachedStatements = $request->input('attached_statements', []);
+
+        DB::transaction(function () use ($request, $student, $ticketNumber, $counselorId, $attachedStatements) {
             $counseling = CounselingRequest::create([
                 'ticket_number' => $ticketNumber,
                 'source' => 'pribadi',
@@ -98,9 +127,10 @@ class StudentCounselingController extends Controller
                 'service_type_id' => $request->input('service_type_id'),
                 'is_service_unknown' => $request->boolean('is_service_unknown'),
                 'description' => $request->input('description'),
+                'attached_ims_statements' => !empty($attachedStatements) ? array_map('intval', $attachedStatements) : null,
                 'additional_notes' => $request->input('additional_notes'),
                 'preferred_schedule' => $request->input('preferred_schedule'),
-                'assigned_counselor_id' => $request->input('assigned_counselor_id'),
+                'assigned_counselor_id' => $counselorId,
                 'status' => 'pending',
             ]);
 

@@ -230,7 +230,10 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
     Route::get('/', [StudentDashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard.index');
 
-    // 1. Instrumen Masalah Siswa (IMS) - Alur Berjenjang (Intent)
+    // 1. Hub Utama Pengajuan Konseling (Pilihan: Konseling Pribadi vs Konseling Melalui IMS)
+    Route::get('/ajukan-konseling', [StudentCounselingController::class, 'ajukan'])->name('konseling.ajukan');
+
+    // 1b. Instrumen Masalah Siswa (IMS) - Alur Berjenjang (Intent)
     Route::get('/ims', [StudentImsController::class, 'index'])->name('ims.index'); // Halaman 1: Pilih Layanan
     Route::get('/ims/layanan/{service}', [StudentImsController::class, 'selectField'])->name('ims.service'); // Halaman 2: Pilih Bidang
     Route::get('/ims/layanan/{service}/bidang/{field}', [StudentImsController::class, 'showInstrument'])->name('ims.instrument'); // Halaman 3: Instrumen 5 Butir + Catatan Lebar
@@ -240,9 +243,10 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
     Route::post('/ims/draft', [StudentImsController::class, 'saveDraft'])->name('ims.saveDraft');
     Route::post('/ims/submit', [StudentImsController::class, 'submit'])->name('ims.submit');
 
-    // 2. Pengajuan Konseling Mandiri
+    // 2. Pengajuan Konseling Mandiri / Pribadi
     Route::get('/konseling', [StudentCounselingController::class, 'index'])->name('konseling.index');
     Route::get('/konseling/tambah', [StudentCounselingController::class, 'create'])->name('konseling.create');
+    Route::get('/konseling/pribadi', [StudentCounselingController::class, 'create'])->name('konseling.pribadi');
     Route::post('/konseling', [StudentCounselingController::class, 'store'])->name('konseling.store');
     Route::get('/konseling/{konseling}', [StudentCounselingController::class, 'show'])->name('konseling.show');
     Route::get('/konseling/{konseling}/cetak-kartu', [StudentCounselingController::class, 'printCard'])->name('konseling.printCard');

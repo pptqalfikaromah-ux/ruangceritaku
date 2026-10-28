@@ -4,9 +4,9 @@
 @section('page_title', 'Ajukan Konseling Pribadi')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('murid.dashboard') }}" class="text-decoration-none" style="color: var(--emis-teal);">Murid</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('murid.konseling.index') }}" class="text-decoration-none" style="color: var(--emis-teal);">Konseling</a></li>
-    <li class="breadcrumb-item active">Pengajuan Baru</li>
+    <a href="{{ route('murid.konseling.ajukan') }}">Ajukan Konseling</a>
+    <i class="bi bi-chevron-right" style="font-size:.65rem;"></i>
+    <span class="active">Konseling Pribadi</span>
 @endsection
 
 @section('content')
@@ -134,6 +134,46 @@
                             @error('description')
                                 <div class="invalid-feedback small">{{ $message }}</div>
                             @enderror
+                        </div>
+
+                        <!-- Opsi Tambahan: Cantumkan Butir IMS (Opsional) -->
+                        <div class="mb-4">
+                            <div class="accordion border rounded-3 overflow-hidden shadow-xs" id="accordionImsOptional">
+                                <div class="accordion-item border-0">
+                                    <h2 class="accordion-header" id="headingIms">
+                                        <button class="accordion-button collapsed py-2.5 px-3 bg-light fw-bold fs-xs text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIms" aria-expanded="false" aria-controls="collapseIms">
+                                            <i class="bi bi-clipboard2-check text-mint me-2 fs-6"></i>
+                                            <span>Ingin Mencantumkan Butir Masalah dari IMS? <span class="badge bg-secondary-subtle text-muted ms-1">Opsional</span></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseIms" class="accordion-collapse collapse" aria-labelledby="headingIms" data-bs-parent="#accordionImsOptional">
+                                        <div class="accordion-body p-3 bg-white border-top">
+                                            <p class="fs-xs text-muted mb-2.5">
+                                                <i class="bi bi-info-circle me-1 text-mint"></i>
+                                                Jika ada pernyataan di bawah ini yang sesuai dengan apa yang kamu rasakan, kamu boleh mencentangnya sebagai referensi pendukung bagi Guru BK:
+                                            </p>
+                                            <div class="row g-2" style="max-height: 260px; overflow-y: auto;">
+                                                @forelse($allImsStatements ?? [] as $stmt)
+                                                    <div class="col-12">
+                                                        <label class="d-flex align-items-start gap-2 p-2 rounded-2 border border-light-subtle bg-light small mb-0 cursor-pointer hover-bg-teal" style="transition: background 0.15s;">
+                                                            <input type="checkbox" name="attached_statements[]" value="{{ $stmt->id }}" class="form-check-input mt-1 flex-shrink-0" {{ in_array($stmt->id, old('attached_statements', [])) ? 'checked' : '' }}>
+                                                            <div>
+                                                                <span class="badge bg-secondary-subtle text-dark fs-xxs">#Butir {{ $stmt->statement_number }}</span>
+                                                                <span class="badge bg-teal-subtle text-teal fs-xxs">{{ $stmt->guidanceField?->name ?? 'Umum' }}</span>
+                                                                <div class="fs-xs text-dark mt-0.5">{{ $stmt->statement_text }}</div>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                @empty
+                                                    <div class="col-12 text-center text-muted fs-xs py-2">
+                                                        Tidak ada data butir IMS aktif.
+                                                    </div>
+                                                @endforelse
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Preferensi Waktu & Catatan Tambahan -->

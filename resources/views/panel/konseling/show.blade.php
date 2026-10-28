@@ -148,6 +148,31 @@
                         </div>
                     </div>
 
+                    <!-- Butir IMS yang Dicantumkan Siswa (Jika Ada pada Konseling Pribadi) -->
+                    @php
+                        $attachedStatements = $konseling->getAttachedStatementsList();
+                    @endphp
+                    @if($attachedStatements->isNotEmpty())
+                        <div>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="fw-bold text-dark fs-xs d-flex align-items-center gap-1.5 text-uppercase tracking-wide">
+                                    <i class="bi bi-clipboard2-check-fill text-mint"></i>
+                                    Butir Masalah IMS yang Dicantumkan Siswa:
+                                </span>
+                                <span class="badge bg-teal-subtle text-mint fs-xs fw-bold">{{ $attachedStatements->count() }} Butir Terlampir</span>
+                            </div>
+                            <div class="list-group list-group-flush border rounded-3 overflow-hidden" style="max-height: 220px; overflow-y: auto;">
+                                @foreach($attachedStatements as $stmt)
+                                    <div class="list-group-item p-2.5 d-flex align-items-start gap-2 bg-light-subtle">
+                                        <span class="badge bg-secondary-subtle text-dark fs-xxs">#{{ $stmt->statement_number }}</span>
+                                        <span class="badge bg-teal-subtle text-teal fs-xxs">{{ $stmt->guidanceField?->name ?? 'Umum' }}</span>
+                                        <span class="fs-xs text-dark">{{ $stmt->statement_text }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
                     <!-- Catatan Tambahan Siswa (Jika Ada) -->
                     @if($konseling->additional_notes)
                         <div>

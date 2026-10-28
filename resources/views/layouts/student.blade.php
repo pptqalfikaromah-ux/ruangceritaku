@@ -123,6 +123,42 @@
             border-left: 3px solid var(--primary); padding-left: 9px;
         }
         .sk-nav-item.active i { color: var(--primary); }
+        .sk-nav-item.parent-active { color: var(--primary-dark); font-weight: 700; }
+        .sk-nav-item.parent-active i { color: var(--primary); }
+        .sk-chevron { transition: transform .2s ease; font-size: .75rem !important; }
+        .sk-nav-item[aria-expanded="true"] .sk-chevron { transform: rotate(180deg); }
+        .sk-submenu-wrapper {
+            margin-left: 18px;
+            padding-left: 10px;
+            border-left: 2px dashed #cbd5e1;
+            margin-top: 2px;
+            margin-bottom: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .sk-subnav-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 10px;
+            border-radius: 6px;
+            font-size: .8rem;
+            font-weight: 600;
+            color: var(--text-mid);
+            text-decoration: none;
+            transition: all .15s ease;
+            white-space: nowrap;
+        }
+        .sk-subnav-item i { font-size: .95rem; color: var(--text-muted); transition: color .15s ease; }
+        .sk-subnav-item:hover { background: var(--primary-bg); color: var(--primary-dark); }
+        .sk-subnav-item:hover i { color: var(--primary); }
+        .sk-subnav-item.active {
+            background: linear-gradient(90deg, var(--primary-bg) 0%, #e0f7f4 100%);
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+        .sk-subnav-item.active i { color: var(--primary); }
         .sk-sidebar-footer { margin-top: auto; padding: 12px 8px; border-top: 1px solid var(--border-color); flex-shrink: 0; }
         /* LAYOUT */
         .sk-layout { display: flex; min-height: 100vh; padding-top: var(--topbar-h); }
@@ -239,7 +275,8 @@
                         <div class="text-muted" style="font-size:.72rem;">NISN: {{ $currentStudent?->nisn ?? $currentUser?->username }}</div>
                     </li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.dashboard') }}" style="font-size:.83rem;"><i class="bi bi-house-door me-2 text-primary"></i>Beranda</a></li>
-                    <li><a class="dropdown-item py-2" href="{{ route('murid.ims.index') }}" style="font-size:.83rem;"><i class="bi bi-clipboard2-check me-2 text-success"></i>Instrumen Masalah (IMS)</a></li>
+                    <li><a class="dropdown-item py-2" href="{{ route('murid.konseling.pribadi') }}" style="font-size:.83rem;"><i class="bi bi-person-heart me-2 text-primary"></i>Konseling Pribadi</a></li>
+                    <li><a class="dropdown-item py-2" href="{{ route('murid.ims.index') }}" style="font-size:.83rem;"><i class="bi bi-clipboard2-check me-2" style="color:#7c3aed;"></i>Instrumen Masalah (IMS)</a></li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.konseling.index') }}" style="font-size:.83rem;"><i class="bi bi-chat-heart me-2" style="color:#e11d48;"></i>Riwayat Konseling</a></li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.pengaduan.index') }}" style="font-size:.83rem;"><i class="bi bi-shield-check me-2 text-warning"></i>Pengaduan Aman</a></li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.pamflet.index') }}" style="font-size:.83rem;"><i class="bi bi-images me-2 text-info"></i>Pamflet Kreativitas</a></li>
@@ -275,10 +312,46 @@
                     <i class="bi bi-house-door"></i><span>Beranda</span>
                 </a>
                 <div class="sk-nav-heading mt-2">Layanan BK</div>
-                <a href="{{ route('murid.ims.index') }}" class="sk-nav-item {{ request()->routeIs('murid.ims.*') ? 'active' : '' }}">
-                    <i class="bi bi-clipboard2-check"></i><span>Instrumen Masalah (IMS)</span>
-                </a>
-                <a href="{{ route('murid.konseling.index') }}" class="sk-nav-item {{ request()->routeIs('murid.konseling.*') ? 'active' : '' }}">
+
+                @php
+                    $isAjukanActive = request()->routeIs('murid.konseling.ajukan*') || 
+                                     request()->routeIs('murid.konseling.create*') || 
+                                     request()->routeIs('murid.konseling.pribadi*') || 
+                                     request()->routeIs('murid.ims.*');
+                    $isPribadiActive = request()->routeIs('murid.konseling.create*') || request()->routeIs('murid.konseling.pribadi*');
+                    $isImsActive = request()->routeIs('murid.ims.*');
+                @endphp
+
+                <!-- Menu Ajukan Konseling dengan Submenu -->
+                <div class="sk-nav-group mb-1">
+                    <button type="button" 
+                            class="sk-nav-item w-100 border-0 bg-transparent text-start d-flex align-items-center justify-content-between {{ $isAjukanActive ? 'parent-active' : '' }}" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target="#submenuAjukanKonseling" 
+                            aria-expanded="{{ $isAjukanActive ? 'true' : 'false' }}" 
+                            aria-controls="submenuAjukanKonseling"
+                            style="cursor: pointer;">
+                        <span class="d-flex align-items-center gap-2">
+                            <i class="bi bi-send-check"></i>
+                            <span>Ajukan Konseling</span>
+                        </span>
+                        <i class="bi bi-chevron-down sk-chevron"></i>
+                    </button>
+                    <div class="collapse {{ $isAjukanActive ? 'show' : '' }}" id="submenuAjukanKonseling">
+                        <div class="sk-submenu-wrapper">
+                            <a href="{{ route('murid.konseling.pribadi') }}" class="sk-subnav-item {{ $isPribadiActive ? 'active' : '' }}">
+                                <i class="bi bi-person-heart"></i>
+                                <span>Konseling Pribadi</span>
+                            </a>
+                            <a href="{{ route('murid.ims.index') }}" class="sk-subnav-item {{ $isImsActive ? 'active' : '' }}">
+                                <i class="bi bi-clipboard2-check"></i>
+                                <span>Instrumen Masalah (IMS)</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="{{ route('murid.konseling.index') }}" class="sk-nav-item {{ request()->routeIs('murid.konseling.index*') || request()->routeIs('murid.konseling.show*') ? 'active' : '' }}">
                     <i class="bi bi-chat-heart"></i><span>Riwayat Konseling</span>
                 </a>
                 <a href="{{ route('murid.pengaduan.index') }}" class="sk-nav-item {{ request()->routeIs('murid.pengaduan.*') ? 'active' : '' }}">
@@ -331,13 +404,13 @@
             <i class="bi bi-house-door{{ request()->routeIs('murid.dashboard*') ? '-fill' : '' }}"></i>
             <span>Beranda</span>
         </a>
-        <a href="{{ route('murid.ims.index') }}" class="sk-btab {{ request()->routeIs('murid.ims.*') ? 'active' : '' }}">
-            <i class="bi bi-clipboard2{{ request()->routeIs('murid.ims.*') ? '-check-fill' : '-check' }}"></i>
-            <span>IMS</span>
+        <a href="{{ route('murid.konseling.ajukan') }}" class="sk-btab {{ request()->routeIs('murid.konseling.ajukan*') || request()->routeIs('murid.konseling.create*') || request()->routeIs('murid.ims.*') ? 'active' : '' }}">
+            <i class="bi bi-send-check{{ request()->routeIs('murid.konseling.ajukan*') ? '-fill' : '' }}"></i>
+            <span>Ajukan</span>
         </a>
-        <a href="{{ route('murid.konseling.index') }}" class="sk-btab {{ request()->routeIs('murid.konseling.*') ? 'active' : '' }}">
-            <i class="bi bi-chat-heart{{ request()->routeIs('murid.konseling.*') ? '-fill' : '' }}"></i>
-            <span>Konseling</span>
+        <a href="{{ route('murid.konseling.index') }}" class="sk-btab {{ request()->routeIs('murid.konseling.index*') || request()->routeIs('murid.konseling.show*') ? 'active' : '' }}">
+            <i class="bi bi-chat-heart{{ request()->routeIs('murid.konseling.index*') ? '-fill' : '' }}"></i>
+            <span>Riwayat</span>
         </a>
         <a href="{{ route('murid.pengaduan.index') }}" class="sk-btab {{ request()->routeIs('murid.pengaduan.*') ? 'active' : '' }}">
             <i class="bi bi-shield{{ request()->routeIs('murid.pengaduan.*') ? '-fill' : '-check' }}"></i>

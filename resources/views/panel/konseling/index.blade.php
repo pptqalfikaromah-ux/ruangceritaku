@@ -159,8 +159,13 @@
                                         </span>
                                     @else
                                         <span class="badge bg-primary-subtle text-primary border-primary px-2 py-0 fs-xxs fw-semibold">
-                                            <i class="bi bi-person me-0.5"></i>Mandiri
+                                            <i class="bi bi-person me-0.5"></i>Pribadi
                                         </span>
+                                        @if(!empty($item->attached_ims_statements))
+                                            <span class="badge bg-warning-subtle text-warning-emphasis border px-1.5 py-0 fs-xxs fw-semibold" title="{{ count($item->attached_ims_statements) }} Butir IMS Dilampirkan">
+                                                <i class="bi bi-paperclip"></i> {{ count($item->attached_ims_statements) }} IMS
+                                            </span>
+                                        @endif
                                     @endif
 
                                     <span class="badge bg-light text-muted border px-2 py-0 fs-xxs">

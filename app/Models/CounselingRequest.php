@@ -24,6 +24,7 @@ class CounselingRequest extends Model
         'service_type_id',
         'is_service_unknown',
         'description',
+        'attached_ims_statements',
         'additional_notes',
         'preferred_schedule',
         'status',
@@ -36,9 +37,22 @@ class CounselingRequest extends Model
 
     protected $casts = [
         'is_service_unknown' => 'boolean',
+        'attached_ims_statements' => 'array',
         'completed_at' => 'datetime',
         'read_at' => 'datetime',
     ];
+
+    /**
+     * Mengambil daftar butir IMS yang opsional dicantumkan murid saat konseling pribadi
+     */
+    public function getAttachedStatementsList()
+    {
+        $ids = $this->attached_ims_statements;
+        if (empty($ids) || !is_array($ids)) {
+            return collect();
+        }
+        return ImsStatement::with(['guidanceField', 'serviceType'])->whereIn('id', $ids)->orderBy('statement_number')->get();
+    }
 
     public function student(): BelongsTo
     {

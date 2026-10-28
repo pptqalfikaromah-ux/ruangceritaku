@@ -7,97 +7,109 @@
 @endsection
 
 @section('content')
-{{-- Profile Banner (Identik dengan Portal Murid) --}}
-<div style="background:linear-gradient(135deg,#0d9488 0%,#0f766e 100%);border-radius:10px;padding:20px 24px;margin-bottom:20px;color:#fff;position:relative;overflow:hidden;">
+{{-- Profile Banner (Android App Style) --}}
+<div class="rounded-4 text-white position-relative overflow-hidden mb-3 mb-md-4 shadow-sm"
+     style="background:linear-gradient(135deg,#0d9488 0%,#0f766e 100%);padding:clamp(16px, 3.5vw, 24px);box-shadow:0 4px 16px rgba(13,148,136,.2);">
     <div style="position:absolute;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%;top:-60px;right:60px;"></div>
     <div style="position:absolute;width:120px;height:120px;background:rgba(245,158,11,.12);border-radius:50%;bottom:-30px;right:20px;"></div>
-    <div class="row g-3 align-items-center position-relative">
+    <div class="row align-items-center g-3 position-relative z-1">
         <div class="col-auto">
             <img src="{{ 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=f0fdfa&color=0d9488&bold=true&size=80' }}"
                  alt="{{ auth()->user()->name }}"
-                 style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.5);box-shadow:0 4px 12px rgba(0,0,0,.15);">
+                 class="rounded-circle shadow-sm"
+                 style="width:clamp(52px, 8vw, 68px);height:clamp(52px, 8vw, 68px);object-fit:cover;border:3px solid rgba(255,255,255,.6);">
         </div>
-        <div class="col">
-            <div style="font-size:.72rem;font-weight:700;opacity:.8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">
+        <div class="col min-w-0">
+            <div style="font-size:.72rem;font-weight:700;opacity:.8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;">
                 {{ $isAdmin ? 'Portal Administrator' : 'Portal Guru Bimbingan & Konseling' }}
             </div>
-            <div style="font-size:1.35rem;font-weight:800;line-height:1.2;margin-bottom:4px;">
+            <div class="fw-extrabold text-truncate" style="font-size:clamp(1.15rem, 3.8vw, 1.45rem);line-height:1.2;margin-bottom:4px;">
                 Selamat Datang, {{ auth()->user()->name }}
             </div>
-            <div style="font-size:.82rem;opacity:.9;">
-                <i class="bi bi-building me-1"></i>{{ app_setting('school_name', 'Madrasah / Sekolah') }}
-                &nbsp;&bull;&nbsp;
-                <i class="bi bi-calendar3 me-1"></i>Tahun Ajaran {{ $activeYear?->name ?? '2025/2026' }} &bull; Semester {{ $activeSemester?->name ?? 'Ganjil' }}
+            <div class="small opacity-90 d-flex flex-wrap align-items-center gap-1.5" style="font-size:.78rem;">
+                <span class="badge bg-black bg-opacity-20 rounded-pill px-2.5 py-1">
+                    <i class="bi bi-calendar3 me-1"></i>TA: {{ $activeYear?->name ?? '2025/2026' }} (Semester {{ $activeSemester?->name ?? 'Ganjil' }})
+                </span>
             </div>
         </div>
-        <div class="col-md-auto text-md-end mt-2 mt-md-0 d-flex gap-2 flex-wrap">
-            <a href="{{ route('panel.konseling.index') }}"
-               style="display:inline-flex;align-items:center;gap:6px;background:#f59e0b;color:#1e293b;border:none;border-radius:6px;padding:9px 18px;font-weight:800;font-size:.83rem;text-decoration:none;box-shadow:0 2px 8px rgba(245,158,11,.4);transition:background .2s;">
-                <i class="bi bi-chat-heart"></i> Agenda Konseling
-            </a>
-            <a href="{{ route('panel.ims.master') }}"
-               style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:9px 18px;font-weight:700;font-size:.83rem;text-decoration:none;transition:background .2s;">
-                <i class="bi bi-clipboard2-check"></i> Data IMS
-            </a>
+        <div class="col-12 col-md-auto text-md-end mt-2 mt-md-0">
+            <div class="d-flex gap-2">
+                <a href="{{ route('panel.konseling.index') }}"
+                   class="btn btn-gold btn-sm flex-fill flex-md-grow-0 px-3 py-2 rounded-pill fw-bold d-inline-flex align-items-center justify-content-center gap-1.5 shadow-sm"
+                   style="min-height: 40px; font-size: 0.8rem;">
+                    <i class="bi bi-chat-heart"></i>
+                    <span>Agenda Konseling</span>
+                </a>
+                <a href="{{ route('panel.ims.master') }}"
+                   class="btn btn-outline-light btn-sm flex-fill flex-md-grow-0 px-3 py-2 rounded-pill fw-bold d-inline-flex align-items-center justify-content-center gap-1.5"
+                   style="min-height: 40px; background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.35); font-size: 0.8rem;">
+                    <i class="bi bi-clipboard2-check"></i>
+                    <span>Data IMS</span>
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Stats Row (Identik dengan format card di Portal Murid) -->
-<div class="row g-3 mb-4">
-    <div class="col-sm-6 col-lg-3">
-        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);">
-            <div style="width:44px;height:44px;border-radius:10px;background:#f0fdfa;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i class="bi bi-people" style="font-size:1.4rem;color:#0d9488;"></i>
+<!-- Stats Row (2 Kolom di HP) -->
+<div class="row g-2 g-md-3 mb-3 mb-md-4">
+    <div class="col-6 col-md-3">
+        <div class="h-100 rounded-4 bg-white border p-3 p-md-3.5 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2.5 gap-md-3 shadow-xs">
+            <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
+                 style="width:42px;height:42px;border-radius:10px;background:#f0fdfa;color:#0d9488;font-size:1.35rem;">
+                <i class="bi bi-people"></i>
             </div>
-            <div>
-                <div style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;">
-                    {{ $isAdmin ? 'Total Murid' : 'Murid Binaan' }}
+            <div class="flex-grow-1 overflow-hidden min-w-0">
+                <div class="text-uppercase tracking-wider fw-bold text-muted text-truncate" style="font-size:.65rem;">
+                    {{ $isAdmin ? 'TOTAL MURID' : 'MURID BINAAN' }}
                 </div>
-                <div style="font-size:1.3rem;font-weight:800;color:#0d9488;line-height:1.1;">{{ $totalStudents }}</div>
-                <div style="font-size:.7rem;color:#94a3b8;">{{ $isAdmin ? 'Seluruh madrasah' : 'Rombel aktif' }}</div>
+                <div class="fw-extrabold text-mint my-0.5" style="font-size:clamp(1.2rem, 3.5vw, 1.45rem);line-height:1.1;">{{ $totalStudents }}</div>
+                <div class="text-muted text-truncate" style="font-size:.68rem;">{{ $isAdmin ? 'Seluruh madrasah' : 'Rombel aktif' }}</div>
             </div>
         </div>
     </div>
-    <div class="col-sm-6 col-lg-3">
-        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);">
-            <div style="width:44px;height:44px;border-radius:10px;background:#fef3c7;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i class="bi bi-door-open" style="font-size:1.4rem;color:#d97706;"></i>
+    <div class="col-6 col-md-3">
+        <div class="h-100 rounded-4 bg-white border p-3 p-md-3.5 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2.5 gap-md-3 shadow-xs">
+            <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
+                 style="width:42px;height:42px;border-radius:10px;background:#fef3c7;color:#d97706;font-size:1.35rem;">
+                <i class="bi bi-door-open"></i>
             </div>
-            <div>
-                <div style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;">
-                    {{ $isAdmin ? 'Total Rombel' : 'Rombel Binaan' }}
+            <div class="flex-grow-1 overflow-hidden min-w-0">
+                <div class="text-uppercase tracking-wider fw-bold text-muted text-truncate" style="font-size:.65rem;">
+                    {{ $isAdmin ? 'TOTAL ROMBEL' : 'ROMBEL BINAAN' }}
                 </div>
-                <div style="font-size:1.3rem;font-weight:800;color:#d97706;line-height:1.1;">{{ $totalClassrooms }}</div>
-                <div style="font-size:.7rem;color:#94a3b8;">Kelas terdaftar</div>
+                <div class="fw-extrabold my-0.5" style="color:#d97706;font-size:clamp(1.2rem, 3.5vw, 1.45rem);line-height:1.1;">{{ $totalClassrooms }}</div>
+                <div class="text-muted text-truncate" style="font-size:.68rem;">Kelas terdaftar</div>
             </div>
         </div>
     </div>
-    <div class="col-sm-6 col-lg-3">
-        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);">
-            <div style="width:44px;height:44px;border-radius:10px;background:#f0fdf4;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i class="bi bi-person-badge" style="font-size:1.4rem;color:#16a34a;"></i>
+    <div class="col-6 col-md-3">
+        <div class="h-100 rounded-4 bg-white border p-3 p-md-3.5 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2.5 gap-md-3 shadow-xs">
+            <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
+                 style="width:42px;height:42px;border-radius:10px;background:#f0fdf4;color:#16a34a;font-size:1.35rem;">
+                <i class="bi bi-person-badge"></i>
             </div>
-            <div>
-                <div style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;">
-                    Guru BK
+            <div class="flex-grow-1 overflow-hidden min-w-0">
+                <div class="text-uppercase tracking-wider fw-bold text-muted text-truncate" style="font-size:.65rem;">
+                    GURU BK
                 </div>
-                <div style="font-size:1.3rem;font-weight:800;color:#16a34a;line-height:1.1;">{{ $totalCounselors }}</div>
-                <div style="font-size:.7rem;color:#94a3b8;">Konselor aktif</div>
+                <div class="fw-extrabold my-0.5" style="color:#16a34a;font-size:clamp(1.2rem, 3.5vw, 1.45rem);line-height:1.1;">{{ $totalCounselors }}</div>
+                <div class="text-muted text-truncate" style="font-size:.68rem;">Konselor aktif</div>
             </div>
         </div>
     </div>
-    <div class="col-sm-6 col-lg-3">
-        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);">
-            <div style="width:44px;height:44px;border-radius:10px;background:#eff6ff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i class="bi bi-calendar-check" style="font-size:1.4rem;color:#2563eb;"></i>
+    <div class="col-6 col-md-3">
+        <div class="h-100 rounded-4 bg-white border p-3 p-md-3.5 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2.5 gap-md-3 shadow-xs">
+            <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
+                 style="width:42px;height:42px;border-radius:10px;background:#eff6ff;color:#2563eb;font-size:1.35rem;">
+                <i class="bi bi-calendar-check"></i>
             </div>
-            <div>
-                <div style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;">
-                    Semester Aktif
+            <div class="flex-grow-1 overflow-hidden min-w-0">
+                <div class="text-uppercase tracking-wider fw-bold text-muted text-truncate" style="font-size:.65rem;">
+                    SEMESTER AKTIF
                 </div>
-                <div style="font-size:1.1rem;font-weight:800;color:#2563eb;line-height:1.2;">{{ $activeSemester ? $activeSemester->name : 'Nonaktif' }}</div>
-                <div style="font-size:.7rem;color:#94a3b8;">TA {{ $activeYear?->name ?? '-' }}</div>
+                <div class="fw-extrabold my-0.5" style="color:#2563eb;font-size:clamp(1.1rem, 3.5vw, 1.35rem);line-height:1.1;">{{ $activeSemester ? $activeSemester->name : 'Nonaktif' }}</div>
+                <div class="text-muted text-truncate" style="font-size:.68rem;">TA {{ $activeYear?->name ?? '-' }}</div>
             </div>
         </div>
     </div>

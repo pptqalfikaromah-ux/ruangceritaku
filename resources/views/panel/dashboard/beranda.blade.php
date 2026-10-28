@@ -12,8 +12,9 @@
     $schoolName = app_setting('school_name', 'Madrasah / Sekolah');
 @endphp
 
-{{-- 1. WELCOME PROFILE BANNER (Identik dengan Ruang Ceritaku & Portal Murid) --}}
-<div style="background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); border-radius: 12px; padding: 22px 26px; margin-bottom: 22px; color: #ffffff; position: relative; overflow: hidden; box-shadow: 0 4px 14px rgba(13, 148, 136, 0.18);">
+{{-- 1. WELCOME PROFILE BANNER (Android App Style) --}}
+<div class="rounded-4 text-white position-relative overflow-hidden mb-3 mb-md-4 shadow-sm"
+     style="background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); padding: clamp(16px, 3.5vw, 24px); box-shadow: 0 4px 16px rgba(13, 148, 136, 0.2);">
     <!-- Decorative background ambient circles -->
     <div style="position: absolute; width: 220px; height: 220px; background: rgba(255, 255, 255, 0.07); border-radius: 50%; top: -70px; right: 80px; pointer-events: none;"></div>
     <div style="position: absolute; width: 140px; height: 140px; background: rgba(245, 158, 11, 0.14); border-radius: 50%; bottom: -40px; right: 20px; pointer-events: none;"></div>
@@ -23,44 +24,47 @@
         <div class="col-auto">
             <img src="{{ 'https://ui-avatars.com/api/?name=' . urlencode($counselorName) . '&background=f0fdfa&color=0d9488&bold=true&size=80' }}"
                  alt="{{ $counselorName }}"
-                 style="width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255, 255, 255, 0.6); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+                 class="rounded-circle shadow-sm"
+                 style="width: clamp(52px, 8vw, 68px); height: clamp(52px, 8vw, 68px); object-fit: cover; border: 3px solid rgba(255, 255, 255, 0.7);">
         </div>
 
-        <div class="col">
-            <div class="d-flex align-items-center gap-2 mb-1">
-                <span class="badge rounded-pill fw-bold" style="background: rgba(255, 255, 255, 0.22); color: #ffffff; font-size: 0.74rem; letter-spacing: 0.04em;">
-                    <i class="bi bi-shield-check me-1"></i>Dashboard {{ $isAdmin ? 'Administrator' : 'Guru BK' }}
+        <div class="col min-w-0">
+            <div class="d-flex align-items-center gap-1.5 mb-1 flex-wrap">
+                <span class="badge rounded-pill fw-bold" style="background: rgba(255, 255, 255, 0.22); color: #ffffff; font-size: 0.72rem; letter-spacing: 0.03em;">
+                    <i class="bi bi-shield-check me-1"></i>{{ $isAdmin ? 'Administrator' : 'Guru BK' }}
                 </span>
-                <span class="d-none d-sm-inline" style="color: rgba(255, 255, 255, 0.6); font-size: 0.8rem;">&bull;</span>
-                <span class="small d-none d-sm-inline opacity-90" style="font-size: 0.78rem;">
-                    {{ $schoolName }}
+                <span class="text-white opacity-75 small text-truncate d-none d-sm-inline" style="font-size: 0.76rem;">
+                    &bull; {{ $schoolName }}
                 </span>
             </div>
 
-            <h3 class="fw-extrabold mb-1" style="font-size: 1.45rem; line-height: 1.2;">
+            <h3 class="fw-extrabold mb-1 text-truncate" style="font-size: clamp(1.15rem, 3.8vw, 1.45rem); line-height: 1.25;">
                 Selamat Datang, {{ $counselorName }}
             </h3>
 
-            <div class="small opacity-90 d-flex flex-wrap align-items-center gap-2" style="font-size: 0.82rem;">
-                <span><i class="bi bi-calendar3 me-1"></i>Tahun Ajaran: <strong>{{ $activeYear?->name ?? '2025/2026' }}</strong> (Semester {{ $activeSemester?->name ?? 'Ganjil' }})</span>
-                <span>&bull;</span>
-                <span class="d-none d-md-inline" style="font-style: italic; opacity: 0.9;">"Ruang aman, nyaman & rahasia untuk mendampingi potensi terbaik siswa."</span>
+            <div class="small opacity-90 d-flex flex-wrap align-items-center gap-1.5" style="font-size: 0.78rem;">
+                <span class="badge bg-black bg-opacity-20 rounded-pill px-2.5 py-1">
+                    <i class="bi bi-calendar3 me-1"></i>TA: {{ $activeYear?->name ?? '2025/2026' }} (Semester {{ $activeSemester?->name ?? 'Ganjil' }})
+                </span>
             </div>
         </div>
 
-        <!-- Quick Top Actions -->
-        <div class="col-md-auto text-md-end mt-2 mt-md-0 d-flex gap-2 flex-wrap">
-            <a href="{{ route('panel.konseling.index') }}"
-               class="btn btn-gold btn-sm px-3.5 py-2 rounded-pill fw-bold d-inline-flex align-items-center gap-1.5 shadow-sm">
-                <i class="bi bi-chat-heart"></i>
-                <span>Agenda Konseling</span>
-            </a>
-            <a href="{{ route('panel.ims.master') }}"
-               class="btn btn-outline-light btn-sm px-3.5 py-2 rounded-pill fw-bold d-inline-flex align-items-center gap-1.5"
-               style="background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.35);">
-                <i class="bi bi-clipboard2-check"></i>
-                <span>Instrumen IMS</span>
-            </a>
+        <!-- Quick Top Actions (Mobile 2-Button Grid) -->
+        <div class="col-12 col-md-auto text-md-end mt-2 mt-md-0">
+            <div class="d-flex gap-2">
+                <a href="{{ route('panel.konseling.index') }}"
+                   class="btn btn-gold btn-sm flex-fill flex-md-grow-0 px-3 py-2 rounded-pill fw-bold d-inline-flex align-items-center justify-content-center gap-1.5 shadow-sm"
+                   style="min-height: 40px; font-size: 0.8rem;">
+                    <i class="bi bi-chat-heart"></i>
+                    <span>Agenda Konseling</span>
+                </a>
+                <a href="{{ route('panel.ims.master') }}"
+                   class="btn btn-outline-light btn-sm flex-fill flex-md-grow-0 px-3 py-2 rounded-pill fw-bold d-inline-flex align-items-center justify-content-center gap-1.5"
+                   style="min-height: 40px; background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.35); font-size: 0.8rem;">
+                    <i class="bi bi-clipboard2-check"></i>
+                    <span>Data IMS</span>
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -71,7 +75,7 @@
 
 {{-- Mode Guru BK Notification if Not Admin --}}
 @if(!$isAdmin)
-    <div class="alert border-0 mb-4 d-flex align-items-center py-2.5 px-3 rounded-3" style="background: #f0fdfa; border: 1px solid #ccfbf1 !important; color: #0f766e;">
+    <div class="alert border-0 mb-3 mb-md-4 d-flex align-items-center py-2.5 px-3 rounded-3" style="background: #f0fdfa; border: 1px solid #ccfbf1 !important; color: #0f766e;">
         <i class="bi bi-info-circle-fill fs-5 me-2.5 text-mint"></i>
         <div class="small">
             <strong>Mode Guru BK: Menampilkan Data Rombel Binaan:</strong> Anda sedang melihat data murid dan rombel binaan Anda pada semester aktif.
@@ -79,83 +83,87 @@
     </div>
 @endif
 
-{{-- 2. CORE METRICS KPI CARDS (Identik dengan Card Style Portal Murid) --}}
-<div class="row g-3 mb-4">
+{{-- 2. CORE METRICS KPI CARDS (2 Kolom di HP / 4 Kolom di Desktop) --}}
+<div class="row g-2 g-md-3 mb-3 mb-md-4">
     <!-- Card 1: Siswa Aktif -->
-    <div class="col-sm-6 col-xl-3">
-        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.04); height: 100%;">
-            <div style="width: 48px; height: 48px; border-radius: 12px; background: #f0fdfa; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #0d9488; font-size: 1.5rem;">
+    <div class="col-6 col-md-3">
+        <div class="h-100 rounded-4 bg-white border p-3 p-md-3.5 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2.5 gap-md-3 shadow-xs">
+            <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
+                 style="width: 42px; height: 42px; background: #f0fdfa; color: #0d9488; font-size: 1.35rem;">
                 <i class="bi bi-people-fill"></i>
             </div>
-            <div class="flex-grow-1 overflow-hidden">
-                <div style="font-size: 0.72rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px;">
-                    {{ $isAdmin ? 'TOTAL MURID AKTIF' : 'MURID BINAAN AKTIF' }}
+            <div class="flex-grow-1 overflow-hidden min-w-0">
+                <div class="text-uppercase tracking-wider fw-bold text-muted text-truncate" style="font-size: 0.65rem;">
+                    {{ $isAdmin ? 'TOTAL MURID' : 'MURID BINAAN' }}
                 </div>
-                <div style="font-size: 1.45rem; font-weight: 800; color: #0d9488; line-height: 1.1;">
+                <div class="fw-extrabold text-mint my-0.5" style="font-size: clamp(1.2rem, 3.5vw, 1.45rem); line-height: 1.1;">
                     {{ number_format($totalStudents, 0, ',', '.') }}
                 </div>
-                <div class="text-muted text-truncate" style="font-size: 0.72rem; margin-top: 3px;">
-                    {{ $maleCount }} Laki-laki &bull; {{ $femaleCount }} Perempuan
+                <div class="text-muted text-truncate" style="font-size: 0.68rem;">
+                    {{ $maleCount }} L &bull; {{ $femaleCount }} P
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Card 2: Rombel / Kelas -->
-    <div class="col-sm-6 col-xl-3">
-        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.04); height: 100%;">
-            <div style="width: 48px; height: 48px; border-radius: 12px; background: #fef3c7; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #d97706; font-size: 1.5rem;">
+    <div class="col-6 col-md-3">
+        <div class="h-100 rounded-4 bg-white border p-3 p-md-3.5 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2.5 gap-md-3 shadow-xs">
+            <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
+                 style="width: 42px; height: 42px; background: #fef3c7; color: #d97706; font-size: 1.35rem;">
                 <i class="bi bi-door-open-fill"></i>
             </div>
-            <div class="flex-grow-1 overflow-hidden">
-                <div style="font-size: 0.72rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px;">
+            <div class="flex-grow-1 overflow-hidden min-w-0">
+                <div class="text-uppercase tracking-wider fw-bold text-muted text-truncate" style="font-size: 0.65rem;">
                     ROMBEL / KELAS
                 </div>
-                <div style="font-size: 1.45rem; font-weight: 800; color: #d97706; line-height: 1.1;">
+                <div class="fw-extrabold my-0.5" style="color: #d97706; font-size: clamp(1.2rem, 3.5vw, 1.45rem); line-height: 1.1;">
                     {{ $totalClassrooms }} Kelas
                 </div>
-                <div class="text-muted text-truncate" style="font-size: 0.72rem; margin-top: 3px;">
-                    {{ $isAdmin ? 'Seluruh rombel sekolah' : 'Rombel binaan aktif' }}
+                <div class="text-muted text-truncate" style="font-size: 0.68rem;">
+                    {{ $isAdmin ? 'Seluruh rombel' : 'Rombel binaan' }}
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Card 3: Aduan & Kasus Siswa -->
-    <div class="col-sm-6 col-xl-3">
-        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.04); height: 100%;">
-            <div style="width: 48px; height: 48px; border-radius: 12px; background: #f0fdf4; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #16a34a; font-size: 1.5rem;">
+    <div class="col-6 col-md-3">
+        <div class="h-100 rounded-4 bg-white border p-3 p-md-3.5 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2.5 gap-md-3 shadow-xs">
+            <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
+                 style="width: 42px; height: 42px; background: #f0fdf4; color: #16a34a; font-size: 1.35rem;">
                 <i class="bi bi-shield-check"></i>
             </div>
-            <div class="flex-grow-1 overflow-hidden">
-                <div style="font-size: 0.72rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px;">
-                    ADUAN & KASUS SISWA
+            <div class="flex-grow-1 overflow-hidden min-w-0">
+                <div class="text-uppercase tracking-wider fw-bold text-muted text-truncate" style="font-size: 0.65rem;">
+                    ADUAN KASUS
                 </div>
-                <div style="font-size: 1.45rem; font-weight: 800; color: #16a34a; line-height: 1.1;">
+                <div class="fw-extrabold my-0.5" style="color: #16a34a; font-size: clamp(1.15rem, 3.5vw, 1.4rem); line-height: 1.1;">
                     Kondusif
                 </div>
-                <div class="text-muted text-truncate" style="font-size: 0.72rem; margin-top: 3px;">
-                    0 laporan perlu tindak lanjut
+                <div class="text-muted text-truncate" style="font-size: 0.68rem;">
+                    Aman terlindungi
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Card 4: Layanan & Asesmen BK -->
-    <div class="col-sm-6 col-xl-3">
-        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.04); height: 100%;">
-            <div style="width: 48px; height: 48px; border-radius: 12px; background: #eff6ff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #2563eb; font-size: 1.5rem;">
+    <div class="col-6 col-md-3">
+        <div class="h-100 rounded-4 bg-white border p-3 p-md-3.5 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2.5 gap-md-3 shadow-xs">
+            <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
+                 style="width: 42px; height: 42px; background: #eff6ff; color: #2563eb; font-size: 1.35rem;">
                 <i class="bi bi-clipboard2-data-fill"></i>
             </div>
-            <div class="flex-grow-1 overflow-hidden">
-                <div style="font-size: 0.72rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px;">
-                    LAYANAN & ASESMEN BK
+            <div class="flex-grow-1 overflow-hidden min-w-0">
+                <div class="text-uppercase tracking-wider fw-bold text-muted text-truncate" style="font-size: 0.65rem;">
+                    LAYANAN BK
                 </div>
-                <div style="font-size: 1.45rem; font-weight: 800; color: #2563eb; line-height: 1.1;">
+                <div class="fw-extrabold my-0.5" style="color: #2563eb; font-size: clamp(1.2rem, 3.5vw, 1.45rem); line-height: 1.1;">
                     {{ $totalServiceTypes ?? 15 }} Jenis
                 </div>
-                <div class="text-muted text-truncate" style="font-size: 0.72rem; margin-top: 3px;">
-                    4 Bidang Bimbingan Aktif
+                <div class="text-muted text-truncate" style="font-size: 0.68rem;">
+                    4 Bidang Aktif
                 </div>
             </div>
         </div>

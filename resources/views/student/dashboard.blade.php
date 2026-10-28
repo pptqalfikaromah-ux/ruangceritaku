@@ -29,9 +29,9 @@
             </div>
         </div>
         <div class="col-md-auto text-md-end mt-2 mt-md-0">
-            <a href="{{ route('murid.ims.index') }}"
+            <a href="{{ route('murid.konseling.ajukan') }}"
                style="display:inline-flex;align-items:center;gap:6px;background:#f59e0b;color:#1e293b;border:none;border-radius:6px;padding:9px 18px;font-weight:800;font-size:.83rem;text-decoration:none;box-shadow:0 2px 8px rgba(245,158,11,.4);transition:background .2s;">
-                <i class="bi bi-clipboard2-check"></i> Buka Instrumen IMS
+                <i class="bi bi-send-check"></i> Ajukan Konseling
             </a>
         </div>
     </div>

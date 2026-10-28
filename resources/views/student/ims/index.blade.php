@@ -3,7 +3,9 @@
 @section('title', 'Instrumen Masalah Siswa (IMS)')
 
 @section('breadcrumb')
-    <span class="active">Instrumen Masalah Siswa (IMS)</span>
+    <a href="{{ route('murid.konseling.ajukan') }}">Ajukan Konseling</a>
+    <i class="bi bi-chevron-right" style="font-size:.65rem;"></i>
+    <span class="active">Instrumen Masalah (IMS)</span>
 @endsection
 
 @section('content')
@@ -77,23 +79,23 @@
 
     @php
         $servicesData = [
-            1 => [
+            'LAY-01' => [
                 'icon' => 'bi-compass',
                 'grad' => 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
                 'color' => '#2563eb',
                 'bg_subtle' => '#eff6ff',
-                'short' => 'Orientasi Sekolah',
+                'short' => 'Layanan Orientasi',
                 'desc' => 'Adaptasi lingkungan sekolah, fasilitas ibadah, kesehatan, tata tertib, dan teman baru.',
             ],
-            2 => [
+            'LAY-02' => [
                 'icon' => 'bi-info-circle',
                 'grad' => 'linear-gradient(135deg, #7c3aed 0%, #6366f1 100%)',
                 'color' => '#7c3aed',
                 'bg_subtle' => '#f5f3ff',
-                'short' => 'Informasi & Wawasan',
+                'short' => 'Layanan Informasi',
                 'desc' => 'Informasi kesehatan remaja, kiat belajar efektif, pemahaman diri, dan rencana masa depan.',
             ],
-            3 => [
+            'LAY-03' => [
                 'icon' => 'bi-grid-1x2',
                 'grad' => 'linear-gradient(135deg, #ea580c 0%, #d97706 100%)',
                 'color' => '#ea580c',
@@ -101,7 +103,7 @@
                 'short' => 'Penempatan & Penyaluran',
                 'desc' => 'Posisi tempat duduk di kelas, kelompok belajar, ekstrakurikuler, serta minat dan bakat.',
             ],
-            4 => [
+            'LAY-04' => [
                 'icon' => 'bi-mortarboard',
                 'grad' => 'linear-gradient(135deg, #059669 0%, #0d9488 100%)',
                 'color' => '#059669',
@@ -109,7 +111,7 @@
                 'short' => 'Penguasaan Konten',
                 'desc' => 'Mengembangkan kebiasaan belajar prima, manajemen waktu, teknik ujian, dan mengelola emosi.',
             ],
-            5 => [
+            'LAY-05' => [
                 'icon' => 'bi-heart-pulse',
                 'grad' => 'linear-gradient(135deg, #e11d48 0%, #db2777 100%)',
                 'color' => '#e11d48',
@@ -117,7 +119,7 @@
                 'short' => 'Konseling Perorangan',
                 'desc' => 'Konseling mendalam tatap muka secara pribadi untuk masalah personal dan rasa percaya diri.',
             ],
-            6 => [
+            'LAY-06' => [
                 'icon' => 'bi-people',
                 'grad' => 'linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%)',
                 'color' => '#4f46e5',
@@ -125,7 +127,7 @@
                 'short' => 'Bimbingan Kelompok',
                 'desc' => 'Diskusi kelompok mengenai solidaritas, toleransi, bahaya pergaulan bebas, dan kerja sama.',
             ],
-            7 => [
+            'LAY-07' => [
                 'icon' => 'bi-chat-quote',
                 'grad' => 'linear-gradient(135deg, #0d9488 0%, #0891b2 100%)',
                 'color' => '#0d9488',
@@ -133,7 +135,7 @@
                 'short' => 'Konseling Kelompok',
                 'desc' => 'Menyelesaikan hambatan bersama dalam dinamika kelompok kecil dengan saling mendukung.',
             ],
-            8 => [
+            'LAY-08' => [
                 'icon' => 'bi-person-check',
                 'grad' => 'linear-gradient(135deg, #334155 0%, #475569 100%)',
                 'color' => '#334155',
@@ -141,7 +143,7 @@
                 'short' => 'Layanan Konsultasi',
                 'desc' => 'Mendapatkan saran bagaimana membantu sahabat, teman sebangku, atau kendala dengan pihak lain.',
             ],
-            9 => [
+            'LAY-09' => [
                 'icon' => 'bi-handshake',
                 'grad' => 'linear-gradient(135deg, #9333ea 0%, #c026d3 100%)',
                 'color' => '#9333ea',
@@ -155,13 +157,13 @@
     <div class="row g-3 g-lg-4">
         @foreach($serviceTypes as $svc)
             @php
-                $itemData = $servicesData[$svc->id] ?? [
+                $itemData = $servicesData[$svc->code] ?? $servicesData[$svc->id] ?? [
                     'icon' => 'bi-stars',
                     'grad' => 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
                     'color' => '#059669',
                     'bg_subtle' => '#ecfdf5',
                     'short' => $svc->name,
-                    'desc' => 'Pilihan layanan bimbingan konseling peserta didik.',
+                    'desc' => $svc->description ?? 'Pilihan layanan bimbingan konseling peserta didik.',
                 ];
                 $answeredCount = $selectedCountByService[$svc->id] ?? 0;
             @endphp

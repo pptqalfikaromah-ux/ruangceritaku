@@ -405,14 +405,96 @@
         .space-y-5 > * + * { margin-top: 1.75rem !important; }
         .space-y-6 > * + * { margin-top: 2rem !important; }
 
+        /* ANDROID MOBILE BOTTOM NAVIGATION BAR */
+        .panel-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(226, 232, 240, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            z-index: 1040;
+            padding: 0 4px;
+            box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+        }
+        .panel-btab {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #64748b;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 6px 0;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+        }
+        .panel-btab-icon {
+            font-size: 1.25rem;
+            line-height: 1;
+            margin-bottom: 2px;
+            transition: transform 0.2s ease;
+        }
+        .panel-btab:hover, .panel-btab:focus {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .panel-btab.active {
+            color: var(--primary);
+            font-weight: 800;
+        }
+        .panel-btab.active .panel-btab-icon {
+            transform: scale(1.15);
+        }
+        .panel-nav-badge {
+            position: absolute;
+            top: -4px;
+            right: -8px;
+            min-width: 17px;
+            height: 17px;
+            background: #ef4444;
+            color: #ffffff;
+            font-size: 0.62rem;
+            font-weight: 800;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 3px;
+            box-shadow: 0 2px 5px rgba(239, 68, 68, 0.4);
+            border: 1.5px solid #ffffff;
+        }
+
         /* RESPONSIVE & MOBILE FRIENDLY */
         @media (max-width: 991.98px) {
-            .sk-sidebar, .modern-sidebar, .emis-sidebar { transform: translateX(-100%); }
-            .sk-sidebar.open, .modern-sidebar.show, .emis-sidebar.show { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,.15); }
-            .sk-main, .modern-main-content, .emis-main { margin-left: 0 !important; width: 100% !important; padding: 16px 14px 48px !important; }
+            body { padding-bottom: 74px !important; }
+            .sk-sidebar, .modern-sidebar, .emis-sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+                box-shadow: none;
+            }
+            .sk-sidebar.open, .modern-sidebar.show, .emis-sidebar.show {
+                transform: translateX(0);
+                box-shadow: 8px 0 32px rgba(0, 0, 0, 0.2);
+            }
+            .sk-main, .modern-main-content, .emis-main {
+                margin-left: 0 !important;
+                width: 100% !important;
+                padding: 14px 12px 84px !important;
+            }
             .sk-period-badge { display: none !important; }
             .sk-user-text { display: none !important; }
-            .sk-breadbar { padding: 8px 12px !important; }
+            .sk-breadbar { padding: 8px 12px !important; margin-bottom: 14px !important; }
+            .sk-breadbar .sk-bpage { font-size: 0.95rem !important; }
         }
         @media (max-width: 767.98px) {
             .table-responsive { border-radius: 8px; }
@@ -420,9 +502,17 @@
             .btn { font-size: 0.82rem !important; }
         }
         @media (max-width: 575.98px) {
+            .sk-topbar, .modern-topbar {
+                height: 56px !important;
+                padding: 0 10px !important;
+            }
+            .sk-brand img {
+                height: 32px !important;
+                max-width: 40px !important;
+            }
             .h4, h4 { font-size: 1.15rem !important; }
             .h5, h5 { font-size: 1rem !important; }
-            .sk-main { padding: 12px 10px 48px !important; }
+            .sk-main { padding: 12px 10px 84px !important; }
         }
         @media (min-width: 992px) { .sk-burger { display: none !important; } }
     </style>
@@ -778,15 +868,56 @@
         </main>
     </div>
 
+    <!-- ANDROID MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="panel-bottom-nav d-lg-none" id="panelBottomNav">
+        <a href="{{ route('panel.dashboard') }}" class="panel-btab {{ request()->routeIs('panel.dashboard*') || request()->routeIs('panel.beranda*') ? 'active' : '' }}">
+            <div class="panel-btab-icon">
+                <i class="bi bi-house-door{{ request()->routeIs('panel.dashboard*') || request()->routeIs('panel.beranda*') ? '-fill' : '' }}"></i>
+            </div>
+            <span>Beranda</span>
+        </a>
+        <a href="{{ route('panel.konseling.index') }}" class="panel-btab {{ request()->routeIs('panel.konseling.*') ? 'active' : '' }}">
+            <div class="panel-btab-icon position-relative">
+                <i class="bi bi-chat-heart{{ request()->routeIs('panel.konseling.*') ? '-fill' : '' }}"></i>
+                @if(isset($panelNotifs['counseling']) && $panelNotifs['counseling'] > 0)
+                    <span class="panel-nav-badge">{{ $panelNotifs['counseling'] }}</span>
+                @endif
+            </div>
+            <span>Konseling</span>
+        </a>
+        <a href="{{ route('panel.murid.index') }}" class="panel-btab {{ request()->routeIs('panel.murid.*') ? 'active' : '' }}">
+            <div class="panel-btab-icon">
+                <i class="bi bi-people{{ request()->routeIs('panel.murid.*') ? '-fill' : '' }}"></i>
+            </div>
+            <span>Murid</span>
+        </a>
+        <a href="{{ route('panel.pengaduan.index') }}" class="panel-btab {{ request()->routeIs('panel.pengaduan.*') ? 'active' : '' }}">
+            <div class="panel-btab-icon position-relative">
+                <i class="bi bi-shield{{ request()->routeIs('panel.pengaduan.*') ? '-fill' : '-check' }}"></i>
+                @if(isset($panelNotifs['complaints']) && $panelNotifs['complaints'] > 0)
+                    <span class="panel-nav-badge">{{ $panelNotifs['complaints'] }}</span>
+                @endif
+            </div>
+            <span>Pengaduan</span>
+        </a>
+        <button type="button" class="panel-btab border-0 bg-transparent" id="mobileMenuMoreBtn" aria-label="Buka Menu Lengkap">
+            <div class="panel-btab-icon">
+                <i class="bi bi-grid-fill"></i>
+            </div>
+            <span>Menu</span>
+        </button>
+    </nav>
+
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Sidebar Mobile Toggle Script (Identik dengan Portal Murid) -->
+    <!-- Sidebar Mobile Toggle Script (Identik dengan Portal Murid & Android App) -->
     <script>
         (function () {
             var sidebar = document.getElementById('sidebarMenu');
             var toggle  = document.getElementById('sidebarToggle');
             var overlay = document.getElementById('sidebarOverlay');
+            var moreBtn = document.getElementById('mobileMenuMoreBtn');
 
             function openSidebar() {
                 sidebar.classList.add('open');
@@ -809,6 +940,11 @@
                 } else {
                     openSidebar();
                 }
+            });
+
+            if (moreBtn) moreBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                openSidebar();
             });
 
             if (overlay) overlay.addEventListener('click', closeSidebar);
