@@ -17,17 +17,11 @@
 
                     @php
                         $activeProfile = $counselor ?? $teacher;
-                        $currentPhoto = $counselor?->photo ? asset('storage/' . $counselor->photo) : null;
+                        $currentPhoto = $user->avatar_url;
                     @endphp
 
                     <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 mb-4 pb-3 border-bottom">
-                        @if($currentPhoto)
-                            <img src="{{ $currentPhoto }}" alt="{{ $user->name }}" class="rounded-circle shadow-sm" width="70" height="70" style="object-fit: cover;">
-                        @else
-                            <div class="rounded-circle bg-teal-subtle text-primary-teal d-flex align-items-center justify-content-center fw-bold fs-3 shadow-xs" style="width: 70px; height: 70px;">
-                                {{ strtoupper(substr($user->name, 0, 1)) }}
-                            </div>
-                        @endif
+                        <img src="{{ $currentPhoto }}" id="headerProfileAvatar" alt="{{ $user->name }}" class="rounded-circle shadow-sm border border-2 border-primary-subtle" width="76" height="76" style="object-fit: cover; background: #fff;">
                         <div>
                             <h5 class="fw-bold text-slate-800 mb-0.5">{{ $user->name }}</h5>
                             <div class="d-flex align-items-center gap-2 mt-1">
@@ -67,9 +61,35 @@
                         </div>
 
                         <div class="col-12">
-                            <label for="photo" class="form-label fw-semibold small text-slate-700">Ganti Foto Profil</label>
-                            <input type="file" name="photo" id="photo" class="form-control" accept="image/jpeg,image/png,image/jpg">
-                            <div class="form-text small text-muted">Format foto: JPG atau PNG, ukuran maksimal 2MB.</div>
+                            <label class="form-label fw-semibold small text-slate-700">Foto Profil Akun</label>
+                            <div class="p-3 bg-light rounded-3 border d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-3">
+                                <div class="position-relative flex-shrink-0">
+                                    <img id="photoPreview" 
+                                         src="{{ $currentPhoto }}" 
+                                         alt="Pratinjau Foto" 
+                                         class="rounded-circle shadow-sm border border-2 border-teal" 
+                                         width="76" 
+                                         height="76" 
+                                         style="object-fit: cover; background: #fff;">
+                                    <span id="previewBadge" class="position-absolute bottom-0 end-0 badge rounded-pill bg-warning text-dark border shadow-xs d-none" style="font-size: 0.65rem;">
+                                        <i class="bi bi-eye"></i> Baru
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 w-100">
+                                    <div class="d-flex align-items-center justify-content-between mb-1.5 flex-wrap gap-1">
+                                        <span class="small fw-bold text-slate-800">Unggah Foto Baru</span>
+                                        <span id="photoFileInfo" class="small text-muted fs-xs"></span>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="file" name="photo" id="photoInput" class="form-control" accept="image/jpeg,image/png,image/jpg,image/webp">
+                                        <button class="btn btn-outline-secondary d-none" type="button" id="btnCancelPhoto" title="Batalkan pilihan foto">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
+                                    </div>
+                                    <div class="form-text small text-muted mt-1 mb-0">Format didukung: JPG, PNG, atau WEBP. Ukuran maksimal 2 MB. Sebelum disimpan, foto langsung dapat dilihat pada pratinjau.</div>
+                                    <div id="photoError" class="text-danger small mt-1 d-none fw-semibold"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -87,3 +107,92 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const photoInput = document.getElementById('photoInput');
+    const photoPreview = document.getElementById('photoPreview');
+    const headerProfileAvatar = document.getElementById('headerProfileAvatar');
+    const previewBadge = document.getElementById('previewBadge');
+    const photoFileInfo = document.getElementById('photoFileInfo');
+    const btnCancelPhoto = document.getElementById('btnCancelPhoto');
+    const photoError = document.getElementById('photoError');
+    const initialPhotoUrl = photoPreview ? photoPreview.src : '';
+
+    if (photoInput && photoPreview) {
+        photoInput.addEventListener('change', function (e) {
+            const file = e.target.files && e.target.files[0];
+            if (!file) {
+                resetPreview();
+                return;
+            }
+
+            if (!file.type.match('image.*')) {
+                showError('File yang dipilih harus berupa gambar (JPG, PNG, atau WEBP).');
+                photoInput.value = '';
+                resetPreview();
+                return;
+            }
+
+            const maxSize = 2 * 1024 * 1024;
+            if (file.size > maxSize) {
+                showError('Ukuran file terlalu besar (' + (file.size / 1024 / 1024).toFixed(2) + ' MB). Maksimal 2 MB.');
+                photoInput.value = '';
+                resetPreview();
+                return;
+            }
+
+            clearError();
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                photoPreview.src = event.target.result;
+                if (headerProfileAvatar) {
+                    headerProfileAvatar.src = event.target.result;
+                }
+                if (previewBadge) previewBadge.classList.remove('d-none');
+                if (btnCancelPhoto) btnCancelPhoto.classList.remove('d-none');
+                if (photoFileInfo) {
+                    const sizeKb = (file.size / 1024).toFixed(0);
+                    photoFileInfo.textContent = file.name + ' (' + sizeKb + ' KB)';
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+
+        if (btnCancelPhoto) {
+            btnCancelPhoto.addEventListener('click', function () {
+                photoInput.value = '';
+                resetPreview();
+                clearError();
+            });
+        }
+    }
+
+    function resetPreview() {
+        if (photoPreview) photoPreview.src = initialPhotoUrl;
+        if (headerProfileAvatar) headerProfileAvatar.src = initialPhotoUrl;
+        if (previewBadge) previewBadge.classList.add('d-none');
+        if (btnCancelPhoto) btnCancelPhoto.classList.add('d-none');
+        if (photoFileInfo) photoFileInfo.textContent = '';
+    }
+
+    function showError(msg) {
+        if (photoError) {
+            photoError.textContent = msg;
+            photoError.classList.remove('d-none');
+        } else {
+            alert(msg);
+        }
+    }
+
+    function clearError() {
+        if (photoError) {
+            photoError.textContent = '';
+            photoError.classList.add('d-none');
+        }
+    }
+});
+</script>
+@endpush

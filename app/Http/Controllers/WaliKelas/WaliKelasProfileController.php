@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
+use Illuminate\Support\Facades\Storage;
+
 class WaliKelasProfileController extends Controller
 {
     /**
@@ -41,6 +43,7 @@ class WaliKelasProfileController extends Controller
             'gender' => ['required', 'in:L,P'],
             'phone' => ['nullable', 'string', 'max:30'],
             'password' => ['nullable', 'string', 'min:6'],
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
 
         $userData = [
@@ -54,14 +57,29 @@ class WaliKelasProfileController extends Controller
 
         $user->update($userData);
 
+        $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            if ($teacher && $teacher->photo && Storage::disk($disk)->exists($teacher->photo)) {
+                Storage::disk($disk)->delete($teacher->photo);
+            }
+            $photoPath = $request->file('photo')->store('photos/teachers', $disk);
+        }
+
         if ($teacher) {
-            $teacher->update([
+            $teacherData = [
                 'name' => $request->name,
                 'email' => $request->email,
                 'nip_nuptk' => $request->nip_nuptk,
                 'gender' => $request->gender,
                 'phone' => $request->phone,
-            ]);
+            ];
+
+            if ($photoPath) {
+                $teacherData['photo'] = $photoPath;
+            }
+
+            $teacher->update($teacherData);
         }
 
         return back()->with('success', 'Profil data diri Anda berhasil diperbarui.');

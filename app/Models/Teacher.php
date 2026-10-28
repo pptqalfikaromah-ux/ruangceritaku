@@ -17,8 +17,30 @@ class Teacher extends Model
         'gender',
         'phone',
         'email',
+        'photo',
         'status',
     ];
+
+    public function getPhotoUrlAttribute(): string
+    {
+        if ($this->photo) {
+            if (str_starts_with($this->photo, 'http://') || str_starts_with($this->photo, 'https://')) {
+                return $this->photo;
+            }
+            $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
+            if ($disk === 's3') {
+                return \Illuminate\Support\Facades\Storage::disk('s3')->url($this->photo);
+            }
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($this->photo)) {
+                return asset('storage/' . $this->photo);
+            }
+            return asset('storage/' . $this->photo);
+        }
+
+        $initial = urlencode($this->name);
+        $bgColor = $this->gender === 'L' ? 'd97706' : 'db2777';
+        return "https://ui-avatars.com/api/?name={$initial}&background={$bgColor}&color=fff&size=128";
+    }
 
     public function user()
     {

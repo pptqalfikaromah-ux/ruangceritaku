@@ -176,7 +176,7 @@
         $classroom = $teacher?->currentAssignment?->classroom;
         $activeYear = active_academic_year();
         $activeSem = active_semester();
-        $avatarUrl = 'https://ui-avatars.com/api/?name=' . urlencode($currentUser?->name ?? 'Wali Kelas') . '&background=d97706&color=ffffff&bold=true';
+        $avatarUrl = $currentUser?->avatar_url ?? ('https://ui-avatars.com/api/?name=' . urlencode($currentUser?->name ?? 'Wali Kelas') . '&background=d97706&color=ffffff&bold=true');
     @endphp
 
     <!-- TOPBAR -->

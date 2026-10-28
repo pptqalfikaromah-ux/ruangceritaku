@@ -90,13 +90,17 @@ class Student extends Model
     public function getPhotoUrlAttribute(): string
     {
         if ($this->photo) {
+            if (str_starts_with($this->photo, 'http://') || str_starts_with($this->photo, 'https://')) {
+                return $this->photo;
+            }
             $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
-            if (Storage::disk($disk)->exists($this->photo)) {
-                return Storage::disk($disk)->url($this->photo);
+            if ($disk === 's3') {
+                return Storage::disk('s3')->url($this->photo);
             }
             if (Storage::disk('public')->exists($this->photo)) {
                 return asset('storage/' . $this->photo);
             }
+            return asset('storage/' . $this->photo);
         }
 
         // Placeholder avatar berdasarkan jenis kelamin

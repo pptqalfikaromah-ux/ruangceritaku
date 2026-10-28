@@ -54,12 +54,13 @@ class SettingController extends Controller
 
         // Upload logo pengganti jika ada
         if ($request->hasFile('app_logo')) {
+            $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
             $oldLogo = app_setting('app_logo');
-            if ($oldLogo && Storage::disk('public')->exists($oldLogo)) {
-                Storage::disk('public')->delete($oldLogo);
+            if ($oldLogo && Storage::disk($disk)->exists($oldLogo)) {
+                Storage::disk($disk)->delete($oldLogo);
             }
 
-            $path = $request->file('app_logo')->store('images/logos', 'public');
+            $path = $request->file('app_logo')->store('images/logos', $disk);
             Setting::set('app_logo', $path);
         }
 
@@ -100,6 +101,12 @@ class SettingController extends Controller
             'email' => $request->email,
         ]);
 
+        $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
+        $uploadedPhoto = null;
+        if ($request->hasFile('photo')) {
+            $uploadedPhoto = $request->file('photo')->store('photos/counselors', $disk);
+        }
+
         if ($user->counselor) {
             $counselorData = [
                 'name' => $request->name,
@@ -110,11 +117,11 @@ class SettingController extends Controller
                 'gender' => $request->gender ?? $user->counselor->gender,
             ];
 
-            if ($request->hasFile('photo')) {
-                if ($user->counselor->photo && Storage::disk('public')->exists($user->counselor->photo)) {
-                    Storage::disk('public')->delete($user->counselor->photo);
+            if ($uploadedPhoto) {
+                if ($user->counselor->photo && Storage::disk($disk)->exists($user->counselor->photo)) {
+                    Storage::disk($disk)->delete($user->counselor->photo);
                 }
-                $counselorData['photo'] = $request->file('photo')->store('photos/counselors', 'public');
+                $counselorData['photo'] = $uploadedPhoto;
             }
 
             $user->counselor->update($counselorData);
@@ -128,6 +135,13 @@ class SettingController extends Controller
                 'nip_nuptk' => $request->nip_nuptk,
                 'gender' => $request->gender ?? $user->teacher->gender,
             ];
+
+            if ($uploadedPhoto) {
+                if ($user->teacher->photo && Storage::disk($disk)->exists($user->teacher->photo)) {
+                    Storage::disk($disk)->delete($user->teacher->photo);
+                }
+                $teacherData['photo'] = $uploadedPhoto;
+            }
 
             $user->teacher->update($teacherData);
         }

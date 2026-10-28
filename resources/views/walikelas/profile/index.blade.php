@@ -35,9 +35,13 @@
 
         <div class="card card-app shadow-sm border-0 rounded-4 bg-white overflow-hidden">
             <div class="p-3 p-sm-3.5 bg-teal-subtle border-bottom d-flex align-items-center gap-3">
-                <div class="rounded-circle bg-white text-primary-teal d-flex align-items-center justify-content-center fw-bold fs-3 shadow-xs flex-shrink-0" style="width: 54px; height: 54px;">
-                    {{ strtoupper(substr($user->name, 0, 1)) }}
-                </div>
+                <img src="{{ $user->avatar_url }}" 
+                     id="headerProfileAvatar" 
+                     alt="{{ $user->name }}" 
+                     class="rounded-circle shadow-xs flex-shrink-0 border border-2 border-white" 
+                     width="56" 
+                     height="56" 
+                     style="object-fit: cover; background: #fff;">
                 <div class="min-w-0">
                     <h5 class="fw-bold text-dark mb-0 fs-6 fs-sm-5 text-truncate">{{ $user->name }}</h5>
                     <div class="d-flex align-items-center flex-wrap gap-2 mt-0.5">
@@ -85,7 +89,7 @@
             </div>
 
             <div class="card-body p-3 p-md-4">
-                <form action="{{ route('walikelas.profile.update') }}" method="POST">
+                <form action="{{ route('walikelas.profile.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -119,7 +123,39 @@
                             <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', $teacher?->phone ?? '') }}" placeholder="Contoh: 081234567890">
                         </div>
 
-                        <div class="col-12 mt-4 pt-3 border-top">
+                        <div class="col-12">
+                            <label class="form-label fw-semibold small text-slate-700">Foto Profil Wali Kelas</label>
+                            <div class="p-3 bg-light rounded-3 border d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-3">
+                                <div class="position-relative flex-shrink-0">
+                                    <img id="photoPreview" 
+                                         src="{{ $user->avatar_url }}" 
+                                         alt="Pratinjau Foto" 
+                                         class="rounded-circle shadow-sm border border-2 border-primary" 
+                                         width="76" 
+                                         height="76" 
+                                         style="object-fit: cover; background: #fff;">
+                                    <span id="previewBadge" class="position-absolute bottom-0 end-0 badge rounded-pill bg-warning text-dark border shadow-xs d-none" style="font-size: 0.65rem;">
+                                        <i class="bi bi-eye"></i> Baru
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 w-100">
+                                    <div class="d-flex align-items-center justify-content-between mb-1.5 flex-wrap gap-1">
+                                        <span class="small fw-bold text-slate-800">Unggah Foto Baru</span>
+                                        <span id="photoFileInfo" class="small text-muted fs-xs"></span>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="file" name="photo" id="photoInput" class="form-control" accept="image/jpeg,image/png,image/jpg,image/webp">
+                                        <button class="btn btn-outline-secondary d-none" type="button" id="btnCancelPhoto" title="Batalkan pilihan foto">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
+                                    </div>
+                                    <div class="form-text small text-muted mt-1 mb-0">Format: JPG, PNG, WEBP. Maksimal 2MB. Pratinjau langsung terlihat sebelum disimpan.</div>
+                                    <div id="photoError" class="text-danger small mt-1 d-none fw-semibold"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-3 pt-3 border-top">
                             <h6 class="fw-bold text-dark mb-1"><i class="bi bi-shield-lock me-1 text-primary"></i> Ganti Password Akun</h6>
                             <p class="text-muted small mb-2">Kosongkan kolom di bawah jika Anda tidak ingin mengubah password akun.</p>
                             <div class="col-md-6">
@@ -140,3 +176,92 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const photoInput = document.getElementById('photoInput');
+    const photoPreview = document.getElementById('photoPreview');
+    const headerProfileAvatar = document.getElementById('headerProfileAvatar');
+    const previewBadge = document.getElementById('previewBadge');
+    const photoFileInfo = document.getElementById('photoFileInfo');
+    const btnCancelPhoto = document.getElementById('btnCancelPhoto');
+    const photoError = document.getElementById('photoError');
+    const initialPhotoUrl = photoPreview ? photoPreview.src : '';
+
+    if (photoInput && photoPreview) {
+        photoInput.addEventListener('change', function (e) {
+            const file = e.target.files && e.target.files[0];
+            if (!file) {
+                resetPreview();
+                return;
+            }
+
+            if (!file.type.match('image.*')) {
+                showError('File yang dipilih harus berupa gambar (JPG, PNG, atau WEBP).');
+                photoInput.value = '';
+                resetPreview();
+                return;
+            }
+
+            const maxSize = 2 * 1024 * 1024;
+            if (file.size > maxSize) {
+                showError('Ukuran file terlalu besar (' + (file.size / 1024 / 1024).toFixed(2) + ' MB). Maksimal 2 MB.');
+                photoInput.value = '';
+                resetPreview();
+                return;
+            }
+
+            clearError();
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                photoPreview.src = event.target.result;
+                if (headerProfileAvatar) {
+                    headerProfileAvatar.src = event.target.result;
+                }
+                if (previewBadge) previewBadge.classList.remove('d-none');
+                if (btnCancelPhoto) btnCancelPhoto.classList.remove('d-none');
+                if (photoFileInfo) {
+                    const sizeKb = (file.size / 1024).toFixed(0);
+                    photoFileInfo.textContent = file.name + ' (' + sizeKb + ' KB)';
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+
+        if (btnCancelPhoto) {
+            btnCancelPhoto.addEventListener('click', function () {
+                photoInput.value = '';
+                resetPreview();
+                clearError();
+            });
+        }
+    }
+
+    function resetPreview() {
+        if (photoPreview) photoPreview.src = initialPhotoUrl;
+        if (headerProfileAvatar) headerProfileAvatar.src = initialPhotoUrl;
+        if (previewBadge) previewBadge.classList.add('d-none');
+        if (btnCancelPhoto) btnCancelPhoto.classList.add('d-none');
+        if (photoFileInfo) photoFileInfo.textContent = '';
+    }
+
+    function showError(msg) {
+        if (photoError) {
+            photoError.textContent = msg;
+            photoError.classList.remove('d-none');
+        } else {
+            alert(msg);
+        }
+    }
+
+    function clearError() {
+        if (photoError) {
+            photoError.textContent = '';
+            photoError.classList.add('d-none');
+        }
+    }
+});
+</script>
+@endpush

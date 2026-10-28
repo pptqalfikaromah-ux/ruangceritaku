@@ -526,7 +526,7 @@
         $menuItems   = config('menu.items', []);
         $roleLabel   = $currentUser?->role === 'admin' ? 'Administrator' : ($currentUser?->role === 'guru_bk' ? 'Guru BK / Konselor' : 'Pengguna');
         $portalLabel = $currentUser?->role === 'admin' ? 'Admin Portal' : 'Guru BK Portal';
-        $avatarUrl   = 'https://ui-avatars.com/api/?name=' . urlencode($currentUser?->name ?? 'User') . '&background=0d9488&color=ffffff&bold=true';
+        $avatarUrl   = $currentUser?->avatar_url ?? ('https://ui-avatars.com/api/?name=' . urlencode($currentUser?->name ?? 'User') . '&background=0d9488&color=ffffff&bold=true');
     @endphp
 
     <!-- TOPBAR (Identik dengan Portal Murid) -->

@@ -51,15 +51,35 @@
                         </div>
                     </div>
 
-                    <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="photo" class="form-label fw-semibold small text-slate-700">Foto Profil</label>
-                                <input type="file" name="photo" id="photo" class="form-control" accept="image/*">
-                                <div class="form-text small text-muted">Format JPG/PNG, maksimal 2MB.</div>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-md-7">
+                            <label class="form-label fw-semibold small text-slate-700">Foto Profil Guru BK</label>
+                            <div class="p-2.5 bg-light rounded-3 border d-flex align-items-center gap-3">
+                                <div class="position-relative flex-shrink-0">
+                                    <img id="photoPreview" 
+                                         src="https://ui-avatars.com/api/?name=Guru+BK&background=0d9488&color=fff&size=100" 
+                                         alt="Pratinjau Foto" 
+                                         class="rounded-circle shadow-xs border" 
+                                         width="60" 
+                                         height="60" 
+                                         style="object-fit: cover; background: #fff;">
+                                    <span id="previewBadge" class="position-absolute bottom-0 end-0 badge rounded-pill bg-warning text-dark border shadow-xs d-none" style="font-size: 0.6rem;">
+                                        Baru
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 min-w-0">
+                                    <div class="input-group input-group-sm">
+                                        <input type="file" name="photo" id="photoInput" class="form-control" accept="image/jpeg,image/png,image/jpg,image/webp">
+                                        <button class="btn btn-outline-secondary d-none" type="button" id="btnCancelPhoto" title="Batal">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
+                                    </div>
+                                    <div class="form-text small text-muted mt-1 mb-0 fs-xxs">Maks 2MB (JPG, PNG, WEBP). Pratinjau langsung terlihat.</div>
+                                    <div id="photoError" class="text-danger small mt-0.5 d-none fw-semibold fs-xxs"></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <x-form-select name="status" label="Status Guru BK" required>
                                 <option value="aktif" {{ old('status', 'aktif') === 'aktif' ? 'selected' : '' }}>Aktif</option>
                                 <option value="nonaktif" {{ old('status') === 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
@@ -110,5 +130,55 @@
             fields.style.display = isChecked ? 'block' : 'none';
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const photoInput = document.getElementById('photoInput');
+        const photoPreview = document.getElementById('photoPreview');
+        const previewBadge = document.getElementById('previewBadge');
+        const btnCancelPhoto = document.getElementById('btnCancelPhoto');
+        const photoError = document.getElementById('photoError');
+        const initialUrl = photoPreview ? photoPreview.src : '';
+
+        if (photoInput && photoPreview) {
+            photoInput.addEventListener('change', function (e) {
+                const file = e.target.files && e.target.files[0];
+                if (!file) {
+                    photoPreview.src = initialUrl;
+                    if (previewBadge) previewBadge.classList.add('d-none');
+                    if (btnCancelPhoto) btnCancelPhoto.classList.add('d-none');
+                    return;
+                }
+                if (!file.type.match('image.*')) {
+                    if (photoError) { photoError.textContent = 'Harus berupa file gambar.'; photoError.classList.remove('d-none'); }
+                    photoInput.value = '';
+                    return;
+                }
+                if (file.size > 2 * 1024 * 1024) {
+                    if (photoError) { photoError.textContent = 'Maksimal ukuran foto adalah 2 MB.'; photoError.classList.remove('d-none'); }
+                    photoInput.value = '';
+                    return;
+                }
+                if (photoError) photoError.classList.add('d-none');
+
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    photoPreview.src = evt.target.result;
+                    if (previewBadge) previewBadge.classList.remove('d-none');
+                    if (btnCancelPhoto) btnCancelPhoto.classList.remove('d-none');
+                };
+                reader.readAsDataURL(file);
+            });
+
+            if (btnCancelPhoto) {
+                btnCancelPhoto.addEventListener('click', function () {
+                    photoInput.value = '';
+                    photoPreview.src = initialUrl;
+                    if (previewBadge) previewBadge.classList.add('d-none');
+                    btnCancelPhoto.classList.add('d-none');
+                    if (photoError) photoError.classList.add('d-none');
+                });
+            }
+        }
+    });
 </script>
 @endpush

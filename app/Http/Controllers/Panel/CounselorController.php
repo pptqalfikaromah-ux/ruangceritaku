@@ -57,8 +57,9 @@ class CounselorController extends Controller
             }
 
             $photoPath = null;
+            $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
             if ($request->hasFile('photo')) {
-                $photoPath = $request->file('photo')->store('photos/counselors', 'public');
+                $photoPath = $request->file('photo')->store('photos/counselors', $disk);
             }
 
             Counselor::create([
@@ -88,12 +89,13 @@ class CounselorController extends Controller
     public function update(CounselorRequest $request, Counselor $guru_bk): RedirectResponse
     {
         $data = $request->safe()->except(['photo', 'create_account', 'username', 'password']);
+        $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
 
         if ($request->hasFile('photo')) {
-            if ($guru_bk->photo && Storage::disk('public')->exists($guru_bk->photo)) {
-                Storage::disk('public')->delete($guru_bk->photo);
+            if ($guru_bk->photo && Storage::disk($disk)->exists($guru_bk->photo)) {
+                Storage::disk($disk)->delete($guru_bk->photo);
             }
-            $data['photo'] = $request->file('photo')->store('photos/counselors', 'public');
+            $data['photo'] = $request->file('photo')->store('photos/counselors', $disk);
         }
 
         $guru_bk->update($data);
@@ -113,8 +115,9 @@ class CounselorController extends Controller
 
     public function destroy(Counselor $guru_bk): RedirectResponse
     {
-        if ($guru_bk->photo && Storage::disk('public')->exists($guru_bk->photo)) {
-            Storage::disk('public')->delete($guru_bk->photo);
+        $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
+        if ($guru_bk->photo && Storage::disk($disk)->exists($guru_bk->photo)) {
+            Storage::disk($disk)->delete($guru_bk->photo);
         }
 
         $guru_bk->delete();

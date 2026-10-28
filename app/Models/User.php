@@ -207,4 +207,30 @@ class User extends Authenticatable
             default => ucfirst(str_replace('_', ' ', $this->role)),
         };
     }
+
+    public function getAvatarUrlAttribute(): string
+    {
+        if ($this->counselor?->photo) {
+            return $this->counselor->photo_url;
+        }
+
+        if ($this->teacher?->photo) {
+            return $this->teacher->photo_url;
+        }
+
+        if ($this->student?->photo) {
+            return $this->student->photo_url;
+        }
+
+        $initial = urlencode($this->name);
+        $bgColor = match ($this->role) {
+            'admin' => '0f766e',
+            'guru_bk' => '0d9488',
+            'wali_kelas' => 'd97706',
+            'murid' => '2563eb',
+            default => '475569',
+        };
+
+        return "https://ui-avatars.com/api/?name={$initial}&background={$bgColor}&color=fff&size=128";
+    }
 }
