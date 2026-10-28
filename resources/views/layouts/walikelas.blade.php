@@ -122,27 +122,34 @@
         /* MOBILE BOTTOM NAV */
         .sk-bottom-nav {
             display: none; position: fixed; bottom: 0; left: 0; right: 0;
-            height: 60px; background: #ffffff; border-top: 1px solid var(--border-color);
-            box-shadow: 0 -2px 14px rgba(0,0,0,.07); z-index: 1040;
+            height: 64px; background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(226, 232, 240, 0.85);
+            box-shadow: 0 -4px 18px rgba(15, 23, 42, 0.05); z-index: 1040;
             align-items: center; justify-content: space-around;
+            padding: 0 10px;
         }
         .sk-btab {
             flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; color: var(--text-muted);
-            font-size: .63rem; font-weight: 700; gap: 3px; height: 100%;
-            transition: color .2s; position: relative;
+            text-decoration: none; color: #64748b;
+            font-size: .68rem; font-weight: 700; gap: 4px; height: 100%;
+            transition: all .18s ease; position: relative;
         }
-        .sk-btab i { font-size: 1.25rem; transition: transform .2s, color .2s; }
-        .sk-btab.active { color: var(--gold-dark); }
-        .sk-btab.active i { transform: translateY(-2px); color: var(--gold); }
+        .sk-btab i {
+            font-size: 1.35rem; line-height: 1; transition: transform .18s ease, color .18s ease;
+        }
+        .sk-btab:hover { color: #d97706; }
+        .sk-btab.active { color: #d97706; font-weight: 800; }
+        .sk-btab.active i { transform: translateY(-2px); color: #d97706; }
         .sk-btab.active::after {
-            content: ''; position: absolute; top: 4px; width: 20px; height: 3px;
-            background: var(--gold); border-radius: 3px;
+            content: ''; position: absolute; top: 0; width: 32px; height: 3px;
+            background: linear-gradient(90deg, #d97706, #b45309); border-radius: 0 0 4px 4px;
         }
 
         /* UTILITY HELPERS */
         .fs-xs { font-size: .75rem !important; }
         .fs-xxs { font-size: .68rem !important; }
+        .fw-black { font-weight: 900 !important; }
         .fw-extrabold { font-weight: 800 !important; }
         .bg-teal-subtle { background-color: #ccfbf1 !important; }
         .text-mint { color: #0f766e !important; }
@@ -151,11 +158,10 @@
         @media (max-width: 991.98px) {
             .sk-sidebar { transform: translateX(-100%); }
             .sk-sidebar.open { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,.15); }
-            .sk-main { margin-left: 0 !important; padding: 12px 12px 84px !important; }
+            .sk-main { margin-left: 0 !important; padding: 12px 14px 84px !important; }
             .sk-bottom-nav { display: flex; }
             .sk-period-badge, .sk-user-text { display: none !important; }
-            .sk-breadbar { padding: 8px 12px; margin-bottom: 12px; font-size: .78rem; }
-            .sk-breadbar .fs-6 { font-size: .88rem !important; }
+            .sk-breadbar { display: none !important; }
             .sk-brand-name { font-size: .88rem; max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
             .sk-brand-sub { font-size: .63rem; max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         }
@@ -290,15 +296,15 @@
     <!-- MOBILE BOTTOM NAVIGATION -->
     <nav class="sk-bottom-nav d-lg-none">
         <a href="{{ route('walikelas.dashboard') }}" class="sk-btab {{ request()->routeIs('walikelas.dashboard*') ? 'active' : '' }}">
-            <i class="bi bi-grid-1x2{{ request()->routeIs('walikelas.dashboard*') ? '-fill' : '' }}"></i>
+            <i class="bi bi-house-door{{ request()->routeIs('walikelas.dashboard*') ? '-fill' : '' }}"></i>
             <span>Beranda</span>
         </a>
         <a href="{{ route('walikelas.aduan.index') }}" class="sk-btab {{ request()->routeIs('walikelas.aduan.*') ? 'active' : '' }}">
-            <i class="bi bi-exclamation-octagon{{ request()->routeIs('walikelas.aduan.*') ? '-fill' : '' }}"></i>
+            <i class="bi bi-shield-exclamation"></i>
             <span>Aduan BK</span>
         </a>
         <a href="{{ route('walikelas.profile.index') }}" class="sk-btab {{ request()->routeIs('walikelas.profile.*') ? 'active' : '' }}">
-            <i class="bi bi-person{{ request()->routeIs('walikelas.profile.*') ? '-fill' : '' }}"></i>
+            <i class="bi bi-person-circle"></i>
             <span>Profil</span>
         </a>
     </nav>
