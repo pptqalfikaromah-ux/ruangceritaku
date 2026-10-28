@@ -227,6 +227,42 @@
             color: #ffffff;
         }
 
+        /* NAVBAR LOGIN DROPDOWN */
+        .dropdown-menu-custom {
+            min-width: 270px;
+            border-radius: 18px;
+            padding: 8px;
+            box-shadow: 0 20px 35px -5px rgba(13, 148, 136, 0.15), 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(204, 251, 241, 0.9) !important;
+            animation: navDropFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes navDropFade {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .nav-dropdown-item {
+            padding: 10px 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.18s ease;
+            text-decoration: none;
+        }
+        .nav-dropdown-item:hover {
+            background: #f0fdfa;
+            transform: translateX(3px);
+        }
+        .nav-dropdown-item.item-register:hover {
+            background: #ccfbf1;
+        }
+
         /* HERO ROLE BUTTONS (3 TOMBOL LOGIN) */
         .hero-login-box {
             background: #ffffff;
@@ -429,9 +465,62 @@
                         <i class="bi bi-speedometer2 me-1"></i> Buka Dashboard
                     </a>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-mint rounded-pill px-3.5 py-2 fw-bold shadow-sm d-flex align-items-center gap-1.5">
-                        <i class="bi bi-box-arrow-in-right"></i> Masuk ke Aplikasi
-                    </a>
+                    <div class="dropdown">
+                        <button class="btn btn-mint rounded-pill px-3.5 py-2 fw-bold shadow-sm dropdown-toggle d-flex align-items-center gap-1.5" type="button" id="dropdownMasuk" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-box-arrow-in-right"></i> Masuk
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-custom shadow-lg border-0 mt-2" aria-labelledby="dropdownMasuk">
+                            <li>
+                                <a class="nav-dropdown-item text-dark" href="{{ route('login.murid') }}">
+                                    <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 36px; height: 36px; background: rgba(13, 148, 136, 0.12); color: var(--primary);">
+                                        <i class="bi bi-person-heart fs-6"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="fw-bold text-dark" style="font-size: 0.88rem; line-height: 1.2;">Masuk sebagai Murid</div>
+                                        <div class="text-muted" style="font-size: 0.72rem;">Menggunakan NISN</div>
+                                    </div>
+                                    <i class="bi bi-chevron-right text-muted opacity-50 small"></i>
+                                </a>
+                            </li>
+                            <li class="mt-1">
+                                <a class="nav-dropdown-item text-dark" href="{{ route('login.admin') }}">
+                                    <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 36px; height: 36px; background: rgba(37, 99, 235, 0.12); color: #2563eb;">
+                                        <i class="bi bi-shield-check fs-6"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="fw-bold text-dark" style="font-size: 0.88rem; line-height: 1.2;">Masuk sebagai Admin / BK</div>
+                                        <div class="text-muted" style="font-size: 0.72rem;">Admin & Konselor Sekolah</div>
+                                    </div>
+                                    <i class="bi bi-chevron-right text-muted opacity-50 small"></i>
+                                </a>
+                            </li>
+                            <li class="mt-1">
+                                <a class="nav-dropdown-item text-dark" href="{{ route('login.wali-kelas') }}">
+                                    <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 36px; height: 36px; background: rgba(245, 158, 11, 0.12); color: #d97706;">
+                                        <i class="bi bi-mortarboard-fill fs-6"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="fw-bold text-dark" style="font-size: 0.88rem; line-height: 1.2;">Masuk sebagai Wali Kelas</div>
+                                        <div class="text-muted" style="font-size: 0.72rem;">Pendidik & Pembina Rombel</div>
+                                    </div>
+                                    <i class="bi bi-chevron-right text-muted opacity-50 small"></i>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider my-2 border-secondary-subtle"></li>
+                            <li>
+                                <a class="nav-dropdown-item item-register" href="{{ route('register.murid') }}" style="background: rgba(13, 148, 136, 0.08);">
+                                    <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 36px; height: 36px; background: var(--primary); color: #ffffff;">
+                                        <i class="bi bi-person-plus-fill fs-6"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="fw-bold" style="font-size: 0.88rem; line-height: 1.2; color: var(--primary-dark);">Daftar Akun</div>
+                                        <div class="text-muted" style="font-size: 0.72rem;">Registrasi Murid Baru</div>
+                                    </div>
+                                    <i class="bi bi-arrow-right small fw-bold" style="color: var(--primary);"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 @endauth
             </div>
         </div>
@@ -471,15 +560,8 @@
                         Aplikasi resmi layanan <strong>Bimbingan dan Konseling</strong> sekolah untuk pengisian instrumen masalah siswa (IMS 180), konsultasi privat rahasia, pencegahan perundungan, dan pendampingan tumbuh kembang peserta didik.
                     </p>
 
-                    <!-- TOMBOL DAFTAR AKUN DI HERO (TOMBOL MASUK HANYA DI POJOK KANAN ATAS) -->
-                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-3 mb-4">
-                        <a href="{{ route('register.murid') }}" class="btn btn-mint btn-lg rounded-pill px-4 py-2.5 fw-bold shadow-sm d-inline-flex align-items-center gap-2">
-                            <i class="bi bi-person-plus-fill"></i> Daftar Akun
-                        </a>
-                    </div>
-
                     <!-- Trust indicators -->
-                    <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3 pt-2 text-muted small fw-semibold">
+                    <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3 pt-3 text-muted small fw-semibold">
                         <div class="d-flex align-items-center gap-1.5">
                             <i class="bi bi-shield-check text-mint fs-5"></i>
                             <span>100% Rahasia & Aman</span>
@@ -514,17 +596,13 @@
                                 "Tidak ada masalah yang terlalu sepele atau terlalu rumit untuk diceritakan. Kamu berhak merasa aman, nyaman, dan didampingi."
                             </p>
 
-                            <div class="bg-light p-3 rounded-3 mb-3 border">
+                            <div class="bg-light p-3 rounded-3 mb-0 border">
                                 <div class="d-flex align-items-center justify-content-between mb-1">
                                     <span class="small fw-bold text-dark"><i class="bi bi-clock-history me-1 text-mint"></i> Layanan Konseling</span>
                                     <span class="badge rounded-pill bg-success text-white small">Aktif</span>
                                 </div>
                                 <div class="small text-muted">Bimbingan Pribadi, Sosial, Belajar & Masa Depan.</div>
                             </div>
-
-                            <a href="{{ route('register.murid') }}" class="btn btn-outline-mint w-100 py-2.5 rounded-pill fw-bold">
-                                <i class="bi bi-person-plus-fill me-1"></i> Daftar Akun
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -652,20 +730,13 @@
                 <!-- Deco circle -->
                 <div style="position: absolute; width: 300px; height: 300px; background: rgba(255, 255, 255, 0.08); border-radius: 50%; top: -100px; right: -50px;"></div>
                 
-                <div class="row align-items-center position-relative z-1 g-4">
-                    <div class="col-lg-8 text-center text-lg-start">
-                        <h3 class="fw-extrabold mb-2" style="font-size: clamp(1.6rem, 2.8vw, 2.2rem);">
-                            Ada yang Mengganjal di Pikiran atau Hatimu?
-                        </h3>
-                        <p class="mb-0 text-white opacity-90" style="font-size: 1.05rem;">
-                            Jangan disimpan sendirian. Masuk ke Ruang Ceritaku dan temukan pendampingan terbaik dari Guru BK sekolahmu.
-                        </p>
-                    </div>
-                    <div class="col-lg-4 text-center text-lg-end">
-                        <a href="{{ route('register.murid') }}" class="btn btn-gold btn-lg px-4 py-3 rounded-pill fw-bold shadow">
-                            <i class="bi bi-person-plus-fill me-1.5"></i> Daftar Akun
-                        </a>
-                    </div>
+                <div class="position-relative z-1 text-center py-2 max-w-700 mx-auto">
+                    <h3 class="fw-extrabold mb-2" style="font-size: clamp(1.6rem, 2.8vw, 2.2rem);">
+                        Ada yang Mengganjal di Pikiran atau Hatimu?
+                    </h3>
+                    <p class="mb-0 text-white opacity-90" style="font-size: 1.05rem;">
+                        Jangan disimpan sendirian. Gunakan menu <strong>Masuk</strong> di pojok kanan atas untuk mulai bercerita dan temukan pendampingan terbaik dari Guru BK sekolahmu.
+                    </p>
                 </div>
             </div>
         </div>

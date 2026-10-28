@@ -78,11 +78,11 @@ if (!function_exists('current_counselor')) {
      */
     function current_counselor(): ?Counselor
     {
-        if (!Auth::check() || Auth::user()->role !== 'guru_bk') {
+        if (!Auth::check() || !in_array(Auth::user()->role, ['guru_bk', 'admin'])) {
             return null;
         }
 
-        return Counselor::where('user_id', Auth::id())->first();
+        return Auth::user()->counselor ?? Counselor::where('user_id', Auth::id())->first();
     }
 }
 

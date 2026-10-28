@@ -39,6 +39,49 @@ class User extends Authenticatable
         return $this->hasOne(Counselor::class, 'user_id');
     }
 
+    public function getCounselorAttribute()
+    {
+        if ($this->relationLoaded('counselor')) {
+            $existing = $this->getRelationValue('counselor');
+            if ($existing) {
+                return $existing;
+            }
+        }
+
+        $relation = $this->counselor()->first();
+        if ($relation) {
+            $this->setRelation('counselor', $relation);
+            return $relation;
+        }
+
+        // Fallback: cari berdasarkan email atau nama jika user_id belum terhubung
+        $fallback = Counselor::where('email', $this->email)
+            ->orWhere('name', $this->name)
+            ->first();
+
+        if ($fallback) {
+            if ($fallback->user_id !== $this->id) {
+                $fallback->user_id = $this->id;
+                $fallback->saveQuietly();
+            }
+            $this->setRelation('counselor', $fallback);
+            return $fallback;
+        }
+
+        if (in_array($this->role, ['guru_bk', 'admin'])) {
+            $newCounselor = Counselor::create([
+                'user_id' => $this->id,
+                'name' => $this->name,
+                'email' => $this->email,
+                'status' => 'aktif',
+            ]);
+            $this->setRelation('counselor', $newCounselor);
+            return $newCounselor;
+        }
+
+        return null;
+    }
+
     public function student()
     {
         return $this->hasOne(Student::class, 'user_id');
