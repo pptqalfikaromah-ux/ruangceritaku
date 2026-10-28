@@ -50,7 +50,7 @@
                 <i class="bi bi-people-fill"></i>
             </div>
             <div>
-                <div class="text-muted fs-xxs fw-bold text-uppercase">Murid Rombel</div>
+                <div class="text-muted fs-xxs fw-bold text-uppercase">Total Murid</div>
                 <div class="fs-5 fs-sm-4 fw-extrabold text-dark">{{ $totalStudents }}</div>
                 <div class="text-muted fs-xxs d-none d-sm-block">Peserta Didik Aktif</div>
             </div>
@@ -60,25 +60,12 @@
     <div class="col-6 col-lg-3">
         <div class="card-app p-2.5 p-sm-3 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2 gap-sm-3 h-100">
             <div class="p-2 p-sm-2.5 rounded-3 bg-primary-subtle text-primary fs-4 flex-shrink-0">
-                <i class="bi bi-chat-heart-fill"></i>
+                <i class="bi bi-gender-male"></i>
             </div>
             <div>
-                <div class="text-muted fs-xxs fw-bold text-uppercase">Total Konseling</div>
-                <div class="fs-5 fs-sm-4 fw-extrabold text-dark">{{ $totalCounseling }}</div>
-                <div class="text-muted fs-xxs d-none d-sm-block">Pengajuan Siswa</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-6 col-lg-3">
-        <div class="card-app p-2.5 p-sm-3 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2 gap-sm-3 h-100">
-            <div class="p-2 p-sm-2.5 rounded-3 bg-warning-subtle text-warning-emphasis fs-4 flex-shrink-0">
-                <i class="bi bi-hourglass-split"></i>
-            </div>
-            <div>
-                <div class="text-muted fs-xxs fw-bold text-uppercase">Berjalan</div>
-                <div class="fs-5 fs-sm-4 fw-extrabold text-warning-emphasis">{{ $activeCounselingCount }}</div>
-                <div class="text-muted fs-xxs d-none d-sm-block">Perlu Dipantau</div>
+                <div class="text-muted fs-xxs fw-bold text-uppercase">Laki-Laki</div>
+                <div class="fs-5 fs-sm-4 fw-extrabold text-primary">{{ $maleStudentsCount }}</div>
+                <div class="text-muted fs-xxs d-none d-sm-block">Siswa (L)</div>
             </div>
         </div>
     </div>
@@ -86,11 +73,24 @@
     <div class="col-6 col-lg-3">
         <div class="card-app p-2.5 p-sm-3 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2 gap-sm-3 h-100">
             <div class="p-2 p-sm-2.5 rounded-3 bg-danger-subtle text-danger fs-4 flex-shrink-0">
+                <i class="bi bi-gender-female"></i>
+            </div>
+            <div>
+                <div class="text-muted fs-xxs fw-bold text-uppercase">Perempuan</div>
+                <div class="fs-5 fs-sm-4 fw-extrabold text-danger">{{ $femaleStudentsCount }}</div>
+                <div class="text-muted fs-xxs d-none d-sm-block">Siswi (P)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-lg-3">
+        <div class="card-app p-2.5 p-sm-3 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2 gap-sm-3 h-100">
+            <div class="p-2 p-sm-2.5 rounded-3 bg-warning-subtle text-warning-emphasis fs-4 flex-shrink-0">
                 <i class="bi bi-exclamation-octagon-fill"></i>
             </div>
             <div>
                 <div class="text-muted fs-xxs fw-bold text-uppercase">Aduan Kasus</div>
-                <div class="fs-5 fs-sm-4 fw-extrabold text-danger">{{ $totalComplaints }}</div>
+                <div class="fs-5 fs-sm-4 fw-extrabold text-warning-emphasis">{{ $totalComplaints }}</div>
                 <div class="text-muted fs-xxs d-none d-sm-block">Ke Guru BK</div>
             </div>
         </div>
@@ -153,59 +153,49 @@
         </div>
     </div>
 
-    {{-- 4. SESI KONSELING TERAKHIR MURID & ADUAN KASUS --}}
+    {{-- 4. ADUAN KASUS TERAKHIR KE GURU BK --}}
     <div class="col-lg-5">
-        {{-- Konseling Terakhir --}}
-        <div class="card card-app mb-4">
-            <div class="card-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between">
+        <div class="card card-app h-100">
+            <div class="card-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between flex-wrap gap-2">
                 <h6 class="fw-bold mb-0 text-dark">
-                    <i class="bi bi-chat-heart text-primary me-1.5"></i> Sesi Konseling Siswa Rombel
+                    <i class="bi bi-flag-fill text-danger me-1.5"></i> Aduan Kasus ke Guru BK
                 </h6>
-                <span class="badge bg-light text-muted border">Info Rombel</span>
-            </div>
-            <div class="card-body p-3">
-                @forelse($recentCounselings as $counseling)
-                    <div class="p-2.5 rounded-3 border bg-light mb-2">
-                        <div class="d-flex align-items-center justify-content-between mb-1">
-                            <span class="fw-bold text-dark small">{{ $counseling->student?->name }}</span>
-                            <span class="badge bg-teal-subtle text-mint small rounded-pill">{{ ucfirst($counseling->status) }}</span>
-                        </div>
-                        <div class="text-muted fs-xs mb-1">{{ Str::limit($counseling->purpose, 55) }}</div>
-                        <div class="text-muted fs-xxs">
-                            <i class="bi bi-person-badge me-1"></i>Konselor: {{ $counseling->assignedCounselor?->name ?? 'Belum Ditentukan' }}
-                        </div>
-                    </div>
-                @empty
-                    <div class="text-center py-3 text-muted small">
-                        Belum ada pengajuan konseling dari murid di rombel Anda.
-                    </div>
-                @endforelse
-            </div>
-        </div>
-
-        {{-- Aduan Kasus Terakhir --}}
-        <div class="card card-app">
-            <div class="card-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between">
-                <h6 class="fw-bold mb-0 text-dark">
-                    <i class="bi bi-flag text-danger me-1.5"></i> Aduan Kasus yang Anda Ajukan
-                </h6>
-                <a href="{{ route('walikelas.aduan.index') }}" class="small text-warning-emphasis fw-bold text-decoration-none">Semua Aduan &rarr;</a>
+                <a href="{{ route('walikelas.aduan.index') }}" class="small text-warning-emphasis fw-bold text-decoration-none">
+                    Semua Aduan &rarr;
+                </a>
             </div>
             <div class="card-body p-3">
                 @forelse($recentComplaints as $comp)
-                    <div class="p-2.5 rounded-3 border mb-2">
-                        <div class="d-flex align-items-center justify-content-between mb-1">
+                    <div class="p-2.5 rounded-3 border mb-2.5 bg-white shadow-xs">
+                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-1 mb-1">
                             <span class="fw-bold text-dark small">{{ $comp->student?->name }}</span>
-                            <span class="badge {{ $comp->status_badge_class }} small rounded-pill">{{ $comp->status_label }}</span>
+                            <span class="badge {{ $comp->status_badge_class }} fs-xxs rounded-pill px-2 py-0.5">
+                                {{ $comp->status_label }}
+                            </span>
                         </div>
-                        <div class="small fw-semibold text-muted">{{ $comp->title }}</div>
-                        <div class="text-muted fs-xxs mt-1">
+                        <div class="small fw-semibold text-dark mb-1">{{ $comp->title }}</div>
+                        <div class="text-muted fs-xxs mb-1.5">
                             <i class="bi bi-calendar-event me-1"></i>{{ $comp->incident_date->format('d M Y') }} &bull; {{ $comp->category_label }}
+                        </div>
+                        @if($comp->counselor_response)
+                            <div class="p-1.5 rounded-2 bg-teal-subtle text-mint fs-xxs mb-1.5">
+                                <i class="bi bi-check2-circle me-1"></i><strong>Respon BK:</strong> {{ Str::limit($comp->counselor_response, 45) }}
+                            </div>
+                        @endif
+                        <div class="text-end">
+                            <a href="{{ route('walikelas.aduan.show', $comp) }}" class="btn btn-light btn-sm rounded-pill px-2 py-0.5 border fw-bold fs-xxs text-muted">
+                                Detail Kasus &rarr;
+                            </a>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-3 text-muted small">
-                        Belum ada aduan kasus yang Anda laporkan.
+                    <div class="text-center py-5 text-muted">
+                        <i class="bi bi-shield-check fs-1 d-block mb-2 text-success opacity-50"></i>
+                        <div class="fw-bold fs-sm">Belum Ada Kasus Siswa</div>
+                        <div class="fs-xs mt-1">Keadaan kelas terpantau aman dan tertib.</div>
+                        <a href="{{ route('walikelas.aduan.create') }}" class="btn btn-outline-warning btn-sm rounded-pill px-3 py-1 fw-bold mt-3">
+                            <i class="bi bi-plus-circle me-1"></i> Lapor Kasus Murid
+                        </a>
                     </div>
                 @endforelse
             </div>

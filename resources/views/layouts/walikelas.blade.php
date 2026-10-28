@@ -244,10 +244,6 @@
                 <i class="bi bi-grid-1x2-fill"></i>
                 <span>Beranda & Siswa</span>
             </a>
-            <a href="{{ route('walikelas.monitoring.index') }}" class="sk-nav-item {{ request()->routeIs('walikelas.monitoring.*') ? 'active' : '' }}">
-                <i class="bi bi-chat-heart-fill"></i>
-                <span>Monitoring Konseling</span>
-            </a>
 
             <div class="sk-nav-heading">LAYANAN & ADUAN</div>
             <a href="{{ route('walikelas.aduan.index') }}" class="sk-nav-item {{ request()->routeIs('walikelas.aduan.*') ? 'active' : '' }}">
@@ -296,10 +292,6 @@
         <a href="{{ route('walikelas.dashboard') }}" class="sk-btab {{ request()->routeIs('walikelas.dashboard*') ? 'active' : '' }}">
             <i class="bi bi-grid-1x2{{ request()->routeIs('walikelas.dashboard*') ? '-fill' : '' }}"></i>
             <span>Beranda</span>
-        </a>
-        <a href="{{ route('walikelas.monitoring.index') }}" class="sk-btab {{ request()->routeIs('walikelas.monitoring.*') ? 'active' : '' }}">
-            <i class="bi bi-chat-heart{{ request()->routeIs('walikelas.monitoring.*') ? '-fill' : '' }}"></i>
-            <span>Monitoring</span>
         </a>
         <a href="{{ route('walikelas.aduan.index') }}" class="sk-btab {{ request()->routeIs('walikelas.aduan.*') ? 'active' : '' }}">
             <i class="bi bi-exclamation-octagon{{ request()->routeIs('walikelas.aduan.*') ? '-fill' : '' }}"></i>

@@ -277,9 +277,8 @@ Route::prefix('walikelas')->name('walikelas.')->middleware(['auth', 'role:wali_k
     Route::get('/', [WaliKelasDashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [WaliKelasDashboardController::class, 'index'])->name('dashboard.index');
 
-    // Monitoring Konseling Murid Rombel Binaan
-    Route::get('/monitoring', [WaliKelasMonitoringController::class, 'index'])->name('monitoring.index');
-    Route::get('/monitoring/{konseling}', [WaliKelasMonitoringController::class, 'show'])->name('monitoring.show');
+    // Monitoring Konseling dialihkan ke Dashboard
+    Route::redirect('/monitoring', '/walikelas/dashboard')->name('monitoring.index');
 
     // Fitur Aduan Kasus Murid untuk Ditindaklanjuti Guru BK
     Route::get('/aduan', [WaliKelasAduanController::class, 'index'])->name('aduan.index');

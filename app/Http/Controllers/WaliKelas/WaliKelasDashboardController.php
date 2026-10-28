@@ -27,33 +27,22 @@ class WaliKelasDashboardController extends Controller
 
         $students = collect();
         $totalStudents = 0;
-        $totalCounseling = 0;
-        $activeCounselingCount = 0;
+        $maleStudentsCount = 0;
+        $femaleStudentsCount = 0;
         $totalComplaints = 0;
-        $recentCounselings = collect();
         $recentComplaints = collect();
 
         if ($classroom) {
             $students = $classroom->students()->orderBy('name')->get();
             $totalStudents = $students->count();
-            $studentIds = $students->pluck('id')->toArray();
-
-            $totalCounseling = CounselingRequest::whereIn('student_id', $studentIds)->count();
-            $activeCounselingCount = CounselingRequest::whereIn('student_id', $studentIds)
-                ->whereNotIn('status', ['completed', 'cancelled'])
-                ->count();
-
-            $recentCounselings = CounselingRequest::with(['student', 'assignedCounselor.user', 'schedule'])
-                ->whereIn('student_id', $studentIds)
-                ->latest()
-                ->limit(5)
-                ->get();
+            $maleStudentsCount = $students->where('gender', 'L')->count();
+            $femaleStudentsCount = $students->where('gender', 'P')->count();
 
             $totalComplaints = HomeroomComplaint::where('teacher_id', $teacher->id)->count();
             $recentComplaints = HomeroomComplaint::with(['student', 'handledByCounselor'])
                 ->where('teacher_id', $teacher->id)
                 ->latest()
-                ->limit(5)
+                ->limit(6)
                 ->get();
         }
 
@@ -63,10 +52,9 @@ class WaliKelasDashboardController extends Controller
             'classroom',
             'students',
             'totalStudents',
-            'totalCounseling',
-            'activeCounselingCount',
+            'maleStudentsCount',
+            'femaleStudentsCount',
             'totalComplaints',
-            'recentCounselings',
             'recentComplaints',
             'activeSemester',
             'activeYear'
