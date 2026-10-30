@@ -18,6 +18,7 @@ class ImsAssessment extends Model
         'semester_id',
         'status',
         'final_notes',
+        'consult_to',
         'submitted_at',
         'read_at',
     ];

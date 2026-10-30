@@ -22,7 +22,10 @@
                 <h1 class="h5 fw-bold text-dark mb-0">Lembar Hasil Pengisian Instrumen Masalah Siswa</h1>
             </div>
         </div>
-        <div class="d-flex gap-2">
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ route('panel.ims.print-individual', $assessment) }}" target="_blank" class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-printer me-1"></i> Cetak Format AUM (Individual)
+            </a>
             <a href="{{ route('panel.konseling.index', ['student_id' => $assessment->student_id]) }}" class="btn btn-primary btn-sm bg-emerald border-0 text-white">
                 <i class="bi bi-calendar-plus me-1"></i> Jadwalkan Konseling
             </a>
@@ -62,7 +65,7 @@
                     <div class="d-flex justify-content-between py-1">
                         <span class="text-muted">Masalah Dipilih</span>
                         <span class="badge bg-danger-subtle text-danger fs-xs fw-bold px-2 py-1 rounded-pill">
-                            {{ $totalSelected }} dari 180 Butir
+                            {{ $totalSelected }} dari {{ $totalAnswers }} Butir
                         </span>
                     </div>
                 </div>
@@ -77,6 +80,22 @@
                         <p class="fs-xs mb-0 mt-1">
                             Seluruh data lembar jawaban dan catatan murid di bawah ini dilindungi kode etik bimbingan konseling dan tidak diperkenankan disebarluaskan di luar penanganan konselor.
                         </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pihak untuk Konsultasi (AUM) -->
+            <div class="card border-0 shadow-sm rounded-3 mt-3">
+                <div class="card-header bg-white py-3 border-bottom">
+                    <span class="fw-semibold text-dark fs-sm"><i class="bi bi-person-check-fill me-1 text-emerald"></i> Pihak untuk Berkonsultasi (AUM)</span>
+                </div>
+                <div class="card-body p-3 fs-sm">
+                    <div class="p-2.5 bg-light rounded-3 text-dark border d-flex align-items-center gap-2">
+                        <i class="bi bi-chat-heart-fill text-danger fs-5"></i>
+                        <div>
+                            <div class="fs-xs text-muted">Ingin mengkonsultasikan masalah kepada:</div>
+                            <strong class="text-dark">{{ $assessment->consult_to ?? 'Guru BK / Konselor' }}</strong>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,7 +122,7 @@
             <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
                 <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
                     <span class="fw-semibold text-dark">Rincian Jawaban Per Bidang Bimbingan</span>
-                    <span class="badge bg-light text-muted border">45 Butir / Bidang</span>
+                    <span class="badge bg-light text-muted border">Asesmen Format Standar BK</span>
                 </div>
                 <div class="card-body p-0">
                     <ul class="nav nav-tabs nav-fill bg-light px-3 pt-2 border-bottom" id="imsTabs" role="tablist">
@@ -166,6 +185,11 @@
                                                             <span class="badge bg-danger text-white px-2 py-1 rounded-pill fw-bold">
                                                                 <i class="bi bi-check-lg"></i> Ya (Dialami)
                                                             </span>
+                                                            @if($ans->is_heavy)
+                                                                <span class="badge bg-dark text-warning border border-warning px-2 py-0.5 rounded-pill fw-bold d-block mt-1 fs-xs" title="Nomor Masalah Yang Berat (N.M.Y.B)">
+                                                                    <i class="bi bi-exclamation-triangle-fill text-warning me-1"></i> N.M.Y.B (Berat)
+                                                                </span>
+                                                            @endif
                                                         @else
                                                             <span class="text-muted fs-xs">Tidak</span>
                                                         @endif

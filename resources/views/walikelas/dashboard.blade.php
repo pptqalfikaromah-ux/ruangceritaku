@@ -12,9 +12,10 @@
 
     <div class="row align-items-center g-3 position-relative z-1">
         <div class="col-auto">
-            <div class="d-flex align-items-center justify-content-center rounded-circle" style="width: 48px; height: 48px; background: #ffffff; color: #d97706; font-size: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                <i class="bi bi-mortarboard-fill"></i>
-            </div>
+            <img src="{{ auth()->user()->avatar_url }}"
+                 alt="{{ $teacher?->name ?? $user->name }}"
+                 class="rounded-circle shadow-sm"
+                 style="width: clamp(52px, 8vw, 68px); height: clamp(52px, 8vw, 68px); object-fit: cover; border: 3px solid rgba(255, 255, 255, 0.7);">
         </div>
         <div class="col">
             <div class="badge rounded-pill bg-white text-warning-emphasis fw-extrabold px-2.5 py-1 mb-1 shadow-xs fs-xxs">

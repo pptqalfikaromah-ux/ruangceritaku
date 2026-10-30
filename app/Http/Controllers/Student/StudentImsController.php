@@ -230,14 +230,21 @@ class StudentImsController extends Controller
         }
 
         $selectedStatements = $request->input('selected', []); // array of statement IDs
+        $heavyStatements = $request->input('heavy', []); // array of statement IDs yang dirasa paling berat (N.M.Y.B)
         $statementNotes = $request->input('notes', []); // array of [stmt_id => note]
         $wideNote = $request->input('wide_note');
+        $consultTo = $request->input('consult_to');
         $scopeStatementIds = $request->input('scope_statement_ids', []);
 
-        DB::transaction(function () use ($assessment, $serviceId, $fieldId, $selectedStatements, $statementNotes, $wideNote, $scopeStatementIds, $request) {
-            // 1. Simpan Butir Standar & Catatan per Butir
+        DB::transaction(function () use ($assessment, $serviceId, $fieldId, $selectedStatements, $heavyStatements, $statementNotes, $wideNote, $consultTo, $scopeStatementIds, $request) {
+            if (!empty($consultTo)) {
+                $assessment->update(['consult_to' => $consultTo]);
+            }
+
+            // 1. Simpan Butir Standar, Catatan, & Indikator Masalah Berat (N.M.Y.B)
             foreach ($scopeStatementIds as $stmtId) {
                 $isSelected = in_array($stmtId, $selectedStatements);
+                $isHeavy = $isSelected && in_array($stmtId, $heavyStatements);
                 $itemNote = $statementNotes[$stmtId] ?? null;
                 if (empty($itemNote) && !empty($wideNote) && $isSelected) {
                     $itemNote = $wideNote;
@@ -251,6 +258,7 @@ class StudentImsController extends Controller
                         ],
                         [
                             'is_selected' => $isSelected,
+                            'is_heavy' => $isHeavy,
                             'student_note' => $itemNote,
                         ]
                     );
@@ -402,6 +410,7 @@ class StudentImsController extends Controller
         $assessment->update([
             'status' => 'submitted',
             'final_notes' => $request->input('final_notes', $assessment->final_notes),
+            'consult_to' => $request->input('consult_to', $assessment->consult_to),
             'submitted_at' => now(),
         ]);
 

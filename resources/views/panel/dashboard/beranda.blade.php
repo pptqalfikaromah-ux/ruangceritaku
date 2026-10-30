@@ -22,7 +22,7 @@
     <div class="row align-items-center g-3 position-relative z-1">
         <!-- User Avatar & Identity -->
         <div class="col-auto">
-            <img src="{{ 'https://ui-avatars.com/api/?name=' . urlencode($counselorName) . '&background=f0fdfa&color=0d9488&bold=true&size=80' }}"
+            <img src="{{ auth()->user()->avatar_url }}"
                  alt="{{ $counselorName }}"
                  class="rounded-circle shadow-sm"
                  style="width: clamp(52px, 8vw, 68px); height: clamp(52px, 8vw, 68px); object-fit: cover; border: 3px solid rgba(255, 255, 255, 0.7);">

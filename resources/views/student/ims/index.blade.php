@@ -39,7 +39,7 @@
                         Peta Masalah & Kebutuhan Siswa (IMS)
                     </h2>
                     <p class="text-white opacity-90 fs-sm mb-4" style="max-width: 620px; line-height: 1.65;">
-                        Kenali dan pilih kendala yang sedang kamu hadapi melalui <strong>9 Rumpun Layanan Konseling</strong> di bawah. Setiap layanan memuat 4 bidang masalah (Pribadi, Sosial, Belajar, Karir). Ceritakan dengan jujur, kerahasiaanmu 100% aman terjamin.
+                        Kenali dan pilih kendala yang sedang kamu hadapi melalui <strong>{{ $serviceTypes->count() }} Rumpun Layanan Konseling</strong> di bawah. Setiap layanan memuat 4 bidang masalah (Pribadi, Sosial, Belajar, Karir). Ceritakan dengan jujur, kerahasiaanmu 100% aman terjamin.
                     </p>
 
                     <div class="d-flex flex-wrap gap-2.5">

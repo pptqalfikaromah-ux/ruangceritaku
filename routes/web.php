@@ -147,13 +147,14 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
         Route::put('/layanan/{service}', [MasterServiceController::class, 'updateService'])->name('layanan.update');
     });
 
-    // 7. Instrumen Masalah Siswa (IMS 180 Butir)
+    // 7. Instrumen Masalah Siswa (IMS Asesmen)
     Route::get('/ims/master', [ImsController::class, 'master'])->name('ims.master');
     Route::post('/ims/toggle-status', [ImsController::class, 'toggleStatus'])->name('ims.toggle-status');
     Route::put('/ims/statement/{statement}', [ImsController::class, 'updateStatement'])->name('ims.update');
     Route::post('/ims/statement/{statement}/toggle', [ImsController::class, 'toggleStatement'])->name('ims.toggle');
     Route::get('/ims/monitoring', [ImsController::class, 'monitoring'])->name('ims.monitoring');
     Route::get('/ims/assessment/{assessment}', [ImsController::class, 'showAssessment'])->name('ims.show');
+    Route::get('/ims/assessment/{assessment}/cetak-individual', [ImsController::class, 'printIndividual'])->name('ims.print-individual');
     Route::get('/ims/rekap', [ImsController::class, 'rekap'])->name('ims.rekap');
 
     // 8. Monitoring, Persetujuan & Penjadwalan Konseling

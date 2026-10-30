@@ -270,6 +270,88 @@ class ImsController extends Controller
     }
 
     /**
+     * Cetak Laporan Format Resmi AUM (Alat Ungkap Masalah) Individual Siswa (Format 3)
+     */
+    public function printIndividual(ImsAssessment $assessment): View
+    {
+        $assessment->load([
+            'student.classrooms',
+            'academicYear',
+            'semester',
+            'answers.statement.serviceType',
+            'answers.statement.guidanceField',
+        ]);
+
+        $guidanceFields = GuidanceField::orderBy('id')->get();
+        $fieldsData = [];
+        $totalSelectedAll = 0;
+        $totalStatementsAll = 0;
+        $heavyStatementsAll = [];
+
+        foreach ($guidanceFields as $field) {
+            $fieldStatementsCount = ImsStatement::where('guidance_field_id', $field->id)
+                ->whereNull('deleted_at')
+                ->where('is_active', true)
+                ->count();
+
+            // Selected answers in this field
+            $selectedAnswers = $assessment->answers->filter(function ($a) use ($field) {
+                return $a->statement?->guidance_field_id === $field->id && $a->is_selected;
+            })->sortBy(function ($a) {
+                return $a->statement?->statement_number;
+            });
+
+            // Heavy answers in this field
+            $heavyAnswers = $selectedAnswers->filter(function ($a) {
+                return (bool) $a->is_heavy;
+            });
+
+            $selectedNumbers = $selectedAnswers->pluck('statement.statement_number')->map(function ($num) {
+                return sprintf('%03d', $num);
+            })->values()->all();
+
+            $heavyNumbers = $heavyAnswers->pluck('statement.statement_number')->map(function ($num) {
+                return sprintf('%03d', $num);
+            })->values()->all();
+
+            $count = count($selectedNumbers);
+            $percentage = $fieldStatementsCount > 0 ? round(($count / $fieldStatementsCount) * 100, 2) : 0;
+
+            $fieldsData[] = [
+                'field' => $field,
+                'total_statements' => $fieldStatementsCount,
+                'selected_numbers' => $selectedNumbers,
+                'selected_answers' => $selectedAnswers,
+                'count' => $count,
+                'percentage' => $percentage,
+                'heavy_numbers' => $heavyNumbers,
+                'heavy_answers' => $heavyAnswers,
+            ];
+
+            $totalSelectedAll += $count;
+            $totalStatementsAll += $fieldStatementsCount;
+            foreach ($heavyAnswers as $ha) {
+                $heavyStatementsAll[] = $ha;
+            }
+        }
+
+        $overallPercentage = $totalStatementsAll > 0 ? round(($totalSelectedAll / $totalStatementsAll) * 100, 2) : 0;
+
+        // Current counselor or fallback
+        $counselor = auth()->user()?->counselor ?? auth()->user();
+
+        return view('panel.ims.print-individual', compact(
+            'assessment',
+            'fieldsData',
+            'totalSelectedAll',
+            'totalStatementsAll',
+            'overallPercentage',
+            'heavyStatementsAll',
+            'counselor'
+        ));
+    }
+
+    /**
      * Rekapitulasi Multidimensi Instrumen Masalah Siswa (Analytics)
      */
     public function rekap(Request $request): View

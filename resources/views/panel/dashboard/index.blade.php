@@ -14,7 +14,7 @@
     <div style="position:absolute;width:120px;height:120px;background:rgba(245,158,11,.12);border-radius:50%;bottom:-30px;right:20px;"></div>
     <div class="row align-items-center g-3 position-relative z-1">
         <div class="col-auto">
-            <img src="{{ 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=f0fdfa&color=0d9488&bold=true&size=80' }}"
+            <img src="{{ auth()->user()->avatar_url }}"
                  alt="{{ auth()->user()->name }}"
                  class="rounded-circle shadow-sm"
                  style="width:clamp(52px, 8vw, 68px);height:clamp(52px, 8vw, 68px);object-fit:cover;border:3px solid rgba(255,255,255,.6);">

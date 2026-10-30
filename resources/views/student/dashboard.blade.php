@@ -13,7 +13,7 @@
     <div style="position:absolute;width:120px;height:120px;background:rgba(245,158,11,.12);border-radius:50%;bottom:-30px;right:20px;"></div>
     <div class="row g-3 align-items-center position-relative">
         <div class="col-auto">
-            <img src="{{ $student->photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($student->name) . '&background=f0fdfa&color=0d9488&bold=true&size=80' }}"
+            <img src="{{ $student->photo_url ?? auth()->user()->avatar_url }}"
                  alt="{{ $student->name }}"
                  style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.5);box-shadow:0 4px 12px rgba(0,0,0,.15);">
         </div>

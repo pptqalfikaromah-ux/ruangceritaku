@@ -9,10 +9,10 @@
         <div>
             <div class="d-flex align-items-center gap-2 mb-1">
                 <span class="badge bg-emerald-subtle text-emerald px-2 py-1 fs-xs fw-semibold rounded-pill">Bank Instrumen</span>
-                <span class="badge bg-secondary-subtle text-secondary px-2 py-1 fs-xs fw-medium rounded-pill">180 Butir Standar BK</span>
+                <span class="badge bg-secondary-subtle text-secondary px-2 py-1 fs-xs fw-medium rounded-pill">{{ $totalStatements }} Butir Standar BK</span>
             </div>
             <h1 class="h4 fw-bold text-dark mb-1">Master Instrumen Masalah Siswa (IMS)</h1>
-            <p class="text-muted small mb-0">Pengelolaan bank instrumen pengungkapan masalah konseling berbasis 9 Layanan & 4 Bidang Bimbingan.</p>
+            <p class="text-muted small mb-0">Pengelolaan bank instrumen asesmen masalah konseling berbasis {{ $serviceTypes->count() }} Layanan & 4 Bidang Bimbingan.</p>
         </div>
         <div class="d-flex gap-2">
             <a href="{{ route('panel.ims.monitoring') }}" class="btn btn-outline-secondary btn-sm">

@@ -94,6 +94,7 @@
                     @php
                         $ans = $existingAnswers->get($stmt->id);
                         $isSelected = $ans?->is_selected ?? false;
+                        $isHeavy = $ans?->is_heavy ?? false;
                         $itemNote = $ans?->student_note ?? '';
                     @endphp
                     <input type="hidden" name="scope_statement_ids[]" value="{{ $stmt->id }}">
@@ -124,13 +125,18 @@
                                         <span class="badge rounded-pill px-2 py-0.5 fs-xs" style="background: #E6FAF5; color: #008F72;">
                                             Bidang {{ $field->name }}
                                         </span>
+                                        @if($isHeavy)
+                                            <span class="badge bg-danger-subtle text-danger rounded-pill px-2 py-0.5 fs-xxs fw-bold">
+                                                <i class="bi bi-exclamation-triangle-fill me-0.5"></i> N.M.Y.B
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="fw-bold text-dark fs-sm lh-base">
                                         {{ $stmt->statement_text }}
                                     </div>
                                 </label>
 
-                                <!-- Catatan Khusus untuk Butir Ini -->
+                                <!-- Catatan Khusus & Penanda NMYB untuk Butir Ini -->
                                 <div class="statement-note-box mt-2" id="note_box_{{ $stmt->id }}" style="{{ $isSelected || !empty($itemNote) ? '' : 'display: none;' }}">
                                     <div class="p-2.5 rounded-3" style="background: #F4FBF9; border: 1px dashed #A7F3D0;">
                                         <label class="form-label fs-xxs fw-bold text-uppercase text-muted mb-1 d-flex align-items-center gap-1">
@@ -138,9 +144,27 @@
                                         </label>
                                         <textarea name="notes[{{ $stmt->id }}]" 
                                                   rows="2" 
-                                                  class="form-control form-control-sm border-0 rounded-2 bg-white" 
+                                                  class="form-control form-control-sm border-0 rounded-2 bg-white mb-2" 
                                                   placeholder="Jelaskan kondisi atau contoh kejadian yang kamu alami pada masalah ini..."
                                                   {{ $assessment->isSubmitted() ? 'readonly' : '' }}>{{ $itemNote }}</textarea>
+
+                                        <!-- Opsi Nomor Masalah Yang Berat (N.M.Y.B) -->
+                                        <div class="pt-2 border-top d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                            <div class="form-check form-switch mb-0">
+                                                <input class="form-check-input cursor-pointer" 
+                                                       type="checkbox" 
+                                                       role="switch" 
+                                                       name="heavy[]" 
+                                                       value="{{ $stmt->id }}" 
+                                                       id="heavy_{{ $stmt->id }}"
+                                                       {{ $isHeavy ? 'checked' : '' }}
+                                                       {{ $assessment->isSubmitted() ? 'disabled' : '' }}>
+                                                <label class="form-check-label fs-xs fw-bold cursor-pointer user-select-none text-danger" for="heavy_{{ $stmt->id }}">
+                                                    <i class="bi bi-exclamation-triangle-fill me-1"></i> Masalah Yang Dirasakan Paling Berat (N.M.Y.B)
+                                                </label>
+                                            </div>
+                                            <span class="badge bg-danger-subtle text-danger rounded-pill px-2 py-0.5 fs-xxs fw-semibold">Format AUM / IMS</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +280,47 @@
             </div>
         </div>
 
-        <!-- SECTION 3: KOLOM CATATAN UMUM / CURHAT SISWA -->
+        <!-- SECTION 3: KEPADA SIAPA INGIN KONSULTASI (FORMAT AUM INDIVIDUAL) -->
+        <div class="card border-0 rounded-4 bg-white p-3.5 p-md-4 shadow-sm mb-4" style="border: 1.5px solid #E2ECE9 !important;">
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; background: #eff6ff; color: #2563eb;">
+                    <i class="bi bi-people-fill fs-5"></i>
+                </div>
+                <div>
+                    <h5 class="fw-bold text-dark mb-0 fs-sm">Pihak untuk Berkonsultasi (Format AUM / IMS)</h5>
+                    <span class="text-muted fs-xs">Kepada siapa kamu paling ingin mengkonsultasikan masalah-masalah ini?</span>
+                </div>
+            </div>
+
+            <p class="text-muted fs-xs mb-3">
+                Sesuai instrumen pengolahan masalah, silakan pilih pihak yang paling kamu percayai untuk diajak bicara:
+            </p>
+
+            <div class="row g-2">
+                @php
+                    $consultOptions = ['Orang Tua', 'Guru BK / Konselor', 'Wali Kelas', 'Teman Sebaya', 'Lainnya / Belum Tahu'];
+                    $currentConsult = $assessment->consult_to ?? 'Guru BK / Konselor';
+                @endphp
+                @foreach($consultOptions as $opt)
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-check p-2.5 rounded-3 border h-100 d-flex align-items-center gap-2" style="background: #fafafa;">
+                            <input class="form-check-input ms-1 mt-0 cursor-pointer" 
+                                   type="radio" 
+                                   name="consult_to" 
+                                   id="consult_{{ Str::slug($opt) }}" 
+                                   value="{{ $opt }}"
+                                   {{ $currentConsult === $opt ? 'checked' : '' }}
+                                   {{ $assessment->isSubmitted() ? 'disabled' : '' }}>
+                            <label class="form-check-label fs-xs fw-semibold text-dark cursor-pointer user-select-none mb-0" for="consult_{{ Str::slug($opt) }}">
+                                {{ $opt }}
+                            </label>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- SECTION 4: KOLOM CATATAN UMUM / CURHAT SISWA -->
         <div class="card border-0 rounded-4 bg-white p-3.5 p-md-4 shadow-sm mb-5" style="border: 1px solid #E2ECE9 !important;">
             <div class="d-flex align-items-center gap-2 mb-2">
                 <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; background: #E6FAF5; color: #00B894;">
@@ -361,6 +425,12 @@
         -webkit-backdrop-filter: blur(16px);
         border: 1px solid #E2ECE9;
         z-index: 1010;
+    }
+
+    @media (max-width: 991.98px) {
+        .floating-action-bar {
+            bottom: 68px !important;
+        }
     }
 
     @media (max-width: 576px) {

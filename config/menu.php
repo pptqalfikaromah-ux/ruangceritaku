@@ -77,7 +77,6 @@ return [
             'id' => 'menuKonseling',
             'label' => 'Layanan Konseling',
             'icon' => 'bi-chat-heart',
-            'badge_key' => 'counseling_and_ims',
             'roles' => ['admin', 'guru_bk'],
             'children' => [
                 [
@@ -85,22 +84,6 @@ return [
                     'icon' => 'bi-calendar2-check',
                     'route' => 'panel.konseling.index',
                     'active' => 'panel.konseling.*',
-                    'badge_key' => 'counseling',
-                    'roles' => ['admin', 'guru_bk'],
-                ],
-                [
-                    'label' => 'Instrumen IMS',
-                    'icon' => 'bi-clipboard2-check',
-                    'route' => 'panel.ims.master',
-                    'active' => 'panel.ims.*',
-                    'badge_key' => 'ims',
-                    'roles' => ['admin', 'guru_bk'],
-                ],
-                [
-                    'label' => 'Pamflet Kreativitas Siswa',
-                    'icon' => 'bi-images',
-                    'route' => 'panel.pamflet-kreatifitas.index',
-                    'active' => 'panel.pamflet-kreatifitas.*',
                     'roles' => ['admin', 'guru_bk'],
                 ],
                 [
@@ -115,6 +98,45 @@ return [
                     'icon' => 'bi-collection',
                     'route' => 'panel.layanan.index',
                     'active' => 'panel.layanan.*',
+                    'roles' => ['admin', 'guru_bk'],
+                ],
+                [
+                    'label' => 'Pamflet Kreativitas Siswa',
+                    'icon' => 'bi-images',
+                    'route' => 'panel.pamflet-kreatifitas.index',
+                    'active' => 'panel.pamflet-kreatifitas.*',
+                    'roles' => ['admin', 'guru_bk'],
+                ],
+            ],
+        ],
+
+        // 3b. Asesmen Siswa (IMS - Instrumen Masalah Siswa)
+        [
+            'type' => 'dropdown',
+            'id' => 'menuAsesmenIms',
+            'label' => 'Asesmen Siswa (IMS)',
+            'icon' => 'bi-clipboard2-data',
+            'roles' => ['admin', 'guru_bk'],
+            'children' => [
+                [
+                    'label' => 'Hasil Asesmen Siswa',
+                    'icon' => 'bi-file-earmark-person',
+                    'route' => 'panel.ims.monitoring',
+                    'active' => 'panel.ims.monitoring',
+                    'roles' => ['admin', 'guru_bk'],
+                ],
+                [
+                    'label' => 'Rekapitulasi & Analisis',
+                    'icon' => 'bi-bar-chart-line',
+                    'route' => 'panel.ims.rekap',
+                    'active' => 'panel.ims.rekap',
+                    'roles' => ['admin', 'guru_bk'],
+                ],
+                [
+                    'label' => 'Bank Soal IMS',
+                    'icon' => 'bi-clipboard2-check',
+                    'route' => 'panel.ims.master',
+                    'active' => 'panel.ims.master',
                     'roles' => ['admin', 'guru_bk'],
                 ],
             ],

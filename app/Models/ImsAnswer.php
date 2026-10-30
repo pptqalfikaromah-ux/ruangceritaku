@@ -14,11 +14,13 @@ class ImsAnswer extends Model
         'ims_assessment_id',
         'ims_statement_id',
         'is_selected',
+        'is_heavy',
         'student_note',
     ];
 
     protected $casts = [
         'is_selected' => 'boolean',
+        'is_heavy' => 'boolean',
     ];
 
     public function assessment(): BelongsTo

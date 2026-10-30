@@ -208,13 +208,23 @@
                             </td>
                             <td class="text-end">
                                 @if($student->current_assessment && $student->ims_status === 'submitted')
-                                    <a href="{{ route('panel.ims.show', $student->current_assessment->id) }}" class="btn btn-sm btn-outline-primary py-1 px-2 fs-xs">
-                                        <i class="bi bi-eye me-1"></i> Periksa Jawaban
-                                    </a>
+                                    <div class="d-inline-flex gap-1">
+                                        <a href="{{ route('panel.ims.show', $student->current_assessment->id) }}" class="btn btn-sm btn-outline-primary py-1 px-2 fs-xs">
+                                            <i class="bi bi-eye me-1"></i> Periksa
+                                        </a>
+                                        <a href="{{ route('panel.ims.print-individual', $student->current_assessment->id) }}" target="_blank" class="btn btn-sm btn-outline-danger py-1 px-2 fs-xs" title="Cetak Format Resmi AUM (Format 3)">
+                                            <i class="bi bi-printer me-1"></i> AUM
+                                        </a>
+                                    </div>
                                 @elseif($student->current_assessment)
-                                    <a href="{{ route('panel.ims.show', $student->current_assessment->id) }}" class="btn btn-sm btn-light border py-1 px-2 fs-xs text-muted">
-                                        <i class="bi bi-eye me-1"></i> Lihat Draft
-                                    </a>
+                                    <div class="d-inline-flex gap-1">
+                                        <a href="{{ route('panel.ims.show', $student->current_assessment->id) }}" class="btn btn-sm btn-light border py-1 px-2 fs-xs text-muted">
+                                            <i class="bi bi-eye me-1"></i> Draft
+                                        </a>
+                                        <a href="{{ route('panel.ims.print-individual', $student->current_assessment->id) }}" target="_blank" class="btn btn-sm btn-light border py-1 px-2 fs-xs text-muted" title="Cetak Format Resmi AUM (Draft)">
+                                            <i class="bi bi-printer"></i>
+                                        </a>
+                                    </div>
                                 @else
                                     <span class="badge bg-light text-muted border px-2 py-1 fs-xs">Tidak Ada Data</span>
                                 @endif

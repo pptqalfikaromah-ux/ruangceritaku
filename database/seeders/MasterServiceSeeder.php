@@ -26,12 +26,6 @@ class MasterServiceSeeder extends Seeder
                 'description' => 'Layanan yang membantu peserta didik menerima dan memahami berbagai informasi diri, sosial, belajar, pergaulan, karier, dan pendidikan lanjutan.',
             ],
             [
-                'code' => 'LAY-03',
-                'name' => 'Layanan Penempatan dan Penyaluran',
-                'category' => 'layanan',
-                'description' => 'Layanan yang membantu peserta didik memperoleh penempatan dan penyaluran yang tepat di dalam kelas, kelompok belajar, jurusan, dan kegiatan ekstrakurikuler.',
-            ],
-            [
                 'code' => 'LAY-04',
                 'name' => 'Layanan Penguasaan Konten',
                 'category' => 'layanan',
