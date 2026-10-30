@@ -93,38 +93,52 @@
             </table>
         </div>
 
-        {{-- MOBILE CARDS VIEW --}}
-        <div class="d-md-none p-3">
+        {{-- MOBILE CARDS VIEW (Spacious & Clean Mobile UI) --}}
+        <div class="d-md-none p-2 p-sm-3">
             @forelse($counselings as $counseling)
-                <div class="card border rounded-3 p-3 mb-2.5 shadow-xs bg-white">
-                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-1 mb-2">
-                        <span class="font-monospace fw-bold text-primary fs-xs">#{{ $counseling->ticket_number }}</span>
-                        <span class="badge rounded-pill bg-teal-subtle text-mint px-2.5 py-1 fs-xxs">
+                <div class="mobile-card mb-3 shadow-xs">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2 pb-2 border-bottom">
+                        <span class="font-monospace fw-bold text-primary fs-xs">
+                            <i class="bi bi-ticket-perforated me-1"></i>#{{ $counseling->ticket_number }}
+                        </span>
+                        <span class="badge rounded-pill bg-teal-subtle text-mint px-2.5 py-1 fs-xs fw-bold">
                             {{ ucfirst(str_replace('_', ' ', $counseling->status)) }}
                         </span>
                     </div>
 
-                    <div class="fw-bold text-dark fs-sm mb-0.5">{{ $counseling->student?->name }}</div>
-                    <div class="text-muted fs-xxs mb-2">NISN: {{ $counseling->student?->nisn }} &bull; {{ $counseling->service?->name ?? 'Layanan Mandiri' }}</div>
-
-                    <div class="small text-muted bg-light p-2 rounded-2 mb-2 fs-xs">
-                        {{ Str::limit($counseling->purpose, 80) }}
+                    <div class="card-name mb-1">{{ $counseling->student?->name }}</div>
+                    
+                    <div class="card-sub mb-2.5">
+                        <div class="d-flex align-items-center gap-1.5 flex-wrap">
+                            <span class="text-muted fs-xs">NISN: {{ $counseling->student?->nisn }}</span>
+                            <span class="text-muted fs-xs">&bull;</span>
+                            <span class="text-dark fw-semibold fs-xs">{{ $counseling->service?->name ?? 'Layanan Mandiri' }}</span>
+                        </div>
                     </div>
 
-                    <div class="d-flex flex-column gap-1 fs-xxs text-muted mb-2.5">
-                        <div>
-                            <i class="bi bi-person-badge text-primary me-1"></i>Konselor: <strong>{{ $counseling->assignedCounselor?->name ?? 'Belum Ditentukan' }}</strong>
+                    <div class="card-info-box mb-2.5 fs-xs">
+                        <div class="fw-bold text-muted fs-xxs text-uppercase mb-1">Kebutuhan / Masalah:</div>
+                        <div class="text-dark">{{ Str::limit($counseling->purpose, 110) }}</div>
+                    </div>
+
+                    <div class="d-flex flex-column gap-1.5 fs-xs text-muted mb-2.5 p-2.5 rounded-3 bg-light">
+                        <div class="d-flex align-items-center gap-1.5">
+                            <i class="bi bi-person-badge text-primary"></i>
+                            <span>Guru BK PIC: <strong class="text-dark">{{ $counseling->assignedCounselor?->name ?? 'Belum Ditentukan' }}</strong></span>
                         </div>
                         @if($counseling->schedule)
-                            <div>
-                                <i class="bi bi-calendar-event text-warning me-1"></i>Jadwal: {{ $counseling->schedule->counseling_date?->format('d M Y') }} ({{ $counseling->schedule->start_time }} - {{ $counseling->schedule->end_time }})
+                            <div class="d-flex align-items-center gap-1.5">
+                                <i class="bi bi-calendar-event text-warning"></i>
+                                <span>Jadwal: <strong class="text-dark">{{ $counseling->schedule->counseling_date?->format('d M Y') }}</strong> ({{ $counseling->schedule->start_time }} - {{ $counseling->schedule->end_time }})</span>
                             </div>
+                        @else
+                            <div class="text-muted fs-xxs fst-italic">Jadwal sesi belum ditetapkan konselor</div>
                         @endif
                     </div>
 
                     <div class="pt-2 border-top">
-                        <a href="{{ route('walikelas.monitoring.show', $counseling) }}" class="btn btn-outline-secondary btn-sm w-100 rounded-pill fw-bold fs-xs">
-                            <i class="bi bi-eye me-1"></i> Rincian Konseling
+                        <a href="{{ route('walikelas.monitoring.show', $counseling) }}" class="btn btn-card-action w-100 text-center">
+                            <i class="bi bi-eye me-1 text-primary"></i> Rincian Konseling
                         </a>
                     </div>
                 </div>

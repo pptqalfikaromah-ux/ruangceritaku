@@ -81,4 +81,17 @@ class HomeroomComplaintController extends Controller
 
         return redirect()->route('panel.aduan-walikelas.show', $aduanWalikela)->with('success', 'Tindak lanjut dan catatan balasan Guru BK berhasil disimpan.');
     }
+
+    /**
+     * Cetak Arsip PDF Laporan Penanganan Aduan Kasus Wali Kelas
+     */
+    public function printReport(HomeroomComplaint $aduanWalikela): View
+    {
+        $complaint = $aduanWalikela->load(['teacher.user', 'classroom', 'student.classrooms', 'handledByCounselor.user']);
+        $student = $complaint->student;
+        $teacher = $complaint->teacher;
+        $counselor = $complaint->handledByCounselor ?? Counselor::first();
+
+        return view('panel.aduan-walikelas.laporan-kasus-pdf', compact('complaint', 'student', 'teacher', 'counselor'));
+    }
 }

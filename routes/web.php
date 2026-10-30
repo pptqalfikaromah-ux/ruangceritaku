@@ -171,12 +171,14 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
     // 9. Layanan Pengaduan & Perlindungan Anak
     Route::get('/pengaduan', [ComplaintController::class, 'index'])->name('pengaduan.index');
     Route::get('/pengaduan/{pengaduan}', [ComplaintController::class, 'show'])->name('pengaduan.show');
+    Route::get('/pengaduan/{pengaduan}/cetak-arsip', [ComplaintController::class, 'printReport'])->name('pengaduan.printReport');
     Route::put('/pengaduan/{pengaduan}/status', [ComplaintController::class, 'updateStatus'])->name('pengaduan.status');
     Route::delete('/pengaduan/{pengaduan}', [ComplaintController::class, 'destroy'])->name('pengaduan.destroy');
 
     // 9b. Aduan Kasus Murid dari Wali Kelas
     Route::get('/aduan-walikelas', [HomeroomComplaintController::class, 'index'])->name('aduan-walikelas.index');
     Route::get('/aduan-walikelas/{aduanWalikela}', [HomeroomComplaintController::class, 'show'])->name('aduan-walikelas.show');
+    Route::get('/aduan-walikelas/{aduanWalikela}/cetak-arsip', [HomeroomComplaintController::class, 'printReport'])->name('aduan-walikelas.printReport');
     Route::put('/aduan-walikelas/{aduanWalikela}', [HomeroomComplaintController::class, 'update'])->name('aduan-walikelas.update');
 
     // 10. Program BK & RPL

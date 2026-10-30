@@ -221,9 +221,14 @@
                 </div>
 
                 <!-- Tombol Aksi Penuh Ramah Jempol (Touch-friendly) -->
-                <div>
+                <div class="d-flex align-items-center gap-2">
+                    @if($item->status === 'resolved' || $item->status === 'closed')
+                        <a href="{{ route('panel.pengaduan.printReport', $item->id) }}" target="_blank" class="btn btn-outline-danger btn-card-icon" title="Cetak Arsip Laporan PDF">
+                            <i class="bi bi-file-earmark-pdf fs-5"></i>
+                        </a>
+                    @endif
                     <a href="{{ route('panel.pengaduan.show', $item->id) }}" 
-                       class="btn btn-mint text-white btn-card-action w-100 shadow-sm">
+                       class="btn btn-mint text-white btn-card-action flex-grow-1 shadow-sm">
                         <i class="bi bi-shield-check me-1"></i> Periksa Detail & Tindak Lanjut <i class="bi bi-arrow-right ms-1"></i>
                     </a>
                 </div>
@@ -337,10 +342,17 @@
 
                                 <!-- Aksi -->
                                 <td class="text-end pe-3.5">
-                                    <a href="{{ route('panel.pengaduan.show', $item->id) }}" 
-                                       class="btn btn-sm btn-outline-primary rounded-pill py-1 px-3 fs-xxs fw-semibold shadow-xs text-nowrap">
-                                        <i class="bi bi-eye me-1"></i> Detail
-                                    </a>
+                                    <div class="d-flex align-items-center justify-content-end gap-1.5">
+                                        @if($item->status === 'resolved' || $item->status === 'closed')
+                                            <a href="{{ route('panel.pengaduan.printReport', $item->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill px-2.5 py-1 fs-xxs fw-semibold shadow-xs" title="Cetak Arsip Laporan PDF">
+                                                <i class="bi bi-file-earmark-pdf me-1"></i> Cetak
+                                            </a>
+                                        @endif
+                                        <a href="{{ route('panel.pengaduan.show', $item->id) }}" 
+                                           class="btn btn-sm btn-outline-primary rounded-pill py-1 px-3 fs-xxs fw-semibold shadow-xs text-nowrap">
+                                            <i class="bi bi-eye me-1"></i> Detail
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

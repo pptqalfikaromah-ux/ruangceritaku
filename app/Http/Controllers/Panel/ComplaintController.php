@@ -131,4 +131,16 @@ class ComplaintController extends Controller
 
         return back()->with('success', 'Data pengaduan ' . $pengaduan->ticket_number . ' berhasil dihapus.');
     }
+
+    /**
+     * Cetak Arsip PDF Laporan Penanganan Pengaduan Darurat / Anak
+     */
+    public function printReport(StudentComplaint $pengaduan): View
+    {
+        $pengaduan->load(['student.classrooms', 'handledBy.user']);
+        $student = $pengaduan->student;
+        $counselor = $pengaduan->handledBy ?? Counselor::first();
+
+        return view('panel.pengaduan.laporan-aduan-pdf', compact('pengaduan', 'student', 'counselor'));
+    }
 }

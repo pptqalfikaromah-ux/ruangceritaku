@@ -353,12 +353,17 @@
             display: none !important;
         }
         .service-idx-circle {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             font-size: 0.75rem;
         }
         .service-name-title {
-            font-size: 0.85rem !important;
+            font-size: 0.88rem !important;
+            line-height: 1.35;
+        }
+        .ims-service-row {
+            padding: 12px 14px !important;
+            border-radius: 12px !important;
         }
     }
 </style>

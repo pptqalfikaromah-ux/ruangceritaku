@@ -8,10 +8,15 @@
 @endsection
 
 @section('content')
-<div class="mb-3">
+<div class="mb-3 d-flex align-items-center justify-content-between flex-wrap gap-2">
     <a href="{{ route('panel.aduan-walikelas.index') }}" class="btn btn-light btn-sm border rounded-pill px-3 fw-bold text-muted">
         <i class="bi bi-arrow-left me-1"></i> Kembali ke Daftar Aduan Wali Kelas
     </a>
+    @if($complaint->status === 'selesai')
+        <a href="{{ route('panel.aduan-walikelas.printReport', $complaint) }}" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3.5 py-1.5 fw-bold shadow-xs">
+            <i class="bi bi-file-earmark-pdf me-1"></i> Cetak Laporan Arsip PDF
+        </a>
+    @endif
 </div>
 
 <div class="row g-4">

@@ -125,8 +125,13 @@
                 </div>
 
                 <!-- Button Aksi Penuh -->
-                <div>
-                    <a href="{{ route('panel.aduan-walikelas.show', $comp) }}" class="btn btn-mint text-white btn-card-action w-100 shadow-sm">
+                <div class="d-flex align-items-center gap-2">
+                    @if($comp->status === 'selesai')
+                        <a href="{{ route('panel.aduan-walikelas.printReport', $comp) }}" target="_blank" class="btn btn-outline-danger btn-card-icon" title="Cetak Arsip Laporan PDF">
+                            <i class="bi bi-file-earmark-pdf fs-5"></i>
+                        </a>
+                    @endif
+                    <a href="{{ route('panel.aduan-walikelas.show', $comp) }}" class="btn btn-mint text-white btn-card-action flex-grow-1 shadow-sm">
                         <i class="bi bi-reply-fill me-1"></i> Tinjau & Respon Kasus <i class="bi bi-arrow-right ms-1"></i>
                     </a>
                 </div>
@@ -192,9 +197,16 @@
                                     </span>
                                 </td>
                                 <td class="text-end pe-3.5">
-                                    <a href="{{ route('panel.aduan-walikelas.show', $comp) }}" class="btn btn-sm btn-mint text-white rounded-pill px-3 py-1 fw-bold fs-xxs shadow-xs">
-                                        <i class="bi bi-reply-fill me-1"></i> Respon
-                                    </a>
+                                    <div class="d-flex align-items-center justify-content-end gap-1.5">
+                                        @if($comp->status === 'selesai')
+                                            <a href="{{ route('panel.aduan-walikelas.printReport', $comp) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill px-2.5 py-1 fw-bold fs-xxs" title="Cetak Arsip Laporan PDF">
+                                                <i class="bi bi-file-earmark-pdf me-1"></i> Cetak
+                                            </a>
+                                        @endif
+                                        <a href="{{ route('panel.aduan-walikelas.show', $comp) }}" class="btn btn-sm btn-mint text-white rounded-pill px-3 py-1 fw-bold fs-xxs shadow-xs">
+                                            <i class="bi bi-reply-fill me-1"></i> Respon
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

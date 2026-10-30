@@ -35,7 +35,8 @@
             <span class="fw-semibold text-dark fs-sm">Riwayat Laporan Saya</span>
             <span class="badge bg-light text-muted border">Total {{ $complaints->total() }} Laporan</span>
         </div>
-        <div class="table-responsive">
+        {{-- DESKTOP TABLE VIEW --}}
+        <div class="table-responsive d-none d-md-block">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light fs-xs text-uppercase text-muted">
                     <tr>
@@ -73,7 +74,7 @@
                                 </span>
                             </td>
                             <td class="text-end">
-                                <a href="{{ route('murid.pengaduan.show', $item->id) }}" class="btn btn-sm btn-outline-primary py-1 px-2 fs-xs">
+                                <a href="{{ route('murid.pengaduan.show', $item->id) }}" class="btn btn-sm btn-outline-primary py-1 px-2.5 fs-xs rounded-pill">
                                     Detail
                                 </a>
                             </td>
@@ -88,6 +89,61 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+
+        {{-- MOBILE CARDS VIEW (Spacious & Clean Mobile UI) --}}
+        <div class="d-md-none p-2 p-sm-3">
+            @forelse($complaints as $item)
+                <div class="mobile-card mb-3 shadow-xs">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2 pb-2 border-bottom">
+                        <span class="fw-bold font-monospace text-danger fs-xs">
+                            <i class="bi bi-shield-lock-fill me-1"></i>#{{ $item->ticket_number }}
+                        </span>
+                        <span class="badge {{ $item->status_badge_class }} px-2.5 py-1 rounded-pill fs-xs fw-bold">
+                            {{ $item->status_label }}
+                        </span>
+                    </div>
+
+                    <div class="card-name mb-1">{{ $item->category }}</div>
+
+                    <div class="card-sub mb-2.5">
+                        <div class="d-flex align-items-center gap-1.5 flex-wrap">
+                            <span class="badge bg-light text-dark border px-2 py-0.5 rounded-pill fs-xxs">
+                                <i class="bi bi-geo-alt me-0.5 text-danger"></i>{{ $item->incident_location ?? 'Madrasah' }}
+                            </span>
+                            <span class="text-muted fs-xs">&bull;</span>
+                            <span class="text-muted fs-xs">
+                                <i class="bi bi-calendar-event me-0.5"></i>{{ $item->incident_date ? $item->incident_date->translatedFormat('d M Y') : 'Fleksibel' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="card-info-box mb-2.5 fs-xs">
+                        <div class="fw-bold text-muted fs-xxs text-uppercase mb-1">Uraian / Kronologi:</div>
+                        <div class="text-dark">{{ Str::limit($item->description, 120) }}</div>
+                    </div>
+
+                    @if($item->handling_notes)
+                        <div class="p-2.5 rounded-3 mb-2.5 border" style="background: #f0fdf4; border-color: #bbf7d0 !important;">
+                            <div class="d-flex align-items-center gap-1.5 fs-xs fw-bold text-success mb-1">
+                                <i class="bi bi-check-circle-fill"></i> Respon & Tindak Lanjut Guru BK:
+                            </div>
+                            <div class="fs-xs text-dark lh-base">{{ Str::limit($item->handling_notes, 90) }}</div>
+                        </div>
+                    @endif
+
+                    <div class="pt-2 border-top">
+                        <a href="{{ route('murid.pengaduan.show', $item->id) }}" class="btn btn-card-action w-100 text-center">
+                            <i class="bi bi-eye me-1 text-danger"></i> Lihat Rincian Pengaduan
+                        </a>
+                    </div>
+                </div>
+            @empty
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-shield-check fs-1 d-block mb-2 text-success opacity-50"></i>
+                    Kamu belum memiliki laporan pengaduan yang aktif.
+                </div>
+            @endforelse
         </div>
         @if($complaints->hasPages())
             <div class="card-footer bg-white py-3 border-top">

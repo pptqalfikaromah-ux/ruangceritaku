@@ -88,39 +88,49 @@
             </table>
         </div>
 
-        {{-- MOBILE CARDS VIEW --}}
-        <div class="d-md-none p-3">
+        {{-- MOBILE CARDS VIEW (Spacious & Clean Mobile UI) --}}
+        <div class="d-md-none p-2 p-sm-3">
             @forelse($complaints as $comp)
-                <div class="card border rounded-3 p-3 mb-2.5 shadow-xs bg-white">
-                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-1 mb-2">
-                        <span class="badge bg-light text-dark border rounded-pill px-2 py-0.5 fs-xxs">
-                            {{ $comp->category_label }}
+                <div class="mobile-card mb-3 shadow-xs">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2 pb-2 border-bottom">
+                        <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1 fs-xs fw-semibold">
+                            <i class="bi bi-tag me-1 text-muted"></i>{{ $comp->category_label }}
                         </span>
-                        <span class="badge rounded-pill {{ $comp->status_badge_class }} px-2.5 py-1 fs-xxs">
+                        <span class="badge rounded-pill {{ $comp->status_badge_class }} px-2.5 py-1 fs-xs fw-bold">
                             {{ $comp->status_label }}
                         </span>
                     </div>
 
-                    <div class="fw-bold text-dark fs-sm mb-0.5">{{ $comp->title }}</div>
-                    <div class="text-muted fs-xs mb-2">
-                        <i class="bi bi-person me-1 text-primary"></i><strong>{{ $comp->student?->name }}</strong> (NISN: {{ $comp->student?->nisn }})
-                        &bull; <i class="bi bi-calendar-event me-0.5"></i>{{ $comp->incident_date->format('d M Y') }}
+                    <div class="card-name mb-1">{{ $comp->title }}</div>
+                    
+                    <div class="card-sub mb-2.5">
+                        <div class="d-flex align-items-center gap-1.5 flex-wrap">
+                            <span class="fw-bold text-dark"><i class="bi bi-person-fill text-primary me-1"></i>{{ $comp->student?->name }}</span>
+                            <span class="text-muted fs-xs">NISN: {{ $comp->student?->nisn }}</span>
+                        </div>
+                        <div class="text-muted fs-xs mt-1">
+                            <i class="bi bi-calendar3 me-1 text-muted"></i>Kejadian: <strong class="text-dark">{{ $comp->incident_date->format('d M Y') }}</strong>
+                        </div>
                     </div>
 
-                    <div class="small text-muted bg-light p-2 rounded-2 mb-2 fs-xs">
-                        {{ Str::limit($comp->description, 90) }}
+                    <div class="card-info-box mb-2.5 fs-xs">
+                        <div class="fw-bold text-muted fs-xxs text-uppercase mb-1">Kronologi Singkat:</div>
+                        <div class="text-dark">{{ Str::limit($comp->description, 110) }}</div>
                     </div>
 
                     @if($comp->counselor_response)
-                        <div class="alert alert-success py-1.5 px-2.5 rounded-2 fs-xxs mb-2 d-flex align-items-center gap-1.5">
-                            <i class="bi bi-check-circle-fill text-success"></i>
-                            <div><strong>Respon BK:</strong> {{ Str::limit($comp->counselor_response, 50) }}</div>
+                        <div class="p-2.5 rounded-3 mb-2.5 border" style="background: #f0fdf4; border-color: #bbf7d0 !important;">
+                            <div class="d-flex align-items-center gap-1.5 fs-xs fw-bold text-success mb-1">
+                                <i class="bi bi-check-circle-fill"></i> Respon & Solusi Guru BK:
+                            </div>
+                            <div class="fs-xs text-dark lh-base">{{ Str::limit($comp->counselor_response, 90) }}</div>
+                            <div class="fs-xxs text-muted mt-1">Ditangani oleh: <strong>{{ $comp->handledByCounselor?->name ?? 'Guru BK' }}</strong></div>
                         </div>
                     @endif
 
                     <div class="pt-2 border-top">
-                        <a href="{{ route('walikelas.aduan.show', $comp) }}" class="btn btn-outline-secondary btn-sm w-100 rounded-pill fw-bold fs-xs">
-                            <i class="bi bi-eye me-1"></i> Lihat Rincian Kasus
+                        <a href="{{ route('walikelas.aduan.show', $comp) }}" class="btn btn-card-action w-100 text-center">
+                            <i class="bi bi-eye me-1 text-warning"></i> Lihat Rincian Kasus
                         </a>
                     </div>
                 </div>

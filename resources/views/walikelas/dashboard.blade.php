@@ -153,27 +153,29 @@
                 </div>
 
                 {{-- MOBILE CARD LIST VIEW --}}
-                <div class="d-md-none">
+                <div class="d-md-none p-2 p-sm-3">
                     @forelse($students as $stu)
-                        <div class="p-3 d-flex align-items-center justify-content-between gap-2.5 border-bottom">
-                            <div class="d-flex align-items-center gap-2.5 min-w-0">
-                                <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold flex-shrink-0 {{ $stu->gender === 'L' ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger' }}" style="width: 42px; height: 42px; font-size: 1rem;">
-                                    {{ strtoupper(substr($stu->name, 0, 1)) }}
-                                </div>
-                                <div class="min-w-0">
-                                    <div class="fw-bold text-dark fs-sm text-truncate">{{ $stu->name }}</div>
-                                    <div class="d-flex align-items-center gap-1.5 mt-0.5">
-                                        <span class="badge {{ $stu->gender === 'L' ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger' }} rounded-pill fs-xxs px-2">
-                                            {{ $stu->gender === 'L' ? 'Laki-laki' : 'Perempuan' }}
-                                        </span>
-                                        <span class="text-muted fs-xxs font-monospace">NISN: {{ $stu->nisn ?? '-' }}</span>
+                        <div class="mobile-card mb-2.5 shadow-xs p-3">
+                            <div class="d-flex align-items-center justify-content-between gap-2.5">
+                                <div class="d-flex align-items-center gap-3 min-w-0">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold flex-shrink-0 {{ $stu->gender === 'L' ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger' }}" style="width: 44px; height: 44px; font-size: 1.05rem;">
+                                        {{ strtoupper(substr($stu->name, 0, 1)) }}
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="fw-bold text-dark fs-sm text-truncate mb-0.5">{{ $stu->name }}</div>
+                                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                                            <span class="badge {{ $stu->gender === 'L' ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger' }} rounded-pill fs-xxs px-2 py-0.5">
+                                                {{ $stu->gender === 'L' ? 'Laki-laki' : 'Perempuan' }}
+                                            </span>
+                                            <span class="text-muted fs-xxs font-monospace">NISN: {{ $stu->nisn ?? '-' }}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <a href="{{ route('walikelas.aduan.create', ['student_id' => $stu->id]) }}" class="btn btn-outline-warning btn-sm rounded-pill px-3 py-1 fw-bold fs-xs text-warning-emphasis d-inline-flex align-items-center gap-1 shadow-xs">
-                                    <i class="bi bi-flag-fill text-warning"></i> Lapor
-                                </a>
+                                <div class="flex-shrink-0">
+                                    <a href="{{ route('walikelas.aduan.create', ['student_id' => $stu->id]) }}" class="btn btn-outline-warning btn-sm rounded-pill px-3 py-1.5 fw-bold fs-xs text-warning-emphasis d-inline-flex align-items-center gap-1 shadow-xs">
+                                        <i class="bi bi-flag-fill text-warning"></i> Lapor
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     @empty
@@ -198,26 +200,26 @@
                     Semua Aduan &rarr;
                 </a>
             </div>
-            <div class="card-body p-3">
+            <div class="card-body p-2.5 p-sm-3">
                 @forelse($recentComplaints as $comp)
-                    <div class="p-2.5 rounded-3 border mb-2.5 bg-white shadow-xs">
-                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-1 mb-1">
-                            <span class="fw-bold text-dark small">{{ $comp->student?->name }}</span>
-                            <span class="badge {{ $comp->status_badge_class }} fs-xxs rounded-pill px-2 py-0.5">
+                    <div class="mobile-card mb-2.5 shadow-xs p-3">
+                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-1.5 mb-2 pb-1.5 border-bottom">
+                            <span class="fw-bold text-dark fs-xs"><i class="bi bi-person text-primary me-1"></i>{{ $comp->student?->name }}</span>
+                            <span class="badge {{ $comp->status_badge_class }} fs-xxs rounded-pill px-2.5 py-1">
                                 {{ $comp->status_label }}
                             </span>
                         </div>
-                        <div class="small fw-semibold text-dark mb-1">{{ $comp->title }}</div>
-                        <div class="text-muted fs-xxs mb-1.5">
-                            <i class="bi bi-calendar-event me-1"></i>{{ $comp->incident_date->format('d M Y') }} &bull; {{ $comp->category_label }}
+                        <div class="card-name mb-1">{{ $comp->title }}</div>
+                        <div class="text-muted fs-xs mb-2">
+                            <i class="bi bi-calendar-event me-1 text-muted"></i>{{ $comp->incident_date->format('d M Y') }} &bull; <span class="badge bg-light text-dark border rounded-pill px-2">{{ $comp->category_label }}</span>
                         </div>
                         @if($comp->counselor_response)
-                            <div class="p-1.5 rounded-2 bg-teal-subtle text-mint fs-xxs mb-1.5">
-                                <i class="bi bi-check2-circle me-1"></i><strong>Respon BK:</strong> {{ Str::limit($comp->counselor_response, 45) }}
+                            <div class="p-2 rounded-2 bg-teal-subtle text-mint fs-xs mb-2 border border-teal-subtle">
+                                <i class="bi bi-check2-circle me-1"></i><strong>Respon BK:</strong> {{ Str::limit($comp->counselor_response, 55) }}
                             </div>
                         @endif
-                        <div class="text-end">
-                            <a href="{{ route('walikelas.aduan.show', $comp) }}" class="btn btn-light btn-sm rounded-pill px-2.5 py-1 border fw-bold fs-xxs text-muted">
+                        <div class="text-end pt-1">
+                            <a href="{{ route('walikelas.aduan.show', $comp) }}" class="btn btn-card-action w-100 text-center">
                                 Detail Kasus &rarr;
                             </a>
                         </div>

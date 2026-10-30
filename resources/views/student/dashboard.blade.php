@@ -227,28 +227,36 @@
 </div>
 
 {{-- Recent History --}}
-<div class="row g-4">
+<div class="row g-3 g-md-4">
     {{-- Riwayat Konseling --}}
     <div class="col-lg-6">
-        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;">
-            <div style="padding:12px 16px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-weight:700;font-size:.88rem;color:#1e293b;"><i class="bi bi-chat-dots me-2" style="color:#0d9488;"></i>Riwayat Konseling</span>
-                <a href="{{ route('murid.konseling.index') }}" style="font-size:.75rem;color:#0d9488;font-weight:700;text-decoration:none;">Lihat Semua &rarr;</a>
+        <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden h-100">
+            <div class="card-header bg-white py-3 px-3.5 border-bottom d-flex justify-content-between align-items-center">
+                <span class="fw-bold fs-xs text-dark"><i class="bi bi-chat-dots-fill me-2" style="color:#0d9488;"></i>Riwayat Konseling</span>
+                <a href="{{ route('murid.konseling.index') }}" class="fs-xs fw-bold text-decoration-none" style="color:#0d9488;">Lihat Semua &rarr;</a>
             </div>
-            <div>
+            <div class="p-2 p-sm-3">
                 @forelse($recentCounselings as $c)
                     <a href="{{ route('murid.konseling.show', $c->id) }}"
-                       style="display:block;padding:12px 16px;border-bottom:1px solid #f1f5f9;text-decoration:none;transition:background .15s;"
-                       onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
-                            <span style="font-family:monospace;font-size:.72rem;font-weight:700;color:#0d9488;">{{ $c->ticket_number }}</span>
-                            <span class="badge {{ $c->status_badge_class }}" style="font-size:.65rem;border-radius:20px;">{{ $c->status_label }}</span>
+                       class="mobile-card d-block mb-2 p-3 text-decoration-none transition-hover">
+                        <div class="d-flex justify-content-between align-items-center gap-2 mb-1.5">
+                            <span class="font-monospace fs-xs fw-bold text-emerald">#{{ $c->ticket_number }}</span>
+                            <span class="badge {{ $c->status_badge_class }} rounded-pill px-2.5 py-1 fs-xs">{{ $c->status_label }}</span>
                         </div>
-                        <div style="font-weight:700;font-size:.83rem;color:#1e293b;">{{ Str::limit($c->purpose, 50) }}</div>
-                        <div style="font-size:.72rem;color:#94a3b8;margin-top:2px;">{{ $c->created_at->translatedFormat('d M Y') }}</div>
+                        <div class="card-name mb-1">{{ Str::limit($c->purpose, 65) }}</div>
+                        <div class="text-muted fs-xs d-flex align-items-center gap-2">
+                            <span><i class="bi bi-calendar3 me-1"></i>{{ $c->created_at->translatedFormat('d M Y') }}</span>
+                            @if($c->schedule)
+                                <span>&bull;</span>
+                                <span class="text-emerald fw-semibold"><i class="bi bi-clock me-1"></i>Sesi: {{ $c->schedule->start_time }} WIB</span>
+                            @endif
+                        </div>
                     </a>
                 @empty
-                    <div style="text-align:center;padding:24px;color:#94a3b8;font-size:.8rem;">Belum ada riwayat pengajuan konseling.</div>
+                    <div class="text-center py-4 text-muted fs-xs">
+                        <i class="bi bi-chat-heart fs-2 d-block mb-1 text-muted opacity-50"></i>
+                        Belum ada riwayat pengajuan konseling.
+                    </div>
                 @endforelse
             </div>
         </div>
@@ -256,25 +264,28 @@
 
     {{-- Riwayat Pengaduan --}}
     <div class="col-lg-6">
-        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;">
-            <div style="padding:12px 16px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-weight:700;font-size:.88rem;color:#1e293b;"><i class="bi bi-shield-exclamation me-2" style="color:#ef4444;"></i>Riwayat Pengaduan</span>
-                <a href="{{ route('murid.pengaduan.index') }}" style="font-size:.75rem;color:#0d9488;font-weight:700;text-decoration:none;">Lihat Semua &rarr;</a>
+        <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden h-100">
+            <div class="card-header bg-white py-3 px-3.5 border-bottom d-flex justify-content-between align-items-center">
+                <span class="fw-bold fs-xs text-dark"><i class="bi bi-shield-fill-exclamation me-2" style="color:#ef4444;"></i>Riwayat Pelayanan Darurat</span>
+                <a href="{{ route('murid.pengaduan.index') }}" class="fs-xs fw-bold text-decoration-none" style="color:#0d9488;">Lihat Semua &rarr;</a>
             </div>
-            <div>
+            <div class="p-2 p-sm-3">
                 @forelse($recentComplaints as $p)
                     <a href="{{ route('murid.pengaduan.show', $p->id) }}"
-                       style="display:block;padding:12px 16px;border-bottom:1px solid #f1f5f9;text-decoration:none;transition:background .15s;"
-                       onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
-                            <span style="font-family:monospace;font-size:.72rem;font-weight:700;color:#ef4444;">{{ $p->ticket_number }}</span>
-                            <span class="badge {{ $p->status_badge_class }}" style="font-size:.65rem;border-radius:20px;">{{ $p->status_label }}</span>
+                       class="mobile-card d-block mb-2 p-3 text-decoration-none transition-hover">
+                        <div class="d-flex justify-content-between align-items-center gap-2 mb-1.5">
+                            <span class="font-monospace fs-xs fw-bold text-danger">#{{ $p->ticket_number }}</span>
+                            <span class="badge {{ $p->status_badge_class }} rounded-pill px-2.5 py-1 fs-xs">{{ $p->status_label }}</span>
                         </div>
-                        <div style="font-weight:700;font-size:.83rem;color:#1e293b;">{{ $p->category }}</div>
-                        <div style="font-size:.72rem;color:#94a3b8;margin-top:2px;">{{ Str::limit($p->description, 55) }}</div>
+                        <div class="card-name mb-1">{{ $p->category }}</div>
+                        <div class="text-muted fs-xs mb-1">{{ Str::limit($p->description, 70) }}</div>
+                        <div class="text-muted fs-xxs"><i class="bi bi-calendar-event me-1"></i>{{ $p->created_at->translatedFormat('d M Y') }}</div>
                     </a>
                 @empty
-                    <div style="text-align:center;padding:24px;color:#94a3b8;font-size:.8rem;">Belum ada riwayat laporan pengaduan.</div>
+                    <div class="text-center py-4 text-muted fs-xs">
+                        <i class="bi bi-shield-check fs-2 d-block mb-1 text-success opacity-50"></i>
+                        Belum ada riwayat laporan pelayanan darurat.
+                    </div>
                 @endforelse
             </div>
         </div>

@@ -44,6 +44,12 @@
                 </div>
 
                 <div class="d-flex flex-wrap gap-2 align-items-center">
+                    @if($pengaduan->status === 'resolved' || $pengaduan->status === 'closed')
+                        <a href="{{ route('panel.pengaduan.printReport', $pengaduan->id) }}" target="_blank" 
+                           class="btn btn-outline-danger btn-sm rounded-pill px-3.5 py-1.5 fw-bold shadow-xs">
+                            <i class="bi bi-file-earmark-pdf me-1.5"></i> Cetak Laporan Arsip PDF
+                        </a>
+                    @endif
                     @if($pengaduan->student_id)
                         <a href="{{ route('panel.konseling.index', ['student_id' => $pengaduan->student_id]) }}" 
                            class="btn btn-mint btn-sm rounded-pill px-3.5 py-1.5 fw-bold shadow-xs">

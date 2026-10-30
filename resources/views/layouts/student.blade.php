@@ -218,16 +218,86 @@
         /* Color helpers */
         .text-primary-teal { color: var(--primary) !important; }
         .bg-primary-teal { background-color: var(--primary) !important; }
+        .bg-teal-subtle { background-color: var(--primary-bg) !important; color: var(--primary-dark) !important; }
         .text-emerald { color: var(--primary) !important; }
         .text-mint { color: var(--primary) !important; }
-        /* Utility spacing shims */
-        .fs-xs { font-size: .75rem !important; }
-        .fs-sm { font-size: .85rem !important; }
+        .shadow-xs { box-shadow: 0 1px 3px rgba(15,23,42,0.06) !important; }
+
+        /* Utility spacing shims & breathing typography */
+        .fs-xs { font-size: .83rem !important; letter-spacing: 0.01em; }
+        .fs-xxs { font-size: .76rem !important; letter-spacing: 0.015em; }
+        .fs-sm { font-size: .92rem !important; }
         .fw-extrabold { font-weight: 800 !important; }
         .tracking-tight { letter-spacing: -.02em; }
         .lh-base { line-height: 1.6; }
-        .space-y-4 > * + * { margin-top: 1.5rem; }
-        .space-y-5 > * + * { margin-top: 2rem; }
+        .space-y-1.5 > * + * { margin-top: 0.4rem !important; }
+        .space-y-2 > * + * { margin-top: 0.5rem !important; }
+        .space-y-2.5 > * + * { margin-top: 0.65rem !important; }
+        .space-y-3 > * + * { margin-top: 1rem !important; }
+        .space-y-4 > * + * { margin-top: 1.5rem !important; }
+        .space-y-5 > * + * { margin-top: 2rem !important; }
+
+        /* RESPONSIVE MOBILE FEED CARDS POLISH (Breathing Room, Clear Hierarchy) */
+        .mobile-card {
+            border-radius: 1.15rem !important;
+            padding: 1.15rem !important;
+            border: 1px solid #e2e8f0 !important;
+            background: #ffffff !important;
+            box-shadow: 0 2px 10px rgba(15,23,42,0.04) !important;
+            transition: all 0.2s ease;
+        }
+        .mobile-card:active {
+            transform: scale(0.995);
+        }
+        .mobile-card .card-name {
+            font-size: 1.02rem !important;
+            font-weight: 800 !important;
+            color: #1e293b !important;
+            line-height: 1.35 !important;
+            letter-spacing: -0.01em;
+        }
+        .mobile-card .card-sub {
+            font-size: 0.83rem !important;
+            color: #64748b !important;
+            line-height: 1.45 !important;
+        }
+        .mobile-card .card-info-box {
+            background: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 0.85rem !important;
+            padding: 0.75rem 0.95rem !important;
+            font-size: 0.84rem !important;
+            color: #334155 !important;
+            line-height: 1.6 !important;
+        }
+        .mobile-card .btn-card-action {
+            min-height: 42px !important;
+            font-size: 0.86rem !important;
+            font-weight: 700 !important;
+            border-radius: 50rem !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.4rem !important;
+            padding: 0.55rem 1.15rem !important;
+            letter-spacing: 0.01em !important;
+        }
+        .mobile-card .btn-card-icon {
+            width: 42px !important;
+            height: 42px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border-radius: 50rem !important;
+            flex-shrink: 0 !important;
+        }
+        .badge-pill-custom {
+            font-size: 0.76rem !important;
+            font-weight: 700 !important;
+            padding: 0.35rem 0.75rem !important;
+            letter-spacing: 0.02em !important;
+            border-radius: 50rem !important;
+        }
     </style>
     @stack('styles')
 </head>
