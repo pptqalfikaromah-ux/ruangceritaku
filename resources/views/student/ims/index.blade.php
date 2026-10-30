@@ -9,286 +9,294 @@
 @endsection
 
 @section('content')
-<div class="space-y-5">
-    <!-- Hero Banner Modern (Mint & Sunny Gold) -->
-    <div class="card border-0 rounded-4 overflow-hidden shadow-sm position-relative mb-4" 
-         style="background: linear-gradient(135deg, #00B894 0%, #008F72 65%, #00705a 100%);">
-        <!-- Ambient Glow Circles -->
-        <div class="position-absolute rounded-circle" style="width: 320px; height: 320px; background: radial-gradient(circle, rgba(255, 184, 0, 0.22) 0%, transparent 70%); top: -80px; right: -40px; pointer-events: none;"></div>
-        <div class="position-absolute rounded-circle" style="width: 240px; height: 240px; background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%); bottom: -60px; left: 20%; pointer-events: none;"></div>
-
-        <div class="card-body p-4 p-md-5 text-white position-relative" style="z-index: 1;">
-            <div class="row align-items-center g-4">
-                <div class="col-lg-8">
-                    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                        <span class="badge px-3 py-1.5 rounded-pill fw-bold fs-xs text-slate-900" style="background: #FFB800; border: 1px solid #FFE082;">
-                            <i class="bi bi-sparkles me-1 text-dark"></i> Asesmen Kebutuhan Siswa
+<div class="space-y-4">
+    <!-- Header Ringkas & Elegan -->
+    <div class="card border-0 rounded-4 overflow-hidden shadow-sm position-relative" 
+         style="background: linear-gradient(135deg, #00B894 0%, #008F72 70%, #00705a 100%);">
+        <div class="position-absolute rounded-circle" style="width: 280px; height: 280px; background: radial-gradient(circle, rgba(255, 184, 0, 0.20) 0%, transparent 70%); top: -70px; right: -30px; pointer-events: none;"></div>
+        
+        <div class="card-body p-4 p-md-4.5 text-white position-relative" style="z-index: 1;">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge px-3 py-1 rounded-pill fw-bold fs-xs text-dark" style="background: #FFB800;">
+                            <i class="bi bi-card-checklist me-1"></i> Asesmen Kebutuhan Siswa
                         </span>
                         @if($assessment->isSubmitted())
-                            <span class="badge px-3 py-1.5 rounded-pill fw-semibold fs-xs text-white" style="background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.4);">
-                                <i class="bi bi-check-circle-fill me-1 text-warning"></i> Lembar Asesmen Selesai & Dikirimkan
+                            <span class="badge px-2.5 py-1 rounded-pill fw-semibold fs-xs bg-white text-emerald">
+                                <i class="bi bi-check-circle-fill me-1"></i> Asesmen Selesai Terkirim
                             </span>
                         @else
-                            <span class="badge px-3 py-1.5 rounded-pill fw-semibold fs-xs text-white" style="background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.3);">
-                                <i class="bi bi-pencil-square me-1" style="color: #FFD15C;"></i> Mode Pemilihan Butir Aktif
+                            <span class="badge px-2.5 py-1 rounded-pill fw-semibold fs-xs text-white" style="background: rgba(255, 255, 255, 0.22); border: 1px solid rgba(255, 255, 255, 0.35);">
+                                <i class="bi bi-pencil-square me-1" style="color: #FFD15C;"></i> Mode Pemilihan Butir
                             </span>
                         @endif
                     </div>
-
-                    <h2 class="fw-extrabold mb-2 tracking-tight" style="font-size: clamp(1.6rem, 2.8vw, 2.2rem);">
-                        Peta Masalah & Kebutuhan Siswa (IMS)
-                    </h2>
-                    <p class="text-white opacity-90 fs-sm mb-4" style="max-width: 620px; line-height: 1.65;">
-                        Kenali dan pilih kendala yang sedang kamu hadapi melalui <strong>{{ $serviceTypes->count() }} Rumpun Layanan Konseling</strong> di bawah. Setiap layanan memuat 4 bidang masalah (Pribadi, Sosial, Belajar, Karir). Ceritakan dengan jujur, kerahasiaanmu 100% aman terjamin.
+                    <h3 class="fw-extrabold mb-1 tracking-tight" style="font-size: clamp(1.4rem, 2.2vw, 1.85rem);">
+                        Instrumen Masalah Siswa (IMS / AUM)
+                    </h3>
+                    <p class="text-white opacity-90 fs-xs mb-0" style="max-width: 600px; line-height: 1.55;">
+                        Pilih butir-butir masalah yang sedang kamu alami pada <strong>8 Layanan Konseling</strong> di bawah secara berurutan. Jawabanmu bersifat rahasia dan aman.
                     </p>
-
-                    <div class="d-flex flex-wrap gap-2.5">
-                        @if($assessment->isSubmitted())
-                            <a href="{{ route('murid.ims.result') }}" class="btn btn-gold btn-sm rounded-pill px-4 py-2.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5" style="color: #1e293b;">
-                                <i class="bi bi-file-earmark-bar-graph-fill"></i> Lihat Lembar Hasil Akhir &rarr;
-                            </a>
-                            <a href="{{ route('murid.ims.print') }}" target="_blank" class="btn btn-light btn-sm rounded-pill px-3.5 py-2.5 fw-bold text-dark d-inline-flex align-items-center gap-1.5">
-                                <i class="bi bi-printer"></i> Cetak Format AUM (PDF)
-                            </a>
-                        @else
-                            <a href="#daftar-layanan" class="btn btn-gold btn-sm rounded-pill px-4 py-2.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5" style="color: #1e293b;">
-                                <i class="bi bi-pencil-square"></i> Pilih Butir Layanan &rarr;
-                            </a>
-                            @if(($totalSelectedCount ?? 0) > 0)
-                                <a href="{{ route('murid.ims.result') }}" class="btn btn-light btn-sm rounded-pill px-3.5 py-2.5 fw-bold text-dark d-inline-flex align-items-center gap-1.5">
-                                    <i class="bi bi-eye"></i> Pratinjau Hasil ({{ $totalSelectedCount }} Butir)
-                                </a>
-                            @endif
-                        @endif
-                    </div>
                 </div>
 
-                <div class="col-lg-4 text-lg-end">
-                    <div class="d-inline-block text-start p-3.5 rounded-4" style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.25); min-width: 240px;">
-                        <div class="d-flex align-items-center gap-2 mb-2 text-white opacity-85 fs-xs fw-semibold text-uppercase">
-                            <i class="bi bi-shield-check fs-6" style="color: #FFD15C;"></i> Etika Kerahasiaan BK
-                        </div>
-                        <div class="small text-white fw-medium lh-base mb-2">
-                            Setiap butir masalah dan catatan curhat yang kamu isi hanya dibaca oleh Guru BK untuk membantumu.
-                        </div>
-                        <div class="d-flex align-items-center gap-2 pt-2 border-top border-white border-opacity-20 fs-xs fw-bold" style="color: #FFD15C;">
-                            <i class="bi bi-lock-fill"></i> Privasi Siswa Terlindungi
-                        </div>
-                    </div>
+                <div class="d-flex flex-wrap gap-2 flex-shrink-0">
+                    @if($assessment->isSubmitted())
+                        <a href="{{ route('murid.ims.result') }}" class="btn btn-gold btn-sm rounded-pill px-3.5 py-2 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5" style="color: #1e293b;">
+                            <i class="bi bi-file-earmark-bar-graph-fill"></i> Lembar Hasil Akhir &rarr;
+                        </a>
+                        <a href="{{ route('murid.ims.print') }}" target="_blank" class="btn btn-light btn-sm rounded-pill px-3 py-2 fw-semibold text-dark d-inline-flex align-items-center gap-1">
+                            <i class="bi bi-printer"></i> Cetak Format 3
+                        </a>
+                    @else
+                        @if(($totalSelectedCount ?? 0) > 0)
+                            <a href="{{ route('murid.ims.result') }}" class="btn btn-light btn-sm rounded-pill px-3.5 py-2 fw-bold text-dark d-inline-flex align-items-center gap-1.5 shadow-sm">
+                                <i class="bi bi-eye"></i> Pratinjau ({{ $totalSelectedCount }} Butir)
+                            </a>
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Section Title & 8 Service Grid -->
-    <div id="daftar-layanan" class="mb-3 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
-        <div>
-            <h4 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
-                <span>{{ $serviceTypes->count() }} Menu Layanan Konseling</span>
-                <span class="badge bg-light text-muted border rounded-pill fs-xs fw-semibold">Pilih Layanan</span>
-            </h4>
-            <p class="text-muted fs-xs mb-0 mt-0.5">Pilih salah satu layanan di bawah untuk membuka pilihan butir masalah pada 4 bidang bimbingan.</p>
-        </div>
-    </div>
-
     @php
-        $servicesData = [
+        $completedCount = 0;
+        foreach($serviceTypes as $s) {
+            if (!empty($selectedCountByService[$s->id]) && $selectedCountByService[$s->id] > 0) {
+                $completedCount++;
+            }
+        }
+        $totalServices = $serviceTypes->count();
+        $progressPct = $totalServices > 0 ? round(($completedCount / $totalServices) * 100) : 0;
+
+        $servicesMeta = [
             'LAY-01' => [
                 'icon' => 'bi-compass',
-                'grad' => 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
                 'color' => '#2563eb',
-                'bg_subtle' => '#eff6ff',
-                'short' => 'Layanan Orientasi',
-                'desc' => 'Adaptasi lingkungan sekolah, fasilitas ibadah, kesehatan, tata tertib, dan teman baru.',
+                'bg' => '#eff6ff',
+                'desc' => 'Adaptasi lingkungan sekolah, sarana ibadah, kesehatan, tata tertib, dan teman baru.',
             ],
             'LAY-02' => [
                 'icon' => 'bi-info-circle',
-                'grad' => 'linear-gradient(135deg, #7c3aed 0%, #6366f1 100%)',
                 'color' => '#7c3aed',
-                'bg_subtle' => '#f5f3ff',
-                'short' => 'Layanan Informasi',
-                'desc' => 'Informasi kesehatan remaja, kiat belajar efektif, pemahaman diri, dan rencana masa depan.',
-            ],
-            'LAY-03' => [
-                'icon' => 'bi-grid-1x2',
-                'grad' => 'linear-gradient(135deg, #ea580c 0%, #d97706 100%)',
-                'color' => '#ea580c',
-                'bg_subtle' => '#fff7ed',
-                'short' => 'Penempatan & Penyaluran',
-                'desc' => 'Posisi tempat duduk di kelas, kelompok belajar, ekstrakurikuler, serta minat dan bakat.',
+                'bg' => '#f5f3ff',
+                'desc' => 'Informasi kesehatan remaja, kiat belajar efektif, pemahaman diri, dan cita-cita masa depan.',
             ],
             'LAY-04' => [
                 'icon' => 'bi-mortarboard',
-                'grad' => 'linear-gradient(135deg, #059669 0%, #0d9488 100%)',
                 'color' => '#059669',
-                'bg_subtle' => '#ecfdf5',
-                'short' => 'Penguasaan Konten',
-                'desc' => 'Mengembangkan kebiasaan belajar prima, manajemen waktu, teknik ujian, dan mengelola emosi.',
+                'bg' => '#ecfdf5',
+                'desc' => 'Kebiasaan belajar prima, manajemen waktu, persiapan ujian, dan pengendalian emosi diri.',
             ],
             'LAY-05' => [
                 'icon' => 'bi-heart-pulse',
-                'grad' => 'linear-gradient(135deg, #e11d48 0%, #db2777 100%)',
                 'color' => '#e11d48',
-                'bg_subtle' => '#fff1f2',
-                'short' => 'Konseling Perorangan',
+                'bg' => '#fff1f2',
                 'desc' => 'Konseling mendalam tatap muka secara pribadi untuk masalah personal dan rasa percaya diri.',
             ],
             'LAY-06' => [
                 'icon' => 'bi-people',
-                'grad' => 'linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%)',
                 'color' => '#4f46e5',
-                'bg_subtle' => '#eef2ff',
-                'short' => 'Bimbingan Kelompok',
+                'bg' => '#eef2ff',
                 'desc' => 'Diskusi kelompok mengenai solidaritas, toleransi, bahaya pergaulan bebas, dan kerja sama.',
             ],
             'LAY-07' => [
                 'icon' => 'bi-chat-quote',
-                'grad' => 'linear-gradient(135deg, #0d9488 0%, #0891b2 100%)',
                 'color' => '#0d9488',
-                'bg_subtle' => '#f0fdfa',
-                'short' => 'Konseling Kelompok',
+                'bg' => '#f0fdfa',
                 'desc' => 'Menyelesaikan hambatan bersama dalam dinamika kelompok kecil dengan saling mendukung.',
             ],
             'LAY-08' => [
                 'icon' => 'bi-person-check',
-                'grad' => 'linear-gradient(135deg, #334155 0%, #475569 100%)',
                 'color' => '#334155',
-                'bg_subtle' => '#f8fafc',
-                'short' => 'Layanan Konsultasi',
+                'bg' => '#f8fafc',
                 'desc' => 'Mendapatkan saran bagaimana membantu sahabat, teman sebangku, atau kendala dengan pihak lain.',
             ],
             'LAY-09' => [
                 'icon' => 'bi-handshake',
-                'grad' => 'linear-gradient(135deg, #9333ea 0%, #c026d3 100%)',
                 'color' => '#9333ea',
-                'bg_subtle' => '#faf5ff',
-                'short' => 'Layanan Mediasi',
+                'bg' => '#faf5ff',
                 'desc' => 'Penyelesaian perselisihan atau salah paham antarteman, guru, atau lingkungan keluarga.',
             ],
         ];
     @endphp
 
-    <div class="row g-3 g-lg-4">
-        @foreach($serviceTypes as $svc)
+    <!-- Card Progres Pengisian Layanan -->
+    <div class="card border-0 shadow-xs rounded-3 bg-white p-3 p-md-3.5">
+        <div class="row align-items-center g-3">
+            <div class="col-md-7">
+                <div class="d-flex align-items-center justify-content-between mb-1.5">
+                    <span class="fs-xs fw-bold text-dark">
+                        Progres Asesmen Layanan: <span class="text-emerald">{{ $completedCount }} dari {{ $totalServices }} Layanan Selesai</span>
+                    </span>
+                    <span class="fs-xs fw-bold text-muted">{{ $progressPct }}%</span>
+                </div>
+                <div class="progress rounded-pill" style="height: 8px; background: #E2ECE9;">
+                    <div class="progress-bar rounded-pill" role="progressbar" 
+                         style="width: {{ $progressPct }}%; background: linear-gradient(90deg, #00B894, #059669);" 
+                         aria-valuenow="{{ $progressPct }}" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 text-md-end">
+                <div class="d-flex align-items-center justify-content-md-end gap-3 fs-xs text-muted">
+                    <div>
+                        <span class="fw-bold text-dark fs-sm">{{ $totalSelectedCount }}</span> Butir Dialami
+                    </div>
+                    <div class="vr opacity-25" style="height: 20px;"></div>
+                    <div>
+                        <span class="fw-bold text-warning-emphasis fs-sm">{{ $totalHeavyCount }}</span> Butir Terberat
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Daftar Layanan -->
+    <div class="d-flex align-items-center justify-content-between pt-1">
+        <h5 class="fw-bold text-dark mb-0 fs-sm d-flex align-items-center gap-2">
+            <span>Daftar 8 Layanan Bimbingan & Konseling</span>
+            <span class="badge bg-light text-muted border rounded-pill fs-xxs fw-medium">Format 20 Butir / Layanan</span>
+        </h5>
+        <span class="text-muted fs-xs d-none d-sm-inline">Klik layanan untuk membuka butir asesmen</span>
+    </div>
+
+    <!-- DAFTAR LAYANAN BERURUT KE BAWAH (VERTICAL LIST SEPERTI ASESMEN) -->
+    <div class="ims-vertical-list d-flex flex-column gap-2.5">
+        @foreach($serviceTypes as $index => $svc)
             @php
-                $itemData = $servicesData[$svc->code] ?? $servicesData[$svc->id] ?? [
+                $item = $servicesMeta[$svc->code] ?? [
                     'icon' => 'bi-stars',
-                    'grad' => 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
                     'color' => '#059669',
-                    'bg_subtle' => '#ecfdf5',
-                    'short' => $svc->name,
-                    'desc' => $svc->description ?? 'Pilihan layanan bimbingan konseling peserta didik.',
+                    'bg' => '#ecfdf5',
+                    'desc' => $svc->description ?? 'Pilihan butir masalah pada layanan konseling.',
                 ];
                 $answeredCount = $selectedCountByService[$svc->id] ?? 0;
+                $isCompleted = $answeredCount > 0;
+                $heavyNum = $heavyByService[$svc->id] ?? null;
             @endphp
-            <div class="col-lg-4 col-md-6 col-12">
-                <a href="{{ route('murid.ims.service', $svc->id) }}" class="text-decoration-none h-100 d-block">
-                    <div class="card h-100 rounded-4 p-4 modern-service-card position-relative overflow-hidden"
-                         style="background: {{ $answeredCount > 0 ? '#F9FDFB' : '#FFFFFF' }}; border: {{ $answeredCount > 0 ? '2px solid #00B894' : '1px solid #E2ECE9' }} !important; box-shadow: {{ $answeredCount > 0 ? '0 4px 16px rgba(0, 184, 148, 0.12)' : '0 1px 4px rgba(0,0,0,0.03)' }};">
+
+            <a href="{{ route('murid.ims.service', $svc->id) }}" class="ims-list-link text-decoration-none">
+                <div class="card border rounded-3 p-3 p-md-3.5 ims-service-row {{ $isCompleted ? 'ims-row-completed' : 'ims-row-pending' }}">
+                    <div class="d-flex align-items-center justify-content-between gap-3">
                         
-                        <!-- Top Accent Line -->
-                        <div class="card-top-accent" style="background: {{ $itemData['grad'] }};"></div>
-
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <!-- Gradient Icon Circle -->
-                            <div class="modern-service-icon rounded-3 d-flex align-items-center justify-content-center text-white shadow-sm"
-                                 style="background: {{ $itemData['grad'] }};">
-                                <i class="bi {{ $itemData['icon'] }} fs-4"></i>
-                            </div>
-
-                            <!-- Status Badges: Sudah Diisi vs Belum Diisi -->
-                            <div class="d-flex flex-column align-items-end gap-1.5">
-                                @if($answeredCount > 0)
-                                    <span class="badge rounded-pill px-3 py-1.5 fs-xs fw-bold text-white shadow-xs" 
-                                          style="background: #00B894;">
-                                        <i class="bi bi-check-circle-fill me-1"></i> Sudah Diisi ({{ $answeredCount }})
-                                    </span>
+                        <!-- Sisi Kiri: Nomor + Ikon + Info Layanan -->
+                        <div class="d-flex align-items-center gap-3 min-w-0 flex-grow-1">
+                            <!-- Nomor Urut -->
+                            <div class="service-idx-circle flex-shrink-0 {{ $isCompleted ? 'idx-completed' : 'idx-pending' }}">
+                                @if($isCompleted)
+                                    <i class="bi bi-check-lg fw-bold"></i>
                                 @else
-                                    <span class="badge rounded-pill px-3 py-1.5 fs-xs fw-semibold bg-light text-muted border">
-                                        <i class="bi bi-circle me-1"></i> Belum Diisi
-                                    </span>
+                                    <span>{{ sprintf('%02d', $loop->iteration) }}</span>
                                 @endif
+                            </div>
 
-                                @if(!empty($heavyByService[$svc->id]))
-                                    <span class="badge rounded-pill px-2.5 py-1 fs-xxs fw-bold text-white shadow-xs" 
-                                          style="background: #d97706;" title="Masalah Paling Mengganggu">
-                                        <i class="bi bi-star-fill me-1 text-warning"></i> Paling Mengganggu: #{{ $heavyByService[$svc->id] }}
+                            <!-- Ikon Layanan -->
+                            <div class="service-icon-box flex-shrink-0 d-none d-sm-flex align-items-center justify-content-center rounded-3" 
+                                 style="background: {{ $item['bg'] }}; color: {{ $item['color'] }}; width: 38px; height: 38px;">
+                                <i class="bi {{ $item['icon'] }} fs-5"></i>
+                            </div>
+
+                            <!-- Teks Nama Layanan & Deskripsi -->
+                            <div class="min-w-0">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-0.5">
+                                    <h6 class="fw-bold text-dark mb-0 service-name-title" style="letter-spacing: -0.01em;">
+                                        {{ $svc->name }}
+                                    </h6>
+                                    <span class="badge bg-light text-muted border rounded-pill px-2 py-0.5" style="font-size: 0.68rem;">
+                                        20 Butir
                                     </span>
-                                @endif
+                                </div>
+                                <p class="text-muted fs-xs mb-0 text-truncate service-desc" style="max-width: 580px; line-height: 1.4;">
+                                    {{ $item['desc'] }}
+                                </p>
                             </div>
                         </div>
 
-                        <!-- Service Title -->
-                        <div class="mb-2">
-                            <span class="fs-xs fw-bold text-uppercase tracking-wider text-muted d-block mb-1">
-                                Layanan 0{{ $loop->iteration }}
-                            </span>
-                            <h5 class="fw-bold text-dark mb-1 card-title-hover" style="letter-spacing: -0.01em;">
-                                {{ str_replace('Layanan ', '', $svc->name) }}
-                            </h5>
-                        </div>
+                        <!-- Sisi Kanan: Status & Tombol Aksi -->
+                        <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                            <!-- Badge Status -->
+                            @if($isCompleted)
+                                <span class="badge bg-emerald-subtle text-emerald border border-emerald-subtle rounded-pill px-2.5 py-1.5 fw-bold fs-xs d-inline-flex align-items-center gap-1">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <span>{{ $answeredCount }} Dipilih</span>
+                                </span>
+                                @if($heavyNum)
+                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill px-2 py-1.5 fw-bold fs-xs d-none d-md-inline-flex align-items-center gap-1" title="Masalah Paling Mengganggu">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <span>#{{ $heavyNum }}</span>
+                                    </span>
+                                @endif
+                                <span class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 fs-xs fw-semibold d-none d-sm-inline-flex align-items-center gap-1 text-nowrap">
+                                    Ubah <i class="bi bi-chevron-right" style="font-size: 0.65rem;"></i>
+                                </span>
+                            @else
+                                <span class="badge bg-light text-secondary border rounded-pill px-2.5 py-1.5 fw-medium fs-xs d-inline-flex align-items-center gap-1">
+                                    <i class="bi bi-circle"></i>
+                                    <span>Belum Diisi</span>
+                                </span>
+                                <span class="btn btn-sm btn-emerald rounded-pill px-3 py-1 fs-xs fw-semibold text-white d-none d-sm-inline-flex align-items-center gap-1 text-nowrap shadow-xs">
+                                    Mulai <i class="bi bi-arrow-right" style="font-size: 0.65rem;"></i>
+                                </span>
+                            @endif
 
-                        <!-- Description -->
-                        <p class="text-muted fs-xs mb-4 flex-grow-1" style="line-height: 1.6;">
-                            {{ $itemData['desc'] }}
-                        </p>
-
-                        <!-- Card Footer Action -->
-                        <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
-                            <span class="fs-xs fw-bold card-action-text" style="color: {{ $itemData['color'] }};">
-                                Buka 20 Butir Asesmen &rarr;
-                            </span>
-                            <div class="action-arrow-circle d-flex align-items-center justify-content-center rounded-circle" 
-                                 style="background: {{ $itemData['bg_subtle'] }}; color: {{ $itemData['color'] }}; width: 28px; height: 28px;">
-                                <i class="bi bi-chevron-right fs-xs"></i>
+                            <!-- Panah Mobile / Akses Cepat -->
+                            <div class="row-arrow-circle d-flex align-items-center justify-content-center text-muted rounded-circle ms-1" style="width: 24px; height: 24px;">
+                                <i class="bi bi-chevron-right" style="font-size: 0.75rem;"></i>
                             </div>
                         </div>
+
                     </div>
-                </a>
-            </div>
+                </div>
+            </a>
         @endforeach
     </div>
 
-    <!-- Panel Pengiriman / Hasil Akhir Asesmen -->
+    <!-- Panel Pengiriman Asesmen di Bawah -->
     @if(!$assessment->isSubmitted())
-        <div class="card border-0 rounded-4 bg-white p-4 p-md-5 shadow-sm text-center mt-4" style="border: 1.5px solid #E2ECE9 !important;">
-            <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px; background: #E6FAF5; color: #00B894;">
-                <i class="bi bi-send-check fs-2"></i>
-            </div>
-            <h4 class="fw-extrabold text-dark mb-1">Sudah Selesai Memilih Butir Masalah?</h4>
-            <p class="text-muted fs-xs mb-3 mx-auto" style="max-width: 540px;">
-                Saat ini kamu telah memilih <strong>{{ $totalSelectedCount }} Butir Masalah</strong> (termasuk {{ $totalHeavyCount }} butir masalah berat). Jika kamu sudah selesai memilih butir dari seluruh layanan yang dialami, silakan kirimkan asesmen ini untuk memproses <strong>Lembar Hasil Akhir Pengolahan AUM</strong>.
-            </p>
-            <div class="d-flex flex-wrap justify-content-center gap-2">
-                <form action="{{ route('murid.ims.submit') }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-emerald rounded-pill px-4 py-2.5 fw-bold shadow-sm" onclick="return confirm('Apakah kamu yakin sudah selesai memilih semua butir masalah dan ingin memproses hasil akhir asesmen IMS?')">
-                        <i class="bi bi-check-all me-1.5"></i> Selesai & Kirimkan Asesmen IMS
-                    </button>
-                </form>
-                @if($totalSelectedCount > 0)
-                    <a href="{{ route('murid.ims.result') }}" class="btn btn-light border rounded-pill px-4 py-2.5 fw-semibold text-dark">
-                        <i class="bi bi-eye me-1.5"></i> Pratinjau Lembar Hasil
-                    </a>
-                @endif
+        <div class="card border-0 rounded-4 bg-white p-4 shadow-sm text-center mt-3" style="border: 1px solid #E2ECE9 !important;">
+            <div class="d-flex flex-column align-items-center">
+                <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-2.5" style="width: 48px; height: 48px; background: #E6FAF5; color: #00B894;">
+                    <i class="bi bi-send-check fs-3"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Sudah Selesai Memilih Butir Masalah?</h5>
+                <p class="text-muted fs-xs mb-3" style="max-width: 520px;">
+                    Kamu telah memilih <strong>{{ $totalSelectedCount }} Butir Masalah</strong> dari {{ $completedCount }} layanan. Jika kamu sudah selesai memeriksa semua layanan, silakan kirimkan asesmen ini untuk memproses <strong>Hasil Pengolahan AUM</strong>.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-2">
+                    <form action="{{ route('murid.ims.submit') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-emerald rounded-pill px-4 py-2 fw-bold fs-xs shadow-sm" onclick="return confirm('Apakah kamu yakin sudah selesai memilih butir masalah dan ingin memproses hasil akhir asesmen IMS?')">
+                            <i class="bi bi-check-all me-1"></i> Selesai & Kirimkan Asesmen IMS
+                        </button>
+                    </form>
+                    @if($totalSelectedCount > 0)
+                        <a href="{{ route('murid.ims.result') }}" class="btn btn-light border rounded-pill px-3.5 py-2 fw-semibold fs-xs text-dark">
+                            <i class="bi bi-eye me-1"></i> Pratinjau Lembar Hasil
+                        </a>
+                    @endif
+                </div>
             </div>
         </div>
     @else
-        <div class="card border-0 rounded-4 bg-white p-4 p-md-5 shadow-sm text-center mt-4" style="border: 1.5px solid #E2ECE9 !important;">
-            <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px; background: #ecfdf5; color: #059669;">
-                <i class="bi bi-file-earmark-check-fill fs-2"></i>
-            </div>
-            <h4 class="fw-extrabold text-dark mb-1">Asesmen IMS Kamu Telah Selesai & Tersimpan</h4>
-            <p class="text-muted fs-xs mb-3 mx-auto" style="max-width: 540px;">
-                Kamu dapat melihat kembali rincian pemetaan masalah atau mencetak dokumen resmi <strong>Hasil Pengolahan AUM / IMS (Format 3 Individual)</strong> kapan saja.
-            </p>
-            <div class="d-flex flex-wrap justify-content-center gap-2">
-                <a href="{{ route('murid.ims.result') }}" class="btn btn-emerald rounded-pill px-4 py-2.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5">
-                    <i class="bi bi-file-earmark-bar-graph-fill"></i> Lihat Hasil Akhir Asesmen &rarr;
-                </a>
-                <a href="{{ route('murid.ims.print') }}" target="_blank" class="btn btn-outline-secondary rounded-pill px-4 py-2.5 fw-semibold d-inline-flex align-items-center gap-1.5">
-                    <i class="bi bi-printer"></i> Cetak Format AUM (PDF)
-                </a>
+        <div class="card border-0 rounded-4 bg-white p-4 shadow-sm text-center mt-3" style="border: 1px solid #E2ECE9 !important;">
+            <div class="d-flex flex-column align-items-center">
+                <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-2.5" style="width: 48px; height: 48px; background: #ecfdf5; color: #059669;">
+                    <i class="bi bi-file-earmark-check-fill fs-3"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Asesmen IMS Kamu Telah Tersimpan</h5>
+                <p class="text-muted fs-xs mb-3" style="max-width: 520px;">
+                    Kamu dapat melihat rincian pemetaan masalah atau mencetak dokumen resmi <strong>Hasil Pengolahan AUM / IMS (Format 3 Individual)</strong> kapan saja.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-2">
+                    <a href="{{ route('murid.ims.result') }}" class="btn btn-emerald rounded-pill px-4 py-2 fw-bold fs-xs shadow-sm d-inline-flex align-items-center gap-1.5">
+                        <i class="bi bi-file-earmark-bar-graph-fill"></i> Lihat Hasil Akhir &rarr;
+                    </a>
+                    <a href="{{ route('murid.ims.print') }}" target="_blank" class="btn btn-outline-secondary rounded-pill px-3.5 py-2 fw-semibold fs-xs d-inline-flex align-items-center gap-1">
+                        <i class="bi bi-printer"></i> Cetak Format AUM (PDF)
+                    </a>
+                </div>
             </div>
         </div>
     @endif
@@ -297,40 +305,73 @@
 
 @push('styles')
 <style>
-    .modern-service-card {
-        box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+    /* Styling Daftar Layanan Berurut ke Bawah */
+    .ims-service-row {
+        background: #ffffff;
         border: 1px solid #e2e8f0 !important;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        transition: all 0.2s ease-in-out;
     }
 
-    .card-top-accent {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        opacity: 0;
-        transition: opacity 0.25s ease;
+    .ims-row-completed {
+        border-color: #d1fae5 !important;
+        background: #fafdfc;
     }
 
-    .modern-service-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-        border-color: #cbd5e1 !important;
+    .ims-service-row:hover {
+        border-color: #00B894 !important;
+        box-shadow: 0 6px 18px -3px rgba(0, 184, 148, 0.12), 0 2px 6px -2px rgba(0, 0, 0, 0.04) !important;
+        transform: translateY(-1.5px);
     }
 
-    .modern-service-card:hover .card-top-accent {
-        opacity: 1;
+    .ims-service-row:hover .service-name-title {
+        color: #008F72 !important;
     }
 
-    .modern-service-card:hover .action-arrow-circle {
+    .ims-service-row:hover .row-arrow-circle {
+        color: #00B894 !important;
         transform: translateX(3px);
-        transition: transform 0.2s ease;
+        transition: transform 0.15s ease;
     }
 
-    .modern-service-icon {
-        width: 48px;
-        height: 48px;
+    /* Lingkaran Nomor Urut */
+    .service-idx-circle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.82rem;
+        font-weight: 700;
+        transition: all 0.2s ease;
+    }
+
+    .idx-completed {
+        background: #E6FAF5;
+        color: #00B894;
+        border: 1.5px solid #00B894;
+    }
+
+    .idx-pending {
+        background: #f1f5f9;
+        color: #64748b;
+        border: 1px solid #cbd5e1;
+    }
+
+    /* Responsivitas Mobile */
+    @media (max-width: 576px) {
+        .service-desc {
+            display: none !important;
+        }
+        .service-idx-circle {
+            width: 30px;
+            height: 30px;
+            font-size: 0.75rem;
+        }
+        .service-name-title {
+            font-size: 0.85rem !important;
+        }
     }
 </style>
 @endpush
