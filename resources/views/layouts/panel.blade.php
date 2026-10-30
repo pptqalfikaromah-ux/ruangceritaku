@@ -743,6 +743,7 @@
                                         $hasActiveChild = true;
                                         break;
                                     }
+                                }
                             @endphp
                             <div class="sk-nav-dropdown mb-1">
                                 <button type="button" 
