@@ -160,23 +160,89 @@
         </div>
     </div>
 
-    <!-- Table Master Butir -->
+    <!-- Table & List Master Butir -->
     <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
         <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
             <span class="fw-semibold text-dark">Daftar Butir Instrumen Masalah</span>
             <span class="badge bg-light text-muted border">Menampilkan {{ $statements->firstItem() ?? 0 }}-{{ $statements->lastItem() ?? 0 }} dari {{ $statements->total() }} butir</span>
         </div>
-        <div class="table-responsive">
+
+        {{-- TAMPILAN MOBILE (HP / Layar Kecil): Kalimat Memanjang ke Samping Penuh --}}
+        <div class="d-md-none list-group list-group-flush">
+            @forelse($statements as $item)
+                @php
+                    $fieldColors = [
+                        'PRIBADI' => 'bg-primary-subtle text-primary border border-primary-subtle',
+                        'SOSIAL' => 'bg-info-subtle text-info border border-info-subtle',
+                        'BELAJAR' => 'bg-warning-subtle text-warning-emphasis border border-warning-subtle',
+                        'KARIR' => 'bg-purple-subtle text-purple border border-purple-subtle',
+                    ];
+                    $fieldName = strtoupper($item->guidanceField?->name ?? '');
+                    $colorClass = $fieldColors[$fieldName] ?? 'bg-secondary-subtle text-secondary';
+                @endphp
+                <div class="list-group-item p-3 border-bottom bg-white">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                        <div class="d-flex align-items-center flex-wrap gap-1.5">
+                            <span class="badge bg-light text-dark border font-monospace fw-bold" style="font-size: 0.75rem;">
+                                #{{ $item->statement_number }}
+                            </span>
+                            <span class="badge {{ $colorClass }}" style="font-size: 0.68rem;">
+                                {{ $item->guidanceField?->name ?? '-' }}
+                            </span>
+                            <span class="badge bg-light text-dark border" style="font-size: 0.68rem;">
+                                {{ $item->serviceType?->name ?? '-' }}
+                            </span>
+                            @if($item->is_active)
+                                <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.68rem;">Aktif</span>
+                            @else
+                                <span class="badge bg-secondary-subtle text-secondary" style="font-size: 0.68rem;">Nonaktif</span>
+                            @endif
+                        </div>
+
+                        @if(Auth::user()->isAdmin())
+                            <div class="d-flex align-items-center gap-1.5 ms-auto">
+                                <button type="button" class="btn btn-sm btn-light border py-1 px-2.5 fs-xs text-primary" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#editModal{{ $item->id }}"
+                                        title="Edit Teks">
+                                    <i class="bi bi-pencil-square me-1"></i> Edit
+                                </button>
+                                <form method="POST" action="{{ route('panel.ims.toggle', $item) }}" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm {{ $item->is_active ? 'btn-outline-danger' : 'btn-outline-success' }} py-1 px-2 fs-xs"
+                                            title="{{ $item->is_active ? 'Nonaktifkan' : 'Aktifkan' }}">
+                                        <i class="bi {{ $item->is_active ? 'bi-toggle-on' : 'bi-toggle-off' }}"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Kalimat Butir Memanjang Penuh ke Samping di Layar HP -->
+                    <div class="text-dark fw-medium fs-sm lh-base" style="font-size: 0.88rem !important; line-height: 1.55;">
+                        {{ $item->statement_text }}
+                    </div>
+                </div>
+            @empty
+                <div class="p-4 text-center text-muted">
+                    <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                    Tidak ada butir instrumen yang ditemukan.
+                </div>
+            @endforelse
+        </div>
+
+        {{-- TAMPILAN DESKTOP & TABLET: Tabel Lebar Lengkap --}}
+        <div class="table-responsive d-none d-md-block">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light fs-xs text-uppercase text-muted">
                     <tr>
                         <th style="width: 70px;" class="text-center">No</th>
-                        <th>Pernyataan Masalah / Kebutuhan Konseling</th>
-                        <th style="width: 130px;">Bidang</th>
-                        <th style="width: 200px;">Layanan BK</th>
-                        <th style="width: 100px;" class="text-center">Status</th>
+                        <th style="min-width: 280px;">Pernyataan Masalah / Kebutuhan Konseling</th>
+                        <th style="width: 120px;">Bidang</th>
+                        <th style="width: 180px;">Layanan BK</th>
+                        <th style="width: 90px;" class="text-center">Status</th>
                         @if(Auth::user()->isAdmin())
-                            <th style="width: 120px;" class="text-end">Aksi</th>
+                            <th style="width: 110px;" class="text-end">Aksi</th>
                         @endif
                     </tr>
                 </thead>
@@ -187,15 +253,15 @@
                                 #{{ $item->statement_number }}
                             </td>
                             <td>
-                                <div class="text-dark fw-medium">{{ $item->statement_text }}</div>
+                                <div class="text-dark fw-medium lh-base">{{ $item->statement_text }}</div>
                             </td>
                             <td>
                                 @php
                                     $fieldColors = [
-                                        'PRIBADI' => 'bg-primary-subtle text-primary',
-                                        'SOSIAL' => 'bg-info-subtle text-info',
-                                        'BELAJAR' => 'bg-warning-subtle text-warning-emphasis',
-                                        'KARIR' => 'bg-purple-subtle text-purple',
+                                        'PRIBADI' => 'bg-primary-subtle text-primary border border-primary-subtle',
+                                        'SOSIAL' => 'bg-info-subtle text-info border border-info-subtle',
+                                        'BELAJAR' => 'bg-warning-subtle text-warning-emphasis border border-warning-subtle',
+                                        'KARIR' => 'bg-purple-subtle text-purple border border-purple-subtle',
                                     ];
                                     $fieldName = strtoupper($item->guidanceField?->name ?? '');
                                     $colorClass = $fieldColors[$fieldName] ?? 'bg-secondary-subtle text-secondary';
@@ -233,36 +299,6 @@
                                             </button>
                                         </form>
                                     </div>
-
-                                    <!-- Modal Edit Butir -->
-                                    <div class="modal fade text-start" id="editModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content border-0 shadow">
-                                                <form method="POST" action="{{ route('panel.ims.update', $item) }}">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <div class="modal-header bg-light">
-                                                        <h5 class="modal-title fs-sm fw-bold">Edit Butir #{{ $item->statement_number }}</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body space-y-3">
-                                                        <div class="mb-3">
-                                                            <label class="form-label fs-xs text-muted fw-semibold">Pernyataan Masalah</label>
-                                                            <textarea name="statement_text" class="form-control form-control-sm" rows="3" required>{{ $item->statement_text }}</textarea>
-                                                        </div>
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" name="is_active" value="1" id="activeSwitch{{ $item->id }}" {{ $item->is_active ? 'checked' : '' }}>
-                                                            <label class="form-check-label fs-xs text-dark" for="activeSwitch{{ $item->id }}">Status Aktif</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer bg-light py-2">
-                                                        <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Batal</button>
-                                                        <button type="submit" class="btn btn-primary btn-sm bg-emerald border-0">Simpan Perubahan</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </td>
                             @endif
                         </tr>
@@ -277,6 +313,41 @@
                 </tbody>
             </table>
         </div>
+
+        {{-- MODAL EDIT BUTIR (Bisa dipanggil dari HP maupun Desktop) --}}
+        @if(Auth::user()->isAdmin())
+            @foreach($statements as $item)
+                <div class="modal fade text-start" id="editModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow">
+                            <form method="POST" action="{{ route('panel.ims.update', $item) }}">
+                                @csrf
+                                @method('PUT')
+                                <div class="modal-header bg-light">
+                                    <h5 class="modal-title fs-sm fw-bold">Edit Butir #{{ $item->statement_number }} ({{ $item->serviceType?->name ?? 'Layanan' }})</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body space-y-3">
+                                    <div class="mb-3">
+                                        <label class="form-label fs-xs text-muted fw-semibold">Pernyataan Masalah</label>
+                                        <textarea name="statement_text" class="form-control form-control-sm" rows="3" required>{{ $item->statement_text }}</textarea>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="is_active" value="1" id="activeSwitch{{ $item->id }}" {{ $item->is_active ? 'checked' : '' }}>
+                                        <label class="form-check-label fs-xs text-dark" for="activeSwitch{{ $item->id }}">Status Aktif</label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer bg-light py-2">
+                                    <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-primary btn-sm bg-emerald border-0">Simpan Perubahan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        @endif
+
         @if($statements->hasPages())
             <div class="card-footer bg-white py-3 border-top">
                 {{ $statements->links() }}
