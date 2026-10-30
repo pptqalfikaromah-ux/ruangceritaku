@@ -38,6 +38,8 @@
             margin: 0; padding: 0;
             overflow-x: hidden;
             font-size: 14px;
+            letter-spacing: 0.012em;
+            line-height: 1.58;
         }
         /* TOPBAR */
         .sk-topbar {
@@ -224,12 +226,13 @@
         .shadow-xs { box-shadow: 0 1px 3px rgba(15,23,42,0.06) !important; }
 
         /* Utility spacing shims & breathing typography */
-        .fs-xs { font-size: .83rem !important; letter-spacing: 0.01em; }
-        .fs-xxs { font-size: .76rem !important; letter-spacing: 0.015em; }
-        .fs-sm { font-size: .92rem !important; }
+        .fs-xs { font-size: .84rem !important; letter-spacing: 0.018em !important; line-height: 1.5 !important; }
+        .fs-xxs { font-size: .77rem !important; letter-spacing: 0.022em !important; line-height: 1.48 !important; }
+        .fs-sm { font-size: .93rem !important; letter-spacing: 0.012em !important; line-height: 1.55 !important; }
         .fw-extrabold { font-weight: 800 !important; }
-        .tracking-tight { letter-spacing: -.02em; }
-        .lh-base { line-height: 1.6; }
+        .tracking-tight { letter-spacing: 0.005em !important; }
+        .lh-base { line-height: 1.62 !important; }
+        .badge { padding: 0.4rem 0.75rem !important; letter-spacing: 0.02em !important; line-height: 1.35 !important; }
         .space-y-1.5 > * + * { margin-top: 0.4rem !important; }
         .space-y-2 > * + * { margin-top: 0.5rem !important; }
         .space-y-2.5 > * + * { margin-top: 0.65rem !important; }
@@ -239,52 +242,55 @@
 
         /* RESPONSIVE MOBILE FEED CARDS POLISH (Breathing Room, Clear Hierarchy) */
         .mobile-card {
-            border-radius: 1.15rem !important;
-            padding: 1.15rem !important;
+            border-radius: 1.25rem !important;
+            padding: 1.25rem 1.35rem !important;
             border: 1px solid #e2e8f0 !important;
             background: #ffffff !important;
-            box-shadow: 0 2px 10px rgba(15,23,42,0.04) !important;
+            box-shadow: 0 3px 12px rgba(15,23,42,0.04) !important;
             transition: all 0.2s ease;
+            margin-bottom: 1.1rem !important;
         }
         .mobile-card:active {
             transform: scale(0.995);
         }
         .mobile-card .card-name {
-            font-size: 1.02rem !important;
+            font-size: 1.04rem !important;
             font-weight: 800 !important;
             color: #1e293b !important;
-            line-height: 1.35 !important;
-            letter-spacing: -0.01em;
+            line-height: 1.4 !important;
+            letter-spacing: 0.008em !important;
         }
         .mobile-card .card-sub {
-            font-size: 0.83rem !important;
+            font-size: 0.84rem !important;
             color: #64748b !important;
-            line-height: 1.45 !important;
+            line-height: 1.5 !important;
+            letter-spacing: 0.012em !important;
         }
         .mobile-card .card-info-box {
             background: #f8fafc !important;
             border: 1px solid #e2e8f0 !important;
-            border-radius: 0.85rem !important;
-            padding: 0.75rem 0.95rem !important;
-            font-size: 0.84rem !important;
+            border-radius: 0.95rem !important;
+            padding: 0.85rem 1.1rem !important;
+            font-size: 0.85rem !important;
             color: #334155 !important;
-            line-height: 1.6 !important;
+            line-height: 1.65 !important;
+            letter-spacing: 0.015em !important;
         }
         .mobile-card .btn-card-action {
-            min-height: 42px !important;
-            font-size: 0.86rem !important;
+            min-height: 44px !important;
+            font-size: 0.88rem !important;
             font-weight: 700 !important;
             border-radius: 50rem !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            gap: 0.4rem !important;
-            padding: 0.55rem 1.15rem !important;
-            letter-spacing: 0.01em !important;
+            gap: 0.5rem !important;
+            padding: 0.6rem 1.25rem !important;
+            letter-spacing: 0.02em !important;
         }
         .mobile-card .btn-card-icon {
-            width: 42px !important;
-            height: 42px !important;
+            width: 44px !important;
+            height: 44px !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
@@ -292,9 +298,9 @@
             flex-shrink: 0 !important;
         }
         .badge-pill-custom {
-            font-size: 0.76rem !important;
+            font-size: 0.77rem !important;
             font-weight: 700 !important;
-            padding: 0.35rem 0.75rem !important;
+            padding: 0.38rem 0.85rem !important;
             letter-spacing: 0.02em !important;
             border-radius: 50rem !important;
         }

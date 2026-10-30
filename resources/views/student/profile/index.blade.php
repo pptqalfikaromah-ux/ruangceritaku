@@ -69,11 +69,11 @@
 
                 <!-- INFORMASI AKADEMIK RESMI (READ-ONLY) -->
                 <div class="p-3 rounded-3 mb-4" style="background:#f8fafc; border:1px solid #e2e8f0;">
-                    <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
                         <span class="fw-bold text-dark fs-xs text-uppercase letter-spacing-1">
-                            <i class="bi bi-shield-check text-success me-1"></i> Data Resmi Madrasah (Terkunci)
+                            <i class="bi bi-shield-lock-fill text-success me-1"></i> Data Resmi Madrasah (Dikunci oleh Admin)
                         </span>
-                        <span class="badge bg-secondary-subtle text-secondary fs-xxs">Hanya dapat diubah oleh Admin / TU</span>
+                        <span class="badge bg-secondary-subtle text-secondary fs-xxs px-2.5 py-1 rounded-pill">Data dikunci oleh Admin</span>
                     </div>
                     <div class="row g-2.5">
                         <div class="col-6 col-md-3">

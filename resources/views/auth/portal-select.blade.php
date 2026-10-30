@@ -3,11 +3,11 @@
 @section('title', 'Pilih Pintu Masuk - ' . app_setting('app_name', 'Ruang Ceritaku'))
 
 @section('content')
-<div class="portal-wrapper min-vh-100 d-flex flex-column justify-content-center align-items-center py-3 py-sm-4 px-2.5 px-sm-3">
+<div class="portal-wrapper min-vh-100 d-flex flex-column justify-content-center align-items-center py-4 px-3">
     
     <!-- Top Navigation / Back to Home -->
-    <div class="portal-container mb-2.5 px-1 text-start w-100">
-        <a href="{{ route('landing') }}" class="portal-back-link text-decoration-none d-inline-flex align-items-center gap-1.5">
+    <div class="portal-container mb-3 text-start w-100">
+        <a href="{{ route('landing') }}" class="portal-back-link text-decoration-none d-inline-flex align-items-center gap-2">
             <i class="bi bi-arrow-left"></i>
             <span>Kembali ke Halaman Utama</span>
         </a>
@@ -18,28 +18,28 @@
         <!-- Top Vibrant Accent Strip -->
         <div class="portal-top-bar"></div>
 
-        <div class="card-body p-3.5 p-sm-4 p-md-4.5">
+        <div class="card-body p-4 p-sm-4.5">
             <!-- App Brand & Header -->
-            <div class="text-center mb-3.5">
-                <div class="portal-logo-wrap d-inline-flex align-items-center justify-content-center mb-2">
-                    <x-app-logo height="58" />
+            <div class="text-center mb-4">
+                <div class="portal-logo-wrap d-inline-flex align-items-center justify-content-center mb-2.5">
+                    <x-app-logo height="62" />
                 </div>
-                <h4 class="portal-app-title fw-extrabold mb-0.5">
+                <h4 class="portal-app-title fw-extrabold mb-1">
                     {{ app_setting('app_name', 'Ruang Ceritaku') }}
                 </h4>
                 <div class="portal-school-subtitle text-muted">
                     {{ app_setting('school_name', 'Layanan Bimbingan & Konseling Sekolah') }}
                 </div>
-                <div class="mt-2">
-                    <span class="portal-hint-badge d-inline-flex align-items-center gap-1">
-                        <i class="bi bi-door-open-fill"></i>
+                <div class="mt-2.5">
+                    <span class="portal-hint-badge d-inline-flex align-items-center gap-1.5">
+                        <i class="bi bi-door-open-fill text-mint"></i>
                         <span>Pilih Pintu Masuk Aplikasi</span>
                     </span>
                 </div>
             </div>
 
-            <!-- 3 Pintu Masuk Utama (Touch-Friendly & Lapang di Mobile) -->
-            <div class="portal-grid d-flex flex-column gap-2.5 mb-3.5">
+            <!-- 3 Pintu Masuk Utama (Touch-Friendly, Bernafas, dan Lega) -->
+            <div class="portal-grid d-flex flex-column gap-3 mb-4">
                 
                 <!-- 1. Murid / Siswa -->
                 <a href="{{ route('login.murid') }}" class="portal-card-item card-murid text-decoration-none">
@@ -47,12 +47,12 @@
                         <i class="bi bi-person-heart"></i>
                     </div>
                     <div class="portal-card-info flex-grow-1 min-w-0">
-                        <div class="portal-card-head d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center justify-content-between gap-2 mb-1">
                             <span class="portal-role-title">Portal Murid</span>
                             <span class="portal-role-tag tag-murid">Siswa</span>
                         </div>
                         <div class="portal-role-desc">
-                            Konseling pribadi, curhat & pengaduan
+                            Konseling pribadi, curhat & aduan siswa
                         </div>
                     </div>
                     <div class="portal-card-arrow">
@@ -66,7 +66,7 @@
                         <i class="bi bi-mortarboard-fill"></i>
                     </div>
                     <div class="portal-card-info flex-grow-1 min-w-0">
-                        <div class="portal-card-head d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center justify-content-between gap-2 mb-1">
                             <span class="portal-role-title">Wali Kelas</span>
                             <span class="portal-role-tag tag-walikelas">Pendidik</span>
                         </div>
@@ -85,7 +85,7 @@
                         <i class="bi bi-shield-check"></i>
                     </div>
                     <div class="portal-card-info flex-grow-1 min-w-0">
-                        <div class="portal-card-head d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center justify-content-between gap-2 mb-1">
                             <span class="portal-role-title">Guru BK & Admin</span>
                             <span class="portal-role-tag tag-admin">Konselor</span>
                         </div>
@@ -101,12 +101,12 @@
             </div>
 
             <!-- Bagian Bawah: Registrasi Murid Baru -->
-            <div class="portal-footer pt-3 border-top text-center">
-                <p class="portal-footer-text mb-2">
+            <div class="portal-footer pt-3.5 border-top text-center">
+                <p class="portal-footer-text mb-2.5">
                     Murid baru dan belum memiliki akun terdaftar?
                 </p>
-                <a href="{{ route('register.murid') }}" class="btn portal-register-btn w-100 d-inline-flex align-items-center justify-content-center">
-                    <i class="bi bi-person-plus-fill me-1.5"></i>
+                <a href="{{ route('register.murid') }}" class="btn portal-register-btn w-100 d-inline-flex align-items-center justify-content-center gap-2">
+                    <i class="bi bi-person-plus-fill fs-5"></i>
                     <span>Daftar Akun Murid Baru</span>
                 </a>
             </div>
@@ -119,73 +119,89 @@
     /* WRAPPER & BACKGROUND */
     .portal-wrapper {
         background: radial-gradient(circle at 50% 8%, rgba(204, 251, 241, 0.6) 0%, rgba(240, 253, 250, 0.8) 35%, #f1f5f9 100%);
+        min-height: 100vh;
+        letter-spacing: 0.012em;
     }
     .portal-container {
-        max-width: 440px;
+        max-width: 460px;
     }
     .portal-back-link {
-        font-size: 0.8rem;
+        font-size: 0.86rem;
         font-weight: 700;
-        color: #64748b;
+        color: #475569;
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(8px);
+        border: 1px solid #cbd5e1;
+        border-radius: 50rem;
         transition: all 0.2s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        letter-spacing: 0.015em;
     }
     .portal-back-link:hover {
         color: var(--primary, #0d9488);
+        background: #ffffff;
+        border-color: #0d9488;
         transform: translateX(-2px);
     }
 
     /* CARD BOX */
     .portal-card-box {
-        max-width: 440px;
+        max-width: 460px;
         background: #ffffff;
-        border-radius: 1.25rem !important;
-        border: 1px solid rgba(226, 232, 240, 0.9) !important;
-        box-shadow: 0 12px 35px -8px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04) !important;
+        border-radius: 1.35rem !important;
+        border: 1px solid rgba(203, 213, 225, 0.8) !important;
+        box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.08), 0 4px 14px -2px rgba(15, 23, 42, 0.04) !important;
     }
     .portal-top-bar {
-        height: 5px;
+        height: 6px;
         background: linear-gradient(90deg, #0d9488 0%, #3b82f6 50%, #f59e0b 100%);
     }
 
     /* BRAND & LOGO */
     .portal-logo-wrap {
-        padding: 6px;
-        border-radius: 16px;
+        padding: 8px;
+        border-radius: 18px;
         background: #ffffff;
         border: 1.5px solid #ccfbf1;
-        box-shadow: 0 2px 8px rgba(13, 148, 136, 0.08);
+        box-shadow: 0 2px 10px rgba(13, 148, 136, 0.08);
     }
     .portal-app-title {
         color: var(--primary-dark, #0f766e);
-        letter-spacing: -0.025em;
-        font-size: 1.28rem;
-        line-height: 1.2;
+        font-size: 1.35rem;
+        font-weight: 900;
+        line-height: 1.25;
+        letter-spacing: 0.015em;
     }
     .portal-school-subtitle {
-        font-size: 0.76rem;
-        line-height: 1.3;
+        font-size: 0.84rem;
+        line-height: 1.45;
+        letter-spacing: 0.01em;
+        color: #64748b;
     }
     .portal-hint-badge {
-        font-size: 0.72rem;
+        font-size: 0.78rem;
         font-weight: 700;
-        padding: 4px 12px;
+        padding: 6px 14px;
         border-radius: 50rem;
         background: #f0fdfa;
         color: #0f766e;
-        border: 1px solid #ccfbf1;
+        border: 1.5px solid #ccfbf1;
+        letter-spacing: 0.02em;
     }
 
-    /* PORTAL ENTRY CARDS (TOUCH-FRIENDLY) */
+    /* PORTAL ENTRY CARDS (TOUCH-FRIENDLY & BERNAFAS) */
     .portal-card-item {
         display: flex;
         align-items: center;
-        gap: 12px;
-        padding: 12px 14px;
+        gap: 16px;
+        padding: 16px 18px;
         background: #ffffff;
         border: 1.5px solid #e2e8f0;
-        border-radius: 14px;
+        border-radius: 16px;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02);
     }
     .portal-card-item:hover,
     .portal-card-item:active {
@@ -194,13 +210,13 @@
 
     /* ICON */
     .portal-card-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.25rem;
+        font-size: 1.35rem;
         color: #ffffff;
         flex-shrink: 0;
         transition: transform 0.2s ease;
@@ -212,39 +228,37 @@
     /* TEXT INFO */
     .portal-card-info {
         min-width: 0;
-        padding-right: 8px;
     }
     .portal-role-title {
-        font-size: 0.94rem;
+        font-size: 1.02rem;
         font-weight: 800;
         color: #1e293b;
-        letter-spacing: -0.01em;
-        line-height: 1.2;
+        letter-spacing: 0.015em;
+        line-height: 1.3;
     }
     .portal-role-tag {
-        font-size: 0.68rem;
+        font-size: 0.74rem;
         font-weight: 700;
-        padding: 2px 8px;
+        padding: 4px 10px;
         border-radius: 50rem;
-        line-height: 1.2;
+        line-height: 1.3;
+        letter-spacing: 0.02em;
         flex-shrink: 0;
     }
     .portal-role-desc {
-        font-size: 0.72rem;
+        font-size: 0.82rem;
         color: #64748b;
-        margin-top: 2px;
-        line-height: 1.35;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        margin-top: 3px;
+        line-height: 1.45;
+        letter-spacing: 0.01em;
     }
 
     /* ARROW */
     .portal-card-arrow {
         color: #94a3b8;
-        font-size: 1rem;
+        font-size: 1.15rem;
         flex-shrink: 0;
-        width: 16px;
+        width: 20px;
         text-align: right;
         transition: all 0.2s ease;
     }
@@ -256,7 +270,7 @@
     /* Murid */
     .icon-murid {
         background: linear-gradient(135deg, #0d9488 0%, #10b981 100%);
-        box-shadow: 0 4px 10px rgba(13, 148, 136, 0.28);
+        box-shadow: 0 4px 10px rgba(13, 148, 136, 0.25);
     }
     .tag-murid {
         background: #ccfbf1;
@@ -272,7 +286,7 @@
     /* Wali Kelas */
     .icon-walikelas {
         background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-        box-shadow: 0 4px 10px rgba(217, 119, 6, 0.28);
+        box-shadow: 0 4px 10px rgba(217, 119, 6, 0.25);
     }
     .tag-walikelas {
         background: #fef3c7;
@@ -288,7 +302,7 @@
     /* Admin / BK */
     .icon-admin {
         background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-        box-shadow: 0 4px 10px rgba(30, 64, 175, 0.28);
+        box-shadow: 0 4px 10px rgba(30, 64, 175, 0.25);
     }
     .tag-admin {
         background: #dbeafe;
@@ -303,33 +317,25 @@
 
     /* FOOTER REGISTER BUTTON */
     .portal-footer-text {
-        font-size: 0.74rem;
+        font-size: 0.82rem;
         color: #64748b;
+        letter-spacing: 0.01em;
     }
     .portal-register-btn {
         background: #ffffff;
         border: 1.5px solid var(--primary, #0d9488);
         color: var(--primary, #0d9488);
         border-radius: 50rem;
-        font-size: 0.82rem;
+        font-size: 0.9rem;
         font-weight: 700;
-        padding: 9px 18px;
+        padding: 12px 20px;
         transition: all 0.2s ease;
+        letter-spacing: 0.02em;
     }
     .portal-register-btn:hover {
         background: var(--primary, #0d9488);
         color: #ffffff;
-        box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
-    }
-
-    /* SCREEN ADAPTATIONS FOR SMALL SCREENS (<= 390px, e.g. iPhone SE 375px) */
-    @media (max-width: 390px) {
-        .portal-wrapper { padding: 12px 10px; }
-        .portal-card-item { padding: 10px 12px; gap: 10px; border-radius: 12px; }
-        .portal-card-icon { width: 38px; height: 38px; font-size: 1.15rem; border-radius: 10px; }
-        .portal-role-title { font-size: 0.88rem; }
-        .portal-role-desc { font-size: 0.68rem; }
-        .portal-role-tag { font-size: 0.64rem; padding: 2px 6px; }
+        box-shadow: 0 4px 14px rgba(13, 148, 136, 0.25);
     }
 </style>
 @endsection

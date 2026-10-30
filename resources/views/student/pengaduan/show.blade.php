@@ -38,20 +38,13 @@
                 <div class="card-body p-4 space-y-3 fs-sm">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <span class="text-muted fs-xs d-block mb-1">Tingkat Urgensi</span>
-                            <span class="badge {{ $pengaduan->urgency_badge_class }} text-uppercase fs-xs">
-                                {{ $pengaduan->urgency_level }}
-                            </span>
-                        </div>
-                        <div class="col-md-6">
                             <span class="text-muted fs-xs d-block mb-1">Waktu Kejadian</span>
                             <span class="fw-medium text-dark">{{ $pengaduan->incident_date ? $pengaduan->incident_date->translatedFormat('d F Y') : '-' }}</span>
                         </div>
-                    </div>
-
-                    <div>
-                        <span class="text-muted fs-xs d-block mb-1">Lokasi Kejadian</span>
-                        <div class="fw-medium text-dark">{{ $pengaduan->incident_location ?? 'Lingkungan Madrasah' }}</div>
+                        <div class="col-md-6">
+                            <span class="text-muted fs-xs d-block mb-1">Lokasi Kejadian</span>
+                            <div class="fw-medium text-dark">{{ $pengaduan->incident_location ?? 'Lingkungan Madrasah' }}</div>
+                        </div>
                     </div>
 
                     <div>

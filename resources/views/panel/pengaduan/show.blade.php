@@ -27,9 +27,6 @@
                             <span class="badge bg-teal-subtle text-mint font-monospace px-2.5 py-1 rounded-pill fw-bold fs-xs">
                                 <i class="bi bi-ticket-perforated me-1"></i>{{ $pengaduan->ticket_number }}
                             </span>
-                            <span class="badge {{ $pengaduan->urgency_badge_class }} px-2.5 py-1 rounded-pill fs-xs text-uppercase fw-semibold">
-                                <i class="bi bi-exclamation-triangle me-1"></i>Urgensi: {{ $pengaduan->urgency_level }}
-                            </span>
                             <span class="badge {{ $pengaduan->status_badge_class }} px-2.5 py-1 rounded-pill fs-xs fw-semibold">
                                 {{ $pengaduan->status_label }}
                             </span>

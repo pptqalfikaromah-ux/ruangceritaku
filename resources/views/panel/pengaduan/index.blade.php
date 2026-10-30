@@ -102,15 +102,15 @@
                         @endforeach
                     </select>
                 </div>
-                
-                <!-- Urgency select -->
+
+                <!-- Status select -->
                 <div class="col-6 col-md-3">
-                    <select name="urgency" class="form-select form-select-sm fs-xs" onchange="this.form.submit()">
-                        <option value="">-- Semua Tingkat Urgensi --</option>
-                        <option value="darurat" {{ $urgency == 'darurat' ? 'selected' : '' }}>Darurat (Immediate)</option>
-                        <option value="tinggi" {{ $urgency == 'tinggi' ? 'selected' : '' }}>Tinggi</option>
-                        <option value="sedang" {{ $urgency == 'sedang' ? 'selected' : '' }}>Sedang</option>
-                        <option value="rendah" {{ $urgency == 'rendah' ? 'selected' : '' }}>Rendah</option>
+                    <select name="status" class="form-select form-select-sm fs-xs" onchange="this.form.submit()">
+                        <option value="">-- Semua Status --</option>
+                        <option value="pending" {{ $status == 'pending' ? 'selected' : '' }}>Menunggu Verifikasi</option>
+                        <option value="investigating" {{ $status == 'investigating' ? 'selected' : '' }}>Sedang Ditangani</option>
+                        <option value="resolved" {{ $status == 'resolved' ? 'selected' : '' }}>Selesai Tertangani</option>
+                        <option value="closed" {{ $status == 'closed' ? 'selected' : '' }}>Ditutup</option>
                     </select>
                 </div>
                 
@@ -119,7 +119,7 @@
                     <button type="submit" class="btn btn-sm btn-mint text-white w-100 rounded-pill fw-bold shadow-xs fs-xs">
                         <i class="bi bi-funnel me-1"></i> Filter
                     </button>
-                    @if(request()->hasAny(['q', 'category', 'urgency', 'status', 'risk']))
+                    @if(request()->hasAny(['q', 'category', 'status', 'risk']))
                         <a href="{{ route('panel.pengaduan.index') }}" class="btn btn-sm btn-light border rounded-circle flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 31px; height: 31px;" title="Reset Filter">
                             <i class="bi bi-arrow-counterclockwise"></i>
                         </a>
@@ -190,14 +190,16 @@
                     </div>
                 </div>
 
-                <!-- Badges Kategori & Urgensi -->
+                <!-- Badges Kategori & Risiko -->
                 <div class="d-flex flex-wrap gap-2 mb-3">
                     <span class="badge bg-teal-subtle text-mint badge-pill-custom">
                         <i class="bi bi-tag-fill me-1"></i>{{ $item->category }}
                     </span>
-                    <span class="badge {{ $item->urgency_badge_class }} badge-pill-custom text-uppercase">
-                        <i class="bi bi-exclamation-circle me-1"></i>{{ $item->urgency_level }}
-                    </span>
+                    @if($item->safety_risk_flag)
+                        <span class="badge bg-danger text-white badge-pill-custom">
+                            <i class="bi bi-shield-fill-exclamation me-1"></i>Risiko Keselamatan
+                        </span>
+                    @endif
                 </div>
 
                 <!-- Uraian Kronologi Box (Terbaca rapi, bernafas) -->
@@ -256,7 +258,7 @@
                             <th style="min-width: 140px;" class="ps-3.5">No. Tiket</th>
                             <th style="min-width: 180px;">Murid Pelapor</th>
                             <th style="min-width: 250px;">Kategori & Kronologi</th>
-                            <th style="min-width: 130px;" class="text-center">Urgensi & Risiko</th>
+                            <th style="min-width: 110px;" class="text-center">Risiko Keamanan</th>
                             <th style="min-width: 140px;">Waktu & Lokasi</th>
                             <th style="min-width: 130px;" class="text-center">Status</th>
                             <th style="min-width: 90px;" class="text-end pe-3.5">Aksi</th>
@@ -306,18 +308,15 @@
                                     </div>
                                 </td>
 
-                                <!-- Urgensi & Risiko -->
+                                <!-- Risiko Keamanan -->
                                 <td class="text-center">
-                                    <div class="d-flex flex-column align-items-center gap-1">
-                                        <span class="badge {{ $item->urgency_badge_class }} px-2 py-0.5 rounded-pill fs-xxs text-uppercase fw-semibold">
-                                            {{ $item->urgency_level }}
+                                    @if($item->safety_risk_flag)
+                                        <span class="badge bg-danger text-white px-2.5 py-1 rounded-pill fs-xxs fw-bold">
+                                            <i class="bi bi-shield-fill-exclamation me-0.5"></i>Bahaya
                                         </span>
-                                        @if($item->safety_risk_flag)
-                                            <span class="badge bg-danger text-white px-2 py-0.5 rounded-pill fs-xxs fw-bold">
-                                                <i class="bi bi-shield-fill-exclamation me-0.5"></i>Bahaya
-                                            </span>
-                                        @endif
-                                    </div>
+                                    @else
+                                        <span class="text-muted fs-xxs"><i class="bi bi-check2 text-success me-0.5"></i>Aman</span>
+                                    @endif
                                 </td>
 
                                 <!-- Waktu & Lokasi Kejadian -->

@@ -13,57 +13,57 @@
 <div class="min-vh-100 d-flex flex-column justify-content-center align-items-center py-3 py-sm-4 px-3" style="background: radial-gradient(circle at 50% 10%, rgba(204, 251, 241, 0.45) 0%, rgba(240, 253, 250, 0.7) 40%, rgba(241, 245, 249, 1) 100%);">
     
     <!-- Tombol Kembali ke Landing Page -->
-    <div class="mb-2 text-start" style="max-width: 440px; width: 100%;">
+    <div class="mb-2.5 text-start" style="max-width: 460px; width: 100%;">
         <a href="{{ route('landing') }}" class="text-decoration-none text-muted small fw-bold d-inline-flex align-items-center gap-1.5 hover-teal">
             <i class="bi bi-arrow-left"></i> Kembali ke Halaman Utama
         </a>
     </div>
 
-    <div class="card card-app border-0 shadow-lg overflow-hidden position-relative" style="max-width: 440px; width: 100%; border-radius: 1.25rem; border: 1px solid var(--border-color) !important; background: #ffffff;">
+    <div class="card card-app border-0 shadow-lg overflow-hidden position-relative" style="max-width: 460px; width: 100%; border-radius: 1.25rem; border: 1px solid var(--border-color) !important; background: #ffffff;">
         <!-- Top Gradient Band -->
         <div style="height: 5px; background: linear-gradient(90deg, #0d9488 0%, #10b981 50%, #f59e0b 100%);"></div>
 
-        <div class="card-body p-3.5 p-sm-4">
+        <div class="card-body p-4 p-sm-4.5">
             <!-- App Logo & Title -->
-            <div class="text-center mb-3">
-                <a href="{{ route('landing') }}" class="text-decoration-none d-inline-flex flex-column align-items-center mb-1">
+            <div class="text-center mb-3.5">
+                <a href="{{ route('landing') }}" class="text-decoration-none d-inline-flex flex-column align-items-center mb-1.5">
                     <div class="p-2 rounded-4 d-inline-flex align-items-center justify-content-center shadow-xs mb-1" style="background: #ffffff; border: 1.5px solid #ccfbf1;">
                         <x-app-logo height="64" />
                     </div>
                 </a>
-                <h4 class="fw-extrabold mb-0" style="color: var(--primary-dark); letter-spacing: -0.02em; font-size: 1.25rem;">
+                <h4 class="fw-extrabold mb-1" style="color: var(--primary-dark); letter-spacing: 0.01em; font-size: 1.28rem;">
                     {{ app_setting('app_name', 'Ruang Ceritaku') }}
                 </h4>
-                <p class="text-muted small mb-0 fs-xs">{{ app_setting('school_name', 'Layanan Bimbingan & Konseling Terpadu') }}</p>
+                <p class="text-muted small mb-0 fs-xs" style="line-height: 1.45; letter-spacing: 0.015em;">{{ app_setting('school_name', 'Layanan Bimbingan & Konseling Terpadu') }}</p>
             </div>
 
-            <!-- Role Selector Tabs (Mobile Touch Friendly) -->
-            <div class="role-selector-wrap p-1 rounded-pill bg-light border d-flex mb-3" style="gap: 4px;">
+            <!-- Role Selector Tabs (Mobile Touch Friendly & Spacious) -->
+            <div class="role-selector-wrap p-1.5 rounded-pill bg-light border d-flex mb-3.5" style="gap: 6px;">
                 <button type="button" 
-                        class="btn btn-sm flex-fill rounded-pill py-1.5 fw-bold role-tab-btn {{ $currentRole === 'murid' ? 'active' : '' }}" 
+                        class="btn btn-sm flex-fill rounded-pill py-2 px-2 fw-bold role-tab-btn {{ $currentRole === 'murid' ? 'active' : '' }}" 
                         onclick="setRoleTab('murid')">
                     <i class="bi bi-person-heart me-1"></i> Murid
                 </button>
                 <button type="button" 
-                        class="btn btn-sm flex-fill rounded-pill py-1.5 fw-bold role-tab-btn {{ $currentRole === 'bk' ? 'active' : '' }}" 
+                        class="btn btn-sm flex-fill rounded-pill py-2 px-2 fw-bold role-tab-btn {{ $currentRole === 'bk' ? 'active' : '' }}" 
                         onclick="setRoleTab('bk')">
                     <i class="bi bi-shield-check me-1"></i> Guru BK
                 </button>
                 <button type="button" 
-                        class="btn btn-sm flex-fill rounded-pill py-1.5 fw-bold role-tab-btn {{ $currentRole === 'wali_kelas' ? 'active' : '' }}" 
+                        class="btn btn-sm flex-fill rounded-pill py-2 px-2 fw-bold role-tab-btn {{ $currentRole === 'wali_kelas' ? 'active' : '' }}" 
                         onclick="setRoleTab('wali_kelas')">
                     <i class="bi bi-mortarboard-fill me-1"></i> Wali Kelas
                 </button>
             </div>
 
             <!-- Active Portal Indicator Box -->
-            <div class="role-info-banner p-2.5 rounded-3 mb-3 border d-flex align-items-center gap-2.5" id="roleBanner" style="background: #f0fdfa; border-color: #ccfbf1 !important;">
-                <div class="role-banner-icon d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 34px; height: 34px; background: #ffffff; color: var(--primary);">
+            <div class="role-info-banner p-3 rounded-4 mb-3.5 border d-flex align-items-center gap-3" id="roleBanner" style="background: #f0fdfa; border-color: #ccfbf1 !important;">
+                <div class="role-banner-icon d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 38px; height: 38px; background: #ffffff; color: var(--primary);">
                     <i class="bi bi-person-heart fs-5" id="bannerIcon"></i>
                 </div>
                 <div>
-                    <div class="fw-bold small text-dark" id="bannerTitle" style="font-size: 0.84rem;">Portal Masuk Siswa</div>
-                    <div class="text-muted" style="font-size: 0.72rem;" id="bannerDesc">Silakan masuk menggunakan NISN resmi Anda.</div>
+                    <div class="fw-bold text-dark" id="bannerTitle" style="font-size: 0.88rem; letter-spacing: 0.01em;">Portal Masuk Siswa</div>
+                    <div class="text-muted" style="font-size: 0.78rem; line-height: 1.45;" id="bannerDesc">Silakan masuk menggunakan NISN resmi Anda.</div>
                 </div>
             </div>
 
@@ -75,93 +75,95 @@
                 @csrf
                 <input type="hidden" name="active_portal" id="inputActivePortal" value="{{ $currentRole }}">
 
-                <div class="mb-3">
-                    <label for="login" class="form-label fw-bold small text-slate-700" id="labelLogin">
+                <div class="mb-3.5">
+                    <label for="login" class="form-label fw-bold small text-slate-700 mb-1.5" id="labelLogin">
                         Username
                     </label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0 text-muted rounded-start-pill ps-3">
+                        <span class="input-group-text bg-light border-end-0 text-muted rounded-start-pill ps-3 pe-2" style="padding-top: 10px; padding-bottom: 10px;">
                             <i class="bi bi-person text-mint fs-5" id="inputIcon"></i>
                         </span>
                         <input type="text"
-                               class="form-control border-start-0 ps-1 rounded-end-pill @error('login') is-invalid @enderror"
+                               class="form-control border-start-0 ps-2 pe-3 rounded-end-pill @error('login') is-invalid @enderror"
                                id="login"
                                name="login"
                                value="{{ old('login') }}"
                                placeholder="Masukkan username"
+                               style="padding-top: 10px; padding-bottom: 10px; font-size: 0.94rem; letter-spacing: 0.015em;"
                                required
                                autofocus>
                     </div>
-                    <div class="form-text text-muted fs-xs mt-1" id="loginHelpText">
+                    <div class="form-text text-muted fs-xs mt-1.5 ps-1" id="loginHelpText" style="line-height: 1.45;">
                         <i class="bi bi-info-circle me-1"></i>Masuk dengan username terdaftar (atau NISN bagi siswa).
                     </div>
                     @error('login')
-                        <div class="text-danger small mt-1">{{ $message }}</div>
+                        <div class="text-danger small mt-1.5 ps-1">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
+                <div class="mb-3.5">
+                    <div class="d-flex justify-content-between align-items-center mb-1.5">
                         <label for="password" class="form-label fw-bold small text-slate-700 mb-0">Password</label>
                     </div>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0 text-muted rounded-start-pill ps-3">
+                        <span class="input-group-text bg-light border-end-0 text-muted rounded-start-pill ps-3 pe-2" style="padding-top: 10px; padding-bottom: 10px;">
                             <i class="bi bi-shield-lock text-mint fs-5"></i>
                         </span>
                         <input type="password"
-                               class="form-control border-start-0 border-end-0 ps-1 @error('password') is-invalid @enderror"
+                               class="form-control border-start-0 border-end-0 ps-2 @error('password') is-invalid @enderror"
                                id="password"
                                name="password"
                                placeholder="Masukkan password Anda"
+                               style="padding-top: 10px; padding-bottom: 10px; font-size: 0.94rem; letter-spacing: 0.015em;"
                                required>
-                        <button class="btn btn-light border border-start-0 rounded-end-pill pe-3 text-muted" type="button" id="togglePasswordBtn" onclick="togglePasswordVisibility()">
+                        <button class="btn btn-light border border-start-0 rounded-end-pill pe-3.5 text-muted" type="button" id="togglePasswordBtn" onclick="togglePasswordVisibility()">
                             <i class="bi bi-eye" id="togglePasswordIcon"></i>
                         </button>
                     </div>
-                    <div class="form-text text-muted fs-xs mt-1" id="passwordHelpText">
+                    <div class="form-text text-muted fs-xs mt-1.5 ps-1" id="passwordHelpText" style="line-height: 1.45;">
                         Password bawaan akun sama dengan username masing-masing.
                     </div>
                     @error('password')
-                        <div class="text-danger small mt-1">{{ $message }}</div>
+                        <div class="text-danger small mt-1.5 ps-1">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                        <label class="form-check-label small text-muted cursor-pointer" for="remember">
+                <div class="d-flex align-items-center justify-content-between mb-4 ps-1">
+                    <div class="form-check d-flex align-items-center gap-2 mb-0">
+                        <input class="form-check-input mt-0 cursor-pointer" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} style="width: 16px; height: 16px;">
+                        <label class="form-check-label small text-muted cursor-pointer user-select-none" for="remember">
                             Ingat saya di perangkat ini
                         </label>
                     </div>
                 </div>
 
-                <div class="d-grid mb-3">
-                    <button type="submit" class="btn btn-mint py-2.5 rounded-pill fw-bold shadow-sm" id="btnSubmitLogin" style="font-size: 0.95rem; letter-spacing: 0.02em;">
+                <div class="d-grid mb-3.5">
+                    <button type="submit" class="btn btn-mint py-3 rounded-pill fw-bold shadow-sm" id="btnSubmitLogin" style="font-size: 0.96rem; letter-spacing: 0.03em;">
                         <i class="bi bi-box-arrow-in-right me-1.5"></i> MASUK SEKARANG
                     </button>
                 </div>
             </form>
 
             <!-- Student Registration Link Box (Khusus Murid) -->
-            <div class="p-2.5 rounded-3 mb-3 border text-center" id="registerMuridContainer" style="background: #f0fdfa; border-color: #ccfbf1 !important;">
+            <div class="p-3 rounded-3 mb-3 border text-center" id="registerMuridContainer" style="background: #f0fdfa; border-color: #ccfbf1 !important;">
                 <span class="text-muted small">Belum memiliki akun siswa?</span>
-                <div class="mt-1">
-                    <a href="{{ route('register.murid') }}" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1 fw-bold" style="font-size: 0.8rem;">
+                <div class="mt-1.5">
+                    <a href="{{ route('register.murid') }}" class="btn btn-sm btn-outline-success rounded-pill px-3.5 py-1.5 fw-bold" style="font-size: 0.82rem; letter-spacing: 0.015em;">
                         <i class="bi bi-person-plus-fill me-1"></i> Daftar Akun
                     </a>
                 </div>
             </div>
 
             <div class="text-center mt-3 pt-3 border-top border-light">
-                <div class="text-muted small mb-2">Pilih Pintu Masuk Peran Lainnya:</div>
-                <div class="d-flex justify-content-center gap-2">
-                    <a href="{{ route('login.murid') }}" class="btn btn-light btn-sm border rounded-pill px-2.5 py-1 text-muted fw-semibold" style="font-size: 0.78rem;">
+                <div class="text-muted small mb-2.5">Pilih Pintu Masuk Peran Lainnya:</div>
+                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                    <a href="{{ route('login.murid') }}" class="btn btn-light btn-sm border rounded-pill px-3 py-1.5 text-muted fw-semibold" style="font-size: 0.8rem;">
                         <i class="bi bi-person-heart text-mint me-1"></i> Murid
                     </a>
-                    <a href="{{ route('login.admin') }}" class="btn btn-light btn-sm border rounded-pill px-2.5 py-1 text-muted fw-semibold" style="font-size: 0.78rem;">
+                    <a href="{{ route('login.admin') }}" class="btn btn-light btn-sm border rounded-pill px-3 py-1.5 text-muted fw-semibold" style="font-size: 0.8rem;">
                         <i class="bi bi-shield-check text-primary me-1"></i> Admin / BK
                     </a>
-                    <a href="{{ route('login.wali-kelas') }}" class="btn btn-light btn-sm border rounded-pill px-2.5 py-1 text-muted fw-semibold" style="font-size: 0.78rem;">
+                    <a href="{{ route('login.wali-kelas') }}" class="btn btn-light btn-sm border rounded-pill px-3 py-1.5 text-muted fw-semibold" style="font-size: 0.8rem;">
                         <i class="bi bi-mortarboard-fill text-warning me-1"></i> Wali Kelas
                     </a>
                 </div>
@@ -170,7 +172,7 @@
     </div>
 
     <!-- Footer Note -->
-    <div class="text-center text-muted small mt-4">
+    <div class="text-center text-muted small mt-4" style="letter-spacing: 0.015em;">
         &copy; {{ date('Y') }} {{ app_setting('app_name', 'Ruang Ceritaku') }} &bull; {{ app_setting('school_name', 'Madrasah / Sekolah') }}
     </div>
 </div>
@@ -180,7 +182,8 @@
         color: var(--text-mid);
         border: none;
         transition: all 0.2s ease;
-        font-size: 0.82rem;
+        font-size: 0.84rem;
+        letter-spacing: 0.015em;
     }
     .role-tab-btn:hover {
         color: var(--primary);
@@ -188,7 +191,7 @@
     .role-tab-btn.active {
         background: #ffffff !important;
         color: var(--primary-dark) !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
     .hover-teal:hover {
         color: var(--primary) !important;

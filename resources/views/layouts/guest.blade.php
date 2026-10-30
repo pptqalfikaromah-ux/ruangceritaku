@@ -9,10 +9,10 @@
     <!-- Favicon -->
     <link rel="icon" href="{{ app_logo() }}">
 
-    <!-- Google Fonts Nunito & Inter -->
+    <!-- Google Fonts Plus Jakarta Sans & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Bootstrap 5 CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -28,7 +28,7 @@
             --primary-bg: #f0fdfa;
             --gold: #f59e0b;
             --gold-light: #fef3c7;
-            --font-main: 'Nunito', 'Inter', system-ui, sans-serif;
+            --font-main: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
             --text-dark: #1e293b;
             --text-mid: #475569;
             --text-muted: #94a3b8;
@@ -43,6 +43,9 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            letter-spacing: 0.012em;
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
         }
 
         .text-mint, .text-primary-teal, .text-teal { color: var(--primary) !important; }
