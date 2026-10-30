@@ -743,23 +743,6 @@
                                         $hasActiveChild = true;
                                         break;
                                     }
-                                }
-
-                                // Cek badge untuk menu dropdown utama
-                                $parentBadge = null;
-                                $isParentDanger = false;
-                                if (isset($item['badge_key'])) {
-                                    if ($item['badge_key'] === 'counseling_and_ims') {
-                                        $cnt = $panelNotifs['counseling'] + $panelNotifs['ims'];
-                                        if ($cnt > 0) $parentBadge = $cnt;
-                                    } elseif ($item['badge_key'] === 'all_complaints') {
-                                        $cnt = $panelNotifs['complaints'] + $panelNotifs['homeroom_complaints'];
-                                        if ($cnt > 0) {
-                                            $parentBadge = $cnt;
-                                            $isParentDanger = $panelNotifs['has_danger'];
-                                        }
-                                    }
-                                }
                             @endphp
                             <div class="sk-nav-dropdown mb-1">
                                 <button type="button" 
@@ -769,11 +752,6 @@
                                         aria-expanded="{{ $hasActiveChild ? 'true' : 'false' }}">
                                     <i class="bi {{ $item['icon'] }}"></i>
                                     <span class="flex-grow-1">{{ $item['label'] }}</span>
-                                    @if($parentBadge)
-                                        <span class="badge {{ $isParentDanger ? 'badge-danger-pulse' : 'bg-primary-teal text-white' }} rounded-pill me-1" style="font-size: .65rem;">
-                                            {{ $parentBadge }}
-                                        </span>
-                                    @endif
                                     <i class="bi bi-chevron-down sk-chevron"></i>
                                 </button>
                                 <div class="collapse {{ $hasActiveChild ? 'show' : '' }} sk-submenu" id="{{ $item['id'] }}">
@@ -781,30 +759,10 @@
                                         @if(in_array($userRole, $child['roles']))
                                             @php
                                                 $isChildActive = request()->routeIs($child['active']);
-                                                $childBadge = null;
-                                                $isChildDanger = false;
-
-                                                if (isset($child['badge_key'])) {
-                                                    if ($child['badge_key'] === 'counseling' && $panelNotifs['counseling'] > 0) {
-                                                        $childBadge = $panelNotifs['counseling'];
-                                                    } elseif ($child['badge_key'] === 'ims' && $panelNotifs['ims'] > 0) {
-                                                        $childBadge = $panelNotifs['ims'];
-                                                    } elseif ($child['badge_key'] === 'complaints' && $panelNotifs['complaints'] > 0) {
-                                                        $childBadge = $panelNotifs['complaints'];
-                                                        $isChildDanger = $panelNotifs['has_danger'];
-                                                    } elseif ($child['badge_key'] === 'homeroom_complaints' && $panelNotifs['homeroom_complaints'] > 0) {
-                                                        $childBadge = $panelNotifs['homeroom_complaints'];
-                                                    }
-                                                }
                                             @endphp
                                             <a href="{{ route($child['route']) }}" class="sk-subitem {{ $isChildActive ? 'active' : '' }}">
                                                 <i class="bi {{ $child['icon'] ?? 'bi-circle' }}"></i>
                                                 <span class="flex-grow-1">{{ $child['label'] }}</span>
-                                                @if($childBadge)
-                                                    <span class="badge {{ $isChildDanger ? 'badge-danger-pulse' : 'bg-teal-subtle text-primary-teal' }} rounded-pill" style="font-size: .65rem;">
-                                                        {{ $childBadge }}
-                                                    </span>
-                                                @endif
                                             </a>
                                         @endif
                                     @endforeach

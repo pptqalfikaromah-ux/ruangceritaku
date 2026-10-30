@@ -78,7 +78,7 @@
                     <div>
                         <span class="text-muted small fw-medium">Total Butir Soal</span>
                         <h3 class="fw-bold text-dark mt-1 mb-0">{{ $totalStatements }}</h3>
-                        <span class="text-muted fs-xs">9 Layanan × 4 Bidang Bimbingan</span>
+                        <span class="text-muted fs-xs">{{ $serviceTypes->count() }} Layanan × 4 Bidang Bimbingan</span>
                     </div>
                     <div class="p-3 bg-emerald-subtle rounded-3 text-emerald">
                         <i class="bi bi-collection fs-4"></i>
@@ -128,7 +128,7 @@
                 </div>
                 <div class="col-md-3">
                     <select name="service_type_id" class="form-select form-select-sm" onchange="this.form.submit()">
-                        <option value="">-- Semua Layanan (9) --</option>
+                        <option value="">-- Semua Layanan ({{ $serviceTypes->count() }}) --</option>
                         @foreach($serviceTypes as $service)
                             <option value="{{ $service->id }}" {{ request('service_type_id') == $service->id ? 'selected' : '' }}>
                                 {{ $service->name }}

@@ -202,7 +202,7 @@
                 <i class="bi bi-clipboard2-check"></i>
             </div>
             <div class="overflow-hidden">
-                <div class="fw-bold text-dark small text-truncate">Instrumen IMS (180)</div>
+                <div class="fw-bold text-dark small text-truncate">Instrumen IMS</div>
                 <div class="text-muted text-truncate" style="font-size: 0.72rem;">Pemetaan masalah siswa</div>
             </div>
         </a>

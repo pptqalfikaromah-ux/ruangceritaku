@@ -26,6 +26,12 @@ class MasterServiceSeeder extends Seeder
                 'description' => 'Layanan yang membantu peserta didik menerima dan memahami berbagai informasi diri, sosial, belajar, pergaulan, karier, dan pendidikan lanjutan.',
             ],
             [
+                'code' => 'LAY-04',
+                'name' => 'Layanan Penguasaan Konten',
+                'category' => 'layanan',
+                'description' => 'Layanan bimbingan dan konseling yang membantu peserta didik menguasai kemampuan atau kompetensi tertentu melalui kegiatan belajar.',
+            ],
+            [
                 'code' => 'LAY-05',
                 'name' => 'Layanan Konseling Perorangan',
                 'category' => 'layanan',

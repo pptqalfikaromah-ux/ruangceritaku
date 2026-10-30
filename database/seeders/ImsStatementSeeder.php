@@ -16,6 +16,7 @@ class ImsStatementSeeder extends Seeder
         $layananMap = [
             'ORIENTASI' => ServiceType::where('code', 'LAY-01')->first()?->id,
             'INFORMASI' => ServiceType::where('code', 'LAY-02')->first()?->id,
+            'PENGUASAAN KONTEN' => ServiceType::where('code', 'LAY-04')->first()?->id,
             'KONSELING PERORANGAN' => ServiceType::where('code', 'LAY-05')->first()?->id,
             'BIMBINGAN KELOMPOK' => ServiceType::where('code', 'LAY-06')->first()?->id,
             'KONSELING KELOMPOK' => ServiceType::where('code', 'LAY-07')->first()?->id,

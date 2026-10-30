@@ -89,7 +89,7 @@ return [
                     'roles' => ['admin', 'guru_bk'],
                 ],
                 [
-                    'label' => 'Instrumen IMS (180)',
+                    'label' => 'Instrumen IMS',
                     'icon' => 'bi-clipboard2-check',
                     'route' => 'panel.ims.master',
                     'active' => 'panel.ims.*',
