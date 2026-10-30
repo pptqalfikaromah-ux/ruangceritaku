@@ -119,10 +119,17 @@
                     </ul>
                 </div>
 
-                <a href="{{ route('murid.ims.index') }}" class="btn btn-primary w-100 py-2.5 rounded-pill fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2" style="background: #4f46e5; border-color: #4f46e5;">
-                    <span>Buka Lembar Instrumen IMS</span>
-                    <i class="bi bi-arrow-right"></i>
-                </a>
+                @if(app_setting('ims_enabled', '1') === '1')
+                    <a href="{{ route('murid.ims.index') }}" class="btn btn-primary w-100 py-2.5 rounded-pill fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2" style="background: #4f46e5; border-color: #4f46e5;">
+                        <span>Buka Lembar Instrumen IMS</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                @else
+                    <button type="button" class="btn btn-secondary w-100 py-2.5 rounded-pill fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2" onclick="alert('Layanan Instrumen Masalah Siswa (IMS) saat ini dinonaktifkan oleh Guru BK.')" style="cursor:not-allowed; opacity: 0.75;">
+                        <i class="bi bi-lock-fill"></i>
+                        <span>Instrumen IMS Terkunci</span>
+                    </button>
+                @endif
             </div>
         </div>
     </div>

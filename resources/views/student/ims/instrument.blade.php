@@ -100,15 +100,15 @@
 
                 <input type="hidden" name="scope_statement_ids[]" value="{{ $stmt->id }}">
 
-                <div class="card border-0 rounded-4 modern-statement-item p-3.5 p-md-4 {{ $isSelected ? 'statement-active' : '' }} {{ $isHeavy ? 'statement-heavy' : '' }}"
+                <div class="card border-0 rounded-4 modern-statement-item p-2.5 p-sm-3.5 {{ $isSelected ? 'statement-active' : '' }} {{ $isHeavy ? 'statement-heavy' : '' }}"
                      id="card-stmt-{{ $stmt->id }}"
                      style="background: #ffffff; border: 1.5px solid {{ $isHeavy ? '#f59e0b' : ($isSelected ? '#00B894' : '#E2ECE9') }} !important;">
                     
-                    <div class="d-flex align-items-start gap-3">
+                    <div class="d-flex align-items-start gap-2.5">
                         <!-- Checkbox Pilihan Butir -->
-                        <div class="pt-1 flex-shrink-0">
-                            <div class="form-check m-0">
-                                <input class="form-check-input modern-checkbox cursor-pointer"
+                        <div class="pt-0.5 flex-shrink-0">
+                            <div class="form-check m-0 p-0">
+                                <input class="form-check-input modern-checkbox cursor-pointer m-0"
                                        type="checkbox"
                                        name="selected[]"
                                        value="{{ $stmt->id }}"
@@ -117,44 +117,35 @@
                                        data-radio-id="radio_heavy_{{ $stmt->id }}"
                                        {{ $isSelected ? 'checked' : '' }}
                                        {{ $assessment->isSubmitted() ? 'disabled' : '' }}
-                                       style="width: 22px; height: 22px; cursor: pointer;">
+                                       style="width: 20px; height: 20px; cursor: pointer;">
                             </div>
                         </div>
 
-                        <!-- Konten Butir: Nomor, Badge Bidang, Pernyataan -->
+                        <!-- Konten Butir: Nomor, Badge Bidang, Pernyataan Memanjang ke Samping -->
                         <div class="flex-grow-1 min-w-0">
-                            <div class="d-flex flex-wrap align-items-center gap-2 mb-1.5">
-                                <!-- Nomor Butir -->
-                                <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1 fs-xs fw-bold font-monospace">
-                                    #{{ $stmt->statement_number }}
-                                </span>
-
-                                <!-- Badge Bidang Bimbingan -->
-                                <span class="badge rounded-pill px-2.5 py-1 fs-xs fw-semibold"
+                            <label for="chk_{{ $stmt->id }}" class="text-dark mb-0 fs-sm cursor-pointer lh-base d-block" style="user-select: none;">
+                                <span class="badge bg-light text-dark border rounded px-1.5 py-0.5 me-1 fs-xxs fw-bold font-monospace align-middle">#{{ $stmt->statement_number }}</span>
+                                <span class="badge rounded px-1.5 py-0.5 me-1.5 fs-xxs fw-semibold align-middle"
                                       style="background: {{ $badgeStyle['bg'] }}; color: {{ $badgeStyle['text'] }}; border: 1px solid {{ $badgeStyle['border'] }};">
-                                    <i class="bi {{ $badgeStyle['icon'] }} me-1"></i>{{ $fieldName }}
+                                    {{ $fieldName }}
                                 </span>
+                                <span class="statement-text fw-medium align-middle">{{ $stmt->statement_text }}</span>
+                            </label>
 
-                                <!-- Indikator Visual Masalah Paling Mengganggu -->
-                                <span class="badge rounded-pill px-2.5 py-1 fs-xs fw-bold text-white heavy-badge-label"
-                                      id="heavyLabel_{{ $stmt->id }}"
-                                      style="background: #d97706; display: {{ $isHeavy ? 'inline-flex' : 'none' }}; align-items: center; gap: 4px;">
-                                    <i class="bi bi-star-fill text-warning"></i> Masalah Paling Mengganggu di Layanan Ini
+                            <!-- Indikator Visual Masalah Paling Mengganggu -->
+                            <div class="heavy-badge-label mt-1" id="heavyLabel_{{ $stmt->id }}" style="display: {{ $isHeavy ? 'inline-flex' : 'none' }};">
+                                <span class="badge rounded-pill px-2 py-0.5 fs-xxs fw-bold text-white" style="background: #d97706;">
+                                    <i class="bi bi-star-fill text-warning me-1"></i> Masalah Terberat di Layanan Ini
                                 </span>
                             </div>
 
-                            <!-- Teks Pernyataan Masalah -->
-                            <label for="chk_{{ $stmt->id }}" class="fw-medium text-dark mb-0 fs-sm cursor-pointer d-block lh-base" style="user-select: none;">
-                                {{ $stmt->statement_text }}
-                            </label>
-
                             <!-- Pilihan Masalah Paling Mengganggu (Radio Option - Maksimal 1 per Layanan, Opsional) -->
                             @if(!$assessment->isSubmitted())
-                                <div class="mt-2.5 pt-2 border-top border-light-subtle d-flex align-items-center justify-content-between flex-wrap gap-2 heavy-selector-box"
+                                <div class="mt-2 pt-1.5 border-top border-light-subtle d-flex align-items-center justify-content-between flex-wrap gap-2 heavy-selector-box"
                                      id="heavyBox_{{ $stmt->id }}"
                                      style="{{ $isSelected ? '' : 'opacity: 0.6;' }}">
                                     <div class="form-check form-check-inline m-0 d-flex align-items-center gap-1.5">
-                                        <input class="form-check-input heavy-radio cursor-pointer"
+                                        <input class="form-check-input heavy-radio cursor-pointer m-0"
                                                type="radio"
                                                name="heavy_statement_id"
                                                value="{{ $stmt->id }}"
@@ -162,9 +153,12 @@
                                                data-stmt-id="{{ $stmt->id }}"
                                                data-chk-id="chk_{{ $stmt->id }}"
                                                {{ $isHeavy ? 'checked' : '' }}
-                                               style="cursor: pointer;">
-                                        <label class="form-check-label fs-xs fw-semibold text-dark cursor-pointer" for="radio_heavy_{{ $stmt->id }}">
-                                            <span class="text-warning fw-bold">⭐</span> Jadikan Masalah Paling Mengganggu di Layanan Ini <span class="badge bg-secondary-subtle text-secondary fs-xxs fw-normal ms-1">Opsional (Maks. 1)</span>
+                                               style="width: 15px; height: 15px; cursor: pointer;">
+                                        <label class="form-check-label fs-xxs fw-semibold text-dark cursor-pointer" for="radio_heavy_{{ $stmt->id }}">
+                                            <span class="text-warning fw-bold">⭐</span> 
+                                            <span class="d-none d-sm-inline">Tandai Masalah Paling Mengganggu</span>
+                                            <span class="d-sm-none">Masalah Terberat</span>
+                                            <span class="badge bg-secondary-subtle text-secondary fs-xxs fw-normal ms-1 d-none d-md-inline">Opsional</span>
                                         </label>
                                     </div>
                                 </div>
@@ -293,6 +287,16 @@
             padding: 10px !important;
             font-size: 0.85rem !important;
         }
+        .modern-statement-item {
+            padding: 10px 12px !important;
+        }
+        .statement-text {
+            font-size: 0.84rem !important;
+            line-height: 1.4 !important;
+        }
+    }
+    .fs-xxs {
+        font-size: 0.68rem !important;
     }
 </style>
 @endpush

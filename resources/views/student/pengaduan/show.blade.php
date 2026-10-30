@@ -1,11 +1,11 @@
 @extends('layouts.student')
 
-@section('title', 'Detail Laporan Pengaduan - ' . $pengaduan->ticket_number)
-@section('page_title', 'Detail Pengaduan')
+@section('title', 'Detail Pelayanan Darurat - ' . $pengaduan->ticket_number)
+@section('page_title', 'Detail Pelayanan Darurat')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('murid.dashboard') }}" class="text-decoration-none" style="color: var(--emis-teal);">Murid</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('murid.pengaduan.index') }}" class="text-decoration-none" style="color: var(--emis-teal);">Pengaduan</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('murid.pengaduan.index') }}" class="text-decoration-none" style="color: var(--emis-teal);">Pelayanan Darurat</a></li>
     <li class="breadcrumb-item active">{{ $pengaduan->ticket_number }}</li>
 @endsection
 

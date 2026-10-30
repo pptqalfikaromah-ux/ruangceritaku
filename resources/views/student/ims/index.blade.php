@@ -78,6 +78,12 @@
                 'bg' => '#f5f3ff',
                 'desc' => 'Informasi kesehatan remaja, kiat belajar efektif, pemahaman diri, dan cita-cita masa depan.',
             ],
+            'LAY-03' => [
+                'icon' => 'bi-diagram-3',
+                'color' => '#d97706',
+                'bg' => '#fef3c7',
+                'desc' => 'Penempatan posisi duduk, pemilihan kawan akrab/teman sebangku, penjurusan, dan rencana karir.',
+            ],
             'LAY-04' => [
                 'icon' => 'bi-mortarboard',
                 'color' => '#059669',

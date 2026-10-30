@@ -43,35 +43,36 @@
 
 @php
     $imsEnabled = app_setting('ims_enabled', '1') === '1';
-    $statColClass = $imsEnabled ? 'col-sm-6 col-lg-3' : 'col-sm-6 col-lg-4';
-    $agendaColClass = $imsEnabled ? 'col-lg-6' : 'col-12';
+    $statColClass = 'col-sm-6 col-lg-3';
+    $agendaColClass = 'col-lg-6';
 @endphp
 
 {{-- Stats Row --}}
 <div class="row g-3 mb-4">
-    @if($imsEnabled)
-        {{-- IMS Status --}}
-        <div class="{{ $statColClass }}">
-            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);">
-                <div style="width:44px;height:44px;border-radius:10px;background:#f0fdfa;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <i class="bi bi-clipboard2-check" style="font-size:1.4rem;color:#0d9488;"></i>
-                </div>
-                <div>
-                    <div style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;">Status IMS</div>
-                    @if($currentAssessment && $currentAssessment->isSubmitted())
-                        <div style="font-size:1rem;font-weight:800;color:#0d9488;">Terkirim</div>
-                        <div style="font-size:.7rem;color:#94a3b8;">{{ $currentAssessment->submitted_at?->format('d M Y') }}</div>
-                    @elseif($currentAssessment && $currentAssessment->isDraft())
-                        <div style="font-size:1rem;font-weight:800;color:#f59e0b;">Draf</div>
-                        <div style="font-size:.7rem;color:#94a3b8;">Belum dikirim</div>
-                    @else
-                        <div style="font-size:1rem;font-weight:800;color:#94a3b8;">Belum Isi</div>
-                        <div style="font-size:.7rem;color:#94a3b8;">Silakan isi IMS</div>
-                    @endif
-                </div>
+    {{-- IMS Status --}}
+    <div class="{{ $statColClass }}">
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);{{ $imsEnabled ? '' : 'opacity:0.75;' }}">
+            <div style="width:44px;height:44px;border-radius:10px;background:{{ $imsEnabled ? '#f0fdfa' : '#f1f5f9' }};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="bi {{ $imsEnabled ? 'bi-clipboard2-check' : 'bi-lock-fill' }}" style="font-size:1.4rem;color:{{ $imsEnabled ? '#0d9488' : '#64748b' }};"></i>
+            </div>
+            <div>
+                <div style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;">Status IMS</div>
+                @if(!$imsEnabled)
+                    <div style="font-size:.9rem;font-weight:800;color:#64748b;">Dinonaktifkan</div>
+                    <div style="font-size:.7rem;color:#94a3b8;">Oleh Guru BK</div>
+                @elseif($currentAssessment && $currentAssessment->isSubmitted())
+                    <div style="font-size:1rem;font-weight:800;color:#0d9488;">Terkirim</div>
+                    <div style="font-size:.7rem;color:#94a3b8;">{{ $currentAssessment->submitted_at?->format('d M Y') }}</div>
+                @elseif($currentAssessment && $currentAssessment->isDraft())
+                    <div style="font-size:1rem;font-weight:800;color:#f59e0b;">Draf</div>
+                    <div style="font-size:.7rem;color:#94a3b8;">Belum dikirim</div>
+                @else
+                    <div style="font-size:1rem;font-weight:800;color:#94a3b8;">Belum Isi</div>
+                    <div style="font-size:.7rem;color:#94a3b8;">Silakan isi IMS</div>
+                @endif
             </div>
         </div>
-    @endif
+    </div>
     {{-- Konseling --}}
     <div class="{{ $statColClass }}">
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);">
@@ -103,14 +104,14 @@
             </div>
         </div>
     </div>
-    {{-- Pengaduan --}}
+    {{-- Pelayanan Darurat --}}
     <div class="{{ $statColClass }}">
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);">
             <div style="width:44px;height:44px;border-radius:10px;background:#fef2f2;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i class="bi bi-shield-check" style="font-size:1.4rem;color:#ef4444;"></i>
+                <i class="bi bi-shield-fill-exclamation" style="font-size:1.4rem;color:#ef4444;"></i>
             </div>
             <div>
-                <div style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;">Pengaduan</div>
+                <div style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;">Pelayanan Darurat</div>
                 <div style="font-size:1.4rem;font-weight:800;color:#ef4444;line-height:1;">{{ $recentComplaints->count() }}</div>
                 <div style="font-size:.7rem;color:#94a3b8;">Laporan tercatat</div>
             </div>
@@ -120,9 +121,9 @@
 
 {{-- IMS + Agenda Konseling Row --}}
 <div class="row g-4 mb-4">
-    @if($imsEnabled)
-        {{-- IMS Status Card --}}
-        <div class="col-lg-6">
+    {{-- IMS Card (Aktif atau Terkunci) --}}
+    <div class="col-lg-6">
+        @if($imsEnabled)
             <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;height:100%;">
                 <div style="padding:12px 16px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-weight:700;font-size:.88rem;color:#1e293b;"><i class="bi bi-clipboard2-check text-success me-2"></i>Instrumen Masalah Siswa (IMS)</span>
@@ -166,8 +167,27 @@
                     @endif
                 </div>
             </div>
-        </div>
-    @endif
+        @else
+            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;height:100%;opacity:0.9;">
+                <div style="padding:12px 16px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;background:#f8fafc;">
+                    <span style="font-weight:700;font-size:.88rem;color:#64748b;"><i class="bi bi-lock-fill text-secondary me-2"></i>Instrumen Masalah Siswa (IMS)</span>
+                    <span class="badge bg-secondary" style="font-size:0.68rem;">Dinonaktifkan</span>
+                </div>
+                <div style="padding:24px 16px;text-align:center;">
+                    <div style="width:48px;height:48px;border-radius:50%;background:#f1f5f9;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;">
+                        <i class="bi bi-lock-fill" style="font-size:1.4rem;color:#94a3b8;"></i>
+                    </div>
+                    <div style="font-weight:700;font-size:.9rem;margin-bottom:4px;color:#334155;">Layanan Asesmen Sedang Dinonaktifkan</div>
+                    <div style="font-size:.78rem;color:#64748b;margin-bottom:16px;max-width:320px;margin-left:auto;margin-right:auto;">
+                        Pengisian instrumen IMS saat ini dinonaktifkan oleh Guru BK. Anda dapat mengaksesnya kembali setelah diaktifkan oleh pihak madrasah.
+                    </div>
+                    <button type="button" class="btn btn-light border btn-sm rounded-pill px-3.5 py-1.5 text-muted" onclick="alert('Layanan Asesmen IMS saat ini dinonaktifkan oleh Guru BK.')" style="cursor:not-allowed;font-size:.78rem;font-weight:600;">
+                        <i class="bi bi-lock me-1"></i> Asesmen Terkunci
+                    </button>
+                </div>
+            </div>
+        @endif
+    </div>
 
     {{-- Agenda Konseling --}}
     <div class="{{ $agendaColClass }}">

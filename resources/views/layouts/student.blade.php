@@ -275,12 +275,15 @@
                         <div class="text-muted" style="font-size:.72rem;">NISN: {{ $currentStudent?->nisn ?? $currentUser?->username }}</div>
                     </li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.dashboard') }}" style="font-size:.83rem;"><i class="bi bi-house-door me-2 text-primary"></i>Beranda</a></li>
+                    <li><a class="dropdown-item py-2" href="{{ route('murid.profile.index') }}" style="font-size:.83rem;"><i class="bi bi-person-gear me-2 text-primary"></i>Profil Saya</a></li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.konseling.pribadi') }}" style="font-size:.83rem;"><i class="bi bi-person-heart me-2 text-primary"></i>Konseling Pribadi</a></li>
                     @if(app_setting('ims_enabled', '1') === '1')
                         <li><a class="dropdown-item py-2" href="{{ route('murid.ims.index') }}" style="font-size:.83rem;"><i class="bi bi-clipboard2-check me-2" style="color:#7c3aed;"></i>Asesmen Masalah (IMS)</a></li>
+                    @else
+                        <li><a class="dropdown-item py-2 text-muted" href="javascript:void(0)" onclick="alert('Layanan Asesmen IMS sedang dinonaktifkan sementara oleh Guru BK.')" style="font-size:.83rem;opacity:0.65;cursor:not-allowed;" title="Asesmen dinonaktifkan"><i class="bi bi-lock me-2 text-secondary"></i>Asesmen Masalah (IMS) <span class="badge bg-secondary ms-1" style="font-size:.65rem;">Terkunci</span></a></li>
                     @endif
                     <li><a class="dropdown-item py-2" href="{{ route('murid.konseling.index') }}" style="font-size:.83rem;"><i class="bi bi-chat-heart me-2" style="color:#e11d48;"></i>Riwayat Konseling</a></li>
-                    <li><a class="dropdown-item py-2" href="{{ route('murid.pengaduan.index') }}" style="font-size:.83rem;"><i class="bi bi-shield-check me-2 text-warning"></i>Pengaduan Aman</a></li>
+                    <li><a class="dropdown-item py-2" href="{{ route('murid.pengaduan.index') }}" style="font-size:.83rem;"><i class="bi bi-shield-fill-exclamation me-2 text-danger"></i>Pelayanan Darurat</a></li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.pamflet.index') }}" style="font-size:.83rem;"><i class="bi bi-images me-2 text-info"></i>Pamflet Kreativitas</a></li>
                     <li><hr class="dropdown-divider my-1"></li>
                     <li>
@@ -313,6 +316,9 @@
                 <a href="{{ route('murid.dashboard') }}" class="sk-nav-item {{ request()->routeIs('murid.dashboard*') ? 'active' : '' }}">
                     <i class="bi bi-house-door"></i><span>Beranda</span>
                 </a>
+                <a href="{{ route('murid.profile.index') }}" class="sk-nav-item {{ request()->routeIs('murid.profile*') ? 'active' : '' }}">
+                    <i class="bi bi-person-gear"></i><span>Profil Saya</span>
+                </a>
                 <div class="sk-nav-heading mt-2">Layanan Konseling</div>
                 <a href="{{ route('murid.konseling.create') }}" class="sk-nav-item {{ request()->routeIs('murid.konseling.create*') || request()->routeIs('murid.konseling.pribadi*') || request()->routeIs('murid.konseling.ajukan*') ? 'active' : '' }}">
                     <i class="bi bi-send-check"></i><span>Ajukan Konseling</span>
@@ -321,16 +327,21 @@
                     <i class="bi bi-chat-heart"></i><span>Riwayat Konseling</span>
                 </a>
                 <a href="{{ route('murid.pengaduan.index') }}" class="sk-nav-item {{ request()->routeIs('murid.pengaduan.*') ? 'active' : '' }}">
-                    <i class="bi bi-shield-check"></i><span>Pengaduan Aman</span>
+                    <i class="bi bi-shield-fill-exclamation text-danger"></i><span>Pelayanan Darurat</span>
                 </a>
                 <a href="{{ route('murid.pamflet.index') }}" class="sk-nav-item {{ request()->routeIs('murid.pamflet.*') ? 'active' : '' }}">
                     <i class="bi bi-images"></i><span>Pamflet Kreativitas</span>
                 </a>
 
+                <div class="sk-nav-heading mt-3">Asesmen Siswa</div>
                 @if(app_setting('ims_enabled', '1') === '1')
-                    <div class="sk-nav-heading mt-3">Asesmen Siswa</div>
                     <a href="{{ route('murid.ims.index') }}" class="sk-nav-item {{ request()->routeIs('murid.ims.*') ? 'active' : '' }}">
                         <i class="bi bi-clipboard2-check"></i><span>Asesmen Masalah (IMS)</span>
+                    </a>
+                @else
+                    <a href="javascript:void(0)" onclick="alert('Layanan Asesmen Masalah (IMS) saat ini sedang dinonaktifkan oleh pihak madrasah / Guru BK.')" class="sk-nav-item" style="opacity:0.6;cursor:not-allowed;" title="Layanan dinonaktifkan oleh Guru BK">
+                        <i class="bi bi-lock"></i><span>Asesmen Masalah (IMS)</span>
+                        <span class="badge bg-secondary ms-auto" style="font-size:.65rem;font-weight:600;">Terkunci</span>
                     </a>
                 @endif
             </div>
@@ -386,14 +397,19 @@
                 <i class="bi bi-clipboard2-check{{ request()->routeIs('murid.ims.*') ? '-fill' : '' }}"></i>
                 <span>Asesmen</span>
             </a>
+        @else
+            <a href="javascript:void(0)" onclick="alert('Layanan Asesmen Masalah (IMS) saat ini sedang dinonaktifkan oleh pihak madrasah / Guru BK.')" class="sk-btab" style="opacity:0.5;cursor:not-allowed;" title="Asesmen dinonaktifkan">
+                <i class="bi bi-lock"></i>
+                <span>Asesmen</span>
+            </a>
         @endif
         <a href="{{ route('murid.konseling.index') }}" class="sk-btab {{ request()->routeIs('murid.konseling.index*') || request()->routeIs('murid.konseling.show*') ? 'active' : '' }}">
             <i class="bi bi-chat-heart{{ request()->routeIs('murid.konseling.index*') ? '-fill' : '' }}"></i>
             <span>Riwayat</span>
         </a>
         <a href="{{ route('murid.pengaduan.index') }}" class="sk-btab {{ request()->routeIs('murid.pengaduan.*') ? 'active' : '' }}">
-            <i class="bi bi-shield{{ request()->routeIs('murid.pengaduan.*') ? '-fill' : '-check' }}"></i>
-            <span>Pengaduan</span>
+            <i class="bi bi-shield-fill-exclamation text-danger"></i>
+            <span>Darurat</span>
         </a>
     </nav>
 

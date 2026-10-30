@@ -1,11 +1,11 @@
 @extends('layouts.student')
 
-@section('title', 'Layanan Pengaduan Aman Siswa')
-@section('page_title', 'Pengaduan Aman')
+@section('title', 'Pelayanan Darurat Siswa')
+@section('page_title', 'Pelayanan Darurat')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('murid.dashboard') }}" class="text-decoration-none" style="color: var(--emis-teal);">Murid</a></li>
-    <li class="breadcrumb-item active">Pengaduan Aman</li>
+    <li class="breadcrumb-item active">Pelayanan Darurat</li>
 @endsection
 
 @section('content')
@@ -14,15 +14,17 @@
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 bg-white p-4 rounded-3 border shadow-sm">
         <div>
             <div class="d-flex align-items-center gap-2 mb-1">
-                <span class="badge bg-danger-subtle text-danger px-2 py-1 fs-xs fw-semibold rounded-pill">Pengaduan Aman</span>
-                <span class="badge bg-light text-dark border px-2 py-1 fs-xs fw-medium rounded-pill">Perlindungan Keselamatan Anak</span>
+                <span class="badge bg-danger-subtle text-danger px-2.5 py-1 fs-xs fw-bold rounded-pill">
+                    <i class="bi bi-shield-fill-exclamation me-1"></i>Pelayanan Darurat
+                </span>
+                <span class="badge bg-light text-dark border px-2 py-1 fs-xs fw-medium rounded-pill">Perlindungan Murid</span>
             </div>
-            <h1 class="h4 fw-bold text-dark mb-1">Pengaduan & Perlindungan Diri</h1>
-            <p class="text-muted small mb-0">Laporkan kejadian perundungan, kekerasan, pelecehan, atau ancaman keselamatan dengan aman dan rahasia.</p>
+            <h1 class="h4 fw-bold text-dark mb-1">Pelayanan Darurat & Perlindungan Diri</h1>
+            <p class="text-muted small mb-0">Laporkan kendala darurat, perundungan, kekerasan, atau ancaman keselamatan dengan aman, cepat, dan rahasia.</p>
         </div>
         <div class="d-flex gap-2">
-            <a href="{{ route('murid.pengaduan.create') }}" class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm">
-                <i class="bi bi-shield-plus me-1"></i> Buat Laporan Baru
+            <a href="{{ route('murid.pengaduan.create') }}" class="btn btn-danger btn-sm rounded-pill px-3.5 py-2 shadow-sm fw-bold">
+                <i class="bi bi-shield-plus me-1"></i> Kirim Pelayanan Darurat
             </a>
         </div>
     </div>

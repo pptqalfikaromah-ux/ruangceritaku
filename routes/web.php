@@ -26,6 +26,7 @@ use App\Http\Controllers\Student\StudentImsController;
 use App\Http\Controllers\Panel\AnnouncementController;
 use App\Http\Controllers\Panel\PamphletModerationController;
 use App\Http\Controllers\Student\StudentPamphletController;
+use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\WaliKelas\WaliKelasAduanController;
 use App\Http\Controllers\WaliKelas\WaliKelasDashboardController;
 use App\Http\Controllers\WaliKelas\WaliKelasMonitoringController;
@@ -267,6 +268,10 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
     Route::get('/pamflet/tambah', [StudentPamphletController::class, 'create'])->name('pamflet.create');
     Route::post('/pamflet', [StudentPamphletController::class, 'store'])->name('pamflet.store');
     Route::delete('/pamflet/{pamphlet}', [StudentPamphletController::class, 'destroy'])->name('pamflet.destroy');
+
+    // 5. Profil Murid (Kelola Profil Mandiri)
+    Route::get('/profil', [StudentProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profil', [StudentProfileController::class, 'update'])->name('profile.update');
 });
 
 /*

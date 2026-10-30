@@ -29,20 +29,33 @@
                     <form method="POST" action="{{ route('murid.konseling.store') }}" class="space-y-4">
                         @csrf
 
-                        <!-- Topik / Tujuan -->
+                        <!-- Dropdown 4 Bidang Masalah Konseling -->
                         <div class="mb-3">
                             <label class="form-label fw-bold small text-slate-700">
-                                Topik / Hal Pokok yang Ingin Dikonsultasikan <span class="text-danger">*</span>
+                                Bidang Masalah yang Ingin Dikonsultasikan <span class="text-danger">*</span>
                             </label>
-                            <input type="text" 
-                                   name="purpose" 
-                                   value="{{ old('purpose', $prefilledPurpose ?? '') }}" 
-                                   class="form-control @error('purpose') is-invalid @enderror" 
-                                   placeholder="Contoh: Merasa cemas menghadapi ujian, bingung memilih jurusan, kendala belajar, dll." 
-                                   required>
-                            @error('purpose')
+                            <select name="guidance_field_id" id="guidanceFieldSelect" class="form-select @error('guidance_field_id') is-invalid @enderror" required onchange="updatePurpose(this)">
+                                <option value="" disabled {{ old('guidance_field_id') ? '' : 'selected' }}>-- Pilih 1 dari 4 Bidang Masalah --</option>
+                                @foreach($guidanceFields as $gf)
+                                    @php
+                                        $fieldDesc = match($gf->code) {
+                                            'BID-01' => 'Bimbingan Pribadi (Kepercayaan diri, emosi, kecemasan, masalah personal)',
+                                            'BID-02' => 'Bimbingan Sosial (Pertemanan, keluarga, adaptasi lingkungan, komunikasi)',
+                                            'BID-03' => 'Bimbingan Belajar (Motivasi belajar, kesulitan mapel, ujian, manajemen waktu)',
+                                            'BID-04' => 'Bimbingan Karier (Minat bakat, cita-cita, jurusan, studi lanjutan)',
+                                            default  => $gf->name,
+                                        };
+                                    @endphp
+                                    <option value="{{ $gf->id }}" data-name="{{ $gf->name }}" {{ old('guidance_field_id') == $gf->id ? 'selected' : '' }}>
+                                        {{ $gf->name }} &bull; {{ $fieldDesc }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <input type="hidden" name="purpose" id="purposeInput" value="{{ old('purpose', 'Konseling Masalah Pribadi') }}">
+                            @error('guidance_field_id')
                                 <div class="invalid-feedback small">{{ $message }}</div>
                             @enderror
+                            <div class="form-text text-muted fs-xxs mt-1">Pilih bidang bimbingan yang paling menggambarkan kendala yang sedang kamu rasakan.</div>
                         </div>
 
                         <!-- Pilihan Metode Konseling (Tatap Muka vs Online Meet) -->
@@ -87,7 +100,7 @@
                                 <option value="">-- Bebas / Siapa saja Guru BK yang bertugas --</option>
                                 @foreach($counselors ?? [] as $c)
                                     <option value="{{ $c->id }}" {{ old('counselor_id') == $c->id ? 'selected' : '' }}>
-                                        {{ $c->user->name ?? 'Guru BK' }}
+                                        {{ $c->name }}
                                     </option>
                                 @endforeach
                             </select>

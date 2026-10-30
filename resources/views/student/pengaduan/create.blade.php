@@ -1,12 +1,12 @@
 @extends('layouts.student')
 
-@section('title', 'Buat Laporan Pengaduan Aman')
-@section('page_title', 'Buat Pengaduan Aman')
+@section('title', 'Kirim Pelayanan Darurat')
+@section('page_title', 'Pelayanan Darurat')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('murid.dashboard') }}" class="text-decoration-none" style="color: var(--emis-teal);">Murid</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('murid.pengaduan.index') }}" class="text-decoration-none" style="color: var(--emis-teal);">Pengaduan</a></li>
-    <li class="breadcrumb-item active">Buat Pengaduan</li>
+    <li class="breadcrumb-item"><a href="{{ route('murid.pengaduan.index') }}" class="text-decoration-none" style="color: var(--emis-teal);">Pelayanan Darurat</a></li>
+    <li class="breadcrumb-item active">Kirim Pelayanan</li>
 @endsection
 
 @section('content')
@@ -19,10 +19,12 @@
             </a>
             <div>
                 <div class="d-flex align-items-center gap-2 mb-1">
-                    <span class="badge bg-danger-subtle text-danger px-2 py-1 fs-xs fw-semibold rounded-pill">Pengaduan Aman</span>
-                    <span class="badge bg-light text-dark border px-2 py-1 fs-xs fw-medium rounded-pill">Kerahasiaan Terjamin</span>
+                    <span class="badge bg-danger-subtle text-danger px-2.5 py-1 fs-xs fw-bold rounded-pill">
+                        <i class="bi bi-shield-fill-exclamation me-1"></i>Pelayanan Darurat
+                    </span>
+                    <span class="badge bg-light text-dark border px-2 py-1 fs-xs fw-medium rounded-pill">Prioritas Penanganan Cepat</span>
                 </div>
-                <h1 class="h4 fw-bold text-dark mb-0">Formulir Pengaduan & Perlindungan Diri</h1>
+                <h1 class="h4 fw-bold text-dark mb-0">Formulir Pelayanan Darurat & Perlindungan Murid</h1>
             </div>
         </div>
     </div>
@@ -31,7 +33,7 @@
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm rounded-3 bg-white">
                 <div class="card-header bg-white py-3 border-bottom">
-                    <span class="fw-semibold text-dark fs-sm">Sampaikan Masalah / Kejadian yang Kamu Alami</span>
+                    <span class="fw-semibold text-dark fs-sm">Sampaikan Masalah / Kendala Darurat yang Kamu Hadapi</span>
                 </div>
                 <div class="card-body p-4">
                     <form method="POST" action="{{ route('murid.pengaduan.store') }}" class="space-y-4">
@@ -39,7 +41,7 @@
 
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label fs-xs text-muted fw-semibold">Kategori Masalah <span class="text-danger">*</span></label>
+                                <label class="form-label fs-xs text-muted fw-semibold">Kategori Permasalahan <span class="text-danger">*</span></label>
                                 <select name="category" class="form-select form-select-sm" required>
                                     @foreach($categories as $cat)
                                         <option value="{{ $cat }}" {{ old('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
@@ -47,30 +49,21 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fs-xs text-muted fw-semibold">Tingkat Urgensi <span class="text-danger">*</span></label>
-                                <select name="urgency_level" class="form-select form-select-sm" required>
-                                    <option value="sedang" {{ old('urgency_level') == 'sedang' ? 'selected' : '' }}>Sedang (Butuh penanganan biasa)</option>
-                                    <option value="tinggi" {{ old('urgency_level') == 'tinggi' ? 'selected' : '' }}>Tinggi (Mendesak & mengganggu ketenangan)</option>
-                                    <option value="darurat" {{ old('urgency_level') == 'darurat' ? 'selected' : '' }}>Darurat (Bahaya keselamatan fisik/mental!)</option>
-                                    <option value="rendah" {{ old('urgency_level') == 'rendah' ? 'selected' : '' }}>Rendah</option>
-                                </select>
+                                <label class="form-label fs-xs text-muted fw-semibold">Tanggal / Waktu Laporan (Otomatis)</label>
+                                <input type="date" name="incident_date" value="{{ old('incident_date', date('Y-m-d')) }}" class="form-control form-control-sm bg-light" readonly title="Waktu kejadian terisi otomatis saat Anda mengirimkan pelayanan ini">
                             </div>
                         </div>
 
                         <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label fs-xs text-muted fw-semibold">Perkiraan Waktu Kejadian</label>
-                                <input type="date" name="incident_date" value="{{ old('incident_date') }}" class="form-control form-control-sm">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fs-xs text-muted fw-semibold">Tempat / Lokasi Terjadinya</label>
+                            <div class="col-12">
+                                <label class="form-label fs-xs text-muted fw-semibold">Tempat / Lokasi Terjadinya (Opsional)</label>
                                 <input type="text" name="incident_location" value="{{ old('incident_location') }}" class="form-control form-control-sm" placeholder="Contoh: Di lorong kelas, toilet, media sosial, atau perjalanan...">
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fs-xs text-muted fw-semibold">Ceritakan Peristiwa yang Terjadi <span class="text-danger">*</span></label>
-                            <textarea name="description" class="form-control" rows="5" placeholder="Jelaskan apa yang terjadi, siapa saja pihak yang terlibat (jika kamu tahu), dan bantuan apa yang kamu perlukan..." required>{{ old('description') }}</textarea>
+                            <label class="form-label fs-xs text-muted fw-semibold">Ceritakan Peristiwa yang Terjadi Secara Jelas <span class="text-danger">*</span></label>
+                            <textarea name="description" class="form-control" rows="5" placeholder="Jelaskan apa yang terjadi, siapa saja pihak yang terlibat (jika kamu tahu), dan bantuan mendesak apa yang kamu perlukan..." required>{{ old('description') }}</textarea>
                         </div>
 
                         <!-- Identitas Siswa Pelapor Resmi -->

@@ -584,7 +584,7 @@
                         <select name="counselor_id" class="form-select rounded-pill px-3" required>
                             @foreach($counselors as $c)
                                 <option value="{{ $c->id }}" {{ ($konseling->assigned_counselor_id ?? $konseling->schedule?->counselor_id) == $c->id ? 'selected' : '' }}>
-                                    {{ $c->user->name ?? $c->name }}
+                                    {{ $c->name }}
                                 </option>
                             @endforeach
                         </select>

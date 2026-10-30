@@ -54,8 +54,6 @@ class StudentComplaintController extends Controller
 
         $request->validate([
             'category' => ['required', 'string', 'max:150'],
-            'urgency_level' => ['required', 'in:rendah,sedang,tinggi,darurat'],
-            'incident_date' => ['nullable', 'date'],
             'incident_location' => ['nullable', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:3000'],
             'is_anonymous' => ['nullable', 'boolean'],
@@ -63,16 +61,14 @@ class StudentComplaintController extends Controller
 
         $dateStr = date('Ymd');
         $randomSeq = strtoupper(substr(bin2hex(random_bytes(2)), 0, 4));
-        $ticketNumber = "PGD-{$dateStr}-{$randomSeq}";
+        $ticketNumber = "DRT-{$dateStr}-{$randomSeq}";
 
         $category = $request->input('category');
-        $urgency = $request->input('urgency_level');
+        $urgency = 'darurat';
+        $incidentDate = $request->input('incident_date', date('Y-m-d'));
 
-        // Flag potential safety risk automatically
-        $isSafetyRisk = in_array($urgency, ['darurat', 'tinggi']) ||
-            str_contains(strtolower($category), 'pelecehan') ||
-            str_contains(strtolower($category), 'kekerasan') ||
-            str_contains(strtolower($category), 'bullying');
+        // Flag potential safety risk automatically for emergency service
+        $isSafetyRisk = true;
 
         StudentComplaint::create([
             'ticket_number' => $ticketNumber,
@@ -81,7 +77,7 @@ class StudentComplaintController extends Controller
             'reporter_name' => $student->name,
             'urgency_level' => $urgency,
             'category' => $category,
-            'incident_date' => $request->input('incident_date'),
+            'incident_date' => $incidentDate,
             'incident_location' => $request->input('incident_location'),
             'description' => $request->input('description'),
             'status' => 'pending',
@@ -89,7 +85,7 @@ class StudentComplaintController extends Controller
         ]);
 
         return redirect()->route('murid.pengaduan.index')
-            ->with('success', "Laporan pengaduan Anda berhasil dikirim dengan kode rahasia #{$ticketNumber}. Guru BK akan melindungi keamanan dan kerahasiaan Anda.");
+            ->with('success', "Laporan Pelayanan Darurat Anda berhasil dikirim dengan kode rahasia #{$ticketNumber}. Guru BK akan segera merespons serta melindungi keamanan dan kerahasiaan Anda.");
     }
 
     /**

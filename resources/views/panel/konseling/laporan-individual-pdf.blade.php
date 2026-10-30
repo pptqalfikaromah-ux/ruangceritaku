@@ -9,11 +9,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <style>
+    <style id="pageOrientationStyle">
         @page {
             size: A4 portrait;
             margin: 15mm 20mm 15mm 20mm;
         }
+    </style>
+    <style>
         * {
             box-sizing: border-box;
         }
@@ -33,6 +35,9 @@
             padding: 30px 40px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border-radius: 4px;
+        }
+        .page.f4-paper {
+            max-width: 820px;
         }
 
         /* ACTIONS BAR (NO PRINT) */
@@ -182,6 +187,77 @@
             text-align: center;
         }
 
+        /* RESPONSIVE UNTUK LAYAR SMARTPHONE / HP */
+        @media (max-width: 768px) {
+            body {
+                padding: 8px 6px;
+                background: #e2e8f0;
+                font-size: 10pt;
+            }
+            .no-print {
+                padding: 10px 12px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+            .no-print .controls-group {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                width: 100%;
+            }
+            .no-print .controls-group .btn {
+                flex: 1 1 auto;
+                justify-content: center;
+            }
+            .page {
+                padding: 16px 12px;
+                width: 100%;
+                max-width: 100%;
+                box-shadow: none;
+                border-radius: 6px;
+            }
+            .kop-logo {
+                width: 50px;
+                height: 50px;
+            }
+            .kop-school {
+                font-size: 11pt;
+            }
+            .kop-address {
+                font-size: 7.5pt;
+                line-height: 1.3;
+            }
+            .kop-divider {
+                margin-top: 6px;
+                margin-bottom: 12px;
+            }
+            .report-title {
+                font-size: 11pt;
+            }
+            .table-laporan {
+                font-size: 8.5pt;
+                margin-bottom: 16px;
+            }
+            .table-laporan th, .table-laporan td {
+                padding: 4px 6px;
+            }
+            .col-num {
+                width: 7%;
+            }
+            .col-label {
+                width: 33%;
+            }
+            .col-content {
+                width: 60%;
+            }
+            .signature-table {
+                font-size: 8.5pt;
+                margin-top: 10px;
+            }
+        }
+
         @media print {
             .no-print {
                 display: none !important;
@@ -204,15 +280,23 @@
     <!-- Bar Navigasi & Cetak PDF -->
     <div class="no-print">
         <div>
-            <strong style="color: #0f766e;"><i class="bi bi-file-earmark-pdf-fill me-1"></i> Laporan Pelaksanaan Layanan Konseling Individual</strong>
-            <span class="text-muted small ms-2">&bull; Dokumen Arsip Resmi Konselor</span>
+            <strong style="color: #0f766e;"><i class="bi bi-file-earmark-pdf-fill me-1"></i> Laporan Konseling Individual</strong>
+            <span class="text-muted small ms-1 d-none d-sm-inline">&bull; Dokumen Arsip Resmi BK</span>
         </div>
-        <div style="display: flex; gap: 8px;">
+        <div class="controls-group" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <!-- Pilihan Ukuran Kertas A4 / F4 -->
+            <div style="display: flex; align-items: center; gap: 4px;">
+                <label for="paperSizeSelect" style="font-size: 12px; font-weight: 600; color: #475569;">Format:</label>
+                <select id="paperSizeSelect" onchange="setPaperSize(this.value)" style="padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer;">
+                    <option value="a4" selected>📄 A4 (210 x 297 mm)</option>
+                    <option value="f4">📜 F4 / Folio (215 x 330 mm)</option>
+                </select>
+            </div>
             <a href="{{ route('panel.konseling.show', $konseling->id) }}" class="btn btn-back">
-                <i class="bi bi-arrow-left"></i> Kembali ke Detail
+                <i class="bi bi-arrow-left"></i> Kembali
             </a>
             <button onclick="window.print()" class="btn btn-print">
-                <i class="bi bi-printer"></i> Cetak / Simpan PDF
+                <i class="bi bi-printer"></i> Cetak PDF
             </button>
         </div>
     </div>
@@ -352,5 +436,18 @@
         </table>
     </div>
 
+    <script>
+        function setPaperSize(size) {
+            const styleTag = document.getElementById('pageOrientationStyle');
+            const pageEl = document.querySelector('.page');
+            if (size === 'f4') {
+                styleTag.innerHTML = '@page { size: 215mm 330mm portrait; margin: 15mm 20mm 15mm 20mm; }';
+                if (pageEl) pageEl.classList.add('f4-paper');
+            } else {
+                styleTag.innerHTML = '@page { size: A4 portrait; margin: 15mm 20mm 15mm 20mm; }';
+                if (pageEl) pageEl.classList.remove('f4-paper');
+            }
+        }
+    </script>
 </body>
 </html>
