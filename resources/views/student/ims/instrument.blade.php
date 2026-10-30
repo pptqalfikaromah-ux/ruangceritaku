@@ -1,379 +1,229 @@
 @extends('layouts.student')
 
-@section('title', 'Instrumen Masalah: ' . $service->name . ' - Bidang ' . $field->name)
+@section('title', 'Asesmen: ' . $service->name)
 
 @section('breadcrumb')
     <a href="{{ route('murid.dashboard') }}">Beranda</a>
     <i class="bi bi-chevron-right" style="font-size:.65rem;"></i>
     <a href="{{ route('murid.ims.index') }}">Asesmen IMS</a>
     <i class="bi bi-chevron-right" style="font-size:.65rem;"></i>
-    <a href="{{ route('murid.ims.service', $service->id) }}">{{ $service->name }}</a>
-    <i class="bi bi-chevron-right" style="font-size:.65rem;"></i>
-    <span class="active">Bidang {{ $field->name }}</span>
+    <span class="active">{{ $service->name }}</span>
 @endsection
 
 @section('content')
 <div class="space-y-4 pb-5">
-    <!-- Step Navigation Indicator (Mobile Friendly) -->
-    <div class="card border-0 rounded-4 bg-white p-3 shadow-xs mb-3" style="border: 1px solid #E2ECE9 !important;">
-        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2.5">
-            <div class="d-flex align-items-center gap-2">
-                <a href="{{ route('murid.ims.service', $service->id) }}" class="btn btn-sm btn-light rounded-pill px-3 py-1.5 fs-xs fw-semibold border">
-                    <i class="bi bi-arrow-left me-1"></i> Ganti Bidang
-                </a>
-                <span class="text-muted fs-xs d-none d-sm-inline">|</span>
-                <span class="fs-xs text-muted fw-semibold d-none d-sm-inline">{{ $service->name }}</span>
-            </div>
 
-            <div class="d-flex align-items-center gap-1.5 fs-xs flex-wrap">
-                <a href="{{ route('murid.ims.index') }}" class="badge text-decoration-none rounded-pill px-2.5 py-1" style="background: #E6FAF5; color: #008F72;">
-                    <i class="bi bi-check-circle-fill me-1"></i>1. Layanan
-                </a>
-                <i class="bi bi-chevron-right text-muted fs-xxs"></i>
-                <a href="{{ route('murid.ims.service', $service->id) }}" class="badge text-decoration-none rounded-pill px-2.5 py-1" style="background: #E6FAF5; color: #008F72;">
-                    <i class="bi bi-check-circle-fill me-1"></i>2. Bidang
-                </a>
-                <i class="bi bi-chevron-right text-muted fs-xxs"></i>
-                <span class="badge rounded-pill px-3 py-1 fw-bold shadow-xs" style="background: #00B894; color: #ffffff;">
-                    3. Isi Lembar & Catatan
-                </span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Banner Header Bagian Ini -->
+    <!-- Header Banner Layanan & Statistik Cepat -->
     <div class="card border-0 rounded-4 bg-white p-3.5 p-md-4 shadow-sm mb-4" style="border: 1px solid #E2ECE9 !important;">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
             <div>
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
-                    <span class="badge rounded-pill px-3 py-1 fs-xs fw-semibold" style="background: #E6FAF5; color: #008F72; border: 1px solid #A7F3D0;">
-                        <i class="bi bi-bookmark-fill me-1"></i>{{ $service->name }}
+                    <span class="badge rounded-pill px-3 py-1.5 fs-xs fw-bold" style="background: #00B894; color: #ffffff;">
+                        <i class="bi bi-compass-fill me-1"></i> {{ $service->name }}
                     </span>
-                    <span class="badge rounded-pill px-3 py-1 fs-xs fw-bold" style="background: #FFF8E6; color: #B45309; border: 1px solid #FDE68A;">
-                        Bidang {{ $field->name }}
+                    <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 fs-xs fw-semibold">
+                        Layanan 0{{ ($currentIndex ?? 0) + 1 }} dari {{ $allServices->count() }}
                     </span>
-                    <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 fs-xs">
-                        5 Butir Standar
+                    <span class="badge bg-light text-secondary border rounded-pill px-2.5 py-1 fs-xs">
+                        Total 20 Butir Asesmen
                     </span>
-                    @if($customStatements->count() > 0)
-                        <span class="badge rounded-pill px-2.5 py-1 fs-xs fw-semibold" style="background: #ede9fe; color: #6d28d9;">
-                            +{{ $customStatements->count() }} Masalah Kustom
-                        </span>
-                    @endif
                 </div>
                 <h3 class="fw-extrabold text-dark mb-1 tracking-tight" style="font-size: clamp(1.2rem, 2vw, 1.55rem);">
-                    Tandai Masalah yang Sedang Kamu Alami
+                    Pilih Butir Masalah yang Sedang Kamu Alami
                 </h3>
-                <p class="text-muted fs-xs mb-0" style="max-width: 680px; line-height: 1.6;">
-                    Centang satu atau lebih butir masalah di bawah ini. Kamu juga dapat menuliskan <strong>catatan khusus pada setiap butir</strong>, atau <strong>menambahkan masalahmu sendiri</strong> jika tidak tercantum dalam pilihan standar.
+                <p class="text-muted fs-xs mb-0" style="max-width: 720px; line-height: 1.6;">
+                    Centang setiap butir masalah yang sesuai dengan kondisimu. Kamu juga dapat menandai <strong>1 butir masalah yang dirasa paling berat</strong> dalam layanan ini (sifatnya <em>opsional</em>).
                 </p>
             </div>
-            <div>
-                <a href="{{ route('murid.ims.service', $service->id) }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-2 fw-semibold text-nowrap">
-                    <i class="bi bi-arrow-left me-1"></i> Bidang Lain
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{{ route('murid.ims.index') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-2 fw-semibold">
+                    <i class="bi bi-grid me-1"></i> Semua Layanan
                 </a>
+                @if($prevService)
+                    <a href="{{ route('murid.ims.service', $prevService->id) }}" class="btn btn-light border btn-sm rounded-pill px-3 py-2 fw-semibold text-muted" title="{{ $prevService->name }}">
+                        <i class="bi bi-chevron-left"></i> Sebelumnya
+                    </a>
+                @endif
+                @if($nextService)
+                    <a href="{{ route('murid.ims.service', $nextService->id) }}" class="btn btn-light border btn-sm rounded-pill px-3 py-2 fw-semibold text-muted" title="{{ $nextService->name }}">
+                        Berikutnya <i class="bi bi-chevron-right"></i>
+                    </a>
+                @endif
+            </div>
+        </div>
+
+        <!-- Bar Petunjuk & Status Masalah Terberat -->
+        <div class="mt-3.5 pt-3 border-top d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2.5 bg-light-subtle p-2.5 rounded-3">
+            <div class="d-flex align-items-center gap-2 fs-xs">
+                <span class="badge bg-white border text-dark fw-bold px-2 py-1">
+                    <i class="bi bi-info-circle-fill text-primary me-1"></i> Petunjuk
+                </span>
+                <span class="text-muted">
+                    Bisa memilih lebih dari 1 butir lintas bidang. Tanda bintang <span class="text-warning fw-bold">⭐</span> untuk 1 masalah terberat.
+                </span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-link text-decoration-none text-muted p-0 fs-xs" id="btnResetHeavy" style="display: {{ $heavyStatementId ? 'inline-block' : 'none' }};">
+                    <i class="bi bi-x-circle me-1 text-danger"></i> Batalkan Masalah Terberat
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Form Butir Instrumen & Catatan -->
-    <form method="POST" action="{{ route('murid.ims.saveInstrument', [$service->id, $field->id]) }}" id="instrumentForm">
+    <!-- Form Instrumen Layanan -->
+    <form method="POST" action="{{ route('murid.ims.saveServiceInstrument', $service->id) }}" id="serviceInstrumentForm">
         @csrf
         <input type="hidden" name="action" id="actionInput" value="save">
-        <input type="hidden" name="delete_custom_id" id="deleteCustomId" value="">
+        @if($nextService)
+            <input type="hidden" name="next_service_id" value="{{ $nextService->id }}">
+        @endif
 
-        <!-- SECTION 1: DAFTAR 5 BUTIR PERNYATAAN STANDAR -->
-        <div class="mb-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold text-dark mb-0 fs-sm text-uppercase tracking-wider">
-                    <i class="bi bi-check2-square text-mint me-1"></i> Butir Masalah Standar (5 Butir)
-                </h5>
-                <span class="text-muted fs-xs fst-italic">Bisa centang lebih dari 1</span>
-            </div>
-
-            <div class="space-y-3">
-                @foreach($statements as $stmt)
-                    @php
-                        $ans = $existingAnswers->get($stmt->id);
-                        $isSelected = $ans?->is_selected ?? false;
-                        $isHeavy = $ans?->is_heavy ?? false;
-                        $itemNote = $ans?->student_note ?? '';
-                    @endphp
-                    <input type="hidden" name="scope_statement_ids[]" value="{{ $stmt->id }}">
-
-                    <div class="card border-0 rounded-4 bg-white p-3 p-md-3.5 modern-statement-item {{ $isSelected ? 'statement-active' : '' }}" 
-                         id="card_stmt_{{ $stmt->id }}"
-                         style="border: 1.5px solid #E2ECE9 !important;">
-                        <div class="d-flex align-items-start gap-3">
-                            <!-- Custom Styled Checkbox -->
-                            <div class="form-check mt-1">
-                                <input class="form-check-input modern-checkbox fs-5 cursor-pointer" 
-                                       type="checkbox" 
-                                       name="selected[]" 
-                                       value="{{ $stmt->id }}" 
-                                       id="stmt_{{ $stmt->id }}"
-                                       data-card-id="card_stmt_{{ $stmt->id }}"
-                                       data-note-box="note_box_{{ $stmt->id }}"
-                                       {{ $isSelected ? 'checked' : '' }}
-                                       {{ $assessment->isSubmitted() ? 'disabled' : '' }}>
-                            </div>
-
-                            <div class="flex-grow-1">
-                                <label class="form-check-label d-block cursor-pointer mb-2" for="stmt_{{ $stmt->id }}">
-                                    <div class="d-flex align-items-center gap-2 mb-1">
-                                        <span class="badge bg-light text-muted border font-monospace fw-bold fs-xs rounded-pill px-2.5 py-0.5">
-                                            #Butir {{ $stmt->statement_number }}
-                                        </span>
-                                        <span class="badge rounded-pill px-2 py-0.5 fs-xs" style="background: #E6FAF5; color: #008F72;">
-                                            Bidang {{ $field->name }}
-                                        </span>
-                                        @if($isHeavy)
-                                            <span class="badge bg-danger-subtle text-danger rounded-pill px-2 py-0.5 fs-xxs fw-bold">
-                                                <i class="bi bi-exclamation-triangle-fill me-0.5"></i> N.M.Y.B
-                                            </span>
-                                        @endif
-                                    </div>
-                                    <div class="fw-bold text-dark fs-sm lh-base">
-                                        {{ $stmt->statement_text }}
-                                    </div>
-                                </label>
-
-                                <!-- Catatan Khusus & Penanda NMYB untuk Butir Ini -->
-                                <div class="statement-note-box mt-2" id="note_box_{{ $stmt->id }}" style="{{ $isSelected || !empty($itemNote) ? '' : 'display: none;' }}">
-                                    <div class="p-2.5 rounded-3" style="background: #F4FBF9; border: 1px dashed #A7F3D0;">
-                                        <label class="form-label fs-xxs fw-bold text-uppercase text-muted mb-1 d-flex align-items-center gap-1">
-                                            <i class="bi bi-chat-left-text text-mint"></i> Catatan Khusus untuk Butir Ini:
-                                        </label>
-                                        <textarea name="notes[{{ $stmt->id }}]" 
-                                                  rows="2" 
-                                                  class="form-control form-control-sm border-0 rounded-2 bg-white mb-2" 
-                                                  placeholder="Jelaskan kondisi atau contoh kejadian yang kamu alami pada masalah ini..."
-                                                  {{ $assessment->isSubmitted() ? 'readonly' : '' }}>{{ $itemNote }}</textarea>
-
-                                        <!-- Opsi Nomor Masalah Yang Berat (N.M.Y.B) -->
-                                        <div class="pt-2 border-top d-flex align-items-center justify-content-between flex-wrap gap-2">
-                                            <div class="form-check form-switch mb-0">
-                                                <input class="form-check-input cursor-pointer" 
-                                                       type="checkbox" 
-                                                       role="switch" 
-                                                       name="heavy[]" 
-                                                       value="{{ $stmt->id }}" 
-                                                       id="heavy_{{ $stmt->id }}"
-                                                       {{ $isHeavy ? 'checked' : '' }}
-                                                       {{ $assessment->isSubmitted() ? 'disabled' : '' }}>
-                                                <label class="form-check-label fs-xs fw-bold cursor-pointer user-select-none text-danger" for="heavy_{{ $stmt->id }}">
-                                                    <i class="bi bi-exclamation-triangle-fill me-1"></i> Masalah Yang Dirasakan Paling Berat (N.M.Y.B)
-                                                </label>
-                                            </div>
-                                            <span class="badge bg-danger-subtle text-danger rounded-pill px-2 py-0.5 fs-xxs fw-semibold">Format AUM / IMS</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-
-        <!-- SECTION 2: BUTIR MASALAH KUSTOM / BUATAN SENDIRI -->
-        <div class="card border-0 rounded-4 bg-white p-3.5 p-md-4 shadow-sm mb-4" style="border: 1.5px solid #E2ECE9 !important;">
-            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2 mb-3 pb-2 border-bottom">
-                <div>
-                    <h5 class="fw-bold text-dark mb-0 fs-sm d-flex align-items-center gap-1.5">
-                        <i class="bi bi-plus-circle-fill text-mint"></i>
-                        Masalah Tambahan / Buatan Sendiri (Kustom)
-                    </h5>
-                    <span class="text-muted fs-xs">Jika masalah yang kamu hadapi tidak ada pada 5 pilihan di atas, tuliskan di sini</span>
-                </div>
-                <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1 fs-xs fw-bold" onclick="toggleCustomForm()">
-                    <i class="bi bi-pencil-plus me-1"></i> + Tulis Masalah Baru
-                </button>
-            </div>
-
-            <!-- Daftar Butir Kustom yang Sudah Pernah Ditambahkan -->
-            @if($customStatements->isNotEmpty())
-                <div class="space-y-3 mb-3">
-                    @foreach($customStatements as $cStmt)
-                        <div class="p-3 rounded-4" style="background: #F8FAFC; border: 1.5px solid #CBD5E1;">
-                            <div class="d-flex align-items-start justify-content-between gap-3">
-                                <div class="form-check mt-1">
-                                    <input class="form-check-input fs-5 cursor-pointer" 
-                                           type="checkbox" 
-                                           name="selected_custom[]" 
-                                           value="{{ $cStmt->id }}" 
-                                           id="custom_{{ $cStmt->id }}"
-                                           {{ $cStmt->is_selected ? 'checked' : '' }}
-                                           {{ $assessment->isSubmitted() ? 'disabled' : '' }}>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <label class="form-check-label d-block cursor-pointer" for="custom_{{ $cStmt->id }}">
-                                        <div class="d-flex align-items-center gap-2 mb-1">
-                                            <span class="badge rounded-pill px-2.5 py-0.5 fs-xs fw-bold" style="background: #ede9fe; color: #6d28d9;">
-                                                <i class="bi bi-stars me-1"></i>Masalah Kustom Saya
-                                            </span>
-                                            <span class="badge rounded-pill px-2 py-0.5 fs-xs" style="background: #E6FAF5; color: #008F72;">
-                                                Bidang {{ $field->name }}
-                                            </span>
-                                        </div>
-                                        <div class="fw-bold text-dark fs-sm lh-base">
-                                            {{ $cStmt->statement_text }}
-                                        </div>
-                                    </label>
-
-                                    <!-- Catatan Butir Kustom -->
-                                    <div class="mt-2">
-                                        <textarea name="custom_notes[{{ $cStmt->id }}]" 
-                                                  rows="2" 
-                                                  class="form-control form-control-sm bg-white rounded-3" 
-                                                  placeholder="Catatan tambahan untuk masalah ini..."
-                                                  {{ $assessment->isSubmitted() ? 'readonly' : '' }}>{{ $cStmt->student_note }}</textarea>
-                                    </div>
-                                </div>
-
-                                @if(!$assessment->isSubmitted())
-                                    <div>
-                                        <button type="button" class="btn btn-sm btn-outline-danger border-0 rounded-circle p-1.5" 
-                                                title="Hapus butir ini"
-                                                onclick="deleteCustomItem({{ $cStmt->id }})">
-                                            <i class="bi bi-trash fs-6"></i>
-                                        </button>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
-
-            <!-- Form Input Butir Kustom Baru (Collapsible) -->
-            <div id="newCustomCard" class="{{ $customStatements->isEmpty() ? '' : 'd-none' }} p-3.5 rounded-4 mt-2" 
-                 style="background: #F4FBF9; border: 1.5px dashed #00B894;">
-                <div class="d-flex align-items-center gap-2 mb-2">
-                    <i class="bi bi-lightbulb-fill text-warning fs-5"></i>
-                    <span class="fw-bold text-dark fs-sm">Form Tambah Butir Masalah Sendiri:</span>
-                </div>
-                
-                <div class="mb-3">
-                    <label class="form-label fs-xs fw-bold text-slate-700">Pernyataan Masalah yang Kamu Hadapi:</label>
-                    <input type="text" 
-                           name="new_custom_text" 
-                           id="new_custom_text" 
-                           class="form-control rounded-3 p-2.5" 
-                           placeholder="Contoh: Saya merasa cemas dan gemetar setiap kali guru memanggil nama saya untuk menjawab soal...">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fs-xs fw-bold text-slate-700">Penjelasan / Catatan Tambahan (Opsional):</label>
-                    <textarea name="new_custom_note" 
-                              rows="2" 
-                              class="form-control rounded-3 p-2.5" 
-                              placeholder="Tuliskan sejak kapan masalah ini muncul atau hal lain yang membuatmu tidak nyaman..."></textarea>
-                </div>
-
-                <div class="d-flex justify-content-end gap-2">
-                    <button type="button" class="btn btn-sm btn-light border rounded-pill px-3" onclick="toggleCustomForm()">
-                        Batal
-                    </button>
-                    <button type="submit" class="btn btn-sm btn-mint rounded-pill px-3.5 fw-bold shadow-xs">
-                        <i class="bi bi-plus-lg me-1"></i> Simpan Masalah Baru
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 3: KEPADA SIAPA INGIN KONSULTASI (FORMAT AUM INDIVIDUAL) -->
-        <div class="card border-0 rounded-4 bg-white p-3.5 p-md-4 shadow-sm mb-4" style="border: 1.5px solid #E2ECE9 !important;">
-            <div class="d-flex align-items-center gap-2 mb-2">
-                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; background: #eff6ff; color: #2563eb;">
-                    <i class="bi bi-people-fill fs-5"></i>
-                </div>
-                <div>
-                    <h5 class="fw-bold text-dark mb-0 fs-sm">Pihak untuk Berkonsultasi (Format AUM / IMS)</h5>
-                    <span class="text-muted fs-xs">Kepada siapa kamu paling ingin mengkonsultasikan masalah-masalah ini?</span>
-                </div>
-            </div>
-
-            <p class="text-muted fs-xs mb-3">
-                Sesuai instrumen pengolahan masalah, silakan pilih pihak yang paling kamu percayai untuk diajak bicara:
-            </p>
-
-            <div class="row g-2">
+        <!-- Daftar 20 Butir Asesmen -->
+        <div class="space-y-3 mb-5" id="statementListContainer">
+            @foreach($statements as $stmt)
                 @php
-                    $consultOptions = ['Orang Tua', 'Guru BK / Konselor', 'Wali Kelas', 'Teman Sebaya', 'Lainnya / Belum Tahu'];
-                    $currentConsult = $assessment->consult_to ?? 'Guru BK / Konselor';
+                    $ans = $existingAnswers->get($stmt->id);
+                    $isSelected = $ans?->is_selected ?? false;
+                    $isHeavy = ($heavyStatementId == $stmt->id);
+                    $fieldCode = $stmt->guidanceField?->code ?? '';
+                    $fieldName = $stmt->guidanceField?->name ?? 'Umum';
+
+                    // Styling Badge Bidang yang Konsisten
+                    $badgeStyle = match($fieldCode) {
+                        'BID-01' => ['bg' => '#eff6ff', 'text' => '#1d4ed8', 'border' => '#bfdbfe', 'icon' => 'bi-person-fill'],
+                        'BID-02' => ['bg' => '#ecfdf5', 'text' => '#047857', 'border' => '#a7f3d0', 'icon' => 'bi-people-fill'],
+                        'BID-03' => ['bg' => '#fffbeb', 'text' => '#b45309', 'border' => '#fde68a', 'icon' => 'bi-book-fill'],
+                        'BID-04' => ['bg' => '#faf5ff', 'text' => '#7e22ce', 'border' => '#e9d5ff', 'icon' => 'bi-briefcase-fill'],
+                        default  => ['bg' => '#f1f5f9', 'text' => '#475569', 'border' => '#cbd5e1', 'icon' => 'bi-tag-fill'],
+                    };
                 @endphp
-                @foreach($consultOptions as $opt)
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-check p-2.5 rounded-3 border h-100 d-flex align-items-center gap-2" style="background: #fafafa;">
-                            <input class="form-check-input ms-1 mt-0 cursor-pointer" 
-                                   type="radio" 
-                                   name="consult_to" 
-                                   id="consult_{{ Str::slug($opt) }}" 
-                                   value="{{ $opt }}"
-                                   {{ $currentConsult === $opt ? 'checked' : '' }}
-                                   {{ $assessment->isSubmitted() ? 'disabled' : '' }}>
-                            <label class="form-check-label fs-xs fw-semibold text-dark cursor-pointer user-select-none mb-0" for="consult_{{ Str::slug($opt) }}">
-                                {{ $opt }}
+
+                <input type="hidden" name="scope_statement_ids[]" value="{{ $stmt->id }}">
+
+                <div class="card border-0 rounded-4 modern-statement-item p-3.5 p-md-4 {{ $isSelected ? 'statement-active' : '' }} {{ $isHeavy ? 'statement-heavy' : '' }}"
+                     id="card-stmt-{{ $stmt->id }}"
+                     style="background: #ffffff; border: 1.5px solid {{ $isHeavy ? '#f59e0b' : ($isSelected ? '#00B894' : '#E2ECE9') }} !important;">
+                    
+                    <div class="d-flex align-items-start gap-3">
+                        <!-- Checkbox Pilihan Butir -->
+                        <div class="pt-1 flex-shrink-0">
+                            <div class="form-check m-0">
+                                <input class="form-check-input modern-checkbox cursor-pointer"
+                                       type="checkbox"
+                                       name="selected[]"
+                                       value="{{ $stmt->id }}"
+                                       id="chk_{{ $stmt->id }}"
+                                       data-card-id="card-stmt-{{ $stmt->id }}"
+                                       data-radio-id="radio_heavy_{{ $stmt->id }}"
+                                       {{ $isSelected ? 'checked' : '' }}
+                                       {{ $assessment->isSubmitted() ? 'disabled' : '' }}
+                                       style="width: 22px; height: 22px; cursor: pointer;">
+                            </div>
+                        </div>
+
+                        <!-- Konten Butir: Nomor, Badge Bidang, Pernyataan -->
+                        <div class="flex-grow-1 min-w-0">
+                            <div class="d-flex flex-wrap align-items-center gap-2 mb-1.5">
+                                <!-- Nomor Butir -->
+                                <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1 fs-xs fw-bold font-monospace">
+                                    #{{ $stmt->statement_number }}
+                                </span>
+
+                                <!-- Badge Bidang Bimbingan -->
+                                <span class="badge rounded-pill px-2.5 py-1 fs-xs fw-semibold"
+                                      style="background: {{ $badgeStyle['bg'] }}; color: {{ $badgeStyle['text'] }}; border: 1px solid {{ $badgeStyle['border'] }};">
+                                    <i class="bi {{ $badgeStyle['icon'] }} me-1"></i>{{ $fieldName }}
+                                </span>
+
+                                <!-- Indikator Visual Masalah Terberat -->
+                                <span class="badge rounded-pill px-2.5 py-1 fs-xs fw-bold text-white heavy-badge-label"
+                                      id="heavyLabel_{{ $stmt->id }}"
+                                      style="background: #d97706; display: {{ $isHeavy ? 'inline-flex' : 'none' }}; align-items: center; gap: 4px;">
+                                    <i class="bi bi-star-fill"></i> Masalah Terberat di Layanan Ini
+                                </span>
+                            </div>
+
+                            <!-- Teks Pernyataan Masalah -->
+                            <label for="chk_{{ $stmt->id }}" class="fw-medium text-dark mb-0 fs-sm cursor-pointer d-block lh-base" style="user-select: none;">
+                                {{ $stmt->statement_text }}
                             </label>
+
+                            <!-- Pilihan Masalah Terberat (Radio Option - Maksimal 1 per Layanan) -->
+                            @if(!$assessment->isSubmitted())
+                                <div class="mt-2.5 pt-2 border-top border-light-subtle d-flex align-items-center justify-content-between flex-wrap gap-2 heavy-selector-box"
+                                     id="heavyBox_{{ $stmt->id }}"
+                                     style="{{ $isSelected ? '' : 'opacity: 0.6;' }}">
+                                    <div class="form-check form-check-inline m-0 d-flex align-items-center gap-1.5">
+                                        <input class="form-check-input heavy-radio cursor-pointer"
+                                               type="radio"
+                                               name="heavy_statement_id"
+                                               value="{{ $stmt->id }}"
+                                               id="radio_heavy_{{ $stmt->id }}"
+                                               data-stmt-id="{{ $stmt->id }}"
+                                               data-chk-id="chk_{{ $stmt->id }}"
+                                               {{ $isHeavy ? 'checked' : '' }}
+                                               style="cursor: pointer;">
+                                        <label class="form-check-label fs-xs fw-semibold text-muted cursor-pointer" for="radio_heavy_{{ $stmt->id }}">
+                                            <span class="text-warning">⭐</span> Jadikan Masalah Terberat di Layanan Ini <span class="text-muted fw-normal fs-xxs">(Opsional)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
         </div>
 
-        <!-- SECTION 4: KOLOM CATATAN UMUM / CURHAT SISWA -->
-        <div class="card border-0 rounded-4 bg-white p-3.5 p-md-4 shadow-sm mb-5" style="border: 1px solid #E2ECE9 !important;">
-            <div class="d-flex align-items-center gap-2 mb-2">
-                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; background: #E6FAF5; color: #00B894;">
-                    <i class="bi bi-pencil-square fs-5"></i>
-                </div>
-                <div>
-                    <h5 class="fw-bold text-dark mb-0 fs-sm">Catatan Siswa untuk Masalah di Atas</h5>
-                    <span class="text-muted fs-xs">Ceritakan secara leluasa apa yang kamu rasakan kepada Guru BK</span>
-                </div>
-            </div>
-
-            <p class="text-muted fs-xs mb-3 lh-base">
-                Apakah ada cerita atau kondisi tertentu yang ingin kamu sampaikan? Kamu dapat menuliskan kendala, harapan bantuan, atau hal-hal yang ingin kamu ceritakan saat konseling:
-            </p>
-
-            <textarea name="wide_note" 
-                      id="wide_note" 
-                      rows="4" 
-                      class="form-control rounded-3 p-3 modern-textarea" 
-                      placeholder="Contoh: Saya merasa kesulitan membagi waktu antara belajar dan tugas rumah tangga, sering begadang sehingga di kelas mengantuk. Saya ingin mendapat bimbingan cara mengatur jadwal harian..."
-                      {{ $assessment->isSubmitted() ? 'readonly' : '' }}>{{ $wideNote }}</textarea>
-            
-            <div class="d-flex justify-content-between align-items-center mt-2 text-muted fs-xs">
-                <span><i class="bi bi-shield-check text-mint me-1"></i>Kerahasiaan catatanmu 100% aman terjamin bersama Guru BK.</span>
-            </div>
-        </div>
-
-        <!-- FLOATING ACTION BAR MODERN (MOBILE FRIENDLY & TOUCH OPTIMIZED) -->
+        <!-- Floating Action Bar Modern (Mobile & Desktop Responsive) -->
         @if(!$assessment->isSubmitted())
             <div class="floating-action-bar rounded-4 shadow-lg p-3 d-flex flex-wrap justify-content-between align-items-center gap-2.5">
-                <a href="{{ route('murid.ims.service', $service->id) }}" class="btn btn-light border rounded-pill px-3.5 py-2 fs-xs fw-semibold text-muted">
-                    <i class="bi bi-arrow-left me-1"></i> Kembali ke Bidang
+                <a href="{{ route('murid.ims.index') }}" class="btn btn-light border rounded-pill px-3.5 py-2 fs-xs fw-semibold text-muted">
+                    <i class="bi bi-arrow-left me-1"></i> Menu Layanan
                 </a>
 
+                <div class="d-flex align-items-center gap-2 fs-xs text-muted d-none d-md-flex">
+                    <span class="badge bg-light text-dark border rounded-pill px-3 py-1.5 fw-bold">
+                        <i class="bi bi-check2-circle text-success me-1"></i> <span id="selectedCountBadge">0</span> Butir Dipilih
+                    </span>
+                    <span class="badge bg-light text-dark border rounded-pill px-3 py-1.5 fw-bold" id="heavyStatusBadge">
+                        ⭐ Terberat: Belum Ada
+                    </span>
+                </div>
+
                 <div class="d-flex flex-wrap gap-2 w-100-mobile justify-content-end">
-                    <!-- 1. Simpan Jawaban & Catatan -->
-                    <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3.5 py-2 fw-semibold" id="btnSaveDraft">
+                    <!-- 1. Simpan Pilihan di Layanan Ini -->
+                    <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3.5 py-2 fw-semibold" id="btnSaveOnly">
                         <i class="bi bi-floppy me-1"></i> Simpan Pilihan
                     </button>
 
-                    <!-- 2. Lanjut ke Menu Layanan Asesmen IMS -->
-                    <button type="button" class="btn btn-primary btn-sm rounded-pill px-4 py-2 fw-bold shadow-sm" id="btnSaveAndIndex">
-                        <i class="bi bi-check2-circle me-1.5"></i> Simpan & Ke Menu Layanan &rarr;
-                    </button>
+                    <!-- 2. Simpan & Lanjut / Menu Layanan -->
+                    @if($nextService)
+                        <button type="button" class="btn btn-primary btn-sm rounded-pill px-4 py-2 fw-bold shadow-sm" id="btnSaveAndNext">
+                            <i class="bi bi-arrow-right-circle-fill me-1.5"></i> Simpan & Lanjut ke {{ str_replace('Layanan ', '', $nextService->name) }} &rarr;
+                        </button>
+                    @else
+                        <button type="button" class="btn btn-primary btn-sm rounded-pill px-4 py-2 fw-bold shadow-sm" id="btnSaveAndIndex">
+                            <i class="bi bi-check-all me-1.5"></i> Simpan & Kembali ke Menu Layanan &rarr;
+                        </button>
+                    @endif
                 </div>
             </div>
         @else
-            <div class="text-center py-4">
-                <a href="{{ route('murid.ims.result') }}" class="btn btn-primary rounded-pill px-4 py-2.5 fw-bold shadow-sm">
-                    <i class="bi bi-file-earmark-bar-graph-fill me-1.5"></i> Lihat Lembar Hasil Akhir Asesmen IMS &rarr;
-                </a>
+            <div class="text-center py-4 bg-white rounded-4 border p-4 shadow-sm">
+                <div class="text-success fs-1 mb-2">
+                    <i class="bi bi-check-circle-fill"></i>
+                </div>
+                <h5 class="fw-bold text-dark">Asesmen IMS Kamu Sudah Terkirim</h5>
+                <p class="text-muted fs-xs mb-3">Seluruh butir masalah telah disimpan dalam berkas pengolahan asesmen AUM.</p>
+                <div class="d-flex justify-content-center gap-2">
+                    <a href="{{ route('murid.ims.index') }}" class="btn btn-outline-secondary rounded-pill px-4 py-2 fs-xs fw-semibold">
+                        <i class="bi bi-grid me-1"></i> Menu Layanan
+                    </a>
+                    <a href="{{ route('murid.ims.result') }}" class="btn btn-primary rounded-pill px-4 py-2 fs-xs fw-bold">
+                        <i class="bi bi-file-earmark-bar-graph me-1"></i> Lihat Lembar Hasil Akhir AUM &rarr;
+                    </a>
+                </div>
             </div>
         @endif
     </form>
@@ -388,7 +238,7 @@
 
     .modern-statement-item {
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        box-shadow: 0 1px 4px rgba(0,0,0,0.02);
     }
 
     .modern-statement-item:hover {
@@ -399,7 +249,13 @@
     .modern-statement-item.statement-active {
         border-color: #00B894 !important;
         background-color: #F4FBF9 !important;
-        box-shadow: 0 4px 14px rgba(0, 184, 148, 0.12) !important;
+        box-shadow: 0 3px 12px rgba(0, 184, 148, 0.1) !important;
+    }
+
+    .modern-statement-item.statement-heavy {
+        border-color: #f59e0b !important;
+        background-color: #FFFDF5 !important;
+        box-shadow: 0 4px 16px rgba(245, 158, 11, 0.15) !important;
     }
 
     .modern-checkbox:checked {
@@ -407,16 +263,9 @@
         border-color: #00B894;
     }
 
-    .modern-textarea {
-        font-size: 0.9rem;
-        line-height: 1.6;
-        border-color: #E2ECE9;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .modern-textarea:focus {
-        border-color: #00B894;
-        box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.15);
+    .heavy-radio:checked {
+        background-color: #f59e0b;
+        border-color: #f59e0b;
     }
 
     .floating-action-bar {
@@ -453,55 +302,127 @@
 
 @push('scripts')
 <script>
-    function toggleCustomForm() {
-        const card = document.getElementById('newCustomCard');
-        if (card) {
-            card.classList.toggle('d-none');
-            if (!card.classList.contains('d-none')) {
-                document.getElementById('new_custom_text').focus();
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('serviceInstrumentForm');
+        const actionInput = document.getElementById('actionInput');
+        const btnSaveOnly = document.getElementById('btnSaveOnly');
+        const btnSaveAndNext = document.getElementById('btnSaveAndNext');
+        const btnSaveAndIndex = document.getElementById('btnSaveAndIndex');
+        const btnResetHeavy = document.getElementById('btnResetHeavy');
+        const selectedCountBadge = document.getElementById('selectedCountBadge');
+        const heavyStatusBadge = document.getElementById('heavyStatusBadge');
+
+        function updateCounters() {
+            const checkedBoxes = document.querySelectorAll('.modern-checkbox:checked');
+            const totalSelected = checkedBoxes.length;
+
+            if (selectedCountBadge) {
+                selectedCountBadge.textContent = totalSelected;
+            }
+
+            const checkedRadio = document.querySelector('.heavy-radio:checked');
+            if (checkedRadio) {
+                const stmtId = checkedRadio.value;
+                const card = document.getElementById('card-stmt-' + stmtId);
+                const numberBadge = card ? card.querySelector('.font-monospace') : null;
+                const numText = numberBadge ? numberBadge.textContent.trim() : '#' + stmtId;
+                if (heavyStatusBadge) {
+                    heavyStatusBadge.innerHTML = '⭐ Terberat: <strong>' + numText + '</strong>';
+                    heavyStatusBadge.classList.add('border-warning', 'text-warning-emphasis');
+                }
+                if (btnResetHeavy) btnResetHeavy.style.display = 'inline-block';
+            } else {
+                if (heavyStatusBadge) {
+                    heavyStatusBadge.textContent = '⭐ Terberat: Belum Ada';
+                    heavyStatusBadge.classList.remove('border-warning', 'text-warning-emphasis');
+                }
+                if (btnResetHeavy) btnResetHeavy.style.display = 'none';
             }
         }
-    }
 
-    function deleteCustomItem(id) {
-        if (confirm('Apakah kamu yakin ingin menghapus butir masalah kustom ini?')) {
-            document.getElementById('deleteCustomId').value = id;
-            document.getElementById('instrumentForm').submit();
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('instrumentForm');
-        const actionInput = document.getElementById('actionInput');
-        const btnSaveDraft = document.getElementById('btnSaveDraft');
-        const btnSaveAndIndex = document.getElementById('btnSaveAndIndex');
-
-        // Toggle card visual active state and note box on checkbox change
+        // Toggle visual active state & checkbox handler
         document.querySelectorAll('.modern-checkbox').forEach(chk => {
             chk.addEventListener('change', function() {
                 const card = document.getElementById(this.dataset.cardId);
-                const noteBox = document.getElementById(this.dataset.noteBox);
+                const heavyRadio = document.getElementById(this.dataset.radioId);
+                const heavyLabel = card ? card.querySelector('.heavy-badge-label') : null;
+                const heavyBox = card ? card.querySelector('.heavy-selector-box') : null;
+
                 if (card) {
                     if (this.checked) {
                         card.classList.add('statement-active');
-                        if (noteBox) noteBox.style.display = 'block';
+                        if (heavyBox) heavyBox.style.opacity = '1';
                     } else {
                         card.classList.remove('statement-active');
-                        if (noteBox) {
-                            // If note is empty, hide note box
-                            const txt = noteBox.querySelector('textarea');
-                            if (!txt || txt.value.trim() === '') {
-                                noteBox.style.display = 'none';
-                            }
+                        // Jika butir ini sebelumnya dicentang sebagai terberat dan di-uncheck, uncheck juga radionya!
+                        if (heavyRadio && heavyRadio.checked) {
+                            heavyRadio.checked = false;
+                            card.classList.remove('statement-heavy');
+                            if (heavyLabel) heavyLabel.style.display = 'none';
                         }
+                        if (heavyBox) heavyBox.style.opacity = '0.6';
                     }
                 }
+                updateCounters();
             });
         });
 
-        if (btnSaveDraft) {
-            btnSaveDraft.addEventListener('click', function() {
+        // Heavy Radio Button Selection Handler (1 per service)
+        document.querySelectorAll('.heavy-radio').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const stmtId = this.dataset.stmtId;
+                const chk = document.getElementById(this.dataset.chkId);
+
+                // Jika radio ini dipilih, otomatis pastikan checkbox butir ini tercentang!
+                if (chk && !chk.checked) {
+                    chk.checked = true;
+                    const card = document.getElementById('card-stmt-' + stmtId);
+                    if (card) card.classList.add('statement-active');
+                }
+
+                // Bersihkan tampilan heavy dari card lainnya
+                document.querySelectorAll('.modern-statement-item').forEach(c => {
+                    c.classList.remove('statement-heavy');
+                    const lbl = c.querySelector('.heavy-badge-label');
+                    if (lbl) lbl.style.display = 'none';
+                });
+
+                // Aktifkan visual heavy pada card terpilih
+                const selectedCard = document.getElementById('card-stmt-' + stmtId);
+                if (selectedCard) {
+                    selectedCard.classList.add('statement-heavy');
+                    const lbl = selectedCard.querySelector('.heavy-badge-label');
+                    if (lbl) lbl.style.display = 'inline-flex';
+                }
+
+                updateCounters();
+            });
+        });
+
+        // Reset Heavy Selection Button
+        if (btnResetHeavy) {
+            btnResetHeavy.addEventListener('click', function() {
+                document.querySelectorAll('.heavy-radio').forEach(r => r.checked = false);
+                document.querySelectorAll('.modern-statement-item').forEach(c => {
+                    c.classList.remove('statement-heavy');
+                    const lbl = c.querySelector('.heavy-badge-label');
+                    if (lbl) lbl.style.display = 'none';
+                });
+                updateCounters();
+            });
+        }
+
+        // Action Buttons Submit
+        if (btnSaveOnly) {
+            btnSaveOnly.addEventListener('click', function() {
                 actionInput.value = 'save';
+                form.submit();
+            });
+        }
+
+        if (btnSaveAndNext) {
+            btnSaveAndNext.addEventListener('click', function() {
+                actionInput.value = 'to_next';
                 form.submit();
             });
         }
@@ -512,6 +433,9 @@
                 form.submit();
             });
         }
+
+        // Inisialisasi awal
+        updateCounters();
     });
 </script>
 @endpush

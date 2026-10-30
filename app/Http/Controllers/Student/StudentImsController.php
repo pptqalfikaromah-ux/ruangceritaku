@@ -75,10 +75,21 @@ class StudentImsController extends Controller
         }
 
         $totalSelectedCount = count($answeredStatementIds);
-        $totalHeavyCount = ImsAnswer::where('ims_assessment_id', $assessment->id)
+
+        $heavyStatementIds = ImsAnswer::where('ims_assessment_id', $assessment->id)
             ->where('is_selected', true)
             ->where('is_heavy', true)
-            ->count();
+            ->pluck('ims_statement_id')
+            ->toArray();
+
+        $heavyByService = [];
+        if (!empty($heavyStatementIds)) {
+            $heavyByService = ImsStatement::whereIn('id', $heavyStatementIds)
+                ->pluck('statement_number', 'service_type_id')
+                ->toArray();
+        }
+
+        $totalHeavyCount = count($heavyStatementIds);
 
         return view('student.ims.index', compact(
             'student',
@@ -87,65 +98,24 @@ class StudentImsController extends Controller
             'activeYear',
             'serviceTypes',
             'selectedCountByService',
+            'heavyByService',
             'totalSelectedCount',
             'totalHeavyCount'
         ));
     }
 
     /**
-     * Halaman 2: Pemilihan Menu Bidang Masalah (Pribadi, Sosial, Belajar, Karir)
+     * Halaman 2: Instrumen Butir Masalah per Layanan (Langsung memuat seluruh butir layanan)
      */
-    public function selectField($serviceId): View
+    public function selectField($serviceId): View|RedirectResponse
     {
-        $student = Auth::user()->student;
-        abort_unless($student, 403);
-
-        $activeSemester = active_semester();
-        if (!$activeSemester) {
-            return view('student.ims.no-semester');
-        }
-
-        $service = ServiceType::findOrFail($serviceId);
-        $guidanceFields = GuidanceField::whereIn('code', ['BID-01', 'BID-02', 'BID-03', 'BID-04'])->orderBy('id')->get();
-        if ($guidanceFields->isEmpty()) {
-            $guidanceFields = GuidanceField::orderBy('id')->get();
-        }
-
-        $assessment = ImsAssessment::firstOrCreate(
-            [
-                'student_id' => $student->id,
-                'semester_id' => $activeSemester->id,
-            ],
-            [
-                'academic_year_id' => $activeSemester->academic_year_id,
-                'status' => 'draft',
-            ]
-        );
-
-        // Ambil statement yang sudah dicentang untuk layanan ini
-        $serviceStatementIds = ImsStatement::where('service_type_id', $service->id)->pluck('id');
-        $answeredFieldIds = ImsAnswer::where('ims_assessment_id', $assessment->id)
-            ->whereIn('ims_statement_id', $serviceStatementIds)
-            ->where('is_selected', true)
-            ->join('ims_statements', 'ims_answers.ims_statement_id', '=', 'ims_statements.id')
-            ->pluck('ims_statements.guidance_field_id')
-            ->toArray();
-
-        $selectedCountByField = array_count_values($answeredFieldIds);
-
-        return view('student.ims.select-field', compact(
-            'student',
-            'assessment',
-            'service',
-            'guidanceFields',
-            'selectedCountByField'
-        ));
+        return $this->showServiceInstrument($serviceId);
     }
 
     /**
-     * Halaman 3: Instrumen Butir Masalah yang Dipilih + Kolom Catatan Lebar
+     * Tampilkan seluruh butir instrumen untuk satu Layanan BK
      */
-    public function showInstrument($serviceId, $fieldId): View
+    public function showServiceInstrument($serviceId): View|RedirectResponse
     {
         $student = Auth::user()->student;
         abort_unless($student, 403);
@@ -156,7 +126,6 @@ class StudentImsController extends Controller
         }
 
         $service = ServiceType::findOrFail($serviceId);
-        $field = GuidanceField::findOrFail($fieldId);
 
         $assessment = ImsAssessment::firstOrCreate(
             [
@@ -169,11 +138,11 @@ class StudentImsController extends Controller
             ]
         );
 
-        // Ambil tepat 5 butir pernyataan yang sesuai
-        $statements = ImsStatement::where('service_type_id', $service->id)
-            ->where('guidance_field_id', $field->id)
+        // Ambil seluruh butir pernyataan aktif dari layanan ini (20 butir)
+        $statements = ImsStatement::with('guidanceField')
+            ->where('service_type_id', $service->id)
             ->where('is_active', true)
-            ->orderBy('statement_number')
+            ->orderBy('statement_number', 'asc')
             ->get();
 
         $statementIds = $statements->pluck('id')->toArray();
@@ -183,37 +152,47 @@ class StudentImsController extends Controller
             ->get()
             ->keyBy('ims_statement_id');
 
-        // Ambil butir kustom buatan siswa sendiri untuk rumpun dan bidang ini
-        $customStatements = ImsCustomStatement::where('ims_assessment_id', $assessment->id)
-            ->where('service_type_id', $service->id)
-            ->where('guidance_field_id', $field->id)
-            ->get();
-
-        // Cari catatan lebar umum yang tersimpan sebelumnya untuk bagian ini
-        $wideNote = null;
+        // Cari butir terberat yang sudah ditandai di layanan ini (jika ada)
+        $heavyStatementId = null;
         foreach ($existingAnswers as $ans) {
-            if (!empty($ans->student_note)) {
-                $wideNote = $ans->student_note;
+            if ($ans->is_heavy && $ans->is_selected) {
+                $heavyStatementId = $ans->ims_statement_id;
                 break;
             }
         }
+
+        // Ambil urutan layanan untuk navigasi Sebelumnya / Selanjutnya
+        $allServices = ServiceType::layanan()->orderBy('id')->get();
+        $currentIndex = $allServices->search(fn($item) => $item->id == $service->id);
+        $prevService = ($currentIndex !== false && $currentIndex > 0) ? $allServices->get($currentIndex - 1) : null;
+        $nextService = ($currentIndex !== false && $currentIndex < $allServices->count() - 1) ? $allServices->get($currentIndex + 1) : null;
 
         return view('student.ims.instrument', compact(
             'student',
             'assessment',
             'service',
-            'field',
             'statements',
             'existingAnswers',
-            'customStatements',
-            'wideNote'
+            'heavyStatementId',
+            'allServices',
+            'currentIndex',
+            'prevService',
+            'nextService'
         ));
     }
 
     /**
-     * Simpan Jawaban Butir, Catatan per Butir & Butir Masalah Kustom
+     * Fallback showInstrument untuk backward compatibility
      */
-    public function saveInstrument(Request $request, $serviceId, $fieldId): RedirectResponse
+    public function showInstrument($serviceId, $fieldId = null): View|RedirectResponse
+    {
+        return $this->showServiceInstrument($serviceId);
+    }
+
+    /**
+     * Simpan Pilihan Butir Masalah & 1 Masalah Terberat (Opsional) untuk Layanan ini
+     */
+    public function saveServiceInstrument(Request $request, $serviceId): RedirectResponse
     {
         $student = Auth::user()->student;
         abort_unless($student, 403);
@@ -237,36 +216,24 @@ class StudentImsController extends Controller
         }
 
         $selectedStatements = $request->input('selected', []); // array of statement IDs
-        $heavyStatements = $request->input('heavy', []); // array of statement IDs yang dirasa paling berat (N.M.Y.B)
-        $statementNotes = $request->input('notes', []); // array of [stmt_id => note]
-        $wideNote = $request->input('wide_note');
-        $consultTo = $request->input('consult_to');
-        $scopeStatementIds = $request->input('scope_statement_ids', []);
+        $heavyStatementId = $request->input('heavy_statement_id'); // single statement ID (opsional)
+        $scopeStatementIds = $request->input('scope_statement_ids', []); // seluruh statement IDs layanan ini
 
-        DB::transaction(function () use ($assessment, $serviceId, $fieldId, $selectedStatements, $heavyStatements, $statementNotes, $wideNote, $consultTo, $scopeStatementIds, $request) {
-            if (!empty($consultTo)) {
-                $assessment->update(['consult_to' => $consultTo]);
-            }
-
-            // 1. Simpan Butir Standar, Catatan, & Indikator Masalah Berat (N.M.Y.B)
+        DB::transaction(function () use ($assessment, $selectedStatements, $heavyStatementId, $scopeStatementIds) {
             foreach ($scopeStatementIds as $stmtId) {
                 $isSelected = in_array($stmtId, $selectedStatements);
-                $isHeavy = $isSelected && in_array($stmtId, $heavyStatements);
-                $itemNote = $statementNotes[$stmtId] ?? null;
-                if (empty($itemNote) && !empty($wideNote) && $isSelected) {
-                    $itemNote = $wideNote;
-                }
+                // Hanya bisa menjadi masalah terberat jika butir tersebut juga dipilih!
+                $isHeavy = $isSelected && ($heavyStatementId == $stmtId);
 
-                if ($isSelected || !empty($itemNote)) {
+                if ($isSelected) {
                     ImsAnswer::updateOrCreate(
                         [
                             'ims_assessment_id' => $assessment->id,
                             'ims_statement_id' => $stmtId,
                         ],
                         [
-                            'is_selected' => $isSelected,
+                            'is_selected' => true,
                             'is_heavy' => $isHeavy,
-                            'student_note' => $itemNote,
                         ]
                     );
                 } else {
@@ -275,52 +242,30 @@ class StudentImsController extends Controller
                         ->delete();
                 }
             }
-
-            // 2. Simpan Butir Kustom Baru (Jika Murid Menambahkan)
-            if ($request->filled('new_custom_text')) {
-                ImsCustomStatement::create([
-                    'ims_assessment_id' => $assessment->id,
-                    'service_type_id' => $serviceId,
-                    'guidance_field_id' => $fieldId,
-                    'statement_text' => trim($request->input('new_custom_text')),
-                    'student_note' => trim($request->input('new_custom_note') ?? ''),
-                    'is_selected' => true,
-                ]);
-            }
-
-            // 3. Hapus Butir Kustom jika ada aksi hapus
-            if ($request->filled('delete_custom_id')) {
-                ImsCustomStatement::where('ims_assessment_id', $assessment->id)
-                    ->where('id', $request->input('delete_custom_id'))
-                    ->delete();
-            }
-
-            // 4. Update Butir Kustom yang Sudah Ada
-            $customNotes = $request->input('custom_notes', []);
-            $selectedCustom = $request->input('selected_custom', []);
-            foreach ($customNotes as $cId => $note) {
-                ImsCustomStatement::where('ims_assessment_id', $assessment->id)
-                    ->where('id', $cId)
-                    ->update([
-                        'student_note' => $note,
-                        'is_selected' => in_array($cId, $selectedCustom),
-                    ]);
-            }
         });
 
-        // Aksi Cepat: Lanjut ke Menu Layanan IMS atau Hasil Akhir
-        if ($request->input('action') === 'to_index') {
+        $action = $request->input('action', 'save');
+
+        if ($action === 'to_index') {
             return redirect()->route('murid.ims.index')
                 ->with('success', 'Pilihan butir masalah berhasil disimpan.');
         }
 
-        if ($request->input('action') === 'counseling') {
-            return redirect()->route('murid.ims.result')
-                ->with('success', 'Pilihan butir masalah berhasil disimpan.');
+        if ($action === 'to_next' && $request->filled('next_service_id')) {
+            return redirect()->route('murid.ims.service', $request->input('next_service_id'))
+                ->with('success', 'Pilihan butir masalah berhasil disimpan. Lanjut ke layanan berikutnya.');
         }
 
-        return redirect()->route('murid.ims.instrument', [$serviceId, $fieldId])
-            ->with('success', 'Pilihan butir masalah dan catatan Anda berhasil disimpan.');
+        return redirect()->route('murid.ims.service', $serviceId)
+            ->with('success', 'Pilihan butir masalah dan masalah terberat berhasil disimpan.');
+    }
+
+    /**
+     * Fallback saveInstrument
+     */
+    public function saveInstrument(Request $request, $serviceId, $fieldId = null): RedirectResponse
+    {
+        return $this->saveServiceInstrument($request, $serviceId);
     }
 
     /**

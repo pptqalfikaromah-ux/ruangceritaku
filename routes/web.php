@@ -241,10 +241,11 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
     Route::post('/konseling/{konseling}/reschedule', [StudentCounselingController::class, 'requestReschedule'])->name('konseling.requestReschedule');
 
     // 2. Instrumen Masalah Siswa (IMS) - Modul Asesmen Mandiri
-    Route::get('/ims', [StudentImsController::class, 'index'])->name('ims.index'); // Halaman 1: Pilih Layanan
-    Route::get('/ims/layanan/{service}', [StudentImsController::class, 'selectField'])->name('ims.service'); // Halaman 2: Pilih Bidang
-    Route::get('/ims/layanan/{service}/bidang/{field}', [StudentImsController::class, 'showInstrument'])->name('ims.instrument'); // Halaman 3: Instrumen 5 Butir
-    Route::post('/ims/layanan/{service}/bidang/{field}', [StudentImsController::class, 'saveInstrument'])->name('ims.saveInstrument'); // Simpan Jawaban
+    Route::get('/ims', [StudentImsController::class, 'index'])->name('ims.index'); // Halaman 1: Pilih Layanan (8 Layanan)
+    Route::get('/ims/layanan/{service}', [StudentImsController::class, 'showServiceInstrument'])->name('ims.service'); // Halaman 2: Seluruh 20 Butir Layanan Tersebut
+    Route::post('/ims/layanan/{service}', [StudentImsController::class, 'saveServiceInstrument'])->name('ims.saveServiceInstrument'); // Simpan Butir Layanan
+    Route::get('/ims/layanan/{service}/bidang/{field}', [StudentImsController::class, 'showInstrument'])->name('ims.instrument'); // Backward compatibility
+    Route::post('/ims/layanan/{service}/bidang/{field}', [StudentImsController::class, 'saveInstrument'])->name('ims.saveInstrument'); // Backward compatibility
     Route::post('/ims/draft', [StudentImsController::class, 'saveDraft'])->name('ims.saveDraft');
     Route::post('/ims/submit', [StudentImsController::class, 'submit'])->name('ims.submit');
     Route::get('/ims/hasil-akhir', [StudentImsController::class, 'result'])->name('ims.result'); // Halaman Hasil Akhir Asesmen Murid

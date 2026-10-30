@@ -194,17 +194,26 @@
                                 <i class="bi {{ $itemData['icon'] }} fs-4"></i>
                             </div>
 
-                            <!-- Status Badge -->
-                            @if($answeredCount > 0)
-                                <span class="badge rounded-pill px-2.5 py-1.5 fs-xs fw-semibold text-white shadow-xs" 
-                                      style="background: #059669;">
-                                    <i class="bi bi-check2-circle me-1"></i> Ada Pilihan
-                                </span>
-                            @else
-                                <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 fs-xs">
-                                    Siap Diisi
-                                </span>
-                            @endif
+                            <!-- Status Badges -->
+                            <div class="d-flex flex-column align-items-end gap-1">
+                                @if($answeredCount > 0)
+                                    <span class="badge rounded-pill px-2.5 py-1.5 fs-xs fw-semibold text-white shadow-xs" 
+                                          style="background: #059669;">
+                                        <i class="bi bi-check2-circle me-1"></i> {{ $answeredCount }} Terpilih
+                                    </span>
+                                @else
+                                    <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 fs-xs">
+                                        20 Butir
+                                    </span>
+                                @endif
+
+                                @if(!empty($heavyByService[$svc->id]))
+                                    <span class="badge rounded-pill px-2 py-0.5 fs-xxs fw-bold text-white shadow-xs" 
+                                          style="background: #d97706;">
+                                        ⭐ Terberat #{{ $heavyByService[$svc->id] }}
+                                    </span>
+                                @endif
+                            </div>
                         </div>
 
                         <!-- Service Title -->
@@ -225,7 +234,7 @@
                         <!-- Card Footer Action -->
                         <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
                             <span class="fs-xs fw-bold card-action-text" style="color: {{ $itemData['color'] }};">
-                                Pilih 4 Bidang Masalah &rarr;
+                                Buka 20 Butir Asesmen &rarr;
                             </span>
                             <div class="action-arrow-circle d-flex align-items-center justify-content-center rounded-circle" 
                                  style="background: {{ $itemData['bg_subtle'] }}; color: {{ $itemData['color'] }}; width: 28px; height: 28px;">
