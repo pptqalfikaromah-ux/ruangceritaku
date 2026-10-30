@@ -212,6 +212,8 @@ class ImsController extends Controller
         $academicYears = AcademicYear::orderBy('id', 'desc')->get();
         $semesters = Semester::orderBy('id', 'desc')->get();
 
+        $isImsGloballyEnabled = app_setting('ims_enabled', '1') === '1';
+
         return view('panel.ims.monitoring', compact(
             'paginatedStudents',
             'classrooms',
@@ -225,7 +227,8 @@ class ImsController extends Controller
             'totalStudents',
             'submittedCount',
             'draftCount',
-            'unfilledCount'
+            'unfilledCount',
+            'isImsGloballyEnabled'
         ));
     }
 

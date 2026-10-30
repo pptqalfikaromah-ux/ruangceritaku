@@ -276,7 +276,9 @@
                     </li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.dashboard') }}" style="font-size:.83rem;"><i class="bi bi-house-door me-2 text-primary"></i>Beranda</a></li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.konseling.pribadi') }}" style="font-size:.83rem;"><i class="bi bi-person-heart me-2 text-primary"></i>Konseling Pribadi</a></li>
-                    <li><a class="dropdown-item py-2" href="{{ route('murid.ims.index') }}" style="font-size:.83rem;"><i class="bi bi-clipboard2-check me-2" style="color:#7c3aed;"></i>Instrumen Masalah (IMS)</a></li>
+                    @if(app_setting('ims_enabled', '1') === '1')
+                        <li><a class="dropdown-item py-2" href="{{ route('murid.ims.index') }}" style="font-size:.83rem;"><i class="bi bi-clipboard2-check me-2" style="color:#7c3aed;"></i>Asesmen Masalah (IMS)</a></li>
+                    @endif
                     <li><a class="dropdown-item py-2" href="{{ route('murid.konseling.index') }}" style="font-size:.83rem;"><i class="bi bi-chat-heart me-2" style="color:#e11d48;"></i>Riwayat Konseling</a></li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.pengaduan.index') }}" style="font-size:.83rem;"><i class="bi bi-shield-check me-2 text-warning"></i>Pengaduan Aman</a></li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.pamflet.index') }}" style="font-size:.83rem;"><i class="bi bi-images me-2 text-info"></i>Pamflet Kreativitas</a></li>
@@ -331,16 +333,6 @@
                         <i class="bi bi-clipboard2-check"></i><span>Asesmen Masalah (IMS)</span>
                     </a>
                 @endif
-
-                <a href="{{ route('murid.konseling.index') }}" class="sk-nav-item {{ request()->routeIs('murid.konseling.index*') || request()->routeIs('murid.konseling.show*') ? 'active' : '' }}">
-                    <i class="bi bi-chat-heart"></i><span>Riwayat Konseling</span>
-                </a>
-                <a href="{{ route('murid.pengaduan.index') }}" class="sk-nav-item {{ request()->routeIs('murid.pengaduan.*') ? 'active' : '' }}">
-                    <i class="bi bi-shield-check"></i><span>Pengaduan Aman</span>
-                </a>
-                <a href="{{ route('murid.pamflet.index') }}" class="sk-nav-item {{ request()->routeIs('murid.pamflet.*') ? 'active' : '' }}">
-                    <i class="bi bi-images"></i><span>Pamflet Kreativitas</span>
-                </a>
             </div>
             <div class="sk-sidebar-footer">
                 <div style="background:var(--primary-bg);border:1px solid var(--primary-light);border-radius:8px;padding:10px 12px;margin-bottom:10px;">
