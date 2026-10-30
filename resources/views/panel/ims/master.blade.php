@@ -24,6 +24,52 @@
         </div>
     </div>
 
+    <!-- Global Feature Toggle Banner (Aktif / Nonaktifkan IMS untuk Murid) -->
+    <div class="card border-0 shadow-sm rounded-3 p-3 bg-white" style="border-left: 5px solid {{ $isImsGloballyEnabled ? '#0d9488' : '#f59e0b' }} !important;">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <div class="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0" style="width: 44px; height: 44px; background: {{ $isImsGloballyEnabled ? '#0d9488' : '#d97706' }};">
+                    <i class="bi {{ $isImsGloballyEnabled ? 'bi-toggle-on fs-3' : 'bi-toggle-off fs-3' }}"></i>
+                </div>
+                <div>
+                    <div class="d-flex align-items-center gap-2">
+                        <h6 class="fw-bold mb-0 text-dark">Status Akses Fitur IMS untuk Siswa:</h6>
+                        @if($isImsGloballyEnabled)
+                            <span class="badge bg-success text-white px-2.5 py-1 rounded-pill fw-bold fs-xs">
+                                <i class="bi bi-check-circle-fill me-1"></i> AKTIF (DITAMPILKAN DI AKUN SISWA)
+                            </span>
+                        @else
+                            <span class="badge bg-secondary text-white px-2.5 py-1 rounded-pill fw-bold fs-xs">
+                                <i class="bi bi-slash-circle-fill me-1"></i> NONAKTIF (DISEMBUNYIKAN DARI AKUN SISWA)
+                            </span>
+                        @endif
+                    </div>
+                    <p class="text-muted fs-xs mb-0 mt-1">
+                        @if($isImsGloballyEnabled)
+                            Fitur IMS sedang aktif. Menu "Instrumen Masalah (IMS)" dan asesmen butir masalah tampil di akun seluruh siswa.
+                        @else
+                            Fitur IMS sedang dinonaktifkan. Menu dan lembar instrumen IMS otomatis disembunyikan dari seluruh akun siswa.
+                        @endif
+                    </p>
+                </div>
+            </div>
+            <div>
+                <form action="{{ route('panel.ims.toggle-status') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin {{ $isImsGloballyEnabled ? 'MENONAKTIFKAN' : 'MENGAKTIFKAN' }} fitur IMS untuk akun murid?')">
+                    @csrf
+                    @if($isImsGloballyEnabled)
+                        <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3.5 py-2 fw-bold shadow-xs">
+                            <i class="bi bi-power me-1"></i> Nonaktifkan Fitur IMS
+                        </button>
+                    @else
+                        <button type="submit" class="btn btn-success btn-sm rounded-pill px-3.5 py-2 fw-bold shadow-xs text-white">
+                            <i class="bi bi-check-lg me-1"></i> Aktifkan Fitur IMS
+                        </button>
+                    @endif
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Stats Summary -->
     <div class="row g-3">
         <div class="col-md-4">

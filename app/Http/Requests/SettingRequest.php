@@ -29,6 +29,7 @@ class SettingRequest extends FormRequest
             'app_logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg,svg', 'max:2048'],
             'theme_color' => ['nullable', 'string', 'max:30'],
             'app_footer' => ['nullable', 'string', 'max:200'],
+            'ims_enabled' => ['nullable', 'in:0,1'],
         ];
     }
 }

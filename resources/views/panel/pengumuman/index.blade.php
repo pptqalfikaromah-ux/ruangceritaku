@@ -18,7 +18,7 @@
                     <i class="bi bi-megaphone-fill text-primary"></i> Pengumuman Madrasah
                 </h4>
                 <p class="text-muted fs-xs mb-0">
-                    Kelola pengumuman resmi yang akan ditayangkan langsung di dashboard seluruh akun pengguna (Admin, Guru BK, Wali Kelas, dan Murid).
+                    Kelola pengumuman resmi yang akan ditayangkan langsung di dashboard seluruh akun pengguna (Admin, Guru BK, Wali Kelas, dan Murid) lengkap dengan dukungan poster/gambar.
                 </p>
             </div>
             <div>
@@ -48,6 +48,7 @@
                     <tr>
                         <th class="ps-3" style="width: 50px;">No</th>
                         <th>Judul & Isi Pengumuman</th>
+                        <th style="width: 90px;">Gambar</th>
                         <th>Kategori</th>
                         <th>Target Akun</th>
                         <th>Status</th>
@@ -68,7 +69,19 @@
                                     @endif
                                     <div class="fw-bold text-dark fs-sm">{{ $ann->title }}</div>
                                 </div>
-                                <div class="text-muted fs-xxs mt-1" style="max-width: 480px; white-space: pre-line;">{{ Str::limit($ann->content, 120) }}</div>
+                                <div class="text-muted fs-xxs mt-1" style="max-width: 440px; white-space: pre-line;">{{ Str::limit($ann->content, 120) }}</div>
+                            </td>
+                            <td>
+                                @if($ann->image_url)
+                                    <a href="{{ $ann->image_url }}" target="_blank" class="d-inline-block position-relative rounded overflow-hidden shadow-xs border" style="width: 48px; height: 48px;" title="Lihat gambar asli">
+                                        <img src="{{ $ann->image_url }}" alt="{{ $ann->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <span class="position-absolute bottom-0 end-0 bg-dark bg-opacity-75 text-white p-0.5 rounded-top-start" style="font-size: 8px;">
+                                            <i class="bi bi-zoom-in"></i>
+                                        </span>
+                                    </a>
+                                @else
+                                    <span class="text-muted fs-xxs italic">- Tanpa Gambar -</span>
+                                @endif
                             </td>
                             <td>
                                 <span class="badge {{ $ann->category_badge_class }} px-2 py-1 rounded-pill fw-semibold">
@@ -128,9 +141,9 @@
 
                         <!-- Modal Edit Pengumuman -->
                         <div class="modal fade" id="editModal{{ $ann->id }}" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
                                 <div class="modal-content border-0 shadow">
-                                    <form method="POST" action="{{ route('panel.pengumuman.update', $ann) }}">
+                                    <form method="POST" action="{{ route('panel.pengumuman.update', $ann) }}" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
                                         <div class="modal-header bg-light">
@@ -162,6 +175,33 @@
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <!-- Gambar / Poster Pengumuman -->
+                                            <div class="mb-3 p-3 bg-light rounded-3 border">
+                                                <label class="form-label fs-xs text-dark fw-bold d-flex align-items-center gap-1.5">
+                                                    <i class="bi bi-image text-primary"></i> Gambar / Poster Pengumuman (Opsional)
+                                                </label>
+                                                @if($ann->image_url)
+                                                    <div class="d-flex align-items-center gap-3 mb-2 p-2 bg-white rounded border">
+                                                        <img src="{{ $ann->image_url }}" alt="Preview" style="height: 64px; width: 64px; object-fit: cover; border-radius: 6px;">
+                                                        <div>
+                                                            <div class="fs-xs fw-semibold text-dark">Poster saat ini terpasang</div>
+                                                            <div class="form-check mt-1">
+                                                                <input class="form-check-input" type="checkbox" name="remove_image" value="1" id="rmImg{{ $ann->id }}">
+                                                                <label class="form-check-label fs-xs text-danger fw-semibold" for="rmImg{{ $ann->id }}">
+                                                                    Hapus poster ini
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                <input type="file" name="image" class="form-control form-control-sm" accept="image/*" onchange="previewAnnouncementImage(this, 'previewEdit{{ $ann->id }}')">
+                                                <div class="form-text fs-xxs text-muted mt-1">Format: JPG, JPEG, PNG, WEBP. Maksimal 3MB. Kosongkan jika tidak ingin mengubah.</div>
+                                                <div id="previewEdit{{ $ann->id }}" class="mt-2 text-center d-none">
+                                                    <img src="" alt="Pratinjau Gambar Baru" class="img-fluid rounded border shadow-xs" style="max-height: 180px;">
+                                                </div>
+                                            </div>
+
                                             <div class="mb-3">
                                                 <label class="form-label fs-xs text-muted fw-semibold">Isi Pengumuman</label>
                                                 <textarea name="content" rows="4" class="form-control form-control-sm" required>{{ $ann->content }}</textarea>
@@ -191,7 +231,7 @@
                         </div>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center py-4 text-muted">
+                            <td colspan="8" class="text-center py-4 text-muted">
                                 <i class="bi bi-megaphone fs-2 d-block mb-2 text-secondary"></i>
                                 Belum ada pengumuman yang diterbitkan. Silakan klik tombol "Buat Pengumuman Baru".
                             </td>
@@ -210,9 +250,9 @@
 
 <!-- Modal Tambah Pengumuman Baru -->
 <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 shadow">
-            <form method="POST" action="{{ route('panel.pengumuman.store') }}">
+            <form method="POST" action="{{ route('panel.pengumuman.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-light">
                     <h5 class="modal-title fs-sm fw-bold">Buat Pengumuman Baru</h5>
@@ -243,6 +283,19 @@
                             </select>
                         </div>
                     </div>
+
+                    <!-- Gambar / Poster Pengumuman -->
+                    <div class="mb-3 p-3 bg-light rounded-3 border">
+                        <label class="form-label fs-xs text-dark fw-bold d-flex align-items-center gap-1.5">
+                            <i class="bi bi-image text-primary"></i> Upload Poster / Gambar Pengumuman (Opsional)
+                        </label>
+                        <input type="file" name="image" class="form-control form-control-sm" accept="image/*" onchange="previewAnnouncementImage(this, 'previewCreate')">
+                        <div class="form-text fs-xxs text-muted mt-1">Format gambar: JPG, JPEG, PNG, WEBP. Maksimal ukuran: 3MB.</div>
+                        <div id="previewCreate" class="mt-2 text-center d-none">
+                            <img src="" alt="Pratinjau Gambar" class="img-fluid rounded border shadow-xs" style="max-height: 200px;">
+                        </div>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label fs-xs text-muted fw-semibold">Isi Pengumuman</label>
                         <textarea name="content" rows="4" class="form-control form-control-sm" placeholder="Tuliskan isi pengumuman secara jelas dan informatif..." required></textarea>
@@ -270,4 +323,27 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    function previewAnnouncementImage(input, previewContainerId) {
+        const container = document.getElementById(previewContainerId);
+        if (!container) return;
+        const img = container.querySelector('img');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                if (img) {
+                    img.src = e.target.result;
+                    container.classList.remove('d-none');
+                }
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            if (img) img.src = '';
+            container.classList.add('d-none');
+        }
+    }
+</script>
+@endpush
 @endsection

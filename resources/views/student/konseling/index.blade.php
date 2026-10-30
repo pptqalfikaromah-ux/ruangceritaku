@@ -26,40 +26,44 @@
                 <i class="bi bi-person-heart me-1"></i> + Konseling Pribadi (Mandiri)
             </a>
 
-            <!-- 2. Tombol Jadwal Tindak Lanjut IMS -->
-            <a href="{{ route('murid.ims.counseling.create') }}" class="btn btn-outline-purple btn-sm rounded-pill px-3.5 py-2 fw-semibold shadow-sm" style="border-color: #7c3aed; color: #7c3aed;">
-                <i class="bi bi-clipboard2-check me-1"></i> Ajukan dari Masalah IMS
-            </a>
+            @if(app_setting('ims_enabled', '1') === '1')
+                <!-- 2. Tombol Jadwal Tindak Lanjut IMS -->
+                <a href="{{ route('murid.ims.counseling.create') }}" class="btn btn-outline-purple btn-sm rounded-pill px-3.5 py-2 fw-semibold shadow-sm" style="border-color: #7c3aed; color: #7c3aed;">
+                    <i class="bi bi-clipboard2-check me-1"></i> Ajukan dari Masalah IMS
+                </a>
+            @endif
         </div>
     </div>
 
-    <!-- Filter Tab: Bedakan Konseling Pribadi vs Tindak Lanjut IMS -->
-    <div class="card border-0 shadow-sm rounded-3 bg-white p-2">
-        <ul class="nav nav-pills gap-1">
-            <li class="nav-item">
-                <a class="nav-link rounded-pill fs-sm py-1.5 px-3 {{ !request('source') ? 'active bg-emerald text-white' : 'text-muted' }}" 
-                   href="{{ route('murid.konseling.index') }}">
-                    <i class="bi bi-grid me-1"></i> Semua Permohonan
-                    <span class="badge bg-light text-dark rounded-pill ms-1">{{ $counts['all'] ?? 0 }}</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link rounded-pill fs-sm py-1.5 px-3 {{ request('source') === 'pribadi' ? 'active bg-primary text-white' : 'text-muted' }}" 
-                   href="{{ route('murid.konseling.index', ['source' => 'pribadi']) }}">
-                    <i class="bi bi-person-fill me-1"></i> Konseling Pribadi (Mandiri)
-                    <span class="badge bg-light text-dark rounded-pill ms-1">{{ $counts['pribadi'] ?? 0 }}</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link rounded-pill fs-sm py-1.5 px-3 {{ request('source') === 'ims' ? 'active bg-purple text-white' : 'text-muted' }}" 
-                   style="{{ request('source') === 'ims' ? 'background-color: #7c3aed !important;' : '' }}"
-                   href="{{ route('murid.konseling.index', ['source' => 'ims']) }}">
-                    <i class="bi bi-clipboard2-check me-1"></i> Tindak Lanjut Masalah IMS
-                    <span class="badge bg-light text-dark rounded-pill ms-1">{{ $counts['ims'] ?? 0 }}</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+    @if(app_setting('ims_enabled', '1') === '1')
+        <!-- Filter Tab: Bedakan Konseling Pribadi vs Tindak Lanjut IMS -->
+        <div class="card border-0 shadow-sm rounded-3 bg-white p-2">
+            <ul class="nav nav-pills gap-1">
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill fs-sm py-1.5 px-3 {{ !request('source') ? 'active bg-emerald text-white' : 'text-muted' }}" 
+                       href="{{ route('murid.konseling.index') }}">
+                        <i class="bi bi-grid me-1"></i> Semua Permohonan
+                        <span class="badge bg-light text-dark rounded-pill ms-1">{{ $counts['all'] ?? 0 }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill fs-sm py-1.5 px-3 {{ request('source') === 'pribadi' ? 'active bg-primary text-white' : 'text-muted' }}" 
+                       href="{{ route('murid.konseling.index', ['source' => 'pribadi']) }}">
+                        <i class="bi bi-person-fill me-1"></i> Konseling Pribadi (Mandiri)
+                        <span class="badge bg-light text-dark rounded-pill ms-1">{{ $counts['pribadi'] ?? 0 }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill fs-sm py-1.5 px-3 {{ request('source') === 'ims' ? 'active bg-purple text-white' : 'text-muted' }}" 
+                       style="{{ request('source') === 'ims' ? 'background-color: #7c3aed !important;' : '' }}"
+                       href="{{ route('murid.konseling.index', ['source' => 'ims']) }}">
+                        <i class="bi bi-clipboard2-check me-1"></i> Tindak Lanjut Masalah IMS
+                        <span class="badge bg-light text-dark rounded-pill ms-1">{{ $counts['ims'] ?? 0 }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    @endif
 
     <!-- Table / Card List of Requests -->
     <div class="card border-0 shadow-sm rounded-3 bg-white overflow-hidden">

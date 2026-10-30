@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class Announcement extends Model
 {
@@ -15,6 +16,7 @@ class Announcement extends Model
         'author_user_id',
         'title',
         'content',
+        'image',
         'target_role',
         'category',
         'is_active',
@@ -72,5 +74,19 @@ class Announcement extends Model
             'kegiatan' => 'Kegiatan Sekolah',
             default => 'Informasi Umum',
         };
+    }
+
+    public function getImageUrlAttribute(): ?string
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        if (str_starts_with($this->image, 'http://') || str_starts_with($this->image, 'https://')) {
+            return $this->image;
+        }
+
+        $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
+        return Storage::disk($disk)->url($this->image);
     }
 }

@@ -46,10 +46,14 @@ class StudentCounselingController extends Controller
     /**
      * Hub Pemilihan Jalur Konseling: Konseling Pribadi vs Konseling Melalui IMS
      */
-    public function ajukan(): View
+    public function ajukan(): View|RedirectResponse
     {
         $student = Auth::user()->student;
         abort_unless($student, 403);
+
+        if (app_setting('ims_enabled', '1') !== '1') {
+            return redirect()->route('murid.konseling.create');
+        }
 
         return view('student.konseling.ajukan', compact('student'));
     }

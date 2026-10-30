@@ -102,6 +102,30 @@
                 </div>
             </div>
 
+            <!-- Pengaturan Modul Fitur Siswa -->
+            <div class="card card-app mb-4">
+                <div class="card-header bg-white py-3 border-bottom">
+                    <h6 class="fw-bold mb-0 text-slate-800">
+                        <i class="bi bi-toggles me-1 text-primary-teal"></i> Modul & Fitur Layanan Siswa
+                    </h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded-3 border bg-light">
+                        <div class="me-3">
+                            <div class="fw-bold text-dark fs-sm d-flex align-items-center gap-2">
+                                <i class="bi bi-clipboard2-check text-emerald fs-5"></i> Fitur Instrumen Masalah Siswa (IMS 180 Butir)
+                            </div>
+                            <div class="text-muted fs-xs mt-1">
+                                Jika diaktifkan, menu IMS dan lembar angket asesmen 180 butir masalah akan muncul di seluruh akun murid. Jika dinonaktifkan, seluruh fitur dan menu IMS otomatis disembunyikan dari murid.
+                            </div>
+                        </div>
+                        <div class="form-check form-switch fs-4 mb-0">
+                            <input class="form-check-input" type="checkbox" role="switch" name="ims_enabled" value="1" id="switchImsEnabled" {{ app_setting('ims_enabled', '1') === '1' ? 'checked' : '' }}>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="d-flex justify-content-end mb-5">
                 <button type="submit" class="btn btn-primary px-4 py-2">
                     <i class="bi bi-save me-1"></i> Simpan Seluruh Pengaturan

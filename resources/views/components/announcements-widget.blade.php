@@ -44,6 +44,21 @@
                             </div>
                         </div>
 
+                        {{-- Tampilan Poster/Gambar Pengumuman jika ada --}}
+                        @if($announcement->image_url)
+                            <div class="my-3 text-center">
+                                <a href="{{ $announcement->image_url }}" target="_blank" class="d-inline-block text-decoration-none">
+                                    <img src="{{ $announcement->image_url }}" 
+                                         alt="{{ $announcement->title }}" 
+                                         class="img-fluid rounded-3 border shadow-xs" 
+                                         style="max-height: 280px; width: auto; object-fit: cover; transition: transform 0.2s;"
+                                         onmouseover="this.style.transform='scale(1.01)'"
+                                         onmouseout="this.style.transform='scale(1)'">
+                                    <div class="text-muted fs-xxs mt-1"><i class="bi bi-zoom-in me-1"></i>Klik untuk melihat gambar penuh</div>
+                                </a>
+                            </div>
+                        @endif
+
                         <div class="text-dark small lh-base" style="font-size: .85rem;">
                             {!! nl2br(e($announcement->content)) !!}
                         </div>

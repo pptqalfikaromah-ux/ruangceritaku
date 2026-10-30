@@ -465,62 +465,9 @@
                         <i class="bi bi-speedometer2 me-1"></i> Buka Dashboard
                     </a>
                 @else
-                    <div class="dropdown">
-                        <button class="btn btn-mint rounded-pill px-3.5 py-2 fw-bold shadow-sm dropdown-toggle d-flex align-items-center gap-1.5" type="button" id="dropdownMasuk" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-box-arrow-in-right"></i> Masuk
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-custom shadow-lg border-0 mt-2" aria-labelledby="dropdownMasuk">
-                            <li>
-                                <a class="nav-dropdown-item text-dark" href="{{ route('login.murid') }}">
-                                    <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 36px; height: 36px; background: rgba(13, 148, 136, 0.12); color: var(--primary);">
-                                        <i class="bi bi-person-heart fs-6"></i>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <div class="fw-bold text-dark" style="font-size: 0.88rem; line-height: 1.2;">Masuk sebagai Murid</div>
-                                        <div class="text-muted" style="font-size: 0.72rem;">Menggunakan NISN</div>
-                                    </div>
-                                    <i class="bi bi-chevron-right text-muted opacity-50 small"></i>
-                                </a>
-                            </li>
-                            <li class="mt-1">
-                                <a class="nav-dropdown-item text-dark" href="{{ route('login.admin') }}">
-                                    <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 36px; height: 36px; background: rgba(37, 99, 235, 0.12); color: #2563eb;">
-                                        <i class="bi bi-shield-check fs-6"></i>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <div class="fw-bold text-dark" style="font-size: 0.88rem; line-height: 1.2;">Masuk sebagai Admin / BK</div>
-                                        <div class="text-muted" style="font-size: 0.72rem;">Admin & Konselor Sekolah</div>
-                                    </div>
-                                    <i class="bi bi-chevron-right text-muted opacity-50 small"></i>
-                                </a>
-                            </li>
-                            <li class="mt-1">
-                                <a class="nav-dropdown-item text-dark" href="{{ route('login.wali-kelas') }}">
-                                    <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 36px; height: 36px; background: rgba(245, 158, 11, 0.12); color: #d97706;">
-                                        <i class="bi bi-mortarboard-fill fs-6"></i>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <div class="fw-bold text-dark" style="font-size: 0.88rem; line-height: 1.2;">Masuk sebagai Wali Kelas</div>
-                                        <div class="text-muted" style="font-size: 0.72rem;">Pendidik & Pembina Rombel</div>
-                                    </div>
-                                    <i class="bi bi-chevron-right text-muted opacity-50 small"></i>
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider my-2 border-secondary-subtle"></li>
-                            <li>
-                                <a class="nav-dropdown-item item-register" href="{{ route('register.murid') }}" style="background: rgba(13, 148, 136, 0.08);">
-                                    <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 36px; height: 36px; background: var(--primary); color: #ffffff;">
-                                        <i class="bi bi-person-plus-fill fs-6"></i>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <div class="fw-bold" style="font-size: 0.88rem; line-height: 1.2; color: var(--primary-dark);">Daftar Akun</div>
-                                        <div class="text-muted" style="font-size: 0.72rem;">Registrasi Murid Baru</div>
-                                    </div>
-                                    <i class="bi bi-arrow-right small fw-bold" style="color: var(--primary);"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <a href="{{ route('login') }}" class="btn btn-mint rounded-pill px-4 py-2 fw-bold shadow-sm d-flex align-items-center gap-1.5">
+                        <i class="bi bi-box-arrow-in-right"></i> Masuk
+                    </a>
                 @endauth
             </div>
         </div>

@@ -41,31 +41,39 @@
 <x-pamphlet-carousel />
 <x-announcements-widget />
 
+@php
+    $imsEnabled = app_setting('ims_enabled', '1') === '1';
+    $statColClass = $imsEnabled ? 'col-sm-6 col-lg-3' : 'col-sm-6 col-lg-4';
+    $agendaColClass = $imsEnabled ? 'col-lg-6' : 'col-12';
+@endphp
+
 {{-- Stats Row --}}
 <div class="row g-3 mb-4">
-    {{-- IMS Status --}}
-    <div class="col-sm-6 col-lg-3">
-        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);">
-            <div style="width:44px;height:44px;border-radius:10px;background:#f0fdfa;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i class="bi bi-clipboard2-check" style="font-size:1.4rem;color:#0d9488;"></i>
-            </div>
-            <div>
-                <div style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;">Status IMS</div>
-                @if($currentAssessment && $currentAssessment->isSubmitted())
-                    <div style="font-size:1rem;font-weight:800;color:#0d9488;">Terkirim</div>
-                    <div style="font-size:.7rem;color:#94a3b8;">{{ $currentAssessment->submitted_at?->format('d M Y') }}</div>
-                @elseif($currentAssessment && $currentAssessment->isDraft())
-                    <div style="font-size:1rem;font-weight:800;color:#f59e0b;">Draf</div>
-                    <div style="font-size:.7rem;color:#94a3b8;">Belum dikirim</div>
-                @else
-                    <div style="font-size:1rem;font-weight:800;color:#94a3b8;">Belum Isi</div>
-                    <div style="font-size:.7rem;color:#94a3b8;">Silakan isi IMS</div>
-                @endif
+    @if($imsEnabled)
+        {{-- IMS Status --}}
+        <div class="{{ $statColClass }}">
+            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);">
+                <div style="width:44px;height:44px;border-radius:10px;background:#f0fdfa;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="bi bi-clipboard2-check" style="font-size:1.4rem;color:#0d9488;"></i>
+                </div>
+                <div>
+                    <div style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;">Status IMS</div>
+                    @if($currentAssessment && $currentAssessment->isSubmitted())
+                        <div style="font-size:1rem;font-weight:800;color:#0d9488;">Terkirim</div>
+                        <div style="font-size:.7rem;color:#94a3b8;">{{ $currentAssessment->submitted_at?->format('d M Y') }}</div>
+                    @elseif($currentAssessment && $currentAssessment->isDraft())
+                        <div style="font-size:1rem;font-weight:800;color:#f59e0b;">Draf</div>
+                        <div style="font-size:.7rem;color:#94a3b8;">Belum dikirim</div>
+                    @else
+                        <div style="font-size:1rem;font-weight:800;color:#94a3b8;">Belum Isi</div>
+                        <div style="font-size:.7rem;color:#94a3b8;">Silakan isi IMS</div>
+                    @endif
+                </div>
             </div>
         </div>
-    </div>
+    @endif
     {{-- Konseling --}}
-    <div class="col-sm-6 col-lg-3">
+    <div class="{{ $statColClass }}">
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);">
             <div style="width:44px;height:44px;border-radius:10px;background:#fff1f2;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                 <i class="bi bi-chat-heart" style="font-size:1.4rem;color:#e11d48;"></i>
@@ -83,7 +91,7 @@
         </div>
     </div>
     {{-- Riwayat Konseling --}}
-    <div class="col-sm-6 col-lg-3">
+    <div class="{{ $statColClass }}">
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);">
             <div style="width:44px;height:44px;border-radius:10px;background:#fef3c7;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                 <i class="bi bi-calendar-check" style="font-size:1.4rem;color:#d97706;"></i>
@@ -96,7 +104,7 @@
         </div>
     </div>
     {{-- Pengaduan --}}
-    <div class="col-sm-6 col-lg-3">
+    <div class="{{ $statColClass }}">
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);">
             <div style="width:44px;height:44px;border-radius:10px;background:#fef2f2;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                 <i class="bi bi-shield-check" style="font-size:1.4rem;color:#ef4444;"></i>
@@ -112,55 +120,57 @@
 
 {{-- IMS + Agenda Konseling Row --}}
 <div class="row g-4 mb-4">
-    {{-- IMS Status Card --}}
-    <div class="col-lg-6">
-        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;height:100%;">
-            <div style="padding:12px 16px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-weight:700;font-size:.88rem;color:#1e293b;"><i class="bi bi-clipboard2-check text-success me-2"></i>Instrumen Masalah Siswa (IMS)</span>
-            </div>
-            <div style="padding:16px;">
-                @if($currentAssessment && $currentAssessment->isSubmitted())
-                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-                        <span style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;">
-                            <i class="bi bi-check-circle-fill me-1"></i>Terkirim ke Guru BK
-                        </span>
-                    </div>
-                    <div style="font-weight:700;margin-bottom:4px;">IMS Telah Dikirimkan</div>
-                    <div style="font-size:.8rem;color:#64748b;margin-bottom:14px;">
-                        Terkirim {{ $currentAssessment->submitted_at?->translatedFormat('d F Y, H:i') }}. Guru BK sudah menerima lembar masalahmu.
-                    </div>
-                    <a href="{{ route('murid.ims.index') }}" style="display:inline-flex;align-items:center;gap:6px;background:#0d9488;color:#fff;border-radius:6px;padding:7px 16px;font-weight:700;font-size:.8rem;text-decoration:none;">
-                        <i class="bi bi-eye"></i> Lihat Lembar IMS
-                    </a>
-                @elseif($currentAssessment && $currentAssessment->isDraft())
-                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-                        <span style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;">
-                            <i class="bi bi-hourglass-split me-1"></i>Tersimpan Sebagai Draf
-                        </span>
-                    </div>
-                    <div style="font-weight:700;margin-bottom:4px;">Pengisian Belum Selesai</div>
-                    <div style="font-size:.8rem;color:#64748b;margin-bottom:14px;">Kamu sudah menyimpan sebagian jawaban. Lanjutkan dan kirim untuk diproses Guru BK.</div>
-                    <a href="{{ route('murid.ims.index') }}" style="display:inline-flex;align-items:center;gap:6px;background:#f59e0b;color:#1e293b;border-radius:6px;padding:7px 16px;font-weight:700;font-size:.8rem;text-decoration:none;">
-                        <i class="bi bi-pencil-square"></i> Lanjutkan Pengisian
-                    </a>
-                @else
-                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-                        <span style="background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;">
-                            <i class="bi bi-dash-circle me-1"></i>Belum Mengisi
-                        </span>
-                    </div>
-                    <div style="font-weight:700;margin-bottom:4px;">Daftar Masalah Siswa</div>
-                    <div style="font-size:.8rem;color:#64748b;margin-bottom:14px;">Pilih layanan dan bidang masalah yang sedang kamu alami. Jawaban bersifat rahasia.</div>
-                    <a href="{{ route('murid.ims.index') }}" style="display:inline-flex;align-items:center;gap:6px;background:#0d9488;color:#fff;border-radius:6px;padding:7px 16px;font-weight:700;font-size:.8rem;text-decoration:none;">
-                        <i class="bi bi-clipboard2-check"></i> Mulai Isi IMS
-                    </a>
-                @endif
+    @if($imsEnabled)
+        {{-- IMS Status Card --}}
+        <div class="col-lg-6">
+            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;height:100%;">
+                <div style="padding:12px 16px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-weight:700;font-size:.88rem;color:#1e293b;"><i class="bi bi-clipboard2-check text-success me-2"></i>Instrumen Masalah Siswa (IMS)</span>
+                </div>
+                <div style="padding:16px;">
+                    @if($currentAssessment && $currentAssessment->isSubmitted())
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                            <span style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;">
+                                <i class="bi bi-check-circle-fill me-1"></i>Terkirim ke Guru BK
+                            </span>
+                        </div>
+                        <div style="font-weight:700;margin-bottom:4px;">IMS Telah Dikirimkan</div>
+                        <div style="font-size:.8rem;color:#64748b;margin-bottom:14px;">
+                            Terkirim {{ $currentAssessment->submitted_at?->translatedFormat('d F Y, H:i') }}. Guru BK sudah menerima lembar masalahmu.
+                        </div>
+                        <a href="{{ route('murid.ims.index') }}" style="display:inline-flex;align-items:center;gap:6px;background:#0d9488;color:#fff;border-radius:6px;padding:7px 16px;font-weight:700;font-size:.8rem;text-decoration:none;">
+                            <i class="bi bi-eye"></i> Lihat Lembar IMS
+                        </a>
+                    @elseif($currentAssessment && $currentAssessment->isDraft())
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                            <span style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;">
+                                <i class="bi bi-hourglass-split me-1"></i>Tersimpan Sebagai Draf
+                            </span>
+                        </div>
+                        <div style="font-weight:700;margin-bottom:4px;">Pengisian Belum Selesai</div>
+                        <div style="font-size:.8rem;color:#64748b;margin-bottom:14px;">Kamu sudah menyimpan sebagian jawaban. Lanjutkan dan kirim untuk diproses Guru BK.</div>
+                        <a href="{{ route('murid.ims.index') }}" style="display:inline-flex;align-items:center;gap:6px;background:#f59e0b;color:#1e293b;border-radius:6px;padding:7px 16px;font-weight:700;font-size:.8rem;text-decoration:none;">
+                            <i class="bi bi-pencil-square"></i> Lanjutkan Pengisian
+                        </a>
+                    @else
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                            <span style="background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;">
+                                <i class="bi bi-dash-circle me-1"></i>Belum Mengisi
+                            </span>
+                        </div>
+                        <div style="font-weight:700;margin-bottom:4px;">Daftar Masalah Siswa</div>
+                        <div style="font-size:.8rem;color:#64748b;margin-bottom:14px;">Pilih layanan dan bidang masalah yang sedang kamu alami. Jawaban bersifat rahasia.</div>
+                        <a href="{{ route('murid.ims.index') }}" style="display:inline-flex;align-items:center;gap:6px;background:#0d9488;color:#fff;border-radius:6px;padding:7px 16px;font-weight:700;font-size:.8rem;text-decoration:none;">
+                            <i class="bi bi-clipboard2-check"></i> Mulai Isi IMS
+                        </a>
+                    @endif
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 
     {{-- Agenda Konseling --}}
-    <div class="col-lg-6">
+    <div class="{{ $agendaColClass }}">
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;height:100%;">
             <div style="padding:12px 16px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
                 <span style="font-weight:700;font-size:.88rem;color:#1e293b;"><i class="bi bi-calendar-heart me-2" style="color:#e11d48;"></i>Agenda Konseling Aktif</span>

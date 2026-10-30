@@ -23,9 +23,7 @@ class LoginController extends Controller
             return redirect()->route('panel.dashboard');
         }
 
-        $selectedRole = $request->query('role', 'murid');
-
-        return view('auth.login', compact('selectedRole'));
+        return view('auth.portal-select');
     }
 
     public function showAdminLoginForm(): View|RedirectResponse
@@ -40,8 +38,7 @@ class LoginController extends Controller
             return redirect()->route('panel.dashboard');
         }
 
-        $selectedRole = 'bk';
-        return view('auth.login', compact('selectedRole'));
+        return view('auth.login-admin');
     }
 
     public function showWaliKelasLoginForm(): View|RedirectResponse
@@ -56,8 +53,7 @@ class LoginController extends Controller
             return redirect()->route('panel.dashboard');
         }
 
-        $selectedRole = 'wali_kelas';
-        return view('auth.login', compact('selectedRole'));
+        return view('auth.login-walikelas');
     }
 
     public function showMuridLoginForm(): View|RedirectResponse
@@ -72,8 +68,7 @@ class LoginController extends Controller
             return redirect()->route('panel.dashboard');
         }
 
-        $selectedRole = 'murid';
-        return view('auth.login', compact('selectedRole'));
+        return view('auth.login-murid');
     }
 
     public function login(LoginRequest $request): RedirectResponse

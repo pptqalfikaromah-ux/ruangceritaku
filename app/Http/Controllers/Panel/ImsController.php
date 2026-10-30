@@ -11,6 +11,7 @@ use App\Models\ImsAssessment;
 use App\Models\ImsStatement;
 use App\Models\Semester;
 use App\Models\ServiceType;
+use App\Models\Setting;
 use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -53,14 +54,38 @@ class ImsController extends Controller
 
         $totalStatements = ImsStatement::count();
         $activeStatements = ImsStatement::where('is_active', true)->count();
+        $isImsGloballyEnabled = app_setting('ims_enabled', '1') === '1';
 
         return view('panel.ims.master', compact(
             'statements',
             'serviceTypes',
             'guidanceFields',
             'totalStatements',
-            'activeStatements'
+            'activeStatements',
+            'isImsGloballyEnabled'
         ));
+    }
+
+    /**
+     * Mengaktifkan atau Menonaktifkan Fitur IMS secara Global untuk Murid
+     */
+    public function toggleStatus(Request $request): RedirectResponse
+    {
+        $currentStatus = app_setting('ims_enabled', '1');
+        $newStatus = ($currentStatus === '1' || $currentStatus === true || $currentStatus === 1) ? '0' : '1';
+
+        Setting::set(
+            'ims_enabled',
+            $newStatus,
+            'features',
+            'Status aktif fitur Instrumen Masalah Siswa (IMS) untuk akun murid'
+        );
+
+        $message = $newStatus === '1'
+            ? 'Fitur Instrumen Masalah Siswa (IMS) BERHASIL DIAKTIFKAN. Menu dan instrumen IMS kini muncul di portal murid.'
+            : 'Fitur Instrumen Masalah Siswa (IMS) BERHASIL DINONAKTIFKAN. Seluruh menu dan instrumen IMS disembunyikan dari portal murid.';
+
+        return back()->with('success', $message);
     }
 
     /**

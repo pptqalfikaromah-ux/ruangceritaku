@@ -21,10 +21,21 @@ use Illuminate\View\View;
 
 class StudentImsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (app_setting('ims_enabled', '1') !== '1') {
+                return redirect()->route('murid.dashboard')
+                    ->with('warning', 'Layanan Instrumen Masalah Siswa (IMS) saat ini sedang dinonaktifkan oleh pihak madrasah.');
+            }
+            return $next($request);
+        });
+    }
+
     /**
      * Halaman 1: Pemilihan Menu Layanan Konseling (9 Layanan)
      */
-    public function index(Request $request): View
+    public function index(Request $request): View|RedirectResponse
     {
         $student = Auth::user()->student;
         abort_unless($student, 403, 'Profil murid tidak ditemukan.');

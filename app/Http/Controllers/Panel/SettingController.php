@@ -52,6 +52,9 @@ class SettingController extends Controller
             }
         }
 
+        // Simpan status IMS (checkbox boolean)
+        Setting::set('ims_enabled', $request->has('ims_enabled') ? '1' : '0', 'features', 'Status pengaktifan fitur IMS untuk murid');
+
         // Upload logo pengganti jika ada
         if ($request->hasFile('app_logo')) {
             $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
