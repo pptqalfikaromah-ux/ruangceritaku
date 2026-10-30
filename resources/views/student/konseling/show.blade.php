@@ -51,11 +51,16 @@
         </div>
     </div>
 
-    <!-- Schedule Card if Available -->
+    <!-- Kartu Tiket Ringkas Jadwal Konseling -->
     @if($konseling->schedule)
-        <div class="card border-0 shadow-sm rounded-3 bg-white border-top border-4 border-emerald overflow-hidden">
-            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
-                <span class="fw-bold text-dark fs-sm"><i class="bi bi-calendar-check-fill text-emerald me-1"></i> Jadwal Konseling yang Ditetapkan</span>
+        <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden" style="border: 1.5px solid #0d9488 !important;">
+            <div class="py-2.5 px-3.5 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2" style="background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%);">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-emerald text-white rounded-pill px-2.5 py-1 fs-xs fw-bold font-monospace">
+                        <i class="bi bi-ticket-perforated-fill me-1"></i> TIKET #{{ $konseling->ticket_number }}
+                    </span>
+                    <span class="fw-bold text-emerald fs-xs">Jadwal Sesi Konseling Siswa</span>
+                </div>
                 <div class="d-flex align-items-center gap-2">
                     @if($konseling->isOnlineMeet())
                         <span class="badge bg-info-subtle text-info px-2.5 py-1 rounded-pill fs-xs fw-bold">
@@ -68,25 +73,25 @@
                     @endif
 
                     @if(in_array($konseling->status, ['scheduled', 'approved', 'completed']))
-                        <a href="{{ route('murid.konseling.printCard', $konseling) }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill py-1 px-2.5 fs-xs">
-                            <i class="bi bi-printer me-1"></i> Cetak Kartu
+                        <a href="{{ route('murid.konseling.printCard', $konseling) }}" target="_blank" class="btn btn-sm btn-outline-emerald rounded-pill py-1 px-3 fs-xs fw-semibold">
+                            <i class="bi bi-printer me-1"></i> Cetak Kartu Kecil
                         </a>
                     @endif
                 </div>
             </div>
-            <div class="card-body p-4">
-                <div class="row g-4">
-                    <div class="col-md-3">
-                        <div class="text-muted fs-xs">Hari & Tanggal</div>
-                        <div class="fw-bold text-dark fs-6">{{ $konseling->schedule->scheduled_date->translatedFormat('l, d F Y') }}</div>
+            <div class="card-body p-3.5">
+                <div class="row g-3">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="text-muted fs-xxs text-uppercase fw-semibold">Hari & Tanggal</div>
+                        <div class="fw-bold text-dark fs-sm mt-0.5">{{ $konseling->schedule->scheduled_date->translatedFormat('l, d F Y') }}</div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="text-muted fs-xs">Waktu Pelaksanaan</div>
-                        <div class="fw-bold text-dark fs-6">{{ $konseling->schedule->start_time }} - {{ $konseling->schedule->end_time }} WIB</div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="text-muted fs-xxs text-uppercase fw-semibold">Waktu Sesi</div>
+                        <div class="fw-bold text-dark fs-sm mt-0.5">{{ $konseling->schedule->start_time }} - {{ $konseling->schedule->end_time }} WIB</div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="text-muted fs-xs">Tempat / Media</div>
-                        <div class="fw-bold text-dark fs-6">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="text-muted fs-xxs text-uppercase fw-semibold">Tempat / Ruangan</div>
+                        <div class="fw-bold text-dark fs-sm mt-0.5">
                             @if($konseling->isOnlineMeet())
                                 Google Meet (Online)
                             @else
@@ -94,29 +99,29 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="text-muted fs-xs">Guru BK Pendamping</div>
-                        <div class="fw-bold text-dark fs-6">{{ $konseling->schedule->counselor?->user?->name ?? $konseling->schedule->counselor?->name ?? 'Guru BK' }}</div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="text-muted fs-xxs text-uppercase fw-semibold">Guru BK Pendamping</div>
+                        <div class="fw-bold text-dark fs-sm mt-0.5">{{ $konseling->schedule->counselor?->user?->name ?? $konseling->schedule->counselor?->name ?? 'Guru BK' }}</div>
                     </div>
                 </div>
 
                 @if($konseling->isOnlineMeet() && $konseling->schedule->meeting_link)
-                    <div class="mt-3 p-3 rounded-3 border d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3" style="background: #f0f7ff; border-color: #bfdbfe !important;">
+                    <div class="mt-3 p-2.5 rounded-3 border d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2" style="background: #f0f7ff; border-color: #bfdbfe !important;">
                         <div>
-                            <div class="fw-bold text-primary fs-xs mb-1">
-                                <i class="bi bi-camera-video-fill me-1"></i> Tautan Sesi Google Meet Telah Tersedia:
+                            <div class="fw-bold text-primary fs-xs mb-0.5">
+                                <i class="bi bi-camera-video-fill me-1"></i> Tautan Sesi Google Meet Tersedia:
                             </div>
-                            <div class="text-muted fs-xxs">Klik tombol gabung saat waktu sesi konseling tiba.</div>
+                            <div class="text-muted fs-xxs">Silakan masuk saat waktu sesi tiba.</div>
                         </div>
-                        <a href="{{ $konseling->schedule->meeting_link }}" target="_blank" class="btn btn-primary btn-sm rounded-pill px-4 py-2 fw-bold text-nowrap shadow-xs">
-                            <i class="bi bi-box-arrow-up-right me-1"></i> Buka Google Meet
+                        <a href="{{ $konseling->schedule->meeting_link }}" target="_blank" class="btn btn-primary btn-sm rounded-pill px-3 py-1 fs-xs fw-bold text-nowrap shadow-xs">
+                            <i class="bi bi-box-arrow-up-right me-1"></i> Buka Meet
                         </a>
                     </div>
                 @endif
 
                 @if($konseling->schedule->notes)
-                    <div class="mt-3 p-3 bg-light rounded-3 border fs-xs">
-                        <span class="fw-bold text-dark d-block mb-1"><i class="bi bi-chat-text text-emerald me-1"></i> Pesan / Petunjuk dari Guru BK:</span>
+                    <div class="mt-2.5 p-2.5 bg-light rounded-3 border fs-xs">
+                        <span class="fw-bold text-dark d-block mb-0.5"><i class="bi bi-chat-text text-emerald me-1"></i> Pesan Guru BK:</span>
                         <div class="text-dark">{{ $konseling->schedule->notes }}</div>
                     </div>
                 @endif

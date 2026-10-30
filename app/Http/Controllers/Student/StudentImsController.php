@@ -371,127 +371,26 @@ class StudentImsController extends Controller
             'submitted_at' => now(),
         ]);
 
-        return redirect()->route('murid.ims.result')
-            ->with('success', 'Instrumen Masalah Siswa (IMS) Anda berhasil diselesaikan dan dikirimkan. Berikut adalah Lembar Hasil Akhir Asesmen Anda.');
+        return redirect()->route('murid.ims.index')
+            ->with('success', 'Instrumen Masalah Siswa (IMS) Anda berhasil diselesaikan dan dikirimkan ke Guru BK / Admin. Data asesmen Anda telah tersimpan dengan aman.');
     }
 
     /**
-     * Halaman Hasil Akhir Asesmen IMS Murid (Standar Format AUM)
+     * Halaman Hasil Akhir Asesmen IMS Murid (Dibatasi Khusus Admin / Guru BK)
      */
     public function result(): View|RedirectResponse
     {
-        $student = Auth::user()->student;
-        abort_unless($student, 403, 'Profil murid tidak ditemukan.');
-
-        $activeSemester = active_semester();
-        if (!$activeSemester) {
-            return view('student.ims.no-semester');
-        }
-
-        $assessment = ImsAssessment::where('student_id', $student->id)
-            ->where('semester_id', $activeSemester->id)
-            ->first();
-
-        if (!$assessment) {
-            return redirect()->route('murid.ims.index')->with('info', 'Anda belum memulai pengisian asesmen IMS.');
-        }
-
-        $assessment->load([
-            'student.classrooms',
-            'academicYear',
-            'semester',
-            'answers.statement.serviceType',
-            'answers.statement.guidanceField',
-        ]);
-
-        $services = ServiceType::layanan()->orderBy('id')->get();
-        $servicesData = [];
-        $totalSelectedAll = 0;
-        $totalStatementsAll = 0;
-        $heavyStatementsAll = [];
-
-        foreach ($services as $service) {
-            $serviceStatementsCount = ImsStatement::where('service_type_id', $service->id)
-                ->whereNull('deleted_at')
-                ->where('is_active', true)
-                ->count();
-
-            // Selected answers in this service
-            $selectedAnswers = $assessment->answers->filter(function ($a) use ($service) {
-                return $a->statement?->service_type_id === $service->id && $a->is_selected;
-            })->sortBy(function ($a) {
-                return $a->statement?->statement_number;
-            });
-
-            // Heavy answers in this service
-            $heavyAnswers = $selectedAnswers->filter(function ($a) {
-                return (bool) $a->is_heavy;
-            });
-
-            $selectedNumbers = $selectedAnswers->pluck('statement.statement_number')->map(function ($num) {
-                return sprintf('%03d', $num);
-            })->values()->all();
-
-            $heavyNumbers = $heavyAnswers->pluck('statement.statement_number')->map(function ($num) {
-                return sprintf('%03d', $num);
-            })->values()->all();
-
-            $count = count($selectedNumbers);
-            $percentage = $serviceStatementsCount > 0 ? round(($count / $serviceStatementsCount) * 100, 2) : 0;
-
-            $servicesData[] = [
-                'service' => $service,
-                'field' => $service, // alias for blade
-                'total_statements' => $serviceStatementsCount,
-                'selected_numbers' => $selectedNumbers,
-                'selected_answers' => $selectedAnswers,
-                'count' => $count,
-                'percentage' => $percentage,
-                'heavy_numbers' => $heavyNumbers,
-                'heavy_answers' => $heavyAnswers,
-            ];
-
-            $totalSelectedAll += $count;
-            $totalStatementsAll += $serviceStatementsCount;
-            foreach ($heavyAnswers as $ha) {
-                $heavyStatementsAll[] = $ha;
-            }
-        }
-
-        $fieldsData = $servicesData;
-        $overallPercentage = $totalStatementsAll > 0 ? round(($totalSelectedAll / $totalStatementsAll) * 100, 2) : 0;
-
-        return view('student.ims.result', compact(
-            'student',
-            'assessment',
-            'servicesData',
-            'fieldsData',
-            'totalSelectedAll',
-            'totalStatementsAll',
-            'overallPercentage',
-            'heavyStatementsAll'
-        ));
+        return redirect()->route('murid.ims.index')
+            ->with('info', 'Hasil analisis dan rekapitulasi asesmen IMS bersifat konfidensial dan hanya dapat diakses serta dicetak oleh Admin / Guru BK.');
     }
 
     /**
-     * Cetak Lembar Hasil AUM / IMS Murid
+     * Cetak Lembar Hasil AUM / IMS (Dibatasi Khusus Admin / Guru BK)
      */
     public function printResult(): View|RedirectResponse
     {
-        $student = Auth::user()->student;
-        abort_unless($student, 403);
-
-        $activeSemester = active_semester();
-        $assessment = ImsAssessment::where('student_id', $student->id)
-            ->where('semester_id', $activeSemester?->id)
-            ->first();
-
-        if (!$assessment) {
-            return redirect()->route('murid.ims.index');
-        }
-
-        $controller = app(\App\Http\Controllers\Panel\ImsController::class);
-        return $controller->printIndividual($assessment);
+        return redirect()->route('murid.ims.index')
+            ->with('info', 'Pencetakan hasil pengolahan asesmen IMS resmi hanya dapat dilakukan oleh Admin / Guru BK.');
     }
     public function scheduleCounselingForm(): View|RedirectResponse
     {

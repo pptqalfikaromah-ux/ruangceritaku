@@ -57,11 +57,6 @@
                     </p>
                 </div>
             </div>
-            <div>
-                <a href="{{ route('murid.ims.result') }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3.5 py-2 fw-semibold">
-                    <i class="bi bi-file-earmark-bar-graph me-1"></i> Lembar Hasil Akhir
-                </a>
-            </div>
         </div>
     </div>
 

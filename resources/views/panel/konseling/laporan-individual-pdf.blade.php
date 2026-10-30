@@ -108,17 +108,18 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin: 2px 0;
+            margin: 0 0 4px 0;
         }
-        .kop-contact {
-            font-size: 9pt;
-            margin: 1px 0;
+        .kop-address {
+            font-size: 10pt;
+            margin: 0;
+            color: #222;
         }
         .kop-divider {
-            border-top: 3px solid #000;
+            border-top: 2.5px solid #000;
             border-bottom: 1px solid #000;
-            height: 3px;
-            margin-top: 6px;
+            height: 2px;
+            margin-top: 8px;
             margin-bottom: 18px;
         }
 
@@ -218,24 +219,26 @@
 
     <!-- Halaman Dokumen A4 -->
     <div class="page">
-        <!-- KOP SURAT FORMAL -->
+        <!-- KOP SURAT CUKUP NAMA SEKOLAH DAN ALAMAT -->
         <table class="kop-table">
             <tr>
-                <td style="width: 85px; text-align: left;">
+                @if(app_logo())
+                <td style="width: 75px; text-align: left;">
                     <img src="{{ app_logo() }}" alt="Logo" class="kop-logo">
                 </td>
+                @endif
                 <td class="kop-text">
-                    <div class="kop-line1">{{ app_setting('school_gov_header', 'PEMERINTAH PROVINSI JAWA TIMUR') }}</div>
-                    <div class="kop-line2">{{ app_setting('school_dept_header', 'DINAS PENDIDIKAN') }}</div>
                     <div class="kop-school">{{ app_setting('school_name', 'SMA NEGERI 2 PAMEKASAN') }}</div>
-                    <div class="kop-contact">
-                        Website : {{ app_setting('school_website', 'www.sekolah.sch.id') }} &nbsp; 
-                        Email : {{ app_setting('school_email', 'bk@sekolah.sch.id') }}
-                    </div>
-                    <div class="kop-contact">
-                        Alamat : {{ app_setting('school_address', 'Jl. Pendidikan No. 1') }} Telp. {{ app_setting('school_phone', '(0324) 322133') }}
+                    <div class="kop-address">
+                        Alamat : {{ app_setting('school_address', 'Jl. Jokotole 234 Pamekasan') }}
+                        @if(app_setting('school_phone'))
+                            &nbsp;&bull;&nbsp; Telp. {{ app_setting('school_phone') }}
+                        @endif
                     </div>
                 </td>
+                @if(app_logo())
+                <td style="width: 75px;"></td>
+                @endif
             </tr>
         </table>
         <div class="kop-divider"></div>
@@ -314,31 +317,12 @@
                 </tr>
                 <tr>
                     <td class="col-num">9.</td>
-                    <td class="col-label">Hasil dan Tindak Lanjut</td>
+                    <td class="col-label">Hasil dan Evaluasi Konseling</td>
                     <td class="col-content">
-                        <div style="margin-bottom: 8px;">
-                            @if($service?->activity_description)
-                                - {{ $service->activity_description }}
-                            @elseif($konseling->resolution_notes)
-                                - {{ $konseling->resolution_notes }}
-                            @else
-                                - Konseli menyadari permasalahan yang dialami dan telah menyepakati langkah-langkah solusi perbaikan diri bersama Guru Bimbingan Konseling.
-                            @endif
-                            @if($service?->evaluation_result)
-                                <div style="margin-top: 4px;">- {{ $service->evaluation_result }}</div>
-                            @endif
-                        </div>
-
-                        <div style="font-weight: bold; margin-top: 10px; margin-bottom: 4px;">Tindak lanjut :</div>
-                        <div>
-                            @if($service?->follow_up_plan)
-                                {{ $service->follow_up_plan }}
-                            @else
-                                - Pemantauan lebih lanjut dari Wali Kelas dan Guru BK<br>
-                                - Koordinasi berkala mengenai kedisiplinan dan perkembangan prestasi konseli<br>
-                                - Komunikasi dengan orang tua/wali apabila diperlukan pembinaan lanjutan di rumah.
-                            @endif
-                        </div>
+                        @php
+                            $evalText = $service?->evaluation_result ?? ($konseling->resolution_notes ?? 'Konseli menyadari permasalahan yang dialami, menunjukkan keterbukaan dalam sesi konseling dan menyepakati komitmen langkah perbaikan diri bersama Guru Bimbingan Konseling.');
+                        @endphp
+                        <div style="line-height: 1.5; white-space: pre-line;">- {{ $evalText }}</div>
                     </td>
                 </tr>
             </tbody>
@@ -361,8 +345,8 @@
                 </td>
                 <td>
                     Guru Bimbingan Konseling<br><br><br><br><br>
-                    <strong><u>{{ $counselor->name ?? auth()->user()->name }}</u></strong><br>
-                    NIP. {{ $counselor->nip ?? ($counselor->nuptk ?? '-') }}
+                    <strong><u>{{ ($counselor ?? null)?->user?->name ?? (($counselor ?? null)?->name ?? (auth()->user()?->name ?? 'Guru Bimbingan Konseling')) }}</u></strong><br>
+                    NIP. {{ ($counselor ?? null)?->nip ?? (($counselor ?? null)?->nuptk ?? '-') }}
                 </td>
             </tr>
         </table>

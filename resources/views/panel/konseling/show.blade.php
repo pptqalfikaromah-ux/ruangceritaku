@@ -232,7 +232,7 @@
                             @endif
                             @if($konseling->resolution_notes)
                                 <div class="bg-white p-3 rounded-3 border text-dark fs-sm mt-2">
-                                    <span class="fw-bold d-block text-muted fs-xs mb-1">Catatan Akhir Penanganan:</span>
+                                    <span class="fw-bold d-block text-muted fs-xs mb-1">Hasil & Evaluasi Konseling:</span>
                                     {{ $konseling->resolution_notes }}
                                 </div>
                             @endif
@@ -662,25 +662,15 @@
                     <div class="alert alert-info py-2.5 px-3 fs-xs mb-3 rounded-3">
                         <i class="bi bi-info-circle me-1"></i> Menyimpan form ini akan mengubah status permohonan menjadi <strong>Sudah Tertangani (Selesai)</strong> dan mencatat realisasi layanan BK ke laporan.
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label fs-xs text-muted fw-bold">Durasi Pelaksanaan (Menit)</label>
-                        <input type="number" name="duration_minutes" value="45" class="form-control rounded-pill px-3" min="5" max="480" required>
+                    <div class="row g-3 mb-3">
+                        <div class="col-sm-6">
+                            <label class="form-label fs-xs text-muted fw-bold">Durasi Pelaksanaan (Menit)</label>
+                            <input type="number" name="duration_minutes" value="45" class="form-control rounded-pill px-3" min="5" max="480" required>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fs-xs text-muted fw-bold">Deskripsi Aktivitas Konseling</label>
-                        <textarea name="activity_description" class="form-control rounded-3" rows="3" placeholder="Uraikan jalannya proses konseling dan pokok bahasan..." required>{{ $konseling->purpose }}</textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fs-xs text-muted fw-bold">Hasil & Evaluasi Konseling</label>
-                        <textarea name="evaluation_result" class="form-control rounded-3" rows="2" placeholder="Pemahaman baru, keterbukaan konseli, komitmen perbaikan..." required>Sesi konseling telah selesai dilaksanakan dengan baik.</textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fs-xs text-muted fw-bold">Catatan Akhir Penanganan / Rekomendasi</label>
-                        <textarea name="resolution_notes" class="form-control rounded-3" rows="2" placeholder="Catatan akhir penanganan untuk arsip madrasah..."></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fs-xs text-muted fw-bold">Rencana Tindak Lanjut (Opsional)</label>
-                        <textarea name="follow_up_plan" class="form-control rounded-3" rows="2" placeholder="Sesi lanjutan, observasi berkala, atau kolaborasi wali kelas..."></textarea>
+                        <label class="form-label fs-xs text-muted fw-bold">Hasil & Evaluasi Konseling <span class="text-danger">*</span></label>
+                        <textarea name="evaluation_result" class="form-control rounded-3" rows="3" placeholder="Tuliskan pemahaman baru, keterbukaan konseli, dan hasil evaluasi sesi konseling..." required>Konseli menyadari permasalahan yang dialami dan telah menyepakati komitmen langkah perbaikan diri bersama Guru Bimbingan Konseling.</textarea>
                     </div>
                 </div>
                 <div class="modal-footer bg-light py-2.5 px-4">

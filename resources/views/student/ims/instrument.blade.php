@@ -217,11 +217,8 @@
                 <h5 class="fw-bold text-dark">Asesmen IMS Kamu Sudah Terkirim</h5>
                 <p class="text-muted fs-xs mb-3">Seluruh butir masalah telah disimpan dalam berkas pengolahan asesmen AUM.</p>
                 <div class="d-flex justify-content-center gap-2">
-                    <a href="{{ route('murid.ims.index') }}" class="btn btn-outline-secondary rounded-pill px-4 py-2 fs-xs fw-semibold">
-                        <i class="bi bi-grid me-1"></i> Menu Layanan
-                    </a>
-                    <a href="{{ route('murid.ims.result') }}" class="btn btn-primary rounded-pill px-4 py-2 fs-xs fw-bold">
-                        <i class="bi bi-file-earmark-bar-graph me-1"></i> Lihat Lembar Hasil Akhir AUM &rarr;
+                    <a href="{{ route('murid.ims.index') }}" class="btn btn-emerald rounded-pill px-4 py-2 fs-xs fw-bold text-white shadow-xs">
+                        <i class="bi bi-arrow-left me-1"></i> Kembali ke Menu Layanan
                     </a>
                 </div>
             </div>

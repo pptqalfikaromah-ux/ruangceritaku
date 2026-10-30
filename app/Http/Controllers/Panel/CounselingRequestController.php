@@ -244,19 +244,19 @@ class CounselingRequestController extends Controller
     public function complete(Request $request, CounselingRequest $konseling): RedirectResponse
     {
         $request->validate([
-            'activity_description' => ['required', 'string'],
             'evaluation_result' => ['required', 'string'],
-            'follow_up_plan' => ['nullable', 'string'],
-            'duration_minutes' => ['required', 'integer', 'min:5', 'max:480'],
-            'resolution_notes' => ['nullable', 'string'],
+            'duration_minutes' => ['nullable', 'integer', 'min:5', 'max:480'],
+            'activity_description' => ['nullable', 'string'],
         ]);
 
         DB::transaction(function () use ($request, $konseling) {
             $oldStatus = $konseling->status;
+            $evaluation = $request->input('evaluation_result');
+            $activityDesc = $request->input('activity_description') ?: ('Pelaksanaan sesi konseling mengenai ' . $konseling->purpose);
 
             $konseling->update([
                 'status' => 'completed',
-                'resolution_notes' => $request->input('resolution_notes') ?? $request->input('evaluation_result'),
+                'resolution_notes' => $evaluation,
                 'completed_at' => now(),
             ]);
 
@@ -280,11 +280,11 @@ class CounselingRequestController extends Controller
                 'target_student_id' => $konseling->student_id,
                 'participant_count' => 1,
                 'execution_date' => $konseling->schedule?->scheduled_date ?? now()->toDateString(),
-                'duration_minutes' => $request->input('duration_minutes'),
+                'duration_minutes' => $request->input('duration_minutes', 45),
                 'location' => $konseling->schedule?->location ?? 'Ruang BK',
-                'activity_description' => $request->input('activity_description'),
-                'evaluation_result' => $request->input('evaluation_result'),
-                'follow_up_plan' => $request->input('follow_up_plan'),
+                'activity_description' => $activityDesc,
+                'evaluation_result' => $evaluation,
+                'follow_up_plan' => null,
             ]);
 
             CounselingRequestHistory::create([
