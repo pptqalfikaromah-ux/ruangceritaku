@@ -6,97 +6,218 @@
 @endsection
 
 @section('content')
-<div class="card card-app">
-    <div class="card-header bg-white py-3 border-bottom d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
-        <div>
-            <h5 class="fw-bold mb-0 text-dark">
-                <i class="bi bi-megaphone-fill text-danger me-1.5"></i> Laporan & Aduan Kasus dari Wali Kelas
-            </h5>
-            <div class="text-muted fs-xs">Daftar kasus insidental murid yang dilaporkan oleh Wali Kelas agar segera ditindaklanjuti oleh Tim Guru BK.</div>
+<div class="space-y-4">
+    <!-- Header Card -->
+    <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden mb-3">
+        <div class="card-body p-3 p-md-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <div class="d-flex align-items-start gap-3">
+                    <div class="p-2.5 rounded-3 bg-danger-subtle text-danger d-inline-flex flex-shrink-0 mt-0.5">
+                        <i class="bi bi-megaphone-fill fs-3"></i>
+                    </div>
+                    <div>
+                        <div class="d-flex flex-wrap align-items-center gap-1.5 mb-1">
+                            <span class="badge bg-danger-subtle text-danger px-2.5 py-1 fs-xxs fw-semibold rounded-pill">
+                                Laporan Wali Kelas
+                            </span>
+                            <span class="badge bg-teal-subtle text-mint px-2.5 py-1 fs-xxs fw-semibold rounded-pill">
+                                Kolaborasi Guru BK
+                            </span>
+                        </div>
+                        <h1 class="h5 h4-md fw-extrabold text-dark mb-1">Aduan Kasus dari Wali Kelas</h1>
+                        <p class="text-muted fs-xs mb-0">Daftar kasus insidental murid yang dilaporkan oleh Wali Kelas agar segera ditindaklanjuti oleh Tim Guru BK.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <form method="GET" class="d-flex align-items-center gap-2">
-            <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
-                <option value="">Semua Status</option>
-                <option value="menunggu_tindak_lanjut" {{ request('status') === 'menunggu_tindak_lanjut' ? 'selected' : '' }}>Menunggu Tindak Lanjut</option>
-                <option value="sedang_ditangani" {{ request('status') === 'sedang_ditangani' ? 'selected' : '' }}>Sedang Ditangani</option>
-                <option value="selesai" {{ request('status') === 'selesai' ? 'selected' : '' }}>Selesai</option>
-            </select>
-            <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari kasus, murid, atau wali kelas..." value="{{ request('search') }}">
-            <button type="submit" class="btn btn-primary btn-sm fw-bold px-3">Cari</button>
-        </form>
     </div>
 
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light fs-xs text-muted">
-                    <tr>
-                        <th style="width: 50px;" class="text-center">No</th>
-                        <th>Tanggal</th>
-                        <th>Wali Kelas Pelapor</th>
-                        <th>Murid Terkait</th>
-                        <th>Rombel</th>
-                        <th>Kategori Kasus</th>
-                        <th>Pokok Masalah</th>
-                        <th class="text-center">Status Tindak Lanjut</th>
-                        <th class="text-center" style="width: 100px;">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($complaints as $index => $comp)
-                        <tr>
-                            <td class="text-center fw-bold text-muted">{{ $complaints->firstItem() + $index }}</td>
-                            <td class="small fw-semibold text-muted">{{ $comp->incident_date->format('d M Y') }}</td>
-                            <td>
-                                <div class="fw-bold text-dark">{{ $comp->teacher?->name }}</div>
+    <!-- Filter Bar Card -->
+    <div class="card card-app border-0 shadow-sm rounded-4">
+        <div class="card-body p-3">
+            <form method="GET" class="row g-2 align-items-center">
+                <div class="col-12 col-md-5">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                        <input type="text" name="search" class="form-control border-start-0 fs-xs" placeholder="Cari kasus, murid, atau wali kelas..." value="{{ request('search') }}">
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <select name="status" class="form-select form-select-sm fs-xs" onchange="this.form.submit()">
+                        <option value="">Semua Status</option>
+                        <option value="menunggu_tindak_lanjut" {{ request('status') === 'menunggu_tindak_lanjut' ? 'selected' : '' }}>Menunggu Tindak Lanjut</option>
+                        <option value="sedang_ditangani" {{ request('status') === 'sedang_ditangani' ? 'selected' : '' }}>Sedang Ditangani</option>
+                        <option value="selesai" {{ request('status') === 'selesai' ? 'selected' : '' }}>Selesai</option>
+                    </select>
+                </div>
+                <div class="col-6 col-md-3 d-flex gap-1.5">
+                    <button type="submit" class="btn btn-mint text-white btn-sm w-100 fw-bold rounded-pill shadow-xs fs-xs">
+                        <i class="bi bi-funnel me-1"></i> Filter
+                    </button>
+                    @if(request()->anyFilled(['search', 'status']))
+                        <a href="{{ route('panel.aduan-walikelas.index') }}" class="btn btn-light border btn-sm rounded-circle flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 31px; height: 31px;" title="Reset filter">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                        </a>
+                    @endif
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Info Counter -->
+    <div class="d-flex justify-content-between align-items-center px-1">
+        <span class="fw-extrabold text-dark fs-sm">Daftar Aduan Masuk</span>
+        <span class="badge bg-light text-muted border px-2.5 py-1 rounded-pill fs-xxs">
+            Menampilkan {{ $complaints->firstItem() ?? 0 }}-{{ $complaints->lastItem() ?? 0 }} dari {{ $complaints->total() }} laporan
+        </span>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 1. TAMPILAN MOBILE: CARD LIST (< 768px)    -->
+    <!-- ========================================== -->
+    <div class="d-md-none space-y-3 mb-3">
+        @forelse($complaints as $index => $comp)
+            <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-body p-3">
+                    <div class="d-flex justify-content-between align-items-start gap-2 mb-2 pb-2 border-bottom">
+                        <div>
+                            <span class="text-muted fs-xxs d-block">
+                                <i class="bi bi-calendar-event me-1 text-mint"></i>{{ $comp->incident_date->format('d M Y') }}
+                            </span>
+                            <span class="badge bg-light text-dark border px-2 py-0.5 rounded fs-xxs fw-semibold mt-1">
+                                Kelas {{ $comp->classroom?->name }}
+                            </span>
+                        </div>
+                        <span class="badge rounded-pill {{ $comp->status_badge_class }} px-2.5 py-1 fs-xxs fw-bold text-nowrap">
+                            {{ $comp->status_label }}
+                        </span>
+                    </div>
+
+                    <!-- Pelapor & Murid -->
+                    <div class="row g-2 mb-2.5">
+                        <div class="col-6">
+                            <div class="p-2 rounded-3 bg-light border h-100">
+                                <span class="text-muted fs-xxs d-block mb-0.5">Wali Kelas:</span>
+                                <div class="fw-bold text-dark fs-xs text-truncate">{{ $comp->teacher?->name }}</div>
                                 <div class="text-muted fs-xxs">NIP: {{ $comp->teacher?->nip_nuptk ?? '-' }}</div>
-                            </td>
-                            <td>
-                                <div class="fw-bold text-dark">{{ $comp->student?->name }}</div>
-                                <div class="text-muted fs-xs">NISN: {{ $comp->student?->nisn }}</div>
-                            </td>
-                            <td>
-                                <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1">
-                                    Kelas {{ $comp->classroom?->name }}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1">
-                                    {{ $comp->category_label }}
-                                </span>
-                            </td>
-                            <td>
-                                <div class="fw-bold text-dark small">{{ $comp->title }}</div>
-                                <div class="text-muted fs-xxs">{{ Str::limit($comp->teacher_notes, 45) }}</div>
-                            </td>
-                            <td class="text-center">
-                                <span class="badge rounded-pill {{ $comp->status_badge_class }} px-2.5 py-1">
-                                    {{ $comp->status_label }}
-                                </span>
-                            </td>
-                            <td class="text-center">
-                                <a href="{{ route('panel.aduan-walikelas.show', $comp) }}" class="btn btn-sm btn-primary rounded-pill px-3 py-1 fw-bold">
-                                    <i class="bi bi-reply-fill me-1"></i> Respon
-                                </a>
-                            </td>
-                        </tr>
-                    @empty
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 rounded-3 bg-teal-subtle border border-teal-subtle h-100">
+                                <span class="text-mint fs-xxs d-block mb-0.5 fw-semibold">Murid Terkait:</span>
+                                <div class="fw-bold text-dark fs-xs text-truncate">{{ $comp->student?->name }}</div>
+                                <div class="text-muted fs-xxs">NISN: {{ $comp->student?->nisn }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Masalah -->
+                    <div class="mb-2.5">
+                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-0.5 rounded fs-xxs fw-semibold mb-1 d-inline-block">
+                            {{ $comp->category_label }}
+                        </span>
+                        <div class="fw-bold text-dark fs-sm">{{ $comp->title }}</div>
+                        @if($comp->teacher_notes)
+                            <div class="p-2 rounded-3 bg-light border text-muted fs-xs mt-1.5" style="line-height: 1.5; max-height: 80px; overflow-y: auto;">
+                                <span class="text-muted fs-xxs d-block fw-bold mb-0.5 text-uppercase">Catatan Wali Kelas:</span>
+                                {{ $comp->teacher_notes }}
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Button Aksi Penuh -->
+                    <div class="pt-1">
+                        <a href="{{ route('panel.aduan-walikelas.show', $comp) }}" class="btn btn-mint text-white btn-sm w-100 rounded-pill py-2 fw-bold shadow-xs fs-xs d-flex align-items-center justify-content-center gap-1.5">
+                            <i class="bi bi-reply-fill"></i> Tinjau & Respon Kasus <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="card card-app border-0 shadow-sm rounded-4 text-center py-5 px-3">
+                <i class="bi bi-inbox fs-1 d-block mb-2 text-muted opacity-50"></i>
+                <p class="text-muted fs-xs mb-0">Belum ada laporan kasus murid dari Wali Kelas.</p>
+            </div>
+        @endforelse
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. TAMPILAN DESKTOP: TABEL (>= 768px)      -->
+    <!-- ========================================== -->
+    <div class="d-none d-md-block">
+        <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden mb-3">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light fs-xxs text-uppercase text-muted" style="letter-spacing: 0.04em;">
                         <tr>
-                            <td colspan="9" class="text-center py-5 text-muted">
-                                <i class="bi bi-inbox fs-2 d-block mb-2 text-muted opacity-50"></i>
-                                Belum ada laporan kasus murid dari Wali Kelas.
-                            </td>
+                            <th style="width: 50px;" class="ps-3.5 text-center">No</th>
+                            <th style="width: 110px;">Tanggal</th>
+                            <th>Wali Kelas Pelapor</th>
+                            <th>Murid Terkait</th>
+                            <th style="width: 110px;">Rombel</th>
+                            <th>Kategori Kasus</th>
+                            <th>Pokok Masalah</th>
+                            <th class="text-center" style="width: 150px;">Status</th>
+                            <th class="text-end pe-3.5" style="width: 110px;">Aksi</th>
                         </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="fs-xs">
+                        @forelse($complaints as $index => $comp)
+                            <tr>
+                                <td class="text-center fw-bold text-muted ps-3.5">{{ $complaints->firstItem() + $index }}</td>
+                                <td class="fw-semibold text-muted">{{ $comp->incident_date->format('d M Y') }}</td>
+                                <td>
+                                    <div class="fw-bold text-dark">{{ $comp->teacher?->name }}</div>
+                                    <div class="text-muted fs-xxs">NIP: {{ $comp->teacher?->nip_nuptk ?? '-' }}</div>
+                                </td>
+                                <td>
+                                    <div class="fw-bold text-dark">{{ $comp->student?->name }}</div>
+                                    <div class="text-muted fs-xxs">NISN: <code class="text-mint">{{ $comp->student?->nisn }}</code></div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1">
+                                        Kelas {{ $comp->classroom?->name }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1">
+                                        {{ $comp->category_label }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="fw-bold text-dark small text-truncate" style="max-width: 200px;">{{ $comp->title }}</div>
+                                    <div class="text-muted fs-xxs text-truncate" style="max-width: 200px;">{{ $comp->teacher_notes }}</div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge rounded-pill {{ $comp->status_badge_class }} px-2.5 py-1">
+                                        {{ $comp->status_label }}
+                                    </span>
+                                </td>
+                                <td class="text-end pe-3.5">
+                                    <a href="{{ route('panel.aduan-walikelas.show', $comp) }}" class="btn btn-sm btn-mint text-white rounded-pill px-3 py-1 fw-bold fs-xxs shadow-xs">
+                                        <i class="bi bi-reply-fill me-1"></i> Respon
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="9" class="text-center py-5 text-muted">
+                                    <i class="bi bi-inbox fs-2 d-block mb-2 text-muted opacity-50"></i>
+                                    Belum ada laporan kasus murid dari Wali Kelas.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     @if($complaints->hasPages())
-        <div class="card-footer bg-white border-top py-3">
-            {{ $complaints->links() }}
+        <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card-body py-2.5 px-3.5 d-flex justify-content-center overflow-x-auto">
+                {{ $complaints->links() }}
+            </div>
         </div>
     @endif
 </div>

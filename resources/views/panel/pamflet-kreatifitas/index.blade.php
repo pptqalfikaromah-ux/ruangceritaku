@@ -55,35 +55,26 @@
         </div>
     @endif
 
-    <!-- Tab Filter Status -->
+    <!-- Tab Filter Status (Scrollable on Mobile) -->
     <div class="col-12">
-        <ul class="nav nav-pills gap-2 bg-white p-2 rounded-4 shadow-sm border">
-            <li class="nav-item">
-                <a class="nav-link rounded-pill px-3 py-2 fw-semibold {{ $status === 'all' ? 'active bg-teal text-white' : 'text-dark' }}" 
-                   style="{{ $status === 'all' ? 'background-color: #0d9488;' : '' }}"
-                   href="{{ route('panel.pamflet-kreatifitas.index', ['status' => 'all']) }}">
-                    Semua Karya ({{ $counts['all'] }})
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link rounded-pill px-3 py-2 fw-semibold {{ $status === 'pending' ? 'active bg-warning text-dark' : 'text-dark' }}" 
-                   href="{{ route('panel.pamflet-kreatifitas.index', ['status' => 'pending']) }}">
-                    <i class="bi bi-clock-history me-1"></i> Menunggu Moderasi ({{ $counts['pending'] }})
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link rounded-pill px-3 py-2 fw-semibold {{ $status === 'disetujui' ? 'active bg-success text-white' : 'text-dark' }}" 
-                   href="{{ route('panel.pamflet-kreatifitas.index', ['status' => 'disetujui']) }}">
-                    <i class="bi bi-check-circle-fill me-1"></i> Disetujui / Tayang ({{ $counts['disetujui'] }})
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link rounded-pill px-3 py-2 fw-semibold {{ $status === 'ditolak' ? 'active bg-danger text-white' : 'text-dark' }}" 
-                   href="{{ route('panel.pamflet-kreatifitas.index', ['status' => 'ditolak']) }}">
-                    <i class="bi bi-x-circle-fill me-1"></i> Ditolak ({{ $counts['ditolak'] }})
-                </a>
-            </li>
-        </ul>
+        <div class="d-flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+            <a class="btn btn-sm rounded-pill px-3.5 py-2 fw-semibold text-nowrap shadow-xs {{ $status === 'all' ? 'btn-mint text-white' : 'btn-light border text-dark' }}" 
+               href="{{ route('panel.pamflet-kreatifitas.index', ['status' => 'all']) }}">
+                Semua Karya ({{ $counts['all'] }})
+            </a>
+            <a class="btn btn-sm rounded-pill px-3.5 py-2 fw-semibold text-nowrap shadow-xs {{ $status === 'pending' ? 'btn-warning text-dark' : 'btn-light border text-dark' }}" 
+               href="{{ route('panel.pamflet-kreatifitas.index', ['status' => 'pending']) }}">
+                <i class="bi bi-clock-history me-1"></i> Menunggu Moderasi ({{ $counts['pending'] }})
+            </a>
+            <a class="btn btn-sm rounded-pill px-3.5 py-2 fw-semibold text-nowrap shadow-xs {{ $status === 'disetujui' ? 'btn-success text-white' : 'btn-light border text-dark' }}" 
+               href="{{ route('panel.pamflet-kreatifitas.index', ['status' => 'disetujui']) }}">
+                <i class="bi bi-check-circle-fill me-1"></i> Disetujui / Tayang ({{ $counts['disetujui'] }})
+            </a>
+            <a class="btn btn-sm rounded-pill px-3.5 py-2 fw-semibold text-nowrap shadow-xs {{ $status === 'ditolak' ? 'btn-danger text-white' : 'btn-light border text-dark' }}" 
+               href="{{ route('panel.pamflet-kreatifitas.index', ['status' => 'ditolak']) }}">
+                <i class="bi bi-x-circle-fill me-1"></i> Ditolak ({{ $counts['ditolak'] }})
+            </a>
+        </div>
     </div>
 
     <!-- Grid Kartu Pamflet -->
