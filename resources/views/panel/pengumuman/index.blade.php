@@ -45,77 +45,77 @@
     <!-- ========================================== -->
     <!-- 1. TAMPILAN MOBILE: CARD LIST (< 768px)    -->
     <!-- ========================================== -->
-    <div class="d-md-none space-y-3 mb-3">
+    <div class="d-md-none mb-3">
         @forelse($announcements as $ann)
-            <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden">
-                <div class="card-body p-3">
-                    <div class="d-flex justify-content-between align-items-start gap-2 mb-2 pb-2 border-bottom">
-                        <div class="d-flex flex-wrap align-items-center gap-1.5">
-                            @if($ann->is_pinned)
-                                <span class="badge bg-warning text-dark px-2 py-0.5 rounded-pill fs-xxs fw-bold">
-                                    <i class="bi bi-pin-angle-fill me-0.5"></i>Pinned
-                                </span>
-                            @endif
-                            <span class="badge {{ $ann->category_badge_class }} px-2 py-0.5 rounded-pill fs-xxs fw-semibold">
-                                {{ $ann->category_label }}
-                            </span>
-                        </div>
-                        @if($ann->is_active)
-                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-0.5 rounded-pill fs-xxs fw-bold">
-                                <i class="bi bi-eye me-0.5"></i>Tayang
-                            </span>
-                        @else
-                            <span class="badge bg-secondary-subtle text-secondary px-2 py-0.5 rounded-pill fs-xxs">
-                                <i class="bi bi-eye-slash me-0.5"></i>Nonaktif
+            <div class="mobile-card mb-3">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-3 pb-3 border-bottom">
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        @if($ann->is_pinned)
+                            <span class="badge bg-warning text-dark badge-pill-custom">
+                                <i class="bi bi-pin-angle-fill me-1"></i>Pinned
                             </span>
                         @endif
+                        <span class="badge {{ $ann->category_badge_class }} badge-pill-custom">
+                            {{ $ann->category_label }}
+                        </span>
                     </div>
-
-                    @if($ann->image_url)
-                        <div class="mb-2.5 rounded-3 overflow-hidden border position-relative" style="max-height: 160px;">
-                            <img src="{{ $ann->image_url }}" alt="{{ $ann->title }}" class="w-100" style="object-fit: cover; max-height: 160px;">
-                            <a href="{{ $ann->image_url }}" target="_blank" class="btn btn-sm btn-dark bg-opacity-75 position-absolute bottom-0 end-0 m-2 rounded-pill px-2 py-0.5 fs-xxs text-white">
-                                <i class="bi bi-zoom-in me-0.5"></i>Lihat Gambar
-                            </a>
-                        </div>
+                    @if($ann->is_active)
+                        <span class="badge bg-success-subtle text-success badge-pill-custom flex-shrink-0">
+                            <i class="bi bi-eye me-1"></i>Tayang
+                        </span>
+                    @else
+                        <span class="badge bg-secondary-subtle text-secondary badge-pill-custom flex-shrink-0">
+                            <i class="bi bi-eye-slash me-1"></i>Nonaktif
+                        </span>
                     @endif
+                </div>
 
-                    <div class="fw-extrabold text-dark fs-sm mb-1">{{ $ann->title }}</div>
-                    <div class="text-muted fs-xs mb-2.5" style="line-height: 1.5; white-space: pre-line;">{{ Str::limit($ann->content, 140) }}</div>
+                @if($ann->image_url)
+                    <div class="mb-3 rounded-3 overflow-hidden border position-relative" style="max-height: 180px;">
+                        <img src="{{ $ann->image_url }}" alt="{{ $ann->title }}" class="w-100" style="object-fit: cover; max-height: 180px;">
+                        <a href="{{ $ann->image_url }}" target="_blank" class="btn btn-sm btn-dark bg-opacity-75 position-absolute bottom-0 end-0 m-2 rounded-pill px-2.5 py-1 fs-xs text-white">
+                            <i class="bi bi-zoom-in me-1"></i>Lihat Gambar
+                        </a>
+                    </div>
+                @endif
 
-                    <div class="d-flex align-items-center justify-content-between text-muted fs-xxs pt-2 border-top">
-                        <div>
-                            @php
-                                $targetLabel = match($ann->target_role) {
-                                    'murid' => 'Khusus Murid',
-                                    'guru_bk' => 'Khusus Guru BK',
-                                    'wali_kelas' => 'Khusus Wali Kelas',
-                                    default => 'Semua Pengguna'
-                                };
-                            @endphp
-                            <span class="badge bg-light text-dark border px-2 py-0.5 rounded fs-xxs">
-                                <i class="bi bi-person me-0.5"></i>{{ $targetLabel }}
-                            </span>
-                        </div>
-                        <div class="d-flex align-items-center gap-1.5">
-                            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1 fs-xs fw-semibold" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#editModal{{ $ann->id }}">
-                                <i class="bi bi-pencil me-1"></i>Edit
+                <h3 class="card-name mb-2">{{ $ann->title }}</h3>
+                <div class="card-info-box mb-3">
+                    <p class="text-dark mb-0 small" style="line-height: 1.6; white-space: pre-line;">{{ Str::limit($ann->content, 180) }}</p>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-between text-muted small pt-2 border-top">
+                    <div>
+                        @php
+                            $targetLabel = match($ann->target_role) {
+                                'murid' => 'Khusus Murid',
+                                'guru_bk' => 'Khusus Guru BK',
+                                'wali_kelas' => 'Khusus Wali Kelas',
+                                default => 'Semua Pengguna'
+                            };
+                        @endphp
+                        <span class="badge bg-light text-dark border badge-pill-custom">
+                            <i class="bi bi-person me-1"></i>{{ $targetLabel }}
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-outline-primary btn-card-action" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#editModal{{ $ann->id }}">
+                            <i class="bi bi-pencil me-1"></i>Edit
+                        </button>
+                        <form action="{{ route('panel.pengumuman.destroy', $ann) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Yakin ingin menghapus pengumuman ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-light border text-danger btn-card-icon" title="Hapus">
+                                <i class="bi bi-trash fs-5"></i>
                             </button>
-                            <form action="{{ route('panel.pengumuman.destroy', $ann) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Yakin ingin menghapus pengumuman ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-light border text-danger rounded-circle p-1 d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Hapus">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         @empty
-            <div class="card card-app border-0 shadow-sm rounded-4 text-center py-5 px-3">
+            <div class="mobile-card text-center py-5 px-3 mb-3">
                 <i class="bi bi-megaphone fs-1 d-block mb-2 text-secondary"></i>
                 <p class="text-muted fs-xs mb-0">Belum ada pengumuman yang diterbitkan.</p>
             </div>

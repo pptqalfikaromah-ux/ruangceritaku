@@ -200,77 +200,79 @@
     <!-- ========================================== -->
     <div class="d-md-none space-y-3 mb-3">
         @forelse($paginatedStudents as $index => $student)
-            <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden">
-                <div class="card-body p-3">
-                    <div class="d-flex align-items-start gap-2.5 mb-2 pb-2 border-bottom">
-                        <img src="{{ $student->photo_url }}" alt="{{ $student->name }}" class="rounded-circle shadow-xs flex-shrink-0" width="44" height="44" style="object-fit: cover;">
-                        <div class="overflow-hidden flex-grow-1">
-                            <div class="d-flex align-items-center justify-content-between gap-1 mb-0.5">
-                                <div class="fw-extrabold text-dark fs-sm text-truncate">
-                                    {{ $student->name }}
-                                </div>
-                                @if($student->ims_status === 'submitted')
-                                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-0.5 fs-xxs fw-bold">
-                                        <i class="bi bi-check-circle me-0.5"></i>Terkirim
-                                    </span>
-                                @elseif($student->ims_status === 'draft')
-                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning px-2 py-0.5 rounded-pill fs-xxs fw-bold">
-                                        <i class="bi bi-hourglass-split me-0.5"></i>Draft
-                                    </span>
-                                @else
-                                    <span class="badge bg-danger-subtle text-danger border border-danger px-2 py-0.5 rounded-pill fs-xxs fw-bold">
-                                        <i class="bi bi-dash-circle me-0.5"></i>Belum
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="text-muted fs-xxs d-flex flex-wrap align-items-center gap-1.5">
-                                <span>NISN: <code class="text-mint fw-bold">{{ $student->nisn }}</code></span>
-                                <span>&bull; {{ $student->gender_label }}</span>
-                            </div>
+            <div class="mobile-card mb-3">
+                <div class="d-flex align-items-center gap-3 mb-3 pb-3 border-bottom">
+                    <img src="{{ $student->photo_url }}" alt="{{ $student->name }}" class="rounded-circle shadow-xs flex-shrink-0" width="52" height="52" style="object-fit: cover;">
+                    <div class="overflow-hidden flex-grow-1">
+                        <div class="d-flex align-items-center justify-content-between gap-2 mb-1">
+                            <h3 class="card-name mb-0 text-truncate">{{ $student->name }}</h3>
+                            @if($student->ims_status === 'submitted')
+                                <span class="badge bg-success-subtle text-success badge-pill-custom flex-shrink-0">
+                                    <i class="bi bi-check-circle me-1"></i>Terkirim
+                                </span>
+                            @elseif($student->ims_status === 'draft')
+                                <span class="badge bg-warning-subtle text-warning-emphasis badge-pill-custom flex-shrink-0">
+                                    <i class="bi bi-hourglass-split me-1"></i>Draft
+                                </span>
+                            @else
+                                <span class="badge bg-danger-subtle text-danger badge-pill-custom flex-shrink-0">
+                                    <i class="bi bi-dash-circle me-1"></i>Belum
+                                </span>
+                            @endif
+                        </div>
+                        <div class="card-sub d-flex flex-wrap align-items-center gap-2">
+                            <span>NISN: <code class="text-mint fw-bold px-1.5 py-0.5 rounded bg-light">{{ $student->nisn }}</code></span>
+                            <span>&bull; {{ $student->gender_label }}</span>
                         </div>
                     </div>
+                </div>
 
-                    <div class="d-flex justify-content-between align-items-center mb-2.5">
+                <div class="card-info-box mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted"><i class="bi bi-door-open me-1.5 text-mint"></i>Rombel</span>
                         <div>
                             @php $currentCls = $student->classrooms->first(); @endphp
                             @if($currentCls)
-                                <span class="badge bg-teal-subtle text-mint px-2 py-0.5 rounded fs-xxs fw-semibold">
-                                    <i class="bi bi-door-open me-1"></i>Kelas {{ $currentCls->name }}
+                                <span class="badge bg-teal-subtle text-mint badge-pill-custom">
+                                    Kelas {{ $currentCls->name }}
                                 </span>
                             @else
-                                <span class="badge bg-light text-muted border px-2 py-0.5 rounded fs-xxs">Belum Rombel</span>
+                                <span class="badge bg-light text-muted border badge-pill-custom">Belum Masuk Rombel</span>
                             @endif
                         </div>
-                        <div class="text-muted fs-xxs">
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 mt-2 border-top">
+                        <span class="text-muted"><i class="bi bi-clock me-1.5 text-mint"></i>Waktu Pengisian</span>
+                        <span class="fw-semibold text-dark">
                             @if($student->ims_submitted_at)
-                                <i class="bi bi-clock me-0.5"></i>{{ $student->ims_submitted_at->translatedFormat('d M Y, H:i') }}
+                                {{ $student->ims_submitted_at->translatedFormat('d M Y, H:i') }}
                             @else
-                                <span class="text-muted">- Belum kirim -</span>
+                                <span class="text-muted">- Belum Mengisi -</span>
                             @endif
-                        </div>
+                        </span>
                     </div>
+                </div>
 
-                    <div class="pt-1">
-                        @if($student->ims_status === 'submitted')
-                            <a href="{{ route('panel.ims.show', ['student_id' => $student->id, 'semester_id' => $semesterId]) }}" 
-                               class="btn btn-sm btn-mint text-white w-100 rounded-pill py-2 fw-bold shadow-xs fs-xs d-flex align-items-center justify-content-center gap-1.5">
-                                <i class="bi bi-file-earmark-bar-graph"></i> Lihat Analisis Jawaban <i class="bi bi-arrow-right"></i>
-                            </a>
-                        @elseif($student->ims_status === 'draft')
-                            <a href="{{ route('panel.ims.show', ['student_id' => $student->id, 'semester_id' => $semesterId]) }}" 
-                               class="btn btn-sm btn-outline-warning text-dark w-100 rounded-pill py-1.5 fw-bold fs-xs d-flex align-items-center justify-content-center gap-1">
-                                <i class="bi bi-eye"></i> Tinjau Draft Jawaban
-                            </a>
-                        @else
-                            <button type="button" class="btn btn-sm btn-light border w-100 rounded-pill py-1.5 text-muted fs-xs" disabled>
-                                Belum Mengisi Angket
-                            </button>
-                        @endif
-                    </div>
+                <div>
+                    @if($student->ims_status === 'submitted' && $student->current_assessment)
+                        <a href="{{ route('panel.ims.show', $student->current_assessment->id) }}" 
+                           class="btn btn-mint text-white btn-card-action w-100 shadow-sm">
+                            <i class="bi bi-file-earmark-bar-graph me-1"></i> Lihat Hasil Analisis & Rekomendasi <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    @elseif($student->ims_status === 'draft' && $student->current_assessment)
+                        <a href="{{ route('panel.ims.show', $student->current_assessment->id) }}" 
+                           class="btn btn-outline-warning text-dark btn-card-action w-100">
+                            <i class="bi bi-eye me-1"></i> Tinjau Draft Jawaban
+                        </a>
+                    @else
+                        <button type="button" class="btn btn-light border btn-card-action w-100 text-muted" disabled>
+                            <i class="bi bi-dash-circle me-1"></i> Belum Mengisi Angket
+                        </button>
+                    @endif
                 </div>
             </div>
         @empty
-            <div class="card card-app border-0 shadow-sm rounded-4 text-center py-5 px-3">
+            <div class="mobile-card text-center py-5 px-3 mb-3">
                 <i class="bi bi-people fs-1 d-block mb-2 text-secondary"></i>
                 <p class="text-muted fs-xs mb-0">Tidak ada murid pada filter yang dipilih.</p>
             </div>
@@ -344,16 +346,16 @@
                                     @endif
                                 </td>
                                 <td class="text-end pe-3.5">
-                                    @if($student->ims_status === 'submitted')
-                                        <a href="{{ route('panel.ims.show', ['student_id' => $student->id, 'semester_id' => $semesterId]) }}" class="btn btn-sm btn-mint text-white rounded-pill px-3 py-1 fs-xxs fw-bold shadow-xs">
+                                    @if($student->ims_status === 'submitted' && $student->current_assessment)
+                                        <a href="{{ route('panel.ims.show', $student->current_assessment->id) }}" class="btn btn-sm btn-mint text-white rounded-pill px-3 py-1.5 fs-xs fw-bold shadow-xs">
                                             <i class="bi bi-file-earmark-bar-graph me-1"></i> Hasil
                                         </a>
-                                    @elseif($student->ims_status === 'draft')
-                                        <a href="{{ route('panel.ims.show', ['student_id' => $student->id, 'semester_id' => $semesterId]) }}" class="btn btn-sm btn-outline-warning text-dark rounded-pill px-3 py-1 fs-xxs fw-bold">
+                                    @elseif($student->ims_status === 'draft' && $student->current_assessment)
+                                        <a href="{{ route('panel.ims.show', $student->current_assessment->id) }}" class="btn btn-sm btn-outline-warning text-dark rounded-pill px-3 py-1.5 fs-xs fw-bold">
                                             Draft
                                         </a>
                                     @else
-                                        <span class="text-muted fs-xxs">-</span>
+                                        <span class="text-muted fs-xs">-</span>
                                     @endif
                                 </td>
                             </tr>

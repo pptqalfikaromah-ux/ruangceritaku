@@ -56,61 +56,74 @@
 <!-- ========================================== -->
 <!-- 1. TAMPILAN MOBILE: CARD LIST (< 768px)    -->
 <!-- ========================================== -->
-<div class="d-md-none space-y-3 mb-3">
+<div class="d-md-none mb-3">
     @forelse($teachers as $index => $teacher)
-        <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden">
-            <div class="card-body p-3">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2 pb-2 border-bottom">
-                    <div>
-                        <div class="fw-extrabold text-dark fs-6">{{ $teacher->name }}</div>
-                        <span class="text-muted fs-xxs">NIP: {{ $teacher->nip_nuptk ?? '-' }}</span>
+        <div class="mobile-card mb-3">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-3 pb-3 border-bottom">
+                <div>
+                    <h3 class="card-name mb-1">{{ $teacher->name }}</h3>
+                    <div class="card-sub">
+                        NIP / NUPTK: <code class="text-mint fw-bold px-1.5 py-0.5 rounded bg-light">{{ $teacher->nip_nuptk ?? '-' }}</code>
                     </div>
-                    <span class="badge {{ $teacher->status === 'aktif' ? 'bg-success-subtle text-success border border-success-subtle' : 'bg-secondary' }} rounded-pill px-2.5 py-1 fs-xxs fw-bold">
-                        {{ ucfirst($teacher->status) }}
+                </div>
+                <span class="badge {{ $teacher->status === 'aktif' ? 'bg-success-subtle text-success' : 'bg-secondary' }} badge-pill-custom flex-shrink-0">
+                    {{ ucfirst($teacher->status) }}
+                </span>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="badge {{ $teacher->gender === 'L' ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger' }} badge-pill-custom">
+                    {{ $teacher->gender === 'L' ? 'Laki-laki' : 'Perempuan' }}
+                </span>
+
+                @if($assignment = $teacher->currentAssignment)
+                    <span class="badge bg-warning-subtle text-warning-emphasis badge-pill-custom">
+                        <i class="bi bi-door-open me-1"></i>Kelas {{ $assignment->classroom?->name }}
                     </span>
-                </div>
+                @else
+                    <span class="badge bg-light text-muted border badge-pill-custom">Belum Ditugaskan</span>
+                @endif
 
-                <div class="d-flex flex-wrap gap-1.5 mb-2.5">
-                    <span class="badge {{ $teacher->gender === 'L' ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger' }} rounded-pill fs-xxs">
-                        {{ $teacher->gender === 'L' ? 'Laki-laki' : 'Perempuan' }}
+                @if($teacher->user)
+                    <span class="badge bg-teal-subtle text-mint badge-pill-custom">
+                        <i class="bi bi-person me-1"></i>{{ $teacher->user->username }}
                     </span>
+                @endif
+            </div>
 
-                    @if($assignment = $teacher->currentAssignment)
-                        <span class="badge bg-warning-subtle text-warning-emphasis border border-warning px-2 py-0.5 rounded-pill fs-xxs fw-bold">
-                            <i class="bi bi-door-open me-1"></i>Kelas {{ $assignment->classroom?->name }}
-                        </span>
-                    @else
-                        <span class="badge bg-light text-muted border px-2 py-0.5 rounded-pill fs-xxs">Belum Ditugaskan</span>
-                    @endif
-
-                    @if($teacher->user)
-                        <span class="badge bg-teal-subtle text-mint px-2 py-0.5 rounded-pill fs-xxs">
-                            <i class="bi bi-person me-0.5"></i>{{ $teacher->user->username }}
-                        </span>
-                    @endif
+            <div class="card-info-box mb-3">
+                <div class="d-flex align-items-center justify-content-between py-0.5">
+                    <span class="text-muted"><i class="bi bi-telephone me-1.5 text-mint"></i>No. Telepon</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="fw-semibold text-dark">{{ $teacher->phone ?? '-' }}</span>
+                        @if($teacher->phone)
+                            <a href="https://wa.me/{{ preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $teacher->phone)) }}" target="_blank" class="badge bg-success text-white text-decoration-none rounded-pill px-2.5 py-1">
+                                <i class="bi bi-whatsapp"></i> WA
+                            </a>
+                        @endif
+                    </div>
                 </div>
-
-                <div class="p-2 rounded-3 bg-light border text-muted fs-xxs mb-2.5 space-y-1">
-                    <div><i class="bi bi-telephone me-1 text-mint"></i>Telp: <strong class="text-dark">{{ $teacher->phone ?? '-' }}</strong></div>
-                    <div><i class="bi bi-envelope me-1 text-mint"></i>Email: <strong class="text-dark">{{ $teacher->email ?? '-' }}</strong></div>
+                <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                    <span class="text-muted"><i class="bi bi-envelope me-1.5 text-mint"></i>Email</span>
+                    <span class="fw-semibold text-dark text-truncate ms-2">{{ $teacher->email ?? '-' }}</span>
                 </div>
+            </div>
 
-                <div class="d-flex gap-1.5">
-                    <a href="{{ route('panel.wali-kelas.edit', $teacher) }}" class="btn btn-sm btn-outline-primary rounded-pill flex-grow-1 fw-bold fs-xs py-1.5">
-                        <i class="bi bi-pencil me-1"></i> Ubah Data
-                    </a>
-                    <form action="{{ route('panel.wali-kelas.destroy', $teacher) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Hapus data wali kelas ini beserta akun loginnya?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-light border text-danger rounded-pill px-3 fw-bold fs-xs py-1.5" title="Hapus">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </form>
-                </div>
+            <div class="d-flex align-items-center gap-2">
+                <a href="{{ route('panel.wali-kelas.edit', $teacher) }}" class="btn btn-outline-primary btn-card-action flex-grow-1">
+                    <i class="bi bi-pencil me-1"></i> Ubah Data
+                </a>
+                <form action="{{ route('panel.wali-kelas.destroy', $teacher) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Hapus data wali kelas ini beserta akun loginnya?')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-light border text-danger btn-card-icon" title="Hapus">
+                        <i class="bi bi-trash fs-5"></i>
+                    </button>
+                </form>
             </div>
         </div>
     @empty
-        <div class="card card-app border-0 shadow-sm rounded-4 text-center py-5 px-3">
+        <div class="mobile-card text-center py-5 px-3 mb-3">
             <i class="bi bi-person-x fs-2 d-block mb-2 text-muted opacity-50"></i>
             <p class="text-muted fs-xs mb-0">Belum ada data Wali Kelas. Klik <strong>Tambah Wali Kelas</strong> untuk menambahkan.</p>
         </div>

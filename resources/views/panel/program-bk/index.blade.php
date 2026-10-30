@@ -137,61 +137,62 @@
     <!-- ========================================== -->
     <!-- 1. TAMPILAN MOBILE: CARD LIST (< 768px)    -->
     <!-- ========================================== -->
-    <div class="d-md-none space-y-3 mb-3">
+    <div class="d-md-none mb-3">
         @forelse($programs as $item)
-            <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden">
-                <div class="card-body p-3">
-                    <div class="d-flex justify-content-between align-items-start gap-2 mb-2 pb-2 border-bottom">
-                        <div>
-                            <span class="badge bg-teal-subtle text-mint px-2 py-0.5 rounded fs-xxs fw-bold mb-1">
-                                <i class="bi bi-calendar-event me-1"></i>{{ $item->month_planned ?: 'Fleksibel' }}
-                            </span>
-                            <div class="fw-bold text-dark fs-sm">{{ $item->name }}</div>
-                        </div>
-                        <span class="badge bg-secondary-subtle text-secondary px-2 py-1 rounded fs-xxs text-nowrap">
-                            Kelas {{ $item->target_level }}
+            <div class="mobile-card mb-3">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-3 pb-3 border-bottom">
+                    <div>
+                        <span class="badge bg-teal-subtle text-mint badge-pill-custom mb-1.5">
+                            <i class="bi bi-calendar-event me-1"></i>{{ $item->month_planned ?: 'Fleksibel' }}
                         </span>
+                        <h3 class="card-name mb-0">{{ $item->name }}</h3>
                     </div>
+                    <span class="badge bg-secondary-subtle text-secondary badge-pill-custom text-nowrap flex-shrink-0">
+                        Kelas {{ $item->target_level }}
+                    </span>
+                </div>
 
-                    @if($item->goals)
-                        <div class="text-muted fs-xs mb-2.5" style="line-height: 1.5;">
+                @if($item->goals)
+                    <div class="card-info-box mb-3">
+                        <span class="text-muted small d-block fw-bold mb-1 text-uppercase">Tujuan Kegiatan:</span>
+                        <p class="text-dark mb-0 small" style="line-height: 1.6;">
                             {{ $item->goals }}
-                        </div>
-                    @endif
-
-                    <div class="d-flex flex-wrap gap-1.5 mb-2.5">
-                        <span class="badge bg-primary-subtle text-primary px-2 py-0.5 rounded-pill fs-xxs">
-                            <i class="bi bi-bookmark me-0.5"></i>{{ $item->guidanceField?->name ?? '-' }}
-                        </span>
-                        <span class="badge bg-light text-dark border px-2 py-0.5 rounded fs-xxs">
-                            {{ $item->serviceType?->name ?? '-' }}
-                        </span>
+                        </p>
                     </div>
+                @endif
 
-                    <div class="d-flex justify-content-between align-items-center pt-2 border-top">
-                        <div>
-                            @if($item->rpls->count() > 0)
-                                <a href="{{ route('panel.program-bk.rpl.show', $item->rpls->first()->id) }}" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1 fs-xs fw-bold">
-                                    <i class="bi bi-file-earmark-check me-1"></i> Lihat RPL ({{ $item->rpls->count() }})
-                                </a>
-                            @else
-                                <a href="{{ route('panel.program-bk.rpl.create', ['program_id' => $item->id]) }}" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1 fs-xs fw-bold">
-                                    <i class="bi bi-plus-lg me-1"></i> Susun RPL
-                                </a>
-                            @endif
-                        </div>
-                        <form method="POST" action="{{ route('panel.program-bk.destroy', $item) }}" class="d-inline m-0" onsubmit="return confirm('Hapus butir program ini?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-light border text-danger rounded-circle p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="Hapus">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <span class="badge bg-primary-subtle text-primary badge-pill-custom">
+                        <i class="bi bi-bookmark me-1"></i>{{ $item->guidanceField?->name ?? '-' }}
+                    </span>
+                    <span class="badge bg-light text-dark border badge-pill-custom">
+                        {{ $item->serviceType?->name ?? '-' }}
+                    </span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                    <div>
+                        @if($item->rpls->count() > 0)
+                            <a href="{{ route('panel.program-bk.rpl.show', $item->rpls->first()->id) }}" class="btn btn-outline-success btn-card-action">
+                                <i class="bi bi-file-earmark-check me-1"></i> Lihat RPL ({{ $item->rpls->count() }})
+                            </a>
+                        @else
+                            <a href="{{ route('panel.program-bk.rpl.create', ['program_id' => $item->id]) }}" class="btn btn-outline-primary btn-card-action">
+                                <i class="bi bi-plus-lg me-1"></i> Susun Dokumen RPL
+                            </a>
+                        @endif
                     </div>
+                    <form method="POST" action="{{ route('panel.program-bk.destroy', $item) }}" class="d-inline m-0" onsubmit="return confirm('Hapus butir program ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-light border text-danger btn-card-icon" title="Hapus">
+                            <i class="bi bi-trash fs-5"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         @empty
-            <div class="card card-app border-0 shadow-sm rounded-4 text-center py-5 px-3">
+            <div class="mobile-card text-center py-5 px-3 mb-3">
                 <i class="bi bi-calendar2-x fs-1 d-block mb-2 text-secondary"></i>
                 <p class="text-muted fs-xs mb-0">Belum ada agenda program bimbingan untuk filter yang dipilih.</p>
             </div>

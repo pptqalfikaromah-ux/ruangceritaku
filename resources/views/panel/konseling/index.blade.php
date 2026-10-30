@@ -147,87 +147,89 @@
     </div>
 
     <!-- 1. TAMPILAN MOBILE: ANDROID CARD LIST FEED (d-md-none) -->
-    <div class="d-md-none space-y-2.5">
+    <div class="d-md-none mb-3">
         @forelse($requests as $item)
-            <div class="card border-0 shadow-sm rounded-3 p-3 bg-white">
-                <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="mobile-card mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
                     <span class="font-monospace fw-bold text-mint fs-xs">#{{ $item->ticket_number }}</span>
-                    <x-badge-status :status="$item->status" />
+                    <x-badge-status :status="$item->status" class="badge-pill-custom" />
                 </div>
 
-                <div class="d-flex align-items-center gap-2.5 mb-2.5">
-                    <img src="{{ $item->student->photo_url }}" alt="{{ $item->student->name }}" class="rounded-circle border" style="width: 40px; height: 40px; object-fit: cover;">
-                    <div style="flex: 1; min-width: 0;">
-                        <div class="fw-bold text-dark text-truncate">{{ $item->student->name }}</div>
-                        <div class="text-muted fs-xxs">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <img src="{{ $item->student->photo_url }}" alt="{{ $item->student->name }}" class="rounded-circle border flex-shrink-0" style="width: 50px; height: 50px; object-fit: cover;">
+                    <div class="overflow-hidden flex-grow-1">
+                        <h3 class="card-name mb-1 text-truncate">{{ $item->student->name }}</h3>
+                        <div class="card-sub">
                             NISN: {{ $item->student->nisn }} &bull; 
                             <span class="fw-semibold text-dark">{{ $item->student->classrooms->first()?->name ?? 'Tanpa Rombel' }}</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="p-2.5 rounded-3 bg-light mb-2.5">
-                    <div class="d-flex align-items-center gap-1.5 mb-1 flex-wrap">
+                <div class="card-info-box mb-3">
+                    <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
                         @if($item->source === 'ims')
-                            <span class="badge bg-purple-subtle text-purple border-purple px-2 py-0 fs-xxs fw-semibold">
-                                <i class="bi bi-clipboard2-check me-0.5"></i>IMS
+                            <span class="badge bg-purple-subtle text-purple border-purple badge-pill-custom">
+                                <i class="bi bi-clipboard2-check me-1"></i>IMS
                             </span>
                         @else
-                            <span class="badge bg-primary-subtle text-primary border-primary px-2 py-0 fs-xxs fw-semibold">
-                                <i class="bi bi-person me-0.5"></i>Pribadi
+                            <span class="badge bg-primary-subtle text-primary border-primary badge-pill-custom">
+                                <i class="bi bi-person me-1"></i>Pribadi
                             </span>
                             @if(!empty($item->attached_ims_statements))
-                                <span class="badge bg-warning-subtle text-warning-emphasis border px-1.5 py-0 fs-xxs fw-semibold">
-                                    <i class="bi bi-paperclip"></i> {{ count($item->attached_ims_statements) }} IMS
+                                <span class="badge bg-warning-subtle text-warning-emphasis border badge-pill-custom">
+                                    <i class="bi bi-paperclip me-1"></i> {{ count($item->attached_ims_statements) }} Masalah IMS
                                 </span>
                             @endif
                         @endif
 
-                        <span class="badge bg-white text-muted border px-2 py-0 fs-xxs">
+                        <span class="badge bg-white text-muted border badge-pill-custom">
                             {{ $item->guidanceField?->name ?? 'Bidang Pribadi' }}
                         </span>
                     </div>
-                    <div class="fw-bold text-dark fs-xs mb-1" style="line-height: 1.4;">
+
+                    <div class="fw-bold text-dark fs-6 mb-2" style="line-height: 1.45;">
                         {{ $item->purpose }}
                     </div>
-                    <div class="text-muted fs-xxs d-flex align-items-center gap-2">
-                        <span><i class="bi bi-clock me-0.5"></i>Usulan: {{ $item->preferred_schedule ?? 'Fleksibel' }}</span>
+
+                    <div class="text-muted small d-flex flex-wrap align-items-center gap-3 pt-2 border-top">
+                        <span><i class="bi bi-clock me-1 text-mint"></i>Usulan: <strong class="text-dark">{{ $item->preferred_schedule ?? 'Fleksibel' }}</strong></span>
                         <span>&bull;</span>
                         <span>
                             @if($item->counseling_method === 'online_meet')
-                                <i class="bi bi-camera-video text-info"></i> Online
+                                <i class="bi bi-camera-video text-info me-1"></i> Konseling Online
                             @else
-                                <i class="bi bi-geo-alt text-success"></i> Tatap Muka
+                                <i class="bi bi-geo-alt text-success me-1"></i> Tatap Muka
                             @endif
                         </span>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center pt-2 border-top">
-                    <div class="text-muted fs-xxs">
-                        <i class="bi bi-calendar3 me-0.5"></i> {{ $item->created_at->translatedFormat('d M Y, H:i') }}
+                    <div class="text-muted small">
+                        <i class="bi bi-calendar3 me-1"></i> {{ $item->created_at->translatedFormat('d M Y, H:i') }}
                     </div>
-                    <div class="d-flex align-items-center gap-1.5">
+                    <div class="d-flex align-items-center gap-2">
                         @if($item->status === 'completed')
-                            <a href="{{ route('panel.konseling.printReport', $item->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill px-2.5 py-1 fs-xs fw-bold" title="Cetak Laporan PDF">
-                                <i class="bi bi-file-earmark-pdf"></i>
+                            <a href="{{ route('panel.konseling.printReport', $item->id) }}" target="_blank" class="btn btn-outline-danger btn-card-icon" title="Cetak Laporan PDF">
+                                <i class="bi bi-file-earmark-pdf fs-5"></i>
                             </a>
                         @endif
-                        <form action="{{ route('panel.konseling.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus agenda konseling {{ $item->ticket_number }}?')">
+                        <form action="{{ route('panel.konseling.destroy', $item->id) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Hapus agenda konseling {{ $item->ticket_number }}?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-light border text-danger rounded-circle p-1 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;" title="Hapus">
-                                <i class="bi bi-trash3 fs-xs"></i>
+                            <button type="submit" class="btn btn-light border text-danger btn-card-icon" title="Hapus">
+                                <i class="bi bi-trash fs-5"></i>
                             </button>
                         </form>
-                        <a href="{{ route('panel.konseling.show', $item->id) }}" class="btn btn-sm btn-mint rounded-pill px-3 py-1 fs-xs fw-bold shadow-xs">
-                            Buka Sesi <i class="bi bi-chevron-right ms-0.5"></i>
+                        <a href="{{ route('panel.konseling.show', $item->id) }}" class="btn btn-mint text-white btn-card-action">
+                            Buka Sesi <i class="bi bi-chevron-right ms-1"></i>
                         </a>
                     </div>
                 </div>
             </div>
         @empty
-            <div class="card border-0 shadow-sm rounded-4 p-4 text-center bg-white">
+            <div class="mobile-card text-center py-5 px-3 mb-3">
                 <div class="p-3 rounded-circle bg-teal-subtle text-mint d-inline-flex mx-auto mb-2" style="width: 56px; height: 56px; align-items: center; justify-content: center;">
                     <i class="bi bi-calendar2-x fs-3"></i>
                 </div>

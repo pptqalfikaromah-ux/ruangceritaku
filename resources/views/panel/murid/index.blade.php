@@ -102,85 +102,92 @@
 <!-- ========================================== -->
 <!-- 1. TAMPILAN MOBILE: CARD LIST (< 768px)    -->
 <!-- ========================================== -->
-<div class="d-md-none space-y-3 mb-3">
+<div class="d-md-none mb-3">
     @forelse($students as $student)
-        <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden">
-            <div class="card-body p-3">
-                <div class="d-flex align-items-start gap-2.5 mb-2.5">
-                    <img src="{{ $student->photo_url }}" alt="{{ $student->name }}" class="rounded-circle shadow-xs flex-shrink-0" width="46" height="46" style="object-fit: cover;">
-                    <div class="overflow-hidden flex-grow-1">
-                        <div class="d-flex align-items-center justify-content-between gap-1 mb-0.5">
-                            <a href="{{ route('panel.murid.show', $student->id) }}" class="fw-extrabold text-dark text-truncate fs-sm text-decoration-none">
-                                {{ $student->name }}
-                            </a>
-                            <x-badge-status :status="$student->status" />
-                        </div>
-                        <div class="text-muted fs-xxs d-flex flex-wrap align-items-center gap-1.5">
-                            <span>NISN: <code class="text-mint fw-bold">{{ $student->nisn }}</code></span>
-                            @if($student->nis)
-                                <span>&bull; NIS: {{ $student->nis }}</span>
-                            @endif
-                        </div>
+        <div class="mobile-card mb-3">
+            <div class="d-flex align-items-center gap-3 mb-3 pb-3 border-bottom">
+                <img src="{{ $student->photo_url }}" alt="{{ $student->name }}" class="rounded-circle shadow-xs flex-shrink-0" width="52" height="52" style="object-fit: cover;">
+                <div class="overflow-hidden flex-grow-1">
+                    <div class="d-flex align-items-center justify-content-between gap-2 mb-1">
+                        <a href="{{ route('panel.murid.show', $student->id) }}" class="card-name mb-0 text-truncate text-decoration-none">
+                            {{ $student->name }}
+                        </a>
+                        <x-badge-status :status="$student->status" class="badge-pill-custom flex-shrink-0" />
+                    </div>
+                    <div class="card-sub d-flex flex-wrap align-items-center gap-2">
+                        <span>NISN: <code class="text-mint fw-bold px-1.5 py-0.5 rounded bg-light">{{ $student->nisn }}</code></span>
+                        @if($student->nis)
+                            <span>&bull; NIS: {{ $student->nis }}</span>
+                        @endif
                     </div>
                 </div>
+            </div>
 
-                <div class="d-flex flex-wrap gap-1.5 mb-2.5">
-                    @php $cr = $student->current_classroom; @endphp
-                    @if($cr)
-                        <span class="badge bg-teal-subtle text-mint px-2 py-0.5 rounded fs-xxs fw-semibold">
-                            <i class="bi bi-door-open me-1"></i>Kelas {{ $cr->name }}
-                        </span>
-                    @else
-                        <span class="badge bg-light text-muted border px-2 py-0.5 rounded fs-xxs">Belum ada kelas</span>
-                    @endif
-
-                    <span class="badge {{ $student->gender === 'L' ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger' }} px-2 py-0.5 rounded fs-xxs fw-semibold">
-                        {{ $student->gender_label }}
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                @php $cr = $student->current_classroom; @endphp
+                @if($cr)
+                    <span class="badge bg-teal-subtle text-mint badge-pill-custom">
+                        <i class="bi bi-door-open me-1"></i>Kelas {{ $cr->name }}
                     </span>
+                @else
+                    <span class="badge bg-light text-muted border badge-pill-custom">Belum ada kelas</span>
+                @endif
 
-                    @if($student->user_id)
-                        <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-0.5 rounded fs-xxs fw-semibold">
-                            <i class="bi bi-person-check me-1"></i>Punya Akun
-                        </span>
-                    @endif
+                <span class="badge {{ $student->gender === 'L' ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger' }} badge-pill-custom">
+                    {{ $student->gender_label }}
+                </span>
+
+                @if($student->user_id)
+                    <span class="badge bg-success-subtle text-success badge-pill-custom">
+                        <i class="bi bi-person-check me-1"></i>Punya Akun
+                    </span>
+                @endif
+            </div>
+
+            <!-- Kontak Wali -->
+            <div class="card-info-box mb-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <span class="text-muted"><i class="bi bi-people me-1.5 text-mint"></i>Nama Wali</span>
+                    <span class="fw-semibold text-dark text-truncate ms-2">{{ $student->guardian_name ?? 'Belum ada data' }}</span>
                 </div>
+                @if($student->guardian_phone)
+                    <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                        <span class="text-muted"><i class="bi bi-telephone me-1.5 text-mint"></i>No. HP Wali</span>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-semibold text-dark">{{ $student->guardian_phone }}</span>
+                            <a href="https://wa.me/{{ preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $student->guardian_phone)) }}" target="_blank" class="badge bg-success text-white text-decoration-none rounded-pill px-2.5 py-1">
+                                <i class="bi bi-whatsapp"></i> WA
+                            </a>
+                        </div>
+                    </div>
+                @endif
+            </div>
 
-                <!-- Kontak Wali -->
-                <div class="p-2 rounded-3 bg-light border text-muted fs-xxs d-flex align-items-center justify-content-between mb-2.5">
-                    <span><i class="bi bi-people me-1"></i>Wali: <strong>{{ $student->guardian_name ?? 'Belum ada data' }}</strong></span>
-                    @if($student->guardian_phone)
-                        <a href="https://wa.me/{{ preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $student->guardian_phone)) }}" target="_blank" class="text-success text-decoration-none fw-bold">
-                            <i class="bi bi-whatsapp me-0.5"></i>Hubungi
-                        </a>
-                    @endif
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="d-flex gap-1.5">
-                    <a href="{{ route('panel.murid.show', $student->id) }}" class="btn btn-sm btn-outline-primary rounded-pill flex-grow-1 fw-bold fs-xs py-1.5">
-                        <i class="bi bi-eye me-1"></i> Detail
+            <!-- Action Buttons -->
+            <div class="d-flex align-items-center gap-2">
+                <a href="{{ route('panel.murid.show', $student->id) }}" class="btn btn-outline-primary btn-card-action flex-grow-1">
+                    <i class="bi bi-eye me-1"></i> Detail Murid
+                </a>
+                @if(auth()->user()->isAdmin())
+                    <a href="{{ route('panel.murid.edit', $student->id) }}" class="btn btn-light border btn-card-icon text-dark" title="Ubah Data">
+                        <i class="bi bi-pencil fs-5"></i>
                     </a>
-                    @if(auth()->user()->isAdmin())
-                        <a href="{{ route('panel.murid.edit', $student->id) }}" class="btn btn-sm btn-light border rounded-pill px-3 fw-bold fs-xs py-1.5 text-dark" title="Ubah">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <form action="{{ route('panel.murid.destroy', $student->id) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Hapus data murid {{ $student->name }}?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-light border text-danger rounded-pill px-3 fw-bold fs-xs py-1.5" title="Hapus">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    @endif
-                </div>
+                    <form action="{{ route('panel.murid.destroy', $student->id) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Hapus data murid {{ $student->name }}?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-light border text-danger btn-card-icon" title="Hapus">
+                            <i class="bi bi-trash fs-5"></i>
+                        </button>
+                    </form>
+                @endif
             </div>
         </div>
     @empty
-        <div class="card card-app border-0 shadow-sm rounded-4 text-center py-5 px-3">
+        <div class="mobile-card text-center py-5 px-3 mb-3">
             <x-empty-state icon="bi-people" title="Tidak Ditemukan Data Murid" description="Data murid belum tersedia atau tidak cocok dengan filter pencarian.">
                 @if(auth()->user()->isAdmin())
                     <x-slot:action>
-                        <a href="{{ route('panel.murid.create') }}" class="btn btn-sm btn-mint text-white rounded-pill px-3 py-1.5 fw-bold shadow-xs">
+                        <a href="{{ route('panel.murid.create') }}" class="btn btn-mint text-white btn-card-action shadow-sm">
                             <i class="bi bi-person-plus me-1"></i> Tambah Murid Baru
                         </a>
                     </x-slot:action>

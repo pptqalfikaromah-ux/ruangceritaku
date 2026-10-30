@@ -42,62 +42,60 @@
 <!-- ========================================== -->
 <!-- 1. TAMPILAN MOBILE: CARD LIST (< 768px)    -->
 <!-- ========================================== -->
-<div class="d-md-none space-y-3 mb-3">
+<div class="d-md-none mb-3">
     @forelse($classrooms as $rombel)
-        <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden">
-            <div class="card-body p-3">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2 pb-2 border-bottom">
-                    <div>
-                        <a href="{{ route('panel.rombel.show', $rombel->id) }}" class="fw-extrabold text-dark fs-6 text-decoration-none d-block">
-                            Kelas {{ $rombel->name }}
-                        </a>
-                        <span class="text-muted fs-xxs">Tingkat {{ $rombel->level }} &bull; {{ $rombel->major ?? 'Reguler' }}</span>
+        <div class="mobile-card mb-3">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-3 pb-3 border-bottom">
+                <div>
+                    <a href="{{ route('panel.rombel.show', $rombel->id) }}" class="card-name text-decoration-none d-block mb-1">
+                        Kelas {{ $rombel->name }}
+                    </a>
+                    <div class="card-sub">
+                        Tingkat {{ $rombel->level }} &bull; {{ $rombel->major ?? 'Reguler' }}
                     </div>
-                    <span class="badge bg-teal-subtle text-mint px-2.5 py-1 rounded-pill fs-xxs fw-bold">
-                        <i class="bi bi-people-fill me-1"></i>{{ $rombel->students_count }} Murid
+                </div>
+                <span class="badge bg-teal-subtle text-mint badge-pill-custom flex-shrink-0">
+                    <i class="bi bi-people-fill me-1"></i>{{ $rombel->students_count }} Murid
+                </span>
+            </div>
+
+            <div class="card-info-box mb-3">
+                <div class="d-flex align-items-center justify-content-between py-0.5">
+                    <span class="text-muted"><i class="bi bi-person-video3 me-1.5 text-mint"></i>Wali Kelas</span>
+                    <span class="fw-semibold text-dark text-truncate ms-2">{{ $rombel->homeroom_teacher ?? 'Belum Ditugaskan' }}</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
+                    <span class="text-muted"><i class="bi bi-calendar3 me-1.5 text-mint"></i>Tahun Ajaran</span>
+                    <span class="badge {{ $rombel->academicYear?->is_active ? 'bg-success-subtle text-success' : 'bg-light text-muted border' }} badge-pill-custom">
+                        {{ $rombel->academicYear?->name ?? '-' }}
                     </span>
                 </div>
+            </div>
 
-                <div class="mb-2.5 space-y-1">
-                    <div class="text-muted fs-xs d-flex align-items-center gap-1.5">
-                        <i class="bi bi-person-video3 text-mint"></i>
-                        <span>Wali Kelas: <strong class="text-dark">{{ $rombel->homeroom_teacher ?? 'Belum Ditugaskan' }}</strong></span>
-                    </div>
-                    <div class="text-muted fs-xs d-flex align-items-center gap-1.5">
-                        <i class="bi bi-calendar3 text-muted"></i>
-                        <span>Tahun Ajaran: 
-                            <span class="badge {{ $rombel->academicYear?->is_active ? 'bg-success-subtle text-success' : 'bg-light text-muted border' }} rounded-pill fs-xxs">
-                                {{ $rombel->academicYear?->name ?? '-' }}
-                            </span>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="d-flex gap-1.5 pt-1">
-                    <a href="{{ route('panel.rombel.show', $rombel->id) }}" class="btn btn-sm btn-outline-primary rounded-pill flex-grow-1 fw-bold fs-xs py-1.5">
-                        <i class="bi bi-eye me-1"></i> Lihat Murid
+            <div class="d-flex align-items-center gap-2">
+                <a href="{{ route('panel.rombel.show', $rombel->id) }}" class="btn btn-outline-primary btn-card-action flex-grow-1">
+                    <i class="bi bi-eye me-1"></i> Lihat Data Murid
+                </a>
+                @if(auth()->user()->isAdmin())
+                    <a href="{{ route('panel.rombel.edit', $rombel->id) }}" class="btn btn-light border btn-card-icon text-dark" title="Ubah Rombel">
+                        <i class="bi bi-pencil fs-5"></i>
                     </a>
-                    @if(auth()->user()->isAdmin())
-                        <a href="{{ route('panel.rombel.edit', $rombel->id) }}" class="btn btn-sm btn-light border rounded-pill px-3 fw-bold fs-xs py-1.5 text-dark" title="Ubah">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <form action="{{ route('panel.rombel.destroy', $rombel->id) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Hapus rombel {{ $rombel->name }}?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-light border text-danger rounded-pill px-3 fw-bold fs-xs py-1.5" title="Hapus">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    @endif
-                </div>
+                    <form action="{{ route('panel.rombel.destroy', $rombel->id) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Hapus rombel {{ $rombel->name }}?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-light border text-danger btn-card-icon" title="Hapus">
+                            <i class="bi bi-trash fs-5"></i>
+                        </button>
+                    </form>
+                @endif
             </div>
         </div>
     @empty
-        <div class="card card-app border-0 shadow-sm rounded-4 text-center py-5 px-3">
+        <div class="mobile-card text-center py-5 px-3 mb-3">
             <x-empty-state icon="bi-door-closed" title="Belum Ada Data Rombel" description="Data rombel belajar belum tersedia untuk filter yang dipilih.">
                 @if(auth()->user()->isAdmin())
                     <x-slot:action>
-                        <a href="{{ route('panel.rombel.create') }}" class="btn btn-sm btn-mint text-white rounded-pill px-3.5 py-1.5 fw-bold shadow-xs">
+                        <a href="{{ route('panel.rombel.create') }}" class="btn btn-mint text-white btn-card-action shadow-sm">
                             <i class="bi bi-plus-lg me-1"></i> Tambah Rombel
                         </a>
                     </x-slot:action>

@@ -142,73 +142,71 @@
     <!-- ========================================== -->
     <!-- 1. TAMPILAN MOBILE: CARD LIST (Layar < 768px) -->
     <!-- ========================================== -->
-    <div class="d-md-none space-y-3">
+    <div class="d-md-none mb-3">
         @forelse($complaints as $item)
-            <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden complaint-card position-relative {{ $item->safety_risk_flag ? 'border-start border-danger border-4' : '' }}">
+            <div class="mobile-card mb-3 position-relative {{ $item->safety_risk_flag ? 'border-start border-danger border-4' : '' }}">
                 
                 <!-- Ribbon Bahaya jika Risiko Keselamatan -->
                 @if($item->safety_risk_flag)
-                    <div class="bg-danger text-white py-1 px-3 fs-xxs fw-bold d-flex align-items-center justify-content-between">
-                        <span class="d-flex align-items-center gap-1.5">
-                            <i class="bi bi-shield-fill-exclamation"></i> RISIKO KEAMANAN & KESELAMATAN
+                    <div class="bg-danger text-white py-1.5 px-3 small fw-bold d-flex align-items-center justify-content-between rounded-3 mb-3">
+                        <span class="d-flex align-items-center gap-2">
+                            <i class="bi bi-shield-fill-exclamation fs-6"></i> RISIKO KEAMANAN & KESELAMATAN
                         </span>
                         <span class="badge bg-white text-danger fw-extrabold px-2 py-0.5 rounded-pill">DARURAT</span>
                     </div>
                 @endif
 
-                <div class="card-body p-3">
-                    <!-- Header Card: Tiket, Tanggal, & Status -->
-                    <div class="d-flex justify-content-between align-items-start gap-2 mb-2 pb-2 border-bottom">
-                        <div>
-                            <span class="font-monospace fw-bold text-mint fs-xs d-block">
-                                {{ $item->ticket_number }}
+                <!-- Header Card: Tiket, Tanggal, & Status -->
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-3 pb-3 border-bottom">
+                    <div>
+                        <span class="font-monospace fw-bold text-mint fs-6 d-block mb-1">
+                            #{{ $item->ticket_number }}
+                        </span>
+                        <span class="text-muted small">
+                            <i class="bi bi-clock me-1 text-mint"></i>{{ $item->created_at->translatedFormat('d M Y, H:i') }} WIB
+                        </span>
+                    </div>
+                    <span class="badge {{ $item->status_badge_class }} badge-pill-custom text-nowrap flex-shrink-0">
+                        {{ $item->status_label }}
+                    </span>
+                </div>
+
+                <!-- Identitas Pelapor -->
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="rounded-circle bg-teal-subtle text-mint d-flex align-items-center justify-content-center fw-bold shadow-xs flex-shrink-0" 
+                         style="width: 48px; height: 48px; font-size: 1.15rem;">
+                        {{ strtoupper(substr($item->student?->name ?? $item->reporter_name ?? 'M', 0, 1)) }}
+                    </div>
+                    <div class="overflow-hidden flex-grow-1">
+                        <h3 class="card-name mb-1 text-truncate">
+                            {{ $item->student?->name ?? $item->reporter_name ?? 'Murid' }}
+                        </h3>
+                        <div class="card-sub d-flex flex-wrap align-items-center gap-2">
+                            <span class="badge bg-teal-subtle text-mint badge-pill-custom">
+                                Kelas {{ $item->student?->classrooms->first()?->name ?? 'Belum ada rombel' }}
                             </span>
-                            <span class="text-muted fs-xxs">
-                                <i class="bi bi-clock me-0.5"></i>{{ $item->created_at->translatedFormat('d M Y, H:i') }} WIB
-                            </span>
-                        </div>
-                        <span class="badge {{ $item->status_badge_class }} rounded-pill px-2.5 py-1 fs-xxs fw-bold text-nowrap">
-                            {{ $item->status_label }}
-                        </span>
-                    </div>
-
-                    <!-- Identitas Pelapor -->
-                    <div class="d-flex align-items-center gap-2.5 mb-2.5">
-                        <div class="rounded-circle bg-teal-subtle text-mint d-flex align-items-center justify-content-center fw-bold shadow-xs flex-shrink-0" 
-                             style="width: 36px; height: 36px; font-size: 0.9rem;">
-                            {{ strtoupper(substr($item->student?->name ?? $item->reporter_name ?? 'M', 0, 1)) }}
-                        </div>
-                        <div class="overflow-hidden flex-grow-1">
-                            <div class="fw-bold text-dark fs-sm text-truncate">
-                                {{ $item->student?->name ?? $item->reporter_name ?? 'Murid' }}
-                            </div>
-                            <div class="text-muted fs-xxs d-flex flex-wrap align-items-center gap-1">
-                                <span class="badge bg-light text-dark border px-1.5 py-0.5 rounded">
-                                    {{ $item->student?->classrooms->first()?->name ?? 'Belum ada kelas' }}
-                                </span>
-                                <span>NISN: <code class="text-mint">{{ $item->student?->nisn ?? '-' }}</code></span>
-                            </div>
+                            <span>NISN: <code class="text-mint fw-bold">{{ $item->student?->nisn ?? '-' }}</code></span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Badges Kategori & Urgensi -->
-                    <div class="d-flex flex-wrap gap-1.5 mb-2">
-                        <span class="badge bg-teal-subtle text-mint px-2 py-1 rounded fs-xxs fw-semibold">
-                            <i class="bi bi-tag-fill me-1"></i>{{ $item->category }}
-                        </span>
-                        <span class="badge {{ $item->urgency_badge_class }} px-2 py-1 rounded fs-xxs fw-semibold text-uppercase">
-                            <i class="bi bi-exclamation-circle me-1"></i>{{ $item->urgency_level }}
-                        </span>
-                    </div>
+                <!-- Badges Kategori & Urgensi -->
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <span class="badge bg-teal-subtle text-mint badge-pill-custom">
+                        <i class="bi bi-tag-fill me-1"></i>{{ $item->category }}
+                    </span>
+                    <span class="badge {{ $item->urgency_badge_class }} badge-pill-custom text-uppercase">
+                        <i class="bi bi-exclamation-circle me-1"></i>{{ $item->urgency_level }}
+                    </span>
+                </div>
 
-                    <!-- Uraian Kronologi Box (Terbaca rapi, tidak terpotong kata) -->
-                    <div class="p-2.5 rounded-3 bg-light border text-dark fs-xs mb-2.5" style="line-height: 1.55; max-height: 85px; overflow-y: auto;">
-                        <span class="text-muted fs-xxs d-block fw-bold mb-0.5 text-uppercase">Kronologi Laporan:</span>
+                <!-- Uraian Kronologi Box (Terbaca rapi, bernafas) -->
+                <div class="card-info-box mb-3">
+                    <span class="text-muted small d-block fw-bold mb-1 text-uppercase">Kronologi Laporan:</span>
+                    <p class="text-dark mb-2" style="line-height: 1.6;">
                         {{ $item->description }}
-                    </div>
-
-                    <!-- Meta Waktu & Lokasi Kejadian -->
-                    <div class="d-flex align-items-center justify-content-between text-muted fs-xxs pt-2 border-top">
+                    </p>
+                    <div class="d-flex align-items-center justify-content-between text-muted small pt-2 border-top">
                         <div class="text-truncate me-2" title="Waktu Kejadian">
                             <i class="bi bi-calendar-event me-1 text-mint"></i>
                             <span class="text-dark fw-semibold">
@@ -220,18 +218,18 @@
                             <span class="text-dark fw-semibold">{{ $item->incident_location ?? 'Sekolah' }}</span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Tombol Aksi Penuh Ramah Jempol (Touch-friendly) -->
-                    <div class="mt-3 pt-1">
-                        <a href="{{ route('panel.pengaduan.show', $item->id) }}" 
-                           class="btn btn-mint btn-sm text-white w-100 rounded-pill py-2 fw-bold shadow-xs d-flex align-items-center justify-content-center gap-1.5 fs-xs">
-                            <i class="bi bi-shield-check"></i> Periksa Detail & Tindak Lanjut <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
+                <!-- Tombol Aksi Penuh Ramah Jempol (Touch-friendly) -->
+                <div>
+                    <a href="{{ route('panel.pengaduan.show', $item->id) }}" 
+                       class="btn btn-mint text-white btn-card-action w-100 shadow-sm">
+                        <i class="bi bi-shield-check me-1"></i> Periksa Detail & Tindak Lanjut <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
                 </div>
             </div>
         @empty
-            <div class="card card-app border-0 shadow-sm rounded-4 text-center py-5 px-3">
+            <div class="mobile-card text-center py-5 px-3 mb-3">
                 <div class="p-3 rounded-circle bg-light text-success d-inline-flex mx-auto mb-2">
                     <i class="bi bi-shield-check fs-1"></i>
                 </div>

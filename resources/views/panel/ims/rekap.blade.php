@@ -146,45 +146,51 @@
             </div>
 
             <!-- TAMPILAN MOBILE: CARD LIST (< 768px) -->
-            <div class="d-md-none p-3 space-y-3">
+            <div class="d-md-none p-3">
                 @foreach($topProblems as $rank => $item)
                     @php
                         $pct = round(($item->total_selected / $respondentCount) * 100, 1);
                     @endphp
-                    <div class="card border rounded-3 p-3 bg-white shadow-xs">
-                        <div class="d-flex justify-content-between align-items-start gap-2 mb-2 pb-1.5 border-bottom">
-                            <div class="d-flex align-items-center gap-1.5">
+                    <div class="mobile-card mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                            <div class="d-flex align-items-center gap-2">
                                 @if($rank === 0)
-                                    <span class="badge bg-danger text-white rounded-circle p-1" style="width: 22px; height: 22px; font-size: 0.7rem;">1</span>
+                                    <span class="badge bg-danger text-white rounded-circle p-1 d-inline-flex align-items-center justify-content-center" style="width: 26px; height: 26px; font-size: 0.82rem;">1</span>
                                 @elseif($rank === 1)
-                                    <span class="badge bg-warning text-dark rounded-circle p-1" style="width: 22px; height: 22px; font-size: 0.7rem;">2</span>
+                                    <span class="badge bg-warning text-dark rounded-circle p-1 d-inline-flex align-items-center justify-content-center" style="width: 26px; height: 26px; font-size: 0.82rem;">2</span>
                                 @elseif($rank === 2)
-                                    <span class="badge bg-info text-white rounded-circle p-1" style="width: 22px; height: 22px; font-size: 0.7rem;">3</span>
+                                    <span class="badge bg-info text-white rounded-circle p-1 d-inline-flex align-items-center justify-content-center" style="width: 26px; height: 26px; font-size: 0.82rem;">3</span>
                                 @else
-                                    <span class="badge bg-light text-muted border rounded-circle p-1" style="width: 22px; height: 22px; font-size: 0.7rem;">{{ $rank + 1 }}</span>
+                                    <span class="badge bg-light text-muted border rounded-circle p-1 d-inline-flex align-items-center justify-content-center" style="width: 26px; height: 26px; font-size: 0.82rem;">{{ $rank + 1 }}</span>
                                 @endif
-                                <span class="fw-bold text-mint font-monospace fs-xs">#{{ $item->statement_number }}</span>
+                                <span class="fw-bold text-mint font-monospace fs-6">#{{ $item->statement_number }}</span>
                             </div>
-                            <span class="badge bg-danger-subtle text-danger fw-bold fs-xxs">
+                            <span class="badge bg-danger-subtle text-danger badge-pill-custom">
                                 {{ $item->total_selected }} Siswa ({{ $pct }}%)
                             </span>
                         </div>
 
-                        <div class="fw-bold text-dark fs-xs mb-2" style="line-height: 1.5;">
+                        <div class="card-name mb-3" style="font-size: 0.98rem !important; line-height: 1.55;">
                             {{ $item->statement_text }}
                         </div>
 
-                        <div class="d-flex flex-wrap gap-1 mb-2">
-                            <span class="badge bg-light text-dark border px-2 py-0.5 rounded fs-xxs">
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge bg-light text-dark border badge-pill-custom">
                                 Bidang {{ $item->field_name }}
                             </span>
-                            <span class="badge bg-teal-subtle text-mint px-2 py-0.5 rounded fs-xxs">
+                            <span class="badge bg-teal-subtle text-mint badge-pill-custom">
                                 {{ $item->service_name }}
                             </span>
                         </div>
 
-                        <div class="progress" style="height: 6px;">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $pct }}%"></div>
+                        <div>
+                            <div class="d-flex justify-content-between text-muted small mb-1">
+                                <span>Persentase Frekuensi</span>
+                                <span class="fw-bold text-danger">{{ $pct }}%</span>
+                            </div>
+                            <div class="progress" style="height: 8px; border-radius: 4px;">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $pct }}%"></div>
+                            </div>
                         </div>
                     </div>
                 @endforeach

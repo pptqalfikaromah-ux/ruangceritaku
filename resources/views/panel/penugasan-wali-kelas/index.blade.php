@@ -30,75 +30,75 @@
 <!-- ========================================== -->
 <!-- 1. TAMPILAN MOBILE: CARD LIST (< 768px)    -->
 <!-- ========================================== -->
-<div class="d-md-none space-y-3 mb-3">
+<div class="d-md-none mb-3">
     @forelse($classrooms as $index => $room)
         @php
             $assignment = $room->currentHomeroomAssignment;
             $assignedTeacher = $assignment?->teacher;
         @endphp
-        <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden">
-            <div class="card-body p-3">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2 pb-2 border-bottom">
-                    <div>
-                        <div class="fw-extrabold text-dark fs-6">Kelas {{ $room->name }}</div>
-                        <span class="text-muted fs-xxs">Tingkat {{ $room->level }} &bull; {{ $room->major ?? 'Reguler' }}</span>
+        <div class="mobile-card mb-3">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-3 pb-3 border-bottom">
+                <div>
+                    <h3 class="card-name mb-1">Kelas {{ $room->name }}</h3>
+                    <div class="card-sub">
+                        Tingkat {{ $room->level }} &bull; {{ $room->major ?? 'Reguler' }}
                     </div>
-                    @if($assignedTeacher)
-                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5 py-1 fs-xxs fw-bold">
-                            <i class="bi bi-check-circle me-1"></i>Ditugaskan
-                        </span>
-                    @else
-                        <span class="badge bg-danger-subtle text-danger border border-danger rounded-pill px-2.5 py-1 fs-xxs fw-bold">
-                            <i class="bi bi-exclamation-triangle me-1"></i>Kosong
-                        </span>
-                    @endif
                 </div>
+                @if($assignedTeacher)
+                    <span class="badge bg-success-subtle text-success badge-pill-custom flex-shrink-0">
+                        <i class="bi bi-check-circle me-1"></i>Ditugaskan
+                    </span>
+                @else
+                    <span class="badge bg-danger-subtle text-danger badge-pill-custom flex-shrink-0">
+                        <i class="bi bi-exclamation-triangle me-1"></i>Kosong
+                    </span>
+                @endif
+            </div>
 
-                <div class="p-2.5 rounded-3 bg-light border mb-2.5">
-                    @if($assignedTeacher)
-                        <div class="d-flex align-items-center gap-2 mb-1">
-                            <div class="p-1.5 rounded-circle bg-warning-subtle text-warning-emphasis flex-shrink-0">
-                                <i class="bi bi-mortarboard-fill"></i>
-                            </div>
-                            <div class="overflow-hidden">
-                                <div class="fw-bold text-dark fs-xs text-truncate">{{ $assignedTeacher->name }}</div>
-                                <div class="text-muted fs-xxs">NIP: {{ $assignedTeacher->nip_nuptk ?? '-' }} &bull; User: {{ $assignedTeacher->user?->username ?? '-' }}</div>
-                            </div>
+            <div class="card-info-box mb-3">
+                @if($assignedTeacher)
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="p-2.5 rounded-circle bg-warning-subtle text-warning-emphasis flex-shrink-0">
+                            <i class="bi bi-mortarboard-fill fs-5"></i>
                         </div>
-                    @else
-                        <div class="text-muted fs-xs fst-italic">
-                            <i class="bi bi-info-circle me-1 text-danger"></i> Belum ada wali kelas yang ditugaskan ke rombel ini.
+                        <div class="overflow-hidden flex-grow-1">
+                            <div class="fw-bold text-dark fs-6 text-truncate mb-0.5">{{ $assignedTeacher->name }}</div>
+                            <div class="text-muted small">NIP: {{ $assignedTeacher->nip_nuptk ?? '-' }} &bull; User: {{ $assignedTeacher->user?->username ?? '-' }}</div>
                         </div>
-                    @endif
-                    @if($assignment?->notes)
-                        <div class="text-muted fs-xxs border-top pt-1.5 mt-1.5">
-                            <i class="bi bi-chat-left-text me-1"></i>Catatan: {{ $assignment->notes }}
-                        </div>
-                    @endif
-                </div>
+                    </div>
+                @else
+                    <div class="text-muted small fst-italic py-1">
+                        <i class="bi bi-info-circle me-1.5 text-danger"></i> Belum ada wali kelas yang ditugaskan ke rombel ini.
+                    </div>
+                @endif
+                @if($assignment?->notes)
+                    <div class="text-muted small border-top pt-2 mt-2">
+                        <i class="bi bi-chat-left-text me-1.5 text-mint"></i>Catatan: {{ $assignment->notes }}
+                    </div>
+                @endif
+            </div>
 
-                <div class="d-flex gap-1.5">
-                    <button type="button" 
-                            class="btn btn-sm btn-outline-warning text-dark rounded-pill flex-grow-1 fw-bold fs-xs py-1.5 shadow-xs"
-                            data-bs-toggle="modal" 
-                            data-bs-target="#modalAssign{{ $room->id }}">
-                        <i class="bi bi-pencil me-1"></i> {{ $assignedTeacher ? 'Ganti Wali Kelas' : 'Tugaskan Wali Kelas' }}
-                    </button>
+            <div class="d-flex align-items-center gap-2">
+                <button type="button" 
+                        class="btn btn-outline-warning text-dark btn-card-action flex-grow-1"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#modalAssign{{ $room->id }}">
+                    <i class="bi bi-pencil me-1"></i> {{ $assignedTeacher ? 'Ganti Wali Kelas' : 'Tugaskan Wali Kelas' }}
+                </button>
 
-                    @if($assignment)
-                        <form action="{{ route('panel.penugasan-wali-kelas.destroy', $assignment) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Lepas penugasan wali kelas untuk rombel {{ $room->name }}?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-light border text-danger rounded-pill px-3 fw-bold fs-xs py-1.5" title="Lepas Penugasan">
-                                <i class="bi bi-x-circle"></i>
-                            </button>
-                        </form>
-                    @endif
-                </div>
+                @if($assignment)
+                    <form action="{{ route('panel.penugasan-wali-kelas.destroy', $assignment) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Lepas penugasan wali kelas untuk rombel {{ $room->name }}?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-light border text-danger btn-card-icon" title="Lepas Penugasan">
+                            <i class="bi bi-x-circle fs-5"></i>
+                        </button>
+                    </form>
+                @endif
             </div>
         </div>
     @empty
-        <div class="card card-app border-0 shadow-sm rounded-4 text-center py-5 px-3">
+        <div class="mobile-card text-center py-5 px-3 mb-3">
             <p class="text-muted fs-xs mb-0">Tidak ada rombel belajar pada tahun ajaran ini.</p>
         </div>
     @endforelse

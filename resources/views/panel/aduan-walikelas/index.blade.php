@@ -75,66 +75,64 @@
     <!-- ========================================== -->
     <!-- 1. TAMPILAN MOBILE: CARD LIST (< 768px)    -->
     <!-- ========================================== -->
-    <div class="d-md-none space-y-3 mb-3">
+    <div class="d-md-none mb-3">
         @forelse($complaints as $index => $comp)
-            <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden">
-                <div class="card-body p-3">
-                    <div class="d-flex justify-content-between align-items-start gap-2 mb-2 pb-2 border-bottom">
-                        <div>
-                            <span class="text-muted fs-xxs d-block">
-                                <i class="bi bi-calendar-event me-1 text-mint"></i>{{ $comp->incident_date->format('d M Y') }}
-                            </span>
-                            <span class="badge bg-light text-dark border px-2 py-0.5 rounded fs-xxs fw-semibold mt-1">
-                                Kelas {{ $comp->classroom?->name }}
-                            </span>
-                        </div>
-                        <span class="badge rounded-pill {{ $comp->status_badge_class }} px-2.5 py-1 fs-xxs fw-bold text-nowrap">
-                            {{ $comp->status_label }}
+            <div class="mobile-card mb-3">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-3 pb-3 border-bottom">
+                    <div>
+                        <span class="text-muted small d-block">
+                            <i class="bi bi-calendar-event me-1 text-mint"></i>{{ $comp->incident_date->format('d M Y') }}
+                        </span>
+                        <span class="badge bg-teal-subtle text-mint badge-pill-custom mt-1">
+                            Kelas {{ $comp->classroom?->name }}
                         </span>
                     </div>
+                    <span class="badge rounded-pill {{ $comp->status_badge_class }} badge-pill-custom text-nowrap flex-shrink-0">
+                        {{ $comp->status_label }}
+                    </span>
+                </div>
 
-                    <!-- Pelapor & Murid -->
-                    <div class="row g-2 mb-2.5">
-                        <div class="col-6">
-                            <div class="p-2 rounded-3 bg-light border h-100">
-                                <span class="text-muted fs-xxs d-block mb-0.5">Wali Kelas:</span>
-                                <div class="fw-bold text-dark fs-xs text-truncate">{{ $comp->teacher?->name }}</div>
-                                <div class="text-muted fs-xxs">NIP: {{ $comp->teacher?->nip_nuptk ?? '-' }}</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="p-2 rounded-3 bg-teal-subtle border border-teal-subtle h-100">
-                                <span class="text-mint fs-xxs d-block mb-0.5 fw-semibold">Murid Terkait:</span>
-                                <div class="fw-bold text-dark fs-xs text-truncate">{{ $comp->student?->name }}</div>
-                                <div class="text-muted fs-xxs">NISN: {{ $comp->student?->nisn }}</div>
-                            </div>
+                <!-- Pelapor & Murid -->
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <div class="card-info-box h-100 p-2.5">
+                            <span class="text-muted small d-block mb-1">Wali Kelas:</span>
+                            <div class="fw-bold text-dark fs-6 text-truncate">{{ $comp->teacher?->name }}</div>
+                            <div class="text-muted small">NIP: {{ $comp->teacher?->nip_nuptk ?? '-' }}</div>
                         </div>
                     </div>
-
-                    <!-- Masalah -->
-                    <div class="mb-2.5">
-                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-0.5 rounded fs-xxs fw-semibold mb-1 d-inline-block">
-                            {{ $comp->category_label }}
-                        </span>
-                        <div class="fw-bold text-dark fs-sm">{{ $comp->title }}</div>
-                        @if($comp->teacher_notes)
-                            <div class="p-2 rounded-3 bg-light border text-muted fs-xs mt-1.5" style="line-height: 1.5; max-height: 80px; overflow-y: auto;">
-                                <span class="text-muted fs-xxs d-block fw-bold mb-0.5 text-uppercase">Catatan Wali Kelas:</span>
-                                {{ $comp->teacher_notes }}
-                            </div>
-                        @endif
+                    <div class="col-6">
+                        <div class="card-info-box h-100 p-2.5 bg-teal-subtle border-teal">
+                            <span class="text-mint small d-block mb-1 fw-bold">Murid Terkait:</span>
+                            <div class="fw-bold text-dark fs-6 text-truncate">{{ $comp->student?->name }}</div>
+                            <div class="text-muted small">NISN: {{ $comp->student?->nisn }}</div>
+                        </div>
                     </div>
+                </div>
 
-                    <!-- Button Aksi Penuh -->
-                    <div class="pt-1">
-                        <a href="{{ route('panel.aduan-walikelas.show', $comp) }}" class="btn btn-mint text-white btn-sm w-100 rounded-pill py-2 fw-bold shadow-xs fs-xs d-flex align-items-center justify-content-center gap-1.5">
-                            <i class="bi bi-reply-fill"></i> Tinjau & Respon Kasus <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
+                <!-- Masalah -->
+                <div class="card-info-box mb-3">
+                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle badge-pill-custom mb-1.5 d-inline-block">
+                        {{ $comp->category_label }}
+                    </span>
+                    <h3 class="card-name mb-2 fs-6">{{ $comp->title }}</h3>
+                    @if($comp->teacher_notes)
+                        <div class="p-2.5 rounded-3 bg-white border text-muted small mt-2" style="line-height: 1.55;">
+                            <span class="text-muted small d-block fw-bold mb-1 text-uppercase">Catatan Wali Kelas:</span>
+                            {{ $comp->teacher_notes }}
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Button Aksi Penuh -->
+                <div>
+                    <a href="{{ route('panel.aduan-walikelas.show', $comp) }}" class="btn btn-mint text-white btn-card-action w-100 shadow-sm">
+                        <i class="bi bi-reply-fill me-1"></i> Tinjau & Respon Kasus <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
                 </div>
             </div>
         @empty
-            <div class="card card-app border-0 shadow-sm rounded-4 text-center py-5 px-3">
+            <div class="mobile-card text-center py-5 px-3 mb-3">
                 <i class="bi bi-inbox fs-1 d-block mb-2 text-muted opacity-50"></i>
                 <p class="text-muted fs-xs mb-0">Belum ada laporan kasus murid dari Wali Kelas.</p>
             </div>
