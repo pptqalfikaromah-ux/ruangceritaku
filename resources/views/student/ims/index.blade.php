@@ -3,9 +3,9 @@
 @section('title', 'Instrumen Masalah Siswa (IMS)')
 
 @section('breadcrumb')
-    <a href="{{ route('murid.konseling.ajukan') }}">Ajukan Konseling</a>
+    <a href="{{ route('murid.dashboard') }}">Beranda</a>
     <i class="bi bi-chevron-right" style="font-size:.65rem;"></i>
-    <span class="active">Instrumen Masalah (IMS)</span>
+    <span class="active">Asesmen Masalah Siswa (IMS)</span>
 @endsection
 
 @section('content')
@@ -22,15 +22,15 @@
                 <div class="col-lg-8">
                     <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
                         <span class="badge px-3 py-1.5 rounded-pill fw-bold fs-xs text-slate-900" style="background: #FFB800; border: 1px solid #FFE082;">
-                            <i class="bi bi-sparkles me-1 text-dark"></i> Instrumen Kebutuhan BK
+                            <i class="bi bi-sparkles me-1 text-dark"></i> Asesmen Kebutuhan Siswa
                         </span>
                         @if($assessment->isSubmitted())
                             <span class="badge px-3 py-1.5 rounded-pill fw-semibold fs-xs text-white" style="background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.4);">
-                                <i class="bi bi-check-circle-fill me-1 text-warning"></i> Lembar Sudah Dikirimkan ke Guru BK
+                                <i class="bi bi-check-circle-fill me-1 text-warning"></i> Lembar Asesmen Selesai & Dikirimkan
                             </span>
                         @else
                             <span class="badge px-3 py-1.5 rounded-pill fw-semibold fs-xs text-white" style="background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.3);">
-                                <i class="bi bi-pencil-square me-1" style="color: #FFD15C;"></i> Mode Pengisian Aktif
+                                <i class="bi bi-pencil-square me-1" style="color: #FFD15C;"></i> Mode Pemilihan Butir Aktif
                             </span>
                         @endif
                     </div>
@@ -43,9 +43,23 @@
                     </p>
 
                     <div class="d-flex flex-wrap gap-2.5">
-                        <a href="{{ route('murid.ims.counseling.create') }}" class="btn btn-gold btn-sm rounded-pill px-4 py-2.5 fw-bold shadow-sm" style="color: #1e293b;">
-                            <i class="bi bi-send-check-fill me-1.5"></i> Ajukan Konseling dari Temuan IMS &rarr;
-                        </a>
+                        @if($assessment->isSubmitted())
+                            <a href="{{ route('murid.ims.result') }}" class="btn btn-gold btn-sm rounded-pill px-4 py-2.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5" style="color: #1e293b;">
+                                <i class="bi bi-file-earmark-bar-graph-fill"></i> Lihat Lembar Hasil Akhir &rarr;
+                            </a>
+                            <a href="{{ route('murid.ims.print') }}" target="_blank" class="btn btn-light btn-sm rounded-pill px-3.5 py-2.5 fw-bold text-dark d-inline-flex align-items-center gap-1.5">
+                                <i class="bi bi-printer"></i> Cetak Format AUM (PDF)
+                            </a>
+                        @else
+                            <a href="#daftar-layanan" class="btn btn-gold btn-sm rounded-pill px-4 py-2.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5" style="color: #1e293b;">
+                                <i class="bi bi-pencil-square"></i> Pilih Butir Layanan &rarr;
+                            </a>
+                            @if(($totalSelectedCount ?? 0) > 0)
+                                <a href="{{ route('murid.ims.result') }}" class="btn btn-light btn-sm rounded-pill px-3.5 py-2.5 fw-bold text-dark d-inline-flex align-items-center gap-1.5">
+                                    <i class="bi bi-eye"></i> Pratinjau Hasil ({{ $totalSelectedCount }} Butir)
+                                </a>
+                            @endif
+                        @endif
                     </div>
                 </div>
 
@@ -66,14 +80,14 @@
         </div>
     </div>
 
-    <!-- Section Title & 9 Service Grid -->
-    <div class="mb-3 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
+    <!-- Section Title & 8 Service Grid -->
+    <div id="daftar-layanan" class="mb-3 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
         <div>
             <h4 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
                 <span>{{ $serviceTypes->count() }} Menu Layanan Konseling</span>
-                <span class="badge bg-light text-muted border rounded-pill fs-xs fw-semibold">Pilih Menu Layanan Konseling</span>
+                <span class="badge bg-light text-muted border rounded-pill fs-xs fw-semibold">Pilih Layanan</span>
             </h4>
-            <p class="text-muted fs-xs mb-0 mt-0.5">Klik salah satu kotak layanan di bawah untuk membuka pilihan 4 bidang bimbingan.</p>
+            <p class="text-muted fs-xs mb-0 mt-0.5">Pilih salah satu layanan di bawah untuk membuka pilihan butir masalah pada 4 bidang bimbingan.</p>
         </div>
     </div>
 
@@ -223,6 +237,50 @@
             </div>
         @endforeach
     </div>
+
+    <!-- Panel Pengiriman / Hasil Akhir Asesmen -->
+    @if(!$assessment->isSubmitted())
+        <div class="card border-0 rounded-4 bg-white p-4 p-md-5 shadow-sm text-center mt-4" style="border: 1.5px solid #E2ECE9 !important;">
+            <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px; background: #E6FAF5; color: #00B894;">
+                <i class="bi bi-send-check fs-2"></i>
+            </div>
+            <h4 class="fw-extrabold text-dark mb-1">Sudah Selesai Memilih Butir Masalah?</h4>
+            <p class="text-muted fs-xs mb-3 mx-auto" style="max-width: 540px;">
+                Saat ini kamu telah memilih <strong>{{ $totalSelectedCount }} Butir Masalah</strong> (termasuk {{ $totalHeavyCount }} butir masalah berat). Jika kamu sudah selesai memilih butir dari seluruh layanan yang dialami, silakan kirimkan asesmen ini untuk memproses <strong>Lembar Hasil Akhir Pengolahan AUM</strong>.
+            </p>
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+                <form action="{{ route('murid.ims.submit') }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-emerald rounded-pill px-4 py-2.5 fw-bold shadow-sm" onclick="return confirm('Apakah kamu yakin sudah selesai memilih semua butir masalah dan ingin memproses hasil akhir asesmen IMS?')">
+                        <i class="bi bi-check-all me-1.5"></i> Selesai & Kirimkan Asesmen IMS
+                    </button>
+                </form>
+                @if($totalSelectedCount > 0)
+                    <a href="{{ route('murid.ims.result') }}" class="btn btn-light border rounded-pill px-4 py-2.5 fw-semibold text-dark">
+                        <i class="bi bi-eye me-1.5"></i> Pratinjau Lembar Hasil
+                    </a>
+                @endif
+            </div>
+        </div>
+    @else
+        <div class="card border-0 rounded-4 bg-white p-4 p-md-5 shadow-sm text-center mt-4" style="border: 1.5px solid #E2ECE9 !important;">
+            <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px; background: #ecfdf5; color: #059669;">
+                <i class="bi bi-file-earmark-check-fill fs-2"></i>
+            </div>
+            <h4 class="fw-extrabold text-dark mb-1">Asesmen IMS Kamu Telah Selesai & Tersimpan</h4>
+            <p class="text-muted fs-xs mb-3 mx-auto" style="max-width: 540px;">
+                Kamu dapat melihat kembali rincian pemetaan masalah atau mencetak dokumen resmi <strong>Hasil Pengolahan AUM / IMS (Format 3 Individual)</strong> kapan saja.
+            </p>
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+                <a href="{{ route('murid.ims.result') }}" class="btn btn-emerald rounded-pill px-4 py-2.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5">
+                    <i class="bi bi-file-earmark-bar-graph-fill"></i> Lihat Hasil Akhir Asesmen &rarr;
+                </a>
+                <a href="{{ route('murid.ims.print') }}" target="_blank" class="btn btn-outline-secondary rounded-pill px-4 py-2.5 fw-semibold d-inline-flex align-items-center gap-1.5">
+                    <i class="bi bi-printer"></i> Cetak Format AUM (PDF)
+                </a>
+            </div>
+        </div>
+    @endif
 </div>
 @endsection
 

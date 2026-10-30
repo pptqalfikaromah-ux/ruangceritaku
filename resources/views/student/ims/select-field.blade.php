@@ -3,8 +3,10 @@
 @section('title', 'Pilih Bidang Masalah - ' . $service->name)
 
 @section('breadcrumb')
-    <a href="{{ route('murid.ims.index') }}">IMS</a>
-    <span>/</span>
+    <a href="{{ route('murid.dashboard') }}">Beranda</a>
+    <i class="bi bi-chevron-right" style="font-size:.65rem;"></i>
+    <a href="{{ route('murid.ims.index') }}">Asesmen IMS</a>
+    <i class="bi bi-chevron-right" style="font-size:.65rem;"></i>
     <span class="active">{{ $service->name }}</span>
 @endsection
 
@@ -31,7 +33,7 @@
                 </span>
                 <i class="bi bi-chevron-right text-muted fs-xxs"></i>
                 <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1">
-                    3. Isi 5 Butir & Catatan
+                    3. Isi Butir Masalah
                 </span>
             </div>
         </div>
@@ -51,13 +53,13 @@
                     </span>
                     <h3 class="fw-extrabold text-dark mb-0 tracking-tight">{{ $service->name }}</h3>
                     <p class="text-muted fs-xs mb-0 mt-1">
-                        Silakan pilih 1 dari 4 <strong>Bidang Masalah</strong> di bawah untuk membuka lembar instrumen 5 butir dan catatan lebar.
+                        Silakan pilih 1 dari 4 <strong>Bidang Masalah</strong> di bawah untuk membuka lembar butir instrumen.
                     </p>
                 </div>
             </div>
             <div>
-                <a href="{{ route('murid.ims.counseling.create') }}" class="btn btn-sm btn-outline-purple rounded-pill px-3.5 py-2 fw-semibold" style="border-color: #7c3aed; color: #7c3aed;">
-                    <i class="bi bi-calendar-check me-1"></i> Jadwalkan Konseling IMS
+                <a href="{{ route('murid.ims.result') }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3.5 py-2 fw-semibold">
+                    <i class="bi bi-file-earmark-bar-graph me-1"></i> Lembar Hasil Akhir
                 </a>
             </div>
         </div>

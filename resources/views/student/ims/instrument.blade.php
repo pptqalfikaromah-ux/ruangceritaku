@@ -3,10 +3,12 @@
 @section('title', 'Instrumen Masalah: ' . $service->name . ' - Bidang ' . $field->name)
 
 @section('breadcrumb')
-    <a href="{{ route('murid.ims.index') }}">IMS</a>
-    <span>/</span>
+    <a href="{{ route('murid.dashboard') }}">Beranda</a>
+    <i class="bi bi-chevron-right" style="font-size:.65rem;"></i>
+    <a href="{{ route('murid.ims.index') }}">Asesmen IMS</a>
+    <i class="bi bi-chevron-right" style="font-size:.65rem;"></i>
     <a href="{{ route('murid.ims.service', $service->id) }}">{{ $service->name }}</a>
-    <span>/</span>
+    <i class="bi bi-chevron-right" style="font-size:.65rem;"></i>
     <span class="active">Bidang {{ $field->name }}</span>
 @endsection
 
@@ -361,16 +363,16 @@
                         <i class="bi bi-floppy me-1"></i> Simpan Pilihan
                     </button>
 
-                    <!-- 2. Lanjut ke Pengajuan Konseling IMS -->
-                    <button type="button" class="btn btn-gold btn-sm rounded-pill px-4 py-2 fw-bold shadow-sm" id="btnRequestCounseling">
-                        <i class="bi bi-send-check-fill me-1.5"></i> Simpan & Lanjut ke Konseling &rarr;
+                    <!-- 2. Lanjut ke Menu Layanan Asesmen IMS -->
+                    <button type="button" class="btn btn-primary btn-sm rounded-pill px-4 py-2 fw-bold shadow-sm" id="btnSaveAndIndex">
+                        <i class="bi bi-check2-circle me-1.5"></i> Simpan & Ke Menu Layanan &rarr;
                     </button>
                 </div>
             </div>
         @else
             <div class="text-center py-4">
-                <a href="{{ route('murid.ims.counseling.create') }}" class="btn btn-gold rounded-pill px-4 py-2.5 fw-bold shadow-sm">
-                    <i class="bi bi-calendar-check-fill me-1.5"></i> Ajukan Konseling dari Lembar Ini &rarr;
+                <a href="{{ route('murid.ims.result') }}" class="btn btn-primary rounded-pill px-4 py-2.5 fw-bold shadow-sm">
+                    <i class="bi bi-file-earmark-bar-graph-fill me-1.5"></i> Lihat Lembar Hasil Akhir Asesmen IMS &rarr;
                 </a>
             </div>
         @endif
@@ -472,7 +474,7 @@
         const form = document.getElementById('instrumentForm');
         const actionInput = document.getElementById('actionInput');
         const btnSaveDraft = document.getElementById('btnSaveDraft');
-        const btnRequestCounseling = document.getElementById('btnRequestCounseling');
+        const btnSaveAndIndex = document.getElementById('btnSaveAndIndex');
 
         // Toggle card visual active state and note box on checkbox change
         document.querySelectorAll('.modern-checkbox').forEach(chk => {
@@ -504,9 +506,9 @@
             });
         }
 
-        if (btnRequestCounseling) {
-            btnRequestCounseling.addEventListener('click', function() {
-                actionInput.value = 'counseling';
+        if (btnSaveAndIndex) {
+            btnSaveAndIndex.addEventListener('click', function() {
+                actionInput.value = 'to_index';
                 form.submit();
             });
         }

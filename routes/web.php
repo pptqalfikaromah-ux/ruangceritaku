@@ -229,20 +229,8 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
     Route::get('/', [StudentDashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard.index');
 
-    // 1. Hub Utama Pengajuan Konseling (Pilihan: Konseling Pribadi vs Konseling Melalui IMS)
+    // 1. Pengajuan Konseling Mandiri / Pribadi
     Route::get('/ajukan-konseling', [StudentCounselingController::class, 'ajukan'])->name('konseling.ajukan');
-
-    // 1b. Instrumen Masalah Siswa (IMS) - Alur Berjenjang (Intent)
-    Route::get('/ims', [StudentImsController::class, 'index'])->name('ims.index'); // Halaman 1: Pilih Layanan
-    Route::get('/ims/layanan/{service}', [StudentImsController::class, 'selectField'])->name('ims.service'); // Halaman 2: Pilih Bidang
-    Route::get('/ims/layanan/{service}/bidang/{field}', [StudentImsController::class, 'showInstrument'])->name('ims.instrument'); // Halaman 3: Instrumen 5 Butir + Catatan Lebar
-    Route::post('/ims/layanan/{service}/bidang/{field}', [StudentImsController::class, 'saveInstrument'])->name('ims.saveInstrument'); // Simpan Jawaban & Catatan
-    Route::get('/ims/jadwal-konseling', [StudentImsController::class, 'scheduleCounselingForm'])->name('ims.counseling.create'); // Form Jadwal Khusus Masalah IMS
-    Route::post('/ims/jadwal-konseling', [StudentImsController::class, 'storeCounselingFromIms'])->name('ims.counseling.store'); // Simpan Pengajuan Jadwal IMS
-    Route::post('/ims/draft', [StudentImsController::class, 'saveDraft'])->name('ims.saveDraft');
-    Route::post('/ims/submit', [StudentImsController::class, 'submit'])->name('ims.submit');
-
-    // 2. Pengajuan Konseling Mandiri / Pribadi
     Route::get('/konseling', [StudentCounselingController::class, 'index'])->name('konseling.index');
     Route::get('/konseling/tambah', [StudentCounselingController::class, 'create'])->name('konseling.create');
     Route::get('/konseling/pribadi', [StudentCounselingController::class, 'create'])->name('konseling.pribadi');
@@ -251,6 +239,18 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
     Route::get('/konseling/{konseling}/cetak-kartu', [StudentCounselingController::class, 'printCard'])->name('konseling.printCard');
     Route::post('/konseling/{konseling}/konfirmasi', [StudentCounselingController::class, 'confirmSchedule'])->name('konseling.confirmSchedule');
     Route::post('/konseling/{konseling}/reschedule', [StudentCounselingController::class, 'requestReschedule'])->name('konseling.requestReschedule');
+
+    // 2. Instrumen Masalah Siswa (IMS) - Modul Asesmen Mandiri
+    Route::get('/ims', [StudentImsController::class, 'index'])->name('ims.index'); // Halaman 1: Pilih Layanan
+    Route::get('/ims/layanan/{service}', [StudentImsController::class, 'selectField'])->name('ims.service'); // Halaman 2: Pilih Bidang
+    Route::get('/ims/layanan/{service}/bidang/{field}', [StudentImsController::class, 'showInstrument'])->name('ims.instrument'); // Halaman 3: Instrumen 5 Butir
+    Route::post('/ims/layanan/{service}/bidang/{field}', [StudentImsController::class, 'saveInstrument'])->name('ims.saveInstrument'); // Simpan Jawaban
+    Route::post('/ims/draft', [StudentImsController::class, 'saveDraft'])->name('ims.saveDraft');
+    Route::post('/ims/submit', [StudentImsController::class, 'submit'])->name('ims.submit');
+    Route::get('/ims/hasil-akhir', [StudentImsController::class, 'result'])->name('ims.result'); // Halaman Hasil Akhir Asesmen Murid
+    Route::get('/ims/cetak-hasil', [StudentImsController::class, 'printResult'])->name('ims.print'); // Cetak Dokumen AUM Siswa
+    Route::get('/ims/jadwal-konseling', [StudentImsController::class, 'result'])->name('ims.counseling.create');
+    Route::post('/ims/jadwal-konseling', [StudentImsController::class, 'result'])->name('ims.counseling.store');
 
     // 3. Jalur Pengaduan Aman & Perlindungan Diri
     Route::get('/pengaduan', [StudentComplaintController::class, 'index'])->name('pengaduan.index');

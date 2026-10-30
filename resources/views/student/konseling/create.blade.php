@@ -13,30 +13,6 @@
 
 @section('content')
 <div class="space-y-4">
-    @if(app_setting('ims_enabled', '1') === '1')
-        <!-- Notice Pemisahan Konseling Pribadi vs Hasil IMS (Jika IMS Aktif) -->
-        <div class="card border-0 shadow-sm rounded-4 mb-3 mb-md-4 overflow-hidden" style="background: #f0fdfa; border: 1.5px solid #ccfbf1 !important;">
-            <div class="p-3 p-sm-3.5 d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
-                <div class="d-flex align-items-start gap-2.5 min-w-0">
-                    <div class="rounded-3 bg-teal-subtle text-mint d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px; font-size: 1.25rem;">
-                        <i class="bi bi-info-circle-fill"></i>
-                    </div>
-                    <div>
-                        <div class="fw-bold text-dark fs-sm mb-0.5">Formulir Konseling Pribadi (Mandiri)</div>
-                        <div class="text-muted fs-xs" style="line-height: 1.5;">
-                            Kamu bisa leluasa menceritakan keluhan, curhat, atau masalah yang sedang kamu alami dengan kata-katamu sendiri.
-                        </div>
-                    </div>
-                </div>
-                <div class="w-100 w-md-auto text-end flex-shrink-0">
-                    <a href="{{ route('murid.ims.counseling.create') }}" class="btn btn-sm rounded-pill px-3 py-1.5 fw-bold w-100 w-md-auto d-inline-flex align-items-center justify-content-center gap-1.5 shadow-xs" style="background: #ffffff; border: 1.5px solid #8b5cf6; color: #7c3aed;">
-                        <i class="bi bi-clipboard2-check"></i> Jadwalkan dari Masalah IMS
-                    </a>
-                </div>
-            </div>
-        </div>
-    @endif
-
     <div class="row g-3 g-md-4">
         <!-- Form Utama -->
         <div class="col-lg-8">

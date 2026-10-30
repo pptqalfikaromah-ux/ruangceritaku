@@ -311,51 +311,24 @@
                 <a href="{{ route('murid.dashboard') }}" class="sk-nav-item {{ request()->routeIs('murid.dashboard*') ? 'active' : '' }}">
                     <i class="bi bi-house-door"></i><span>Beranda</span>
                 </a>
-                <div class="sk-nav-heading mt-2">Layanan BK</div>
+                <div class="sk-nav-heading mt-2">Layanan Konseling</div>
+                <a href="{{ route('murid.konseling.create') }}" class="sk-nav-item {{ request()->routeIs('murid.konseling.create*') || request()->routeIs('murid.konseling.pribadi*') || request()->routeIs('murid.konseling.ajukan*') ? 'active' : '' }}">
+                    <i class="bi bi-send-check"></i><span>Ajukan Konseling</span>
+                </a>
+                <a href="{{ route('murid.konseling.index') }}" class="sk-nav-item {{ request()->routeIs('murid.konseling.index*') || request()->routeIs('murid.konseling.show*') ? 'active' : '' }}">
+                    <i class="bi bi-chat-heart"></i><span>Riwayat Konseling</span>
+                </a>
+                <a href="{{ route('murid.pengaduan.index') }}" class="sk-nav-item {{ request()->routeIs('murid.pengaduan.*') ? 'active' : '' }}">
+                    <i class="bi bi-shield-check"></i><span>Pengaduan Aman</span>
+                </a>
+                <a href="{{ route('murid.pamflet.index') }}" class="sk-nav-item {{ request()->routeIs('murid.pamflet.*') ? 'active' : '' }}">
+                    <i class="bi bi-images"></i><span>Pamflet Kreativitas</span>
+                </a>
 
-                @php
-                    $imsEnabled = app_setting('ims_enabled', '1') === '1';
-                    $isAjukanActive = request()->routeIs('murid.konseling.ajukan*') || 
-                                     request()->routeIs('murid.konseling.create*') || 
-                                     request()->routeIs('murid.konseling.pribadi*') || 
-                                     request()->routeIs('murid.ims.*');
-                    $isPribadiActive = request()->routeIs('murid.konseling.create*') || request()->routeIs('murid.konseling.pribadi*');
-                    $isImsActive = request()->routeIs('murid.ims.*');
-                @endphp
-
-                @if($imsEnabled)
-                    <!-- Menu Ajukan Konseling dengan Submenu (Jika IMS Aktif) -->
-                    <div class="sk-nav-group mb-1">
-                        <button type="button" 
-                                class="sk-nav-item w-100 border-0 bg-transparent text-start d-flex align-items-center justify-content-between {{ $isAjukanActive ? 'parent-active' : '' }}" 
-                                data-bs-toggle="collapse" 
-                                data-bs-target="#submenuAjukanKonseling" 
-                                aria-expanded="{{ $isAjukanActive ? 'true' : 'false' }}" 
-                                aria-controls="submenuAjukanKonseling"
-                                style="cursor: pointer;">
-                            <span class="d-flex align-items-center gap-2">
-                                <i class="bi bi-send-check"></i>
-                                <span>Ajukan Konseling</span>
-                            </span>
-                            <i class="bi bi-chevron-down sk-chevron"></i>
-                        </button>
-                        <div class="collapse {{ $isAjukanActive ? 'show' : '' }}" id="submenuAjukanKonseling">
-                            <div class="sk-submenu-wrapper">
-                                <a href="{{ route('murid.konseling.pribadi') }}" class="sk-subnav-item {{ $isPribadiActive ? 'active' : '' }}">
-                                    <i class="bi bi-person-heart"></i>
-                                    <span>Konseling Pribadi</span>
-                                </a>
-                                <a href="{{ route('murid.ims.index') }}" class="sk-subnav-item {{ $isImsActive ? 'active' : '' }}">
-                                    <i class="bi bi-clipboard2-check"></i>
-                                    <span>Instrumen Masalah (IMS)</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                @else
-                    <!-- Menu Ajukan Konseling Langsung (Jika IMS Nonaktif) -->
-                    <a href="{{ route('murid.konseling.pribadi') }}" class="sk-nav-item {{ $isAjukanActive ? 'active' : '' }}">
-                        <i class="bi bi-send-check"></i><span>Ajukan Konseling</span>
+                @if(app_setting('ims_enabled', '1') === '1')
+                    <div class="sk-nav-heading mt-3">Asesmen Siswa</div>
+                    <a href="{{ route('murid.ims.index') }}" class="sk-nav-item {{ request()->routeIs('murid.ims.*') ? 'active' : '' }}">
+                        <i class="bi bi-clipboard2-check"></i><span>Asesmen Masalah (IMS)</span>
                     </a>
                 @endif
 
@@ -412,10 +385,16 @@
             <i class="bi bi-house-door{{ request()->routeIs('murid.dashboard*') ? '-fill' : '' }}"></i>
             <span>Beranda</span>
         </a>
-        <a href="{{ route('murid.konseling.ajukan') }}" class="sk-btab {{ request()->routeIs('murid.konseling.ajukan*') || request()->routeIs('murid.konseling.create*') || request()->routeIs('murid.ims.*') ? 'active' : '' }}">
-            <i class="bi bi-send-check{{ request()->routeIs('murid.konseling.ajukan*') ? '-fill' : '' }}"></i>
-            <span>Ajukan</span>
+        <a href="{{ route('murid.konseling.create') }}" class="sk-btab {{ request()->routeIs('murid.konseling.create*') || request()->routeIs('murid.konseling.pribadi*') ? 'active' : '' }}">
+            <i class="bi bi-send-check{{ request()->routeIs('murid.konseling.create*') ? '-fill' : '' }}"></i>
+            <span>Konseling</span>
         </a>
+        @if(app_setting('ims_enabled', '1') === '1')
+            <a href="{{ route('murid.ims.index') }}" class="sk-btab {{ request()->routeIs('murid.ims.*') ? 'active' : '' }}">
+                <i class="bi bi-clipboard2-check{{ request()->routeIs('murid.ims.*') ? '-fill' : '' }}"></i>
+                <span>Asesmen</span>
+            </a>
+        @endif
         <a href="{{ route('murid.konseling.index') }}" class="sk-btab {{ request()->routeIs('murid.konseling.index*') || request()->routeIs('murid.konseling.show*') ? 'active' : '' }}">
             <i class="bi bi-chat-heart{{ request()->routeIs('murid.konseling.index*') ? '-fill' : '' }}"></i>
             <span>Riwayat</span>

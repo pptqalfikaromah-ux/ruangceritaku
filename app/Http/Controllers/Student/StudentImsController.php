@@ -70,10 +70,15 @@ class StudentImsController extends Controller
         if (!empty($answeredStatementIds)) {
             $selectedCountByService = ImsStatement::whereIn('id', $answeredStatementIds)
                 ->select('service_type_id', DB::raw('count(*) as total'))
-                ->groupBy('service_type_id')
                 ->pluck('total', 'service_type_id')
                 ->toArray();
         }
+
+        $totalSelectedCount = count($answeredStatementIds);
+        $totalHeavyCount = ImsAnswer::where('ims_assessment_id', $assessment->id)
+            ->where('is_selected', true)
+            ->where('is_heavy', true)
+            ->count();
 
         return view('student.ims.index', compact(
             'student',
@@ -81,7 +86,9 @@ class StudentImsController extends Controller
             'activeSemester',
             'activeYear',
             'serviceTypes',
-            'selectedCountByService'
+            'selectedCountByService',
+            'totalSelectedCount',
+            'totalHeavyCount'
         ));
     }
 
@@ -301,10 +308,15 @@ class StudentImsController extends Controller
             }
         });
 
-        // Aksi Cepat: Lanjut ke Konseling IMS
+        // Aksi Cepat: Lanjut ke Menu Layanan IMS atau Hasil Akhir
+        if ($request->input('action') === 'to_index') {
+            return redirect()->route('murid.ims.index')
+                ->with('success', 'Pilihan butir masalah berhasil disimpan.');
+        }
+
         if ($request->input('action') === 'counseling') {
-            return redirect()->route('murid.ims.counseling.create')
-                ->with('success', 'Pilihan masalah IMS berhasil disimpan. Lanjutkan pengajuan permohonan konseling.');
+            return redirect()->route('murid.ims.result')
+                ->with('success', 'Pilihan butir masalah berhasil disimpan.');
         }
 
         return redirect()->route('murid.ims.instrument', [$serviceId, $fieldId])
@@ -414,13 +426,125 @@ class StudentImsController extends Controller
             'submitted_at' => now(),
         ]);
 
-        return redirect()->route('murid.ims.index')
-            ->with('success', 'Instrumen Masalah Siswa (IMS) Anda berhasil dikirimkan ke Guru BK / Konselor.');
+        return redirect()->route('murid.ims.result')
+            ->with('success', 'Instrumen Masalah Siswa (IMS) Anda berhasil diselesaikan dan dikirimkan. Berikut adalah Lembar Hasil Akhir Asesmen Anda.');
     }
 
     /**
-     * Halaman Khusus: Permohonan Konseling Berdasarkan Hasil Temuan IMS
+     * Halaman Hasil Akhir Asesmen IMS Murid (Standar Format AUM)
      */
+    public function result(): View|RedirectResponse
+    {
+        $student = Auth::user()->student;
+        abort_unless($student, 403, 'Profil murid tidak ditemukan.');
+
+        $activeSemester = active_semester();
+        if (!$activeSemester) {
+            return view('student.ims.no-semester');
+        }
+
+        $assessment = ImsAssessment::where('student_id', $student->id)
+            ->where('semester_id', $activeSemester->id)
+            ->first();
+
+        if (!$assessment) {
+            return redirect()->route('murid.ims.index')->with('info', 'Anda belum memulai pengisian asesmen IMS.');
+        }
+
+        $assessment->load([
+            'student.classrooms',
+            'academicYear',
+            'semester',
+            'answers.statement.serviceType',
+            'answers.statement.guidanceField',
+        ]);
+
+        $guidanceFields = GuidanceField::orderBy('id')->get();
+        $fieldsData = [];
+        $totalSelectedAll = 0;
+        $totalStatementsAll = 0;
+        $heavyStatementsAll = [];
+
+        foreach ($guidanceFields as $field) {
+            $fieldStatementsCount = ImsStatement::where('guidance_field_id', $field->id)
+                ->whereNull('deleted_at')
+                ->where('is_active', true)
+                ->count();
+
+            // Selected answers in this field
+            $selectedAnswers = $assessment->answers->filter(function ($a) use ($field) {
+                return $a->statement?->guidance_field_id === $field->id && $a->is_selected;
+            })->sortBy(function ($a) {
+                return $a->statement?->statement_number;
+            });
+
+            // Heavy answers in this field
+            $heavyAnswers = $selectedAnswers->filter(function ($a) {
+                return (bool) $a->is_heavy;
+            });
+
+            $selectedNumbers = $selectedAnswers->pluck('statement.statement_number')->map(function ($num) {
+                return sprintf('%03d', $num);
+            })->values()->all();
+
+            $heavyNumbers = $heavyAnswers->pluck('statement.statement_number')->map(function ($num) {
+                return sprintf('%03d', $num);
+            })->values()->all();
+
+            $count = count($selectedNumbers);
+            $percentage = $fieldStatementsCount > 0 ? round(($count / $fieldStatementsCount) * 100, 2) : 0;
+
+            $fieldsData[] = [
+                'field' => $field,
+                'total_statements' => $fieldStatementsCount,
+                'selected_numbers' => $selectedNumbers,
+                'selected_answers' => $selectedAnswers,
+                'count' => $count,
+                'percentage' => $percentage,
+                'heavy_numbers' => $heavyNumbers,
+                'heavy_answers' => $heavyAnswers,
+            ];
+
+            $totalSelectedAll += $count;
+            $totalStatementsAll += $fieldStatementsCount;
+            foreach ($heavyAnswers as $ha) {
+                $heavyStatementsAll[] = $ha;
+            }
+        }
+
+        $overallPercentage = $totalStatementsAll > 0 ? round(($totalSelectedAll / $totalStatementsAll) * 100, 2) : 0;
+
+        return view('student.ims.result', compact(
+            'student',
+            'assessment',
+            'fieldsData',
+            'totalSelectedAll',
+            'totalStatementsAll',
+            'overallPercentage',
+            'heavyStatementsAll'
+        ));
+    }
+
+    /**
+     * Cetak Lembar Hasil AUM / IMS Murid
+     */
+    public function printResult(): View|RedirectResponse
+    {
+        $student = Auth::user()->student;
+        abort_unless($student, 403);
+
+        $activeSemester = active_semester();
+        $assessment = ImsAssessment::where('student_id', $student->id)
+            ->where('semester_id', $activeSemester?->id)
+            ->first();
+
+        if (!$assessment) {
+            return redirect()->route('murid.ims.index');
+        }
+
+        $controller = app(\App\Http\Controllers\Panel\ImsController::class);
+        return $controller->printIndividual($assessment);
+    }
     public function scheduleCounselingForm(): View|RedirectResponse
     {
         $student = Auth::user()->student;
