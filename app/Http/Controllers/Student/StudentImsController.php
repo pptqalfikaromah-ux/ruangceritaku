@@ -69,8 +69,8 @@ class StudentImsController extends Controller
         $selectedCountByService = [];
         if (!empty($answeredStatementIds)) {
             $selectedCountByService = ImsStatement::whereIn('id', $answeredStatementIds)
-                ->select('service_type_id', DB::raw('count(*) as total'))
-                ->pluck('total', 'service_type_id')
+                ->pluck('service_type_id')
+                ->countBy()
                 ->toArray();
         }
 

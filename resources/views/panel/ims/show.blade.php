@@ -119,6 +119,65 @@
 
         <!-- Answers Grouped by Bidang -->
         <div class="col-lg-8">
+            <!-- Panel Khusus: Masalah Yang Paling Mengganggu / N.M.Y.B -->
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-4" style="border-left: 5px solid #f59e0b !important;">
+                <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-warning text-dark px-2.5 py-1 rounded-pill fw-bold fs-xs">
+                            <i class="bi bi-star-fill me-1"></i> N.M.Y.B
+                        </span>
+                        <span class="fw-bold text-dark fs-sm">Masalah yang Paling Mengganggu (Nomor Masalah Yang Berat)</span>
+                    </div>
+                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill px-2.5 py-1 fs-xs fw-bold">
+                        {{ $heavyAnswers->count() }} Butir Terberat
+                    </span>
+                </div>
+                <div class="card-body p-3">
+                    @if($heavyAnswers->count() > 0)
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover align-middle mb-0">
+                                <thead class="table-light fs-xs text-muted">
+                                    <tr>
+                                        <th style="width: 55px;" class="text-center">No</th>
+                                        <th>Pernyataan Masalah Yang Paling Mengganggu</th>
+                                        <th style="width: 140px;">Layanan BK</th>
+                                        <th style="width: 110px;">Bidang</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="fs-xs">
+                                    @foreach($heavyAnswers as $ha)
+                                        <tr class="table-warning-subtle">
+                                            <td class="text-center fw-bold text-dark font-monospace">
+                                                #{{ $ha->statement?->statement_number }}
+                                            </td>
+                                            <td>
+                                                <div class="fw-bold text-dark">
+                                                    {{ $ha->statement?->statement_text }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-light text-dark border px-2 py-1 rounded-2">
+                                                    {{ $ha->statement?->serviceType?->name ?? '-' }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-light text-secondary border px-2 py-1 rounded-2 fw-semibold">
+                                                    {{ $ha->statement?->guidanceField?->name ?? '-' }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="p-3 text-center text-muted fs-xs">
+                            <i class="bi bi-info-circle me-1"></i> Siswa tidak menandai butir masalah paling berat/mengganggu (opsional).
+                        </div>
+                    @endif
+                </div>
+            </div>
+
             <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
                 <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
                     <span class="fw-semibold text-dark">Rincian Jawaban Per Bidang Bimbingan</span>

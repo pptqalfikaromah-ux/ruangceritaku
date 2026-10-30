@@ -135,11 +135,11 @@
                                     <i class="bi {{ $badgeStyle['icon'] }} me-1"></i>{{ $fieldName }}
                                 </span>
 
-                                <!-- Indikator Visual Masalah Terberat -->
+                                <!-- Indikator Visual Masalah Paling Mengganggu -->
                                 <span class="badge rounded-pill px-2.5 py-1 fs-xs fw-bold text-white heavy-badge-label"
                                       id="heavyLabel_{{ $stmt->id }}"
                                       style="background: #d97706; display: {{ $isHeavy ? 'inline-flex' : 'none' }}; align-items: center; gap: 4px;">
-                                    <i class="bi bi-star-fill"></i> Masalah Terberat di Layanan Ini
+                                    <i class="bi bi-star-fill text-warning"></i> Masalah Paling Mengganggu di Layanan Ini
                                 </span>
                             </div>
 
@@ -148,7 +148,7 @@
                                 {{ $stmt->statement_text }}
                             </label>
 
-                            <!-- Pilihan Masalah Terberat (Radio Option - Maksimal 1 per Layanan) -->
+                            <!-- Pilihan Masalah Paling Mengganggu (Radio Option - Maksimal 1 per Layanan, Opsional) -->
                             @if(!$assessment->isSubmitted())
                                 <div class="mt-2.5 pt-2 border-top border-light-subtle d-flex align-items-center justify-content-between flex-wrap gap-2 heavy-selector-box"
                                      id="heavyBox_{{ $stmt->id }}"
@@ -163,8 +163,8 @@
                                                data-chk-id="chk_{{ $stmt->id }}"
                                                {{ $isHeavy ? 'checked' : '' }}
                                                style="cursor: pointer;">
-                                        <label class="form-check-label fs-xs fw-semibold text-muted cursor-pointer" for="radio_heavy_{{ $stmt->id }}">
-                                            <span class="text-warning">⭐</span> Jadikan Masalah Terberat di Layanan Ini <span class="text-muted fw-normal fs-xxs">(Opsional)</span>
+                                        <label class="form-check-label fs-xs fw-semibold text-dark cursor-pointer" for="radio_heavy_{{ $stmt->id }}">
+                                            <span class="text-warning fw-bold">⭐</span> Jadikan Masalah Paling Mengganggu di Layanan Ini <span class="badge bg-secondary-subtle text-secondary fs-xxs fw-normal ms-1">Opsional (Maks. 1)</span>
                                         </label>
                                     </div>
                                 </div>

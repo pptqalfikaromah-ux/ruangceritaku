@@ -183,7 +183,9 @@
             @endphp
             <div class="col-lg-4 col-md-6 col-12">
                 <a href="{{ route('murid.ims.service', $svc->id) }}" class="text-decoration-none h-100 d-block">
-                    <div class="card h-100 border-0 rounded-4 bg-white p-4 modern-service-card position-relative overflow-hidden">
+                    <div class="card h-100 rounded-4 p-4 modern-service-card position-relative overflow-hidden"
+                         style="background: {{ $answeredCount > 0 ? '#F9FDFB' : '#FFFFFF' }}; border: {{ $answeredCount > 0 ? '2px solid #00B894' : '1px solid #E2ECE9' }} !important; box-shadow: {{ $answeredCount > 0 ? '0 4px 16px rgba(0, 184, 148, 0.12)' : '0 1px 4px rgba(0,0,0,0.03)' }};">
+                        
                         <!-- Top Accent Line -->
                         <div class="card-top-accent" style="background: {{ $itemData['grad'] }};"></div>
 
@@ -194,23 +196,23 @@
                                 <i class="bi {{ $itemData['icon'] }} fs-4"></i>
                             </div>
 
-                            <!-- Status Badges -->
-                            <div class="d-flex flex-column align-items-end gap-1">
+                            <!-- Status Badges: Sudah Diisi vs Belum Diisi -->
+                            <div class="d-flex flex-column align-items-end gap-1.5">
                                 @if($answeredCount > 0)
-                                    <span class="badge rounded-pill px-2.5 py-1.5 fs-xs fw-semibold text-white shadow-xs" 
-                                          style="background: #059669;">
-                                        <i class="bi bi-check2-circle me-1"></i> {{ $answeredCount }} Terpilih
+                                    <span class="badge rounded-pill px-3 py-1.5 fs-xs fw-bold text-white shadow-xs" 
+                                          style="background: #00B894;">
+                                        <i class="bi bi-check-circle-fill me-1"></i> Sudah Diisi ({{ $answeredCount }})
                                     </span>
                                 @else
-                                    <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 fs-xs">
-                                        20 Butir
+                                    <span class="badge rounded-pill px-3 py-1.5 fs-xs fw-semibold bg-light text-muted border">
+                                        <i class="bi bi-circle me-1"></i> Belum Diisi
                                     </span>
                                 @endif
 
                                 @if(!empty($heavyByService[$svc->id]))
-                                    <span class="badge rounded-pill px-2 py-0.5 fs-xxs fw-bold text-white shadow-xs" 
-                                          style="background: #d97706;">
-                                        ⭐ Terberat #{{ $heavyByService[$svc->id] }}
+                                    <span class="badge rounded-pill px-2.5 py-1 fs-xxs fw-bold text-white shadow-xs" 
+                                          style="background: #d97706;" title="Masalah Paling Mengganggu">
+                                        <i class="bi bi-star-fill me-1 text-warning"></i> Paling Mengganggu: #{{ $heavyByService[$svc->id] }}
                                     </span>
                                 @endif
                             </div>

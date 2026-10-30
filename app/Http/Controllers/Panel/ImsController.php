@@ -264,11 +264,20 @@ class ImsController extends Controller
         $totalSelected = $assessment->answers->where('is_selected', true)->count();
         $totalAnswers = $assessment->answers->count();
 
+        // Butir masalah yang paling mengganggu (N.M.Y.B)
+        $heavyAnswers = $assessment->answers
+            ->where('is_selected', true)
+            ->where('is_heavy', true)
+            ->sortBy(function ($a) {
+                return $a->statement?->statement_number;
+            });
+
         return view('panel.ims.show', compact(
             'assessment',
             'answersByField',
             'totalSelected',
-            'totalAnswers'
+            'totalAnswers',
+            'heavyAnswers'
         ));
     }
 
