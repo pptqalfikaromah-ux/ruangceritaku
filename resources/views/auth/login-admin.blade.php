@@ -3,40 +3,41 @@
 @section('title', 'Masuk Panel Guru BK & Admin - ' . app_setting('app_name', 'Ruang Ceritaku'))
 
 @section('content')
-<div class="min-vh-100 d-flex flex-column justify-content-center align-items-center py-4 px-3" style="background: radial-gradient(circle at 50% 10%, rgba(219, 234, 254, 0.45) 0%, rgba(239, 246, 255, 0.7) 40%, rgba(241, 245, 249, 1) 100%);">
+<div class="min-vh-100 d-flex flex-column justify-content-center align-items-center py-3 py-sm-4 px-2.5 px-sm-3" style="background: radial-gradient(circle at 50% 8%, rgba(219, 234, 254, 0.55) 0%, rgba(239, 246, 255, 0.75) 35%, #f1f5f9 100%);">
     
     <!-- Tombol Kembali ke Pemilihan Pintu Masuk -->
-    <div class="mb-3 text-start" style="max-width: 440px; width: 100%;">
-        <a href="{{ route('login') }}" class="text-decoration-none text-muted small fw-bold d-inline-flex align-items-center gap-1.5 hover-blue">
-            <i class="bi bi-arrow-left"></i> Pilih Pintu Masuk Lain
+    <div class="mb-2.5 text-start w-100" style="max-width: 440px;">
+        <a href="{{ route('login') }}" class="text-decoration-none small fw-bold d-inline-flex align-items-center gap-1.5 hover-blue" style="color: #64748b; font-size: 0.8rem;">
+            <i class="bi bi-arrow-left"></i>
+            <span>Pilih Pintu Masuk Lain</span>
         </a>
     </div>
 
-    <div class="card card-app border-0 shadow-lg overflow-hidden position-relative" style="max-width: 440px; width: 100%; border-radius: 1.5rem; border: 1px solid var(--border-color) !important; background: #ffffff;">
+    <div class="card border-0 shadow-lg position-relative overflow-hidden w-100" style="max-width: 440px; border-radius: 1.25rem !important; border: 1px solid rgba(226, 232, 240, 0.9) !important; background: #ffffff;">
         <!-- Top Gradient Band Khusus Admin & Guru BK (Blue/Indigo) -->
-        <div style="height: 6px; background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);"></div>
+        <div style="height: 5px; background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);"></div>
 
-        <div class="card-body p-4 p-sm-4.5">
+        <div class="card-body p-3.5 p-sm-4">
             <!-- App Logo & Title -->
             <div class="text-center mb-3">
                 <a href="{{ route('landing') }}" class="text-decoration-none d-inline-flex flex-column align-items-center mb-1">
-                    <div class="p-2.5 rounded-4 d-inline-flex align-items-center justify-content-center shadow-xs mb-1" style="background: #ffffff; border: 1.5px solid #dbeafe;">
-                        <x-app-logo height="64" />
+                    <div class="p-2 rounded-4 d-inline-flex align-items-center justify-content-center shadow-xs mb-1" style="background: #ffffff; border: 1.5px solid #dbeafe;">
+                        <x-app-logo height="56" />
                     </div>
                 </a>
-                <h4 class="fw-extrabold mb-0" style="color: #1e3a8a; letter-spacing: -0.02em; font-size: 1.25rem;">
+                <h4 class="fw-extrabold mb-0" style="color: #1e3a8a; letter-spacing: -0.025em; font-size: 1.22rem;">
                     {{ app_setting('app_name', 'Ruang Ceritaku') }}
                 </h4>
                 <p class="text-muted small mb-0 fs-xs">{{ app_setting('school_name', 'Layanan Bimbingan & Konseling Terpadu') }}</p>
             </div>
 
             <!-- Role Header Banner (Khusus Guru BK & Admin) -->
-            <div class="p-3 rounded-3 mb-3.5 border d-flex align-items-center gap-3" style="background: #eff6ff; border-color: #bfdbfe !important;">
-                <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0 text-white" style="width: 42px; height: 42px; background: linear-gradient(135deg, #1e40af, #3b82f6);">
+            <div class="p-2.5 px-3 rounded-3 mb-3 border d-flex align-items-center gap-2.5" style="background: #eff6ff; border-color: #bfdbfe !important;">
+                <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0 text-white" style="width: 38px; height: 38px; background: linear-gradient(135deg, #1e40af, #3b82f6); box-shadow: 0 4px 10px rgba(30, 64, 175, 0.25);">
                     <i class="bi bi-shield-check fs-5"></i>
                 </div>
-                <div>
-                    <div class="fw-bold text-dark" style="font-size: 0.92rem; line-height: 1.2;">Pintu Masuk Guru BK & Admin</div>
+                <div class="min-w-0">
+                    <div class="fw-bold text-dark" style="font-size: 0.9rem; line-height: 1.2;">Portal Guru BK & Admin</div>
                     <div class="text-muted fs-xs mt-0.5">Akses panel bimbingan konseling dan tata kelola madrasah.</div>
                 </div>
             </div>
@@ -100,7 +101,7 @@
                     @enderror
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3.5">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                         <label class="form-check-label fs-xs text-muted" for="remember">
@@ -111,11 +112,11 @@
 
                 <button type="submit" class="btn btn-primary w-100 py-2.5 rounded-pill fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2 text-white" style="background: linear-gradient(135deg, #1e40af, #2563eb); border: none;">
                     <i class="bi bi-box-arrow-in-right fs-5"></i>
-                    <span>Masuk ke Panel Konseling / Admin</span>
+                    <span>Masuk ke Panel BK / Admin</span>
                 </button>
             </form>
 
-            <div class="mt-4 pt-3 border-top text-center">
+            <div class="mt-3.5 pt-3 border-top text-center">
                 <span class="fs-xs text-muted">Bukan akun Guru BK / Admin?</span>
                 <a href="{{ route('login') }}" class="fs-xs fw-bold text-dark text-decoration-none ms-1 hover-underline">
                     Pilih Pintu Masuk Lain
@@ -142,8 +143,6 @@
     }
 </script>
 <style>
-    .hover-blue:hover {
-        color: #2563eb !important;
-    }
+    .hover-blue:hover { color: #2563eb !important; }
 </style>
 @endsection
