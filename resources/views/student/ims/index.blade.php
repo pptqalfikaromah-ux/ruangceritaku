@@ -70,7 +70,7 @@
     <div class="mb-3 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
         <div>
             <h4 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
-                <span>9 Menu Layanan Konseling</span>
+                <span>{{ $serviceTypes->count() }} Menu Layanan Konseling</span>
                 <span class="badge bg-light text-muted border rounded-pill fs-xs fw-semibold">Pilih Menu Layanan Konseling</span>
             </h4>
             <p class="text-muted fs-xs mb-0 mt-0.5">Klik salah satu kotak layanan di bawah untuk membuka pilihan 4 bidang bimbingan.</p>
