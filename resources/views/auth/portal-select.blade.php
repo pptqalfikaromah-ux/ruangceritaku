@@ -6,7 +6,7 @@
 <div class="portal-wrapper min-vh-100 d-flex flex-column justify-content-center align-items-center py-3 py-sm-4 px-2.5 px-sm-3">
     
     <!-- Top Navigation / Back to Home -->
-    <div class="portal-container mb-2.5 text-start w-100">
+    <div class="portal-container mb-2.5 px-1 text-start w-100">
         <a href="{{ route('landing') }}" class="portal-back-link text-decoration-none d-inline-flex align-items-center gap-1.5">
             <i class="bi bi-arrow-left"></i>
             <span>Kembali ke Halaman Utama</span>
@@ -52,7 +52,7 @@
                             <span class="portal-role-tag tag-murid">Siswa</span>
                         </div>
                         <div class="portal-role-desc">
-                            Konseling pribadi, pengaduan & asesmen via NISN
+                            Konseling pribadi, curhat & pengaduan
                         </div>
                     </div>
                     <div class="portal-card-arrow">
@@ -210,6 +210,10 @@
     }
 
     /* TEXT INFO */
+    .portal-card-info {
+        min-width: 0;
+        padding-right: 8px;
+    }
     .portal-role-title {
         font-size: 0.94rem;
         font-weight: 800;
@@ -240,6 +244,8 @@
         color: #94a3b8;
         font-size: 1rem;
         flex-shrink: 0;
+        width: 16px;
+        text-align: right;
         transition: all 0.2s ease;
     }
     .portal-card-item:hover .portal-card-arrow {
