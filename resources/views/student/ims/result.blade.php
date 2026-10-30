@@ -120,7 +120,7 @@
                 <h5 class="fw-bold text-dark mb-0 fs-sm">Tabel Rekapitulasi Hasil Pengolahan AUM / IMS</h5>
             </div>
             <span class="badge bg-light text-muted border fs-xs rounded-pill px-3 py-1">
-                Total 4 Bidang Bimbingan
+                Total 8 Layanan Bimbingan Konseling
             </span>
         </div>
         <div class="card-body p-0">
@@ -128,7 +128,7 @@
                 <table class="table table-bordered align-middle mb-0 text-center" style="font-size: 0.85rem;">
                     <thead class="table-light">
                         <tr>
-                            <th rowspan="2" class="text-start" style="width: 25%; min-width: 150px;">BIDANG MASALAH</th>
+                            <th rowspan="2" class="text-start" style="width: 25%; min-width: 150px;">LAYANAN BK</th>
                             <th colspan="3">JENIS MASALAH</th>
                             <th rowspan="2" style="width: 20%; min-width: 120px;">N.M.Y.B<br><span class="fw-normal fs-xxs text-muted">(Masalah Yang Berat)</span></th>
                         </tr>
@@ -142,7 +142,7 @@
                         @foreach($fieldsData as $idx => $row)
                             <tr>
                                 <td class="text-start fw-bold">
-                                    {{ $idx + 1 }}. {{ $row['field']->name }} ({{ $row['total_statements'] }})
+                                    {{ $idx + 1 }}. {{ $row['service']->name }} ({{ $row['total_statements'] }})
                                 </td>
                                 <td class="text-start text-break fs-xs">
                                     @if(count($row['selected_numbers']) > 0)
@@ -206,7 +206,7 @@
                 @foreach($fieldsData as $idx => $row)
                     <div class="mb-3.5 pb-3 {{ !$loop->last ? 'border-bottom' : '' }}">
                         <div class="fw-bold text-dark fs-xs mb-1.5 d-flex align-items-center justify-content-between">
-                            <span>{{ $idx + 1 }}. Bidang {{ $row['field']->name }}</span>
+                            <span>{{ $idx + 1 }}. {{ $row['service']->name }}</span>
                             <span class="badge bg-light text-muted border rounded-pill">{{ count($row['selected_answers']) }} butir</span>
                         </div>
                         @if(count($row['selected_answers']) > 0)
@@ -216,8 +216,11 @@
                                         <span class="badge bg-light text-dark border flex-shrink-0" style="font-size: 0.7rem;">#{{ sprintf('%03d', $ans->statement?->statement_number) }}</span>
                                         <div>
                                             <span>{{ $ans->statement?->statement_text }}</span>
+                                            <span class="badge bg-secondary-subtle text-secondary rounded-pill px-1.5 py-0.5 ms-1" style="font-size: 0.65rem;">
+                                                {{ $ans->statement?->guidanceField?->name ?? 'Bidang' }}
+                                            </span>
                                             @if($ans->is_heavy)
-                                                <span class="badge bg-danger text-white rounded-pill px-1.5 py-0.5 ms-1" style="font-size: 0.65rem;">Berat</span>
+                                                <span class="badge bg-danger text-white rounded-pill px-1.5 py-0.5 ms-1" style="font-size: 0.65rem;">Paling Mengganggu</span>
                                             @endif
                                             @if($ans->student_note)
                                                 <div class="text-muted fst-italic mt-0.5" style="font-size: 0.72rem;">"{{ $ans->student_note }}"</div>
@@ -227,7 +230,7 @@
                                 @endforeach
                             </div>
                         @else
-                            <div class="fs-xs text-muted fst-italic ps-2">- Tidak ada masalah yang dipilih pada bidang ini.</div>
+                            <div class="fs-xs text-muted fst-italic ps-2">- Tidak ada masalah yang dipilih pada layanan ini.</div>
                         @endif
                     </div>
                 @endforeach

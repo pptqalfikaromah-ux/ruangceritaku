@@ -404,26 +404,26 @@ class StudentImsController extends Controller
             'answers.statement.guidanceField',
         ]);
 
-        $guidanceFields = GuidanceField::orderBy('id')->get();
-        $fieldsData = [];
+        $services = ServiceType::layanan()->orderBy('id')->get();
+        $servicesData = [];
         $totalSelectedAll = 0;
         $totalStatementsAll = 0;
         $heavyStatementsAll = [];
 
-        foreach ($guidanceFields as $field) {
-            $fieldStatementsCount = ImsStatement::where('guidance_field_id', $field->id)
+        foreach ($services as $service) {
+            $serviceStatementsCount = ImsStatement::where('service_type_id', $service->id)
                 ->whereNull('deleted_at')
                 ->where('is_active', true)
                 ->count();
 
-            // Selected answers in this field
-            $selectedAnswers = $assessment->answers->filter(function ($a) use ($field) {
-                return $a->statement?->guidance_field_id === $field->id && $a->is_selected;
+            // Selected answers in this service
+            $selectedAnswers = $assessment->answers->filter(function ($a) use ($service) {
+                return $a->statement?->service_type_id === $service->id && $a->is_selected;
             })->sortBy(function ($a) {
                 return $a->statement?->statement_number;
             });
 
-            // Heavy answers in this field
+            // Heavy answers in this service
             $heavyAnswers = $selectedAnswers->filter(function ($a) {
                 return (bool) $a->is_heavy;
             });
@@ -437,11 +437,12 @@ class StudentImsController extends Controller
             })->values()->all();
 
             $count = count($selectedNumbers);
-            $percentage = $fieldStatementsCount > 0 ? round(($count / $fieldStatementsCount) * 100, 2) : 0;
+            $percentage = $serviceStatementsCount > 0 ? round(($count / $serviceStatementsCount) * 100, 2) : 0;
 
-            $fieldsData[] = [
-                'field' => $field,
-                'total_statements' => $fieldStatementsCount,
+            $servicesData[] = [
+                'service' => $service,
+                'field' => $service, // alias for blade
+                'total_statements' => $serviceStatementsCount,
                 'selected_numbers' => $selectedNumbers,
                 'selected_answers' => $selectedAnswers,
                 'count' => $count,
@@ -451,17 +452,19 @@ class StudentImsController extends Controller
             ];
 
             $totalSelectedAll += $count;
-            $totalStatementsAll += $fieldStatementsCount;
+            $totalStatementsAll += $serviceStatementsCount;
             foreach ($heavyAnswers as $ha) {
                 $heavyStatementsAll[] = $ha;
             }
         }
 
+        $fieldsData = $servicesData;
         $overallPercentage = $totalStatementsAll > 0 ? round(($totalSelectedAll / $totalStatementsAll) * 100, 2) : 0;
 
         return view('student.ims.result', compact(
             'student',
             'assessment',
+            'servicesData',
             'fieldsData',
             'totalSelectedAll',
             'totalStatementsAll',

@@ -268,7 +268,7 @@
         <table class="table-aum">
             <thead>
                 <tr>
-                    <th rowspan="2" style="width: 28%;">BIDANG MASALAH</th>
+                    <th rowspan="2" style="width: 28%;">LAYANAN BK</th>
                     <th colspan="3" style="width: 52%;">JENIS MASALAH</th>
                     <th rowspan="2" style="width: 20%;">N.M.Y.B<br><span style="font-weight: normal; font-size: 8.5pt;">(Nomor Masalah Yang Berat)</span></th>
                 </tr>
@@ -289,7 +289,7 @@
                 @foreach($fieldsData as $idx => $row)
                     <tr>
                         <td class="fw-bold">
-                            {{ $idx + 1 }}. {{ $row['field']->name }} ({{ $row['total_statements'] }})
+                            {{ $idx + 1 }}. {{ $row['service']->name }} ({{ $row['total_statements'] }})
                         </td>
                         <td style="word-break: break-word; font-size: 9.5pt;">
                             @if(count($row['selected_numbers']) > 0)
@@ -391,19 +391,25 @@
 
         <!-- Judul Halaman 2 -->
         <div class="page2-title">
-            KETERANGAN HASIL PENGOLAHAN AUM / IMS
+            KETERANGAN HASIL PENGOLAHAN AUM / IMS PER LAYANAN BK
         </div>
 
-        <!-- Daftar Masalah Terpilih Per Bidang -->
+        <!-- Daftar Masalah Terpilih Per Layanan BK -->
         @foreach($fieldsData as $idx => $row)
             <div class="field-group">
                 <div class="field-title">
-                    {{ $idx + 1 }}. {{ $row['field']->name }}
+                    {{ $idx + 1 }}. {{ $row['service']->name }}
                 </div>
                 @if(count($row['selected_answers']) > 0)
                     @foreach($row['selected_answers'] as $ans)
                         <div class="statement-item">
                             - {{ sprintf('%03d', $ans->statement?->statement_number) }} - {{ $ans->statement?->statement_text }}
+                            <span style="font-size: 8.5pt; color: #555; background: #eee; padding: 1px 4px; border-radius: 3px;">
+                                [{{ $ans->statement?->guidanceField?->name ?? 'Bidang' }}]
+                            </span>
+                            @if($ans->is_heavy)
+                                <strong style="color: #b45309; font-size: 8.5pt;">(⭐ Masalah Paling Mengganggu)</strong>
+                            @endif
                             @if($ans->student_note)
                                 <em style="color: #444; font-size: 9.5pt;">(Catatan Siswa: "{{ $ans->student_note }}")</em>
                             @endif
@@ -411,7 +417,7 @@
                     @endforeach
                 @else
                     <div class="statement-item fst-italic" style="color: #666;">
-                        - Tidak ada butir masalah yang dialami pada bidang ini.
+                        - Tidak ada butir masalah yang dialami pada layanan ini.
                     </div>
                 @endif
             </div>
@@ -420,7 +426,7 @@
         <!-- Bagian Masalah Yang Dirasakan Paling Berat (N.M.Y.B) -->
         <div class="heavy-section">
             <div class="heavy-title">
-                N.M.Y.B (No. Masalah Yang Berat)
+                N.M.Y.B (Nomor Masalah Yang Berat / Paling Mengganggu)
             </div>
             @if(count($heavyStatementsAll) > 0)
                 @foreach($heavyStatementsAll as $ha)
