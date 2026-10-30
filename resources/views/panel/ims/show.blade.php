@@ -180,21 +180,21 @@
 
             <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
                 <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
-                    <span class="fw-semibold text-dark">Rincian Jawaban Per Bidang Bimbingan</span>
-                    <span class="badge bg-light text-muted border">Asesmen Format Standar BK</span>
+                    <span class="fw-semibold text-dark">Rincian Jawaban Per Layanan Bimbingan Konseling</span>
+                    <span class="badge bg-light text-muted border">Asesmen 8 Layanan BK</span>
                 </div>
                 <div class="card-body p-0">
-                    <ul class="nav nav-tabs nav-fill bg-light px-3 pt-2 border-bottom" id="imsTabs" role="tablist">
-                        @foreach($answersByField as $fieldName => $answers)
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link {{ $loop->first ? 'active fw-bold text-emerald' : 'text-muted' }} fs-xs text-uppercase" 
-                                        id="tab-{{ Str::slug($fieldName) }}" 
+                    <ul class="nav nav-tabs nav-fill bg-light px-3 pt-2 border-bottom flex-nowrap overflow-x-auto" id="imsTabs" role="tablist">
+                        @foreach($answersByService as $serviceName => $answers)
+                            <li class="nav-item flex-shrink-0" role="presentation">
+                                <button class="nav-link {{ $loop->first ? 'active fw-bold text-emerald' : 'text-muted' }} fs-xs" 
+                                        id="tab-{{ Str::slug($serviceName) }}" 
                                         data-bs-toggle="tab" 
-                                        data-bs-target="#content-{{ Str::slug($fieldName) }}" 
+                                        data-bs-target="#content-{{ Str::slug($serviceName) }}" 
                                         type="button" role="tab">
-                                    {{ $fieldName }}
-                                    <span class="badge bg-secondary-subtle text-secondary rounded-pill ms-1">
-                                        {{ $answers->where('is_selected', true)->count() }} Masalah
+                                    {{ $serviceName }}
+                                    <span class="badge {{ $answers->where('is_selected', true)->count() > 0 ? 'bg-danger text-white' : 'bg-secondary-subtle text-secondary' }} rounded-pill ms-1">
+                                        {{ $answers->where('is_selected', true)->count() }}
                                     </span>
                                 </button>
                             </li>
@@ -202,9 +202,9 @@
                     </ul>
 
                     <div class="tab-content p-3" id="imsTabContents">
-                        @foreach($answersByField as $fieldName => $answers)
+                        @foreach($answersByService as $serviceName => $answers)
                             <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" 
-                                 id="content-{{ Str::slug($fieldName) }}" 
+                                 id="content-{{ Str::slug($serviceName) }}" 
                                  role="tabpanel">
                                 
                                 <div class="table-responsive">
@@ -213,15 +213,15 @@
                                             <tr>
                                                 <th style="width: 50px;" class="text-center">No</th>
                                                 <th>Pernyataan Masalah</th>
-                                                <th style="width: 140px;">Layanan BK</th>
-                                                <th style="width: 110px;" class="text-center">Jawaban</th>
+                                                <th style="width: 140px;">Bidang Masalah</th>
+                                                <th style="width: 130px;" class="text-center">Jawaban Siswa</th>
                                             </tr>
                                         </thead>
                                         <tbody class="fs-xs">
                                             @forelse($answers as $ans)
                                                 <tr class="{{ $ans->is_selected ? 'table-warning-subtle' : '' }}">
                                                     <td class="text-center fw-bold text-muted">
-                                                        #{{ $ans->statement?->statement_number }}
+                                                        #{{ sprintf('%03d', $ans->statement?->statement_number) }}
                                                     </td>
                                                     <td>
                                                         <div class="{{ $ans->is_selected ? 'fw-bold text-dark' : 'text-secondary' }}">
@@ -235,8 +235,8 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <span class="badge bg-light text-dark border px-2 py-1 rounded-2">
-                                                            {{ $ans->statement?->serviceType?->name ?? '-' }}
+                                                        <span class="badge bg-light text-secondary border px-2 py-1 rounded-2 fw-semibold">
+                                                            {{ $ans->statement?->guidanceField?->name ?? 'Bidang' }}
                                                         </span>
                                                     </td>
                                                     <td class="text-center">
@@ -246,7 +246,7 @@
                                                             </span>
                                                             @if($ans->is_heavy)
                                                                 <span class="badge bg-dark text-warning border border-warning px-2 py-0.5 rounded-pill fw-bold d-block mt-1 fs-xs" title="Nomor Masalah Yang Berat (N.M.Y.B)">
-                                                                    <i class="bi bi-exclamation-triangle-fill text-warning me-1"></i> N.M.Y.B (Berat)
+                                                                    <i class="bi bi-star-fill text-warning me-1"></i> N.M.Y.B (Berat)
                                                                 </span>
                                                             @endif
                                                         @else
@@ -257,7 +257,7 @@
                                             @empty
                                                 <tr>
                                                     <td colspan="4" class="text-center py-4 text-muted">
-                                                        Belum ada jawaban tersimpan untuk bidang ini.
+                                                        Belum ada butir jawaban tersimpan untuk layanan ini.
                                                     </td>
                                                 </tr>
                                             @endforelse

@@ -91,8 +91,8 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
                         <span class="text-muted small fw-medium">Basis Asesmen</span>
-                        <h4 class="fw-bold text-dark mt-1 mb-0">180 Butir</h4>
-                        <span class="text-muted fs-xs">Komprehensif 9 Layanan & 4 Bidang</span>
+                        <h4 class="fw-bold text-dark mt-1 mb-0">160 Butir</h4>
+                        <span class="text-muted fs-xs">Komprehensif 8 Layanan BK & 4 Bidang</span>
                     </div>
                     <div class="p-3 bg-primary-subtle rounded-3 text-primary">
                         <i class="bi bi-clipboard2-data fs-4"></i>
@@ -242,11 +242,11 @@
                 </div>
             </div>
 
-            <!-- 3. Rekapitulasi per 9 Layanan BK -->
+            <!-- 3. Rekapitulasi per 8 Layanan BK -->
             <div class="col-lg-6">
                 <div class="card border-0 shadow-sm rounded-3 h-100">
                     <div class="card-header bg-white py-3 border-bottom">
-                        <h5 class="fw-bold text-dark mb-0 fs-sm">Distribusi Kebutuhan Per 9 Layanan BK</h5>
+                        <h5 class="fw-bold text-dark mb-0 fs-sm">Distribusi Kebutuhan Per 8 Layanan BK</h5>
                         <span class="text-muted fs-xs">20 Butir Soal per Layanan BK</span>
                     </div>
                     <div class="card-body p-4 space-y-3">

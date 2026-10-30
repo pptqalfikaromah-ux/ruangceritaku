@@ -249,7 +249,19 @@ class ImsController extends Controller
             'answers.statement.guidanceField',
         ]);
 
-        // Group answers by Guidance Field
+        // Group answers by Service Type (8 Layanan BK)
+        $services = ServiceType::layanan()->orderBy('id')->get();
+        $answersByService = [];
+
+        foreach ($services as $service) {
+            $answersByService[$service->name] = $assessment->answers->filter(function ($a) use ($service) {
+                return $a->statement?->service_type_id === $service->id;
+            })->sortBy(function ($a) {
+                return $a->statement?->statement_number;
+            });
+        }
+
+        // Juga siapkan answersByField untuk fallback
         $answersByField = [];
         $guidanceFields = GuidanceField::all();
 
@@ -274,6 +286,7 @@ class ImsController extends Controller
 
         return view('panel.ims.show', compact(
             'assessment',
+            'answersByService',
             'answersByField',
             'totalSelected',
             'totalAnswers',
