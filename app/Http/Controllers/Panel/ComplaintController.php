@@ -121,4 +121,14 @@ class ComplaintController extends Controller
 
         return back()->with('success', 'Catatan tindak lanjut dan status pengaduan berhasil diperbarui.');
     }
+
+    /**
+     * Hapus Data Pengaduan Siswa
+     */
+    public function destroy(StudentComplaint $pengaduan): RedirectResponse
+    {
+        $pengaduan->delete();
+
+        return back()->with('success', 'Data pengaduan ' . $pengaduan->ticket_number . ' berhasil dihapus.');
+    }
 }

@@ -207,9 +207,23 @@
                     <div class="text-muted fs-xxs">
                         <i class="bi bi-calendar3 me-0.5"></i> {{ $item->created_at->translatedFormat('d M Y, H:i') }}
                     </div>
-                    <a href="{{ route('panel.konseling.show', $item->id) }}" class="btn btn-sm btn-mint rounded-pill px-3 py-1 fs-xs fw-bold shadow-xs">
-                        Buka Sesi <i class="bi bi-chevron-right ms-0.5"></i>
-                    </a>
+                    <div class="d-flex align-items-center gap-1.5">
+                        @if($item->status === 'completed')
+                            <a href="{{ route('panel.konseling.printReport', $item->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill px-2.5 py-1 fs-xs fw-bold" title="Cetak Laporan PDF">
+                                <i class="bi bi-file-earmark-pdf"></i>
+                            </a>
+                        @endif
+                        <form action="{{ route('panel.konseling.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus agenda konseling {{ $item->ticket_number }}?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-light border text-danger rounded-circle p-1 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;" title="Hapus">
+                                <i class="bi bi-trash3 fs-xs"></i>
+                            </button>
+                        </form>
+                        <a href="{{ route('panel.konseling.show', $item->id) }}" class="btn btn-sm btn-mint rounded-pill px-3 py-1 fs-xs fw-bold shadow-xs">
+                            Buka Sesi <i class="bi bi-chevron-right ms-0.5"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         @empty
@@ -240,7 +254,7 @@
                         <th style="width: 150px;">Konselor PIC</th>
                         <th style="width: 150px;" class="text-center">Status</th>
                         <th style="width: 140px;" class="text-center">Jadwal Sesi</th>
-                        <th style="width: 100px;" class="text-end pe-4">Aksi</th>
+                        <th style="width: 140px;" class="text-end pe-4">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="fs-sm">
@@ -322,10 +336,24 @@
                                     <span class="text-muted fs-xs fst-italic">Belum Ditetapkan</span>
                                 @endif
                             </td>
-                            <td class="text-end pe-4">
-                                <a href="{{ route('panel.konseling.show', $item->id) }}" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1 fs-xs fw-bold">
-                                    Detail <i class="bi bi-chevron-right ms-0.5"></i>
-                                </a>
+                            <td class="text-end pe-4 text-nowrap">
+                                <div class="d-inline-flex align-items-center gap-1.5">
+                                    <a href="{{ route('panel.konseling.show', $item->id) }}" class="btn btn-sm btn-outline-primary rounded-pill px-2.5 py-1 fs-xs fw-bold" title="Detail Sesi">
+                                        Detail
+                                    </a>
+                                    @if($item->status === 'completed')
+                                        <a href="{{ route('panel.konseling.printReport', $item->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill px-2.5 py-1 fs-xs fw-bold" title="Cetak Laporan PDF Resmi">
+                                            <i class="bi bi-file-earmark-pdf"></i>
+                                        </a>
+                                    @endif
+                                    <form action="{{ route('panel.konseling.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus agenda konseling {{ $item->ticket_number }}?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-2 py-1 fs-xs" title="Hapus Agenda">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @empty

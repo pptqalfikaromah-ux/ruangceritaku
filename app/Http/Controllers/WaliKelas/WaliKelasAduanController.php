@@ -72,16 +72,26 @@ class WaliKelasAduanController extends Controller
             'student_id' => ['required', 'exists:students,id'],
             'incident_date' => ['required', 'date'],
             'category' => ['required', 'in:kedisiplinan,pelanggaran_aturan,akademik,sosial_pertemanan,perilaku_sikap,bullying_konflik,lainnya'],
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'min:10'],
-            'initial_action' => ['nullable', 'string'],
-            'teacher_notes' => ['required', 'string', 'min:5'],
+            'description' => ['required', 'string', 'min:5'],
         ], [
             'student_id.required' => 'Pilih murid yang terkait kasus.',
-            'title.required' => 'Judul / pokok permasalahan wajib diisi.',
-            'description.required' => 'Deskripsi kronologi kejadian wajib diisi.',
-            'teacher_notes.required' => 'Catatan / rekomendasi untuk Guru BK wajib diisi agar dapat ditindaklanjuti.',
+            'incident_date.required' => 'Tanggal kejadian wajib diisi.',
+            'category.required' => 'Pilih kategori kasus / permasalahan.',
+            'description.required' => 'Deskripsi kejadian wajib diisi.',
         ]);
+
+        $student = $classroom->students()->find($validated['student_id']);
+        $categoryLabels = [
+            'kedisiplinan' => 'Kedisiplinan & Kerapian',
+            'pelanggaran_aturan' => 'Pelanggaran Aturan',
+            'akademik' => 'Akademik & Belajar',
+            'sosial_pertemanan' => 'Sosial Pertemanan',
+            'perilaku_sikap' => 'Perilaku & Sikap',
+            'bullying_konflik' => 'Perundungan / Konflik',
+            'lainnya' => 'Kasus Lainnya',
+        ];
+        $categoryTitle = $categoryLabels[$validated['category']] ?? 'Kasus Murid';
+        $autoTitle = $categoryTitle . ' - ' . ($student?->name ?? 'Murid');
 
         HomeroomComplaint::create([
             'teacher_id' => $teacher->id,
@@ -91,15 +101,15 @@ class WaliKelasAduanController extends Controller
             'semester_id' => $activeSemester?->id,
             'incident_date' => $validated['incident_date'],
             'category' => $validated['category'],
-            'title' => $validated['title'],
+            'title' => $autoTitle,
             'description' => $validated['description'],
-            'initial_action' => $validated['initial_action'] ?? null,
-            'teacher_notes' => $validated['teacher_notes'],
+            'initial_action' => null,
+            'teacher_notes' => null,
             'status' => 'menunggu_tindak_lanjut',
         ]);
 
         return redirect()->route('walikelas.aduan.index')
-            ->with('success', 'Laporan kasus murid berhasil dikirimkan ke Guru BK untuk segera ditindaklanjuti.');
+            ->with('success', 'Laporan kasus murid berhasil dikirimkan ke Guru BK.');
     }
 
     /**

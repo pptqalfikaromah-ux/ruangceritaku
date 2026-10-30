@@ -317,4 +317,63 @@ class CounselingRequestController extends Controller
 
         return view('student.konseling.card-pdf', compact('konseling', 'student'));
     }
+
+    /**
+     * Hapus Data Pengajuan Agenda Konseling
+     */
+    public function destroy(CounselingRequest $konseling): RedirectResponse
+    {
+        DB::transaction(function () use ($konseling) {
+            // Hapus jadwal terkait jika ada
+            if ($konseling->schedule) {
+                $konseling->schedule->delete();
+            }
+            // Hapus layanan konseling yang tercatat
+            CounselingService::where('counseling_request_id', $konseling->id)->delete();
+            // Hapus riwayat tracking
+            CounselingRequestHistory::where('counseling_request_id', $konseling->id)->delete();
+            // Hapus request konseling
+            $konseling->delete();
+        });
+
+        return back()->with('success', 'Agenda konseling ' . $konseling->ticket_number . ' berhasil dihapus dari sistem.');
+    }
+
+    /**
+     * Cetak / Unduh Format PDF Laporan Pelaksanaan Layanan Konseling Individual (Khusus Admin/Guru BK)
+     */
+    public function printReport(CounselingRequest $konseling): View
+    {
+        $konseling->load([
+            'student.classrooms',
+            'assignedCounselor.user',
+            'schedule.counselor.user',
+            'guidanceField',
+            'serviceType',
+            'counselingService',
+        ]);
+
+        $student = $konseling->student;
+        $counselor = $konseling->assignedCounselor ?? auth()->user()->counselor;
+        $service = $konseling->counselingService;
+        $schedule = $konseling->schedule;
+
+        // Hitung pertemuan ke berapa untuk siswa ini
+        $meetingNumber = CounselingRequest::where('student_id', $student->id)
+            ->where('status', 'completed')
+            ->where('id', '<=', $konseling->id)
+            ->count();
+        if ($meetingNumber === 0) {
+            $meetingNumber = 1;
+        }
+
+        return view('panel.konseling.laporan-individual-pdf', compact(
+            'konseling',
+            'student',
+            'counselor',
+            'service',
+            'schedule',
+            'meetingNumber'
+        ));
+    }
 }

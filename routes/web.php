@@ -164,11 +164,14 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
     Route::post('/konseling/{konseling}/schedule', [CounselingRequestController::class, 'schedule'])->name('konseling.schedule');
     Route::post('/konseling/{konseling}/complete', [CounselingRequestController::class, 'complete'])->name('konseling.complete');
     Route::get('/konseling/{konseling}/cetak-kartu', [CounselingRequestController::class, 'printCard'])->name('konseling.printCard');
+    Route::get('/konseling/{konseling}/laporan-individual', [CounselingRequestController::class, 'printReport'])->name('konseling.printReport');
+    Route::delete('/konseling/{konseling}', [CounselingRequestController::class, 'destroy'])->name('konseling.destroy');
 
     // 9. Layanan Pengaduan & Perlindungan Anak
     Route::get('/pengaduan', [ComplaintController::class, 'index'])->name('pengaduan.index');
     Route::get('/pengaduan/{pengaduan}', [ComplaintController::class, 'show'])->name('pengaduan.show');
     Route::put('/pengaduan/{pengaduan}/status', [ComplaintController::class, 'updateStatus'])->name('pengaduan.status');
+    Route::delete('/pengaduan/{pengaduan}', [ComplaintController::class, 'destroy'])->name('pengaduan.destroy');
 
     // 9b. Aduan Kasus Murid dari Wali Kelas
     Route::get('/aduan-walikelas', [HomeroomComplaintController::class, 'index'])->name('aduan-walikelas.index');

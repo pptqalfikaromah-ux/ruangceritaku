@@ -89,6 +89,7 @@
                             <th style="width: 140px;">Layanan BK</th>
                             <th style="width: 130px;" class="text-center">Status</th>
                             <th style="width: 140px;">Konselor PIC</th>
+                            <th style="width: 110px;" class="text-end pe-3">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,9 +104,21 @@
                                 <td><span class="badge bg-light text-dark border">{{ $row->serviceType?->name ?? '-' }}</span></td>
                                 <td class="text-center"><span class="badge {{ $row->status_badge_class }} rounded-pill fs-xs">{{ $row->status_label }}</span></td>
                                 <td>{{ $row->assignedCounselor?->name ?? 'Belum Ditugaskan' }}</td>
+                                <td class="text-end pe-3 text-nowrap">
+                                    <a href="{{ route('panel.konseling.show', $row->id) }}" class="btn btn-xs btn-outline-primary rounded-pill px-2 py-0.5 fs-xs fw-semibold" title="Buka Detail">
+                                        Detail
+                                    </a>
+                                    <form action="{{ route('panel.konseling.destroy', $row->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus agenda konseling {{ $row->ticket_number }}?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-xs btn-outline-danger rounded-pill px-2 py-0.5 fs-xs" title="Hapus Agenda">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         @empty
-                            <tr><td colspan="6" class="text-center py-4 text-muted">Tidak ada data konseling pada filter ini.</td></tr>
+                            <tr><td colspan="7" class="text-center py-4 text-muted">Tidak ada data konseling pada filter ini.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -145,6 +158,7 @@
                             <th style="width: 140px;">Bidang</th>
                             <th style="width: 180px;">Layanan BK</th>
                             <th style="width: 110px;" class="text-center">Sasaran</th>
+                            <th style="width: 80px;" class="text-end pe-3">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -155,9 +169,18 @@
                                 <td><span class="badge bg-primary-subtle text-primary rounded-pill">{{ $p->guidanceField?->name }}</span></td>
                                 <td><span class="badge bg-light text-dark border">{{ $p->serviceType?->name }}</span></td>
                                 <td class="text-center"><span class="badge bg-secondary-subtle text-secondary">Kelas {{ $p->target_level }}</span></td>
+                                <td class="text-end pe-3 text-nowrap">
+                                    <form action="{{ route('panel.program-bk.destroy', $p->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus program ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-xs btn-outline-danger rounded-pill px-2 py-0.5 fs-xs" title="Hapus Program">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         @empty
-                            <tr><td colspan="5" class="text-center py-4 text-muted">Belum ada program yang direncanakan.</td></tr>
+                            <tr><td colspan="6" class="text-center py-4 text-muted">Belum ada program yang direncanakan.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -171,6 +194,7 @@
                             <th style="width: 130px;" class="text-center">Urgensi</th>
                             <th style="width: 130px;" class="text-center">Status</th>
                             <th style="width: 150px;">Konselor PIC</th>
+                            <th style="width: 110px;" class="text-end pe-3">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -182,9 +206,21 @@
                                 <td class="text-center"><span class="badge {{ $cmp->urgency_badge_class }} text-uppercase fs-xs">{{ $cmp->urgency_level }}</span></td>
                                 <td class="text-center"><span class="badge {{ $cmp->status_badge_class }} rounded-pill fs-xs">{{ $cmp->status_label }}</span></td>
                                 <td>{{ $cmp->handledBy?->name ?? 'Belum Ditugaskan' }}</td>
+                                <td class="text-end pe-3 text-nowrap">
+                                    <a href="{{ route('panel.pengaduan.show', $cmp->id) }}" class="btn btn-xs btn-outline-primary rounded-pill px-2 py-0.5 fs-xs fw-semibold" title="Buka Detail">
+                                        Detail
+                                    </a>
+                                    <form action="{{ route('panel.pengaduan.destroy', $cmp->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pengaduan {{ $cmp->ticket_number }}?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-xs btn-outline-danger rounded-pill px-2 py-0.5 fs-xs" title="Hapus Pengaduan">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         @empty
-                            <tr><td colspan="6" class="text-center py-4 text-muted">Tidak ada pengaduan pada filter ini.</td></tr>
+                            <tr><td colspan="7" class="text-center py-4 text-muted">Tidak ada pengaduan pada filter ini.</td></tr>
                         @endforelse
                     </tbody>
                 </table>

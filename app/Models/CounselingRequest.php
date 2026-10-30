@@ -94,6 +94,11 @@ class CounselingRequest extends Model
         return $this->hasOne(CounselingSchedule::class);
     }
 
+    public function counselingService(): HasOne
+    {
+        return $this->hasOne(CounselingService::class, 'counseling_request_id');
+    }
+
     public function isFromIms(): bool
     {
         return $this->source === 'ims';

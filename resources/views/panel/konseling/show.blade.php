@@ -48,7 +48,13 @@
                 <div class="d-flex flex-wrap gap-2 align-items-center">
                     @if(in_array($konseling->status, ['scheduled', 'approved', 'completed']))
                         <a href="{{ route('panel.konseling.printCard', $konseling) }}" target="_blank" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-1.5 fw-semibold shadow-xs">
-                            <i class="bi bi-printer me-1"></i> Cetak Kartu
+                            <i class="bi bi-ticket-perforated me-1"></i> Kartu Tiket
+                        </a>
+                    @endif
+
+                    @if($konseling->status === 'completed')
+                        <a href="{{ route('panel.konseling.printReport', $konseling) }}" target="_blank" class="btn btn-danger btn-sm rounded-pill px-3.5 py-1.5 fw-bold shadow-sm" title="Unduh format resmi laporan hasil konseling individual">
+                            <i class="bi bi-file-earmark-pdf-fill me-1"></i> Laporan PDF (Arsip)
                         </a>
                     @endif
 
@@ -66,6 +72,15 @@
                             <i class="bi bi-check2-circle me-1.5"></i> Tandai Sudah Tertangani
                         </button>
                     @endif
+
+                    <!-- Tombol Hapus Agenda Konseling -->
+                    <form action="{{ route('panel.konseling.destroy', $konseling) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus agenda konseling ini dari sistem?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold shadow-xs" title="Hapus Agenda Konseling">
+                            <i class="bi bi-trash3 me-1"></i> Hapus
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -302,6 +317,54 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Card Khusus: Kartu Tiket Konseling Ringkas -->
+            @if($konseling->schedule)
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-3" style="background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%); border: 1.5px dashed #0d9488 !important;">
+                    <div class="card-body p-3.5">
+                        <div class="d-flex align-items-center justify-content-between mb-2 pb-2 border-bottom" style="border-color: #99f6e4 !important;">
+                            <div class="d-flex align-items-center gap-1.5">
+                                <i class="bi bi-ticket-perforated-fill text-mint fs-5"></i>
+                                <span class="fw-bold text-dark fs-xs">Kartu Tiket Konseling</span>
+                            </div>
+                            <span class="badge bg-mint text-white font-monospace fs-xxs px-2 py-0.5 rounded-pill">{{ $konseling->ticket_number }}</span>
+                        </div>
+                        
+                        <div class="space-y-1.5 fs-xs mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Nama Konseli:</span>
+                                <span class="fw-bold text-dark">{{ $konseling->student->name }} ({{ $konseling->student->classrooms->first()?->name ?? '-' }})</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Waktu Sesi:</span>
+                                <span class="fw-semibold text-dark">{{ $konseling->schedule->scheduled_date->translatedFormat('d M Y') }}, {{ $konseling->schedule->start_time }} WIB</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Ruangan / Tempat:</span>
+                                <span class="fw-semibold text-dark">{{ $konseling->isOnlineMeet() ? 'Google Meet (Online)' : ($konseling->schedule->location ?? 'Ruang BK') }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Konselor PIC:</span>
+                                <span class="fw-semibold text-dark">{{ $konseling->assignedCounselor?->name ?? 'Tim Konselor BK' }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-1.5 border-top" style="border-color: #99f6e4 !important;">
+                                <span class="text-muted">Status Murid:</span>
+                                @if(in_array($konseling->status, ['scheduled', 'approved', 'completed']))
+                                    <span class="badge bg-success text-white rounded-pill fs-xxs px-2 py-0.5"><i class="bi bi-check-circle-fill me-1"></i> Disetujui Murid</span>
+                                @else
+                                    <span class="badge bg-warning text-dark rounded-pill fs-xxs px-2 py-0.5"><i class="bi bi-clock me-1"></i> Menunggu Konfirmasi</span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <a href="{{ route('panel.konseling.printCard', $konseling) }}" target="_blank" class="btn btn-mint btn-sm rounded-pill fw-bold fs-xs shadow-xs">
+                                <i class="bi bi-printer me-1"></i> Cetak Kartu Tiket Ringkas
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
 
             <!-- Card 2: Informasi Jadwal Sesi Konseling -->
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden">

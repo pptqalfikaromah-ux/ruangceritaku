@@ -46,14 +46,16 @@
                     </div>
                 @endif
 
-                <div class="p-3 rounded-3 mb-4" style="background: #fffbeb; border: 1.5px solid #fef08a;">
-                    <label class="fw-bold text-warning-emphasis fs-xs text-uppercase mb-1">
-                        <i class="bi bi-chat-quote-fill me-1"></i> Catatan & Rekomendasi Khusus Wali Kelas untuk Guru BK
-                    </label>
-                    <div class="text-dark fw-bold mt-1" style="white-space: pre-line;">
-                        {{ $complaint->teacher_notes }}
+                @if($complaint->teacher_notes)
+                    <div class="p-3 rounded-3 mb-4" style="background: #fffbeb; border: 1.5px solid #fef08a;">
+                        <label class="fw-bold text-warning-emphasis fs-xs text-uppercase mb-1">
+                            <i class="bi bi-chat-quote-fill me-1"></i> Catatan & Rekomendasi Khusus Wali Kelas untuk Guru BK
+                        </label>
+                        <div class="text-dark fw-bold mt-1" style="white-space: pre-line;">
+                            {{ $complaint->teacher_notes }}
+                        </div>
                     </div>
-                </div>
+                @endif
 
                 {{-- FORM RESPON / TINDAK LANJUT GURU BK --}}
                 <div class="card border-0 rounded-3 shadow-xs p-3" style="background: #f0fdfa; border: 1.5px solid #99f6e4 !important;">

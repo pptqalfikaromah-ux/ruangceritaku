@@ -43,14 +43,16 @@
                     </div>
                 @endif
 
-                <div class="p-3 rounded-3 mb-4" style="background: #fffbeb; border: 1.5px solid #fef08a;">
-                    <label class="fw-bold text-warning-emphasis fs-xs text-uppercase mb-1">
-                        <i class="bi bi-chat-quote-fill me-1"></i> Catatan & Rekomendasi Anda untuk Admin / Guru BK
-                    </label>
-                    <div class="text-dark fw-semibold mt-1" style="white-space: pre-line;">
-                        {{ $aduan->teacher_notes }}
+                @if($aduan->teacher_notes)
+                    <div class="p-3 rounded-3 mb-4" style="background: #fffbeb; border: 1.5px solid #fef08a;">
+                        <label class="fw-bold text-warning-emphasis fs-xs text-uppercase mb-1">
+                            <i class="bi bi-chat-quote-fill me-1"></i> Catatan & Rekomendasi Anda untuk Admin / Guru BK
+                        </label>
+                        <div class="text-dark fw-semibold mt-1" style="white-space: pre-line;">
+                            {{ $aduan->teacher_notes }}
+                        </div>
                     </div>
-                </div>
+                @endif
 
                 {{-- RESPON / TINDAK LANJUT GURU BK --}}
                 <div class="p-3.5 rounded-3 border" style="background: #f0fdfa; border-color: #99f6e4 !important;">
