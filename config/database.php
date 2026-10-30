@@ -64,6 +64,7 @@ return [
                     : (file_exists(base_path('certs/cacert.pem')) ? base_path('certs/cacert.pem') : null),
                 PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
             ]) : [],
+            'timezone' => env('DB_TIMEZONE', '+07:00'),
         ],
 
 

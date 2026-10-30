@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        date_default_timezone_set(config('app.timezone', 'Asia/Jakarta'));
+        \Carbon\Carbon::setLocale(config('app.locale', 'id'));
+
         \Illuminate\Pagination\Paginator::useBootstrapFive();
 
         if (config('app.env') === 'production' || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) || str_contains(request()->header('host', ''), 'vercel.app')) {
