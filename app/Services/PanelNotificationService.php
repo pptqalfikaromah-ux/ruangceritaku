@@ -37,6 +37,7 @@ class PanelNotificationService
                 'high_risk_complaints' => $highRiskComplaints,
                 'has_danger' => $highRiskComplaints > 0,
                 'homeroom_complaints' => $unreadHomeroom,
+                'all_complaints' => ($unreadComplaints + $unreadHomeroom),
                 'ims' => $unreadIms,
             ];
         } catch (\Throwable $e) {
@@ -47,6 +48,7 @@ class PanelNotificationService
                 'high_risk_complaints' => 0,
                 'has_danger' => false,
                 'homeroom_complaints' => 0,
+                'all_complaints' => 0,
                 'ims' => 0,
             ];
         }

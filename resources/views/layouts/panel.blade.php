@@ -729,10 +729,16 @@
                         @elseif($item['type'] === 'item')
                             @php
                                 $isActive = request()->routeIs($item['active']);
+                                $badgeCount = !empty($item['badge_key']) ? ($panelNotifs[$item['badge_key']] ?? 0) : 0;
                             @endphp
                             <a href="{{ route($item['route']) }}" class="sk-nav-item modern-nav-link emis-menu-link {{ $isActive ? 'active' : '' }}">
                                 <i class="bi {{ $item['icon'] }}"></i>
                                 <span class="flex-grow-1">{{ $item['label'] }}</span>
+                                @if($badgeCount > 0)
+                                    <span class="badge {{ !empty($item['danger_alert']) && ($panelNotifs['has_danger'] ?? false) ? 'badge-danger-pulse' : 'bg-danger text-white' }} rounded-pill px-2 py-0.5 fs-xxs fw-bold">
+                                        {{ $badgeCount }}
+                                    </span>
+                                @endif
                             </a>
                         @elseif($item['type'] === 'dropdown')
                             @php
@@ -744,6 +750,7 @@
                                         break;
                                     }
                                 }
+                                $parentBadge = !empty($item['badge_key']) ? ($panelNotifs[$item['badge_key']] ?? 0) : 0;
                             @endphp
                             <div class="sk-nav-dropdown mb-1">
                                 <button type="button" 
@@ -753,6 +760,11 @@
                                         aria-expanded="{{ $hasActiveChild ? 'true' : 'false' }}">
                                     <i class="bi {{ $item['icon'] }}"></i>
                                     <span class="flex-grow-1">{{ $item['label'] }}</span>
+                                    @if($parentBadge > 0)
+                                        <span class="badge {{ !empty($item['danger_alert']) && ($panelNotifs['has_danger'] ?? false) ? 'badge-danger-pulse' : 'bg-danger text-white' }} rounded-pill px-2 py-0.5 fs-xxs fw-bold me-1.5 shadow-xs">
+                                            {{ $parentBadge }}
+                                        </span>
+                                    @endif
                                     <i class="bi bi-chevron-down sk-chevron"></i>
                                 </button>
                                 <div class="collapse {{ $hasActiveChild ? 'show' : '' }} sk-submenu" id="{{ $item['id'] }}">
@@ -760,10 +772,16 @@
                                         @if(in_array($userRole, $child['roles']))
                                             @php
                                                 $isChildActive = request()->routeIs($child['active']);
+                                                $childBadge = !empty($child['badge_key']) ? ($panelNotifs[$child['badge_key']] ?? 0) : 0;
                                             @endphp
                                             <a href="{{ route($child['route']) }}" class="sk-subitem {{ $isChildActive ? 'active' : '' }}">
                                                 <i class="bi {{ $child['icon'] ?? 'bi-circle' }}"></i>
                                                 <span class="flex-grow-1">{{ $child['label'] }}</span>
+                                                @if($childBadge > 0)
+                                                    <span class="badge {{ !empty($child['danger_alert']) && ($panelNotifs['has_danger'] ?? false) ? 'badge-danger-pulse' : 'bg-danger text-white' }} rounded-pill px-2 py-0.5 fs-xxs fw-bold">
+                                                        {{ $childBadge }}
+                                                    </span>
+                                                @endif
                                             </a>
                                         @endif
                                     @endforeach

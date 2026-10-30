@@ -77,6 +77,7 @@ return [
             'id' => 'menuKonseling',
             'label' => 'Layanan Konseling',
             'icon' => 'bi-chat-heart',
+            'badge_key' => 'counseling',
             'roles' => ['admin', 'guru_bk'],
             'children' => [
                 [
@@ -84,6 +85,7 @@ return [
                     'icon' => 'bi-calendar2-check',
                     'route' => 'panel.konseling.index',
                     'active' => 'panel.konseling.*',
+                    'badge_key' => 'counseling',
                     'roles' => ['admin', 'guru_bk'],
                 ],
                 [
@@ -116,6 +118,7 @@ return [
             'id' => 'menuAsesmenIms',
             'label' => 'Asesmen Siswa (IMS)',
             'icon' => 'bi-clipboard2-data',
+            'badge_key' => 'ims',
             'roles' => ['admin', 'guru_bk'],
             'children' => [
                 [
@@ -123,6 +126,7 @@ return [
                     'icon' => 'bi-file-earmark-person',
                     'route' => 'panel.ims.monitoring',
                     'active' => 'panel.ims.*',
+                    'badge_key' => 'ims',
                     'roles' => ['admin', 'guru_bk'],
                 ],
                 [
