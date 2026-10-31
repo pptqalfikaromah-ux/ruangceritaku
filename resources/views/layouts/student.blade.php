@@ -459,7 +459,7 @@
                         <i class="bi bi-clipboard2-check"></i><span>Asesmen Masalah (IMS)</span>
                     </a>
                 @else
-                    <a href="javascript:void(0)" onclick="alert('Layanan Asesmen Masalah (IMS) saat ini sedang dinonaktifkan oleh pihak madrasah / Guru BK.')" class="sk-nav-item" style="opacity:0.6;cursor:not-allowed;" title="Layanan dinonaktifkan oleh Guru BK">
+                    <a href="javascript:void(0)" onclick="alert('Layanan Asesmen Masalah (IMS) saat ini sedang dinonaktifkan oleh pihak sekolah / Guru BK.')" class="sk-nav-item" style="opacity:0.6;cursor:not-allowed;" title="Layanan dinonaktifkan oleh Guru BK">
                         <i class="bi bi-lock"></i><span>Asesmen Masalah (IMS)</span>
                         <span class="badge bg-secondary ms-auto" style="font-size:.65rem;font-weight:600;">Terkunci</span>
                     </a>
@@ -518,7 +518,7 @@
                 <span>Asesmen</span>
             </a>
         @else
-            <a href="javascript:void(0)" onclick="alert('Layanan Asesmen Masalah (IMS) saat ini sedang dinonaktifkan oleh pihak madrasah / Guru BK.')" class="sk-btab" style="opacity:0.5;cursor:not-allowed;" title="Asesmen dinonaktifkan">
+            <a href="javascript:void(0)" onclick="alert('Layanan Asesmen Masalah (IMS) saat ini sedang dinonaktifkan oleh pihak sekolah / Guru BK.')" class="sk-btab" style="opacity:0.5;cursor:not-allowed;" title="Asesmen dinonaktifkan">
                 <i class="bi bi-lock"></i>
                 <span>Asesmen</span>
             </a>

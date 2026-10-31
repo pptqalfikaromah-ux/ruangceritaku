@@ -18,7 +18,7 @@
                 <h6 class="fw-bold mb-0 text-dark">
                     <i class="bi bi-pencil-square text-warning me-1.5"></i> Formulir Laporan Kasus Murid Kelas {{ $classroom?->name }}
                 </h6>
-                <div class="text-muted fs-xs mt-0.5">Laporan ini akan langsung diteruskan ke Guru BK & Admin Madrasah.</div>
+                <div class="text-muted fs-xs mt-0.5">Laporan ini akan langsung diteruskan ke Guru BK & Admin Sekolah.</div>
             </div>
 
             <div class="card-body p-3 p-md-4">

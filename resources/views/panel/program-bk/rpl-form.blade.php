@@ -13,7 +13,7 @@
             <div>
                 <div class="d-flex align-items-center gap-2 mb-1">
                     <span class="badge bg-emerald-subtle text-emerald px-2 py-1 fs-xs fw-semibold rounded-pill">Dokumen RPL</span>
-                    <span class="badge bg-primary-subtle text-primary px-2 py-1 fs-xs fw-medium rounded-pill">Format Standar BK Madrasah</span>
+                    <span class="badge bg-primary-subtle text-primary px-2 py-1 fs-xs fw-medium rounded-pill">Format Standar BK Sekolah</span>
                 </div>
                 <h1 class="h4 fw-bold text-dark mb-0">Penyusunan RPL Bimbingan & Konseling</h1>
             </div>

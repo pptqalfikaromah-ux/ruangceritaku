@@ -71,7 +71,7 @@
                 <div class="p-3.5 p-sm-4 rounded-4 mb-4" style="background:#f8fafc; border:1px solid #e2e8f0;">
                     <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
                         <span class="fw-bold text-dark fs-xs text-uppercase letter-spacing-1 d-inline-flex align-items-center">
-                            <i class="bi bi-shield-lock-fill text-success me-1.5 fs-6"></i> Data Resmi Madrasah (Dikunci oleh Admin)
+                            <i class="bi bi-shield-lock-fill text-success me-1.5 fs-6"></i> Data Resmi Sekolah (Dikunci oleh Admin)
                         </span>
                         <span class="badge bg-secondary-subtle text-secondary px-3 py-1.5 rounded-pill" style="font-size: 0.74rem;">Data dikunci oleh Admin</span>
                     </div>

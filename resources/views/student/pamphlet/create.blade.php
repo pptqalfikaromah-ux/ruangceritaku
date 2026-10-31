@@ -21,7 +21,7 @@
                     </div>
                     <div>
                         <h5 class="fw-bold text-dark mb-0">Formulir Unggah Pamflet & Karya Siswa</h5>
-                        <p class="text-muted small mb-0">Tampilkan karya terbaikmu untuk menginspirasi teman-teman satu madrasah</p>
+                        <p class="text-muted small mb-0">Tampilkan karya terbaikmu untuk menginspirasi teman-teman satu sekolah</p>
                     </div>
                 </div>
             </div>
@@ -133,7 +133,7 @@
                                     <div class="fw-bold text-success mb-1">Ketentuan Publikasi Pamflet:</div>
                                     <ul class="mb-0 ps-3 text-muted">
                                         <li>Karya orisinil buatan sendiri atau kelompok belajar siswa.</li>
-                                        <li>Bertema positif, edukatif, motivasi, kesehatan mental, atau kreativitas madrasah.</li>
+                                        <li>Bertema positif, edukatif, motivasi, kesehatan mental, atau kreativitas sekolah.</li>
                                         <li>Tidak mengandung unsur SARA, ujaran kebencian, atau konten yang tidak pantas.</li>
                                         <li>Admin / Guru BK akan memoderasi karya sebelum resmi ditayangkan di Dashboard.</li>
                                     </ul>

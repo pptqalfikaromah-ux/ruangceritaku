@@ -68,7 +68,7 @@
             <div>
                 <h6 class="fw-extrabold text-danger mb-1">Perhatian Khusus: Terindikasi Risiko Keselamatan Anak!</h6>
                 <p class="mb-0 fs-sm text-danger-emphasis" style="line-height: 1.6;">
-                    Laporan ini ditandai memiliki potensi ancaman terhadap keselamatan fisik atau psikologis anak. Konselor dan pihak madrasah wajib segera melakukan verifikasi tertutup, perlindungan aman bagi pelapor, serta koordinasi cepat dengan Kepala Madrasah.
+                    Laporan ini ditandai memiliki potensi ancaman terhadap keselamatan fisik atau psikologis anak. Konselor dan pihak sekolah wajib segera melakukan verifikasi tertutup, perlindungan aman bagi pelapor, serta koordinasi cepat dengan Kepala Sekolah.
                 </p>
             </div>
         </div>
@@ -167,7 +167,7 @@
                                     <i class="bi bi-geo-alt me-1 text-danger"></i> Tempat / Lokasi Kejadian
                                 </span>
                                 <div class="fw-bold text-dark fs-sm">
-                                    {{ $pengaduan->incident_location ?? 'Lingkungan Madrasah' }}
+                                    {{ $pengaduan->incident_location ?? 'Lingkungan Sekolah' }}
                                 </div>
                             </div>
                         </div>
@@ -274,7 +274,7 @@
                                       rows="5" 
                                       placeholder="Tuliskan tindakan yang telah diambil, hasil wawancara tertutup, klarifikasi saksi, serta langkah perlindungan siswa..." 
                                       required>{{ old('handling_notes', $pengaduan->handling_notes) }}</textarea>
-                            <div class="form-text fs-xs text-muted">Wajib diisi sebagai rekam jejak formal penanganan kasus anak di madrasah.</div>
+                            <div class="form-text fs-xs text-muted">Wajib diisi sebagai rekam jejak formal penanganan kasus anak di sekolah.</div>
                         </div>
 
                         <button type="submit" class="btn btn-mint w-100 rounded-pill py-2.5 fw-bold shadow-xs">

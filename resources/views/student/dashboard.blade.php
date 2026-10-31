@@ -19,7 +19,7 @@
         </div>
         <div class="col">
             <div style="font-size:.72rem;font-weight:700;opacity:.75;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">
-                <i class="bi bi-mortarboard-fill me-1"></i>{{ app_setting('school_name', 'Madrasah / Sekolah') }} &bull; Siswa Aktif
+                <i class="bi bi-mortarboard-fill me-1"></i>{{ app_setting('school_name', 'Sekolah') }} &bull; Siswa Aktif
             </div>
             <div style="font-size:1.3rem;font-weight:800;line-height:1.2;margin-bottom:4px;">{{ $student->name }}</div>
             <div style="font-size:.8rem;opacity:.85;">
@@ -37,7 +37,7 @@
     </div>
 </div>
 
-{{-- Etalase Pamflet Kreativitas Siswa & Pengumuman Madrasah --}}
+{{-- Etalase Pamflet Kreativitas Siswa & Pengumuman Sekolah --}}
 <x-pamphlet-carousel />
 <x-announcements-widget />
 
@@ -179,7 +179,7 @@
                     </div>
                     <div style="font-weight:700;font-size:.9rem;margin-bottom:4px;color:#334155;">Layanan Asesmen Sedang Dinonaktifkan</div>
                     <div style="font-size:.78rem;color:#64748b;margin-bottom:16px;max-width:320px;margin-left:auto;margin-right:auto;">
-                        Pengisian instrumen IMS saat ini dinonaktifkan oleh Guru BK. Anda dapat mengaksesnya kembali setelah diaktifkan oleh pihak madrasah.
+                        Pengisian instrumen IMS saat ini dinonaktifkan oleh Guru BK. Anda dapat mengaksesnya kembali setelah diaktifkan oleh pihak sekolah.
                     </div>
                     <button type="button" class="btn btn-light border btn-sm rounded-pill px-3.5 py-1.5 text-muted" onclick="alert('Layanan Asesmen IMS saat ini dinonaktifkan oleh Guru BK.')" style="cursor:not-allowed;font-size:.78rem;font-weight:600;">
                         <i class="bi bi-lock me-1"></i> Asesmen Terkunci

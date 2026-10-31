@@ -26,7 +26,7 @@ class StudentImsController extends Controller
         $this->middleware(function ($request, $next) {
             if (app_setting('ims_enabled', '1') !== '1') {
                 return redirect()->route('murid.dashboard')
-                    ->with('warning', 'Layanan Instrumen Masalah Siswa (IMS) saat ini sedang dinonaktifkan oleh pihak madrasah.');
+                    ->with('warning', 'Layanan Instrumen Masalah Siswa (IMS) saat ini sedang dinonaktifkan oleh pihak sekolah.');
             }
             return $next($request);
         });

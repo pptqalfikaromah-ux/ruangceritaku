@@ -311,13 +311,13 @@
 
     <!-- Kartu Tiket Kecil -->
     <div class="ticket-card">
-        <!-- Header Madrasah / Sekolah -->
+        <!-- Header Sekolah -->
         <div class="ticket-header">
             @if(app_logo())
                 <img src="{{ app_logo() }}" alt="Logo" class="school-logo">
             @endif
             <div class="school-info">
-                <div class="school-name">{{ app_setting('school_name', 'Bimbingan & Konseling Madrasah') }}</div>
+                <div class="school-name">{{ app_setting('school_name', 'Bimbingan & Konseling Sekolah') }}</div>
                 <div class="school-addr">{{ app_setting('school_address', 'Layanan Bimbingan Konseling Siswa') }}</div>
             </div>
         </div>

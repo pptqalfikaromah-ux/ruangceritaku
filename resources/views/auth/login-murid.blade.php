@@ -69,7 +69,7 @@
                                autofocus>
                     </div>
                     <div class="form-text text-muted fs-xs mt-1.5 ps-1" style="line-height: 1.45;">
-                        <i class="bi bi-info-circle me-1"></i>Masukkan NISN 10 digit terdaftar di madrasah.
+                        <i class="bi bi-info-circle me-1"></i>Masukkan NISN 10 digit terdaftar di sekolah.
                     </div>
                     @error('login')
                         <div class="text-danger small mt-1.5 ps-1">{{ $message }}</div>

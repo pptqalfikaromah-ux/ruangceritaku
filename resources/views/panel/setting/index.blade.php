@@ -4,7 +4,7 @@
 
 @section('content')
 <x-page-header title="Pengaturan Sekolah & Aplikasi"
-               subtitle="Sesuaikan profil sekolah/madrasah, nama aplikasi, logo, dan footer sistem Ruang Ceritaku.">
+               subtitle="Sesuaikan profil sekolah, nama aplikasi, logo, dan footer sistem Ruang Ceritaku.">
 </x-page-header>
 
 <div class="row">
@@ -13,17 +13,17 @@
             @csrf
             @method('PUT')
 
-            <!-- Profil Sekolah / Madrasah -->
+            <!-- Profil Sekolah -->
             <div class="card card-app mb-4">
                 <div class="card-header bg-white py-3 border-bottom">
                     <h6 class="fw-bold mb-0 text-slate-800">
-                        <i class="bi bi-building me-1 text-primary-teal"></i> Profil Sekolah / Madrasah
+                        <i class="bi bi-building me-1 text-primary-teal"></i> Profil Sekolah
                     </h6>
                 </div>
                 <div class="card-body p-4">
                     <div class="row">
                         <div class="col-md-8">
-                            <x-form-input name="school_name" label="Nama Sekolah / Madrasah" :value="app_setting('school_name', 'SMP Negeri 1 Contoh')" placeholder="Nama resmi instansi pendidikan" required />
+                            <x-form-input name="school_name" label="Nama Sekolah" :value="app_setting('school_name', 'SMP Negeri 1 Contoh')" placeholder="Nama resmi instansi pendidikan" required />
                         </div>
                         <div class="col-md-4">
                             <x-form-input name="school_npsn" label="NPSN / NSM" :value="app_setting('school_npsn', '20101234')" placeholder="Nomor Pokok Sekolah Nasional" />
@@ -53,7 +53,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <x-form-input name="headmaster_name" label="Nama Kepala Sekolah / Madrasah" :value="app_setting('headmaster_name')" placeholder="Nama lengkap beserta gelar" />
+                            <x-form-input name="headmaster_name" label="Nama Kepala Sekolah" :value="app_setting('headmaster_name')" placeholder="Nama lengkap beserta gelar" />
                         </div>
                         <div class="col-md-6">
                             <x-form-input name="headmaster_nip" label="NIP Kepala Sekolah" :value="app_setting('headmaster_nip')" placeholder="NIP jika ada" />

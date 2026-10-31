@@ -194,7 +194,7 @@ return [
             'roles' => ['admin', 'guru_bk'],
             'children' => [
                 [
-                    'label' => 'Pengumuman Madrasah',
+                    'label' => 'Pengumuman Sekolah',
                     'icon' => 'bi-broadcast',
                     'route' => 'panel.pengumuman.index',
                     'active' => 'panel.pengumuman.*',
@@ -208,7 +208,7 @@ return [
                     'roles' => ['admin'],
                 ],
                 [
-                    'label' => 'Pengaturan Madrasah',
+                    'label' => 'Pengaturan Sekolah',
                     'icon' => 'bi-gear',
                     'route' => 'panel.setting.index',
                     'active' => 'panel.setting.index',

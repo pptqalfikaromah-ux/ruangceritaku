@@ -147,7 +147,7 @@
                     </div>
                     <div>
                         <h6 class="fw-bold mb-1">Pojok Kreativitas Murid: Tunjukkan Karyamu!</h6>
-                        <p class="mb-0 text-white-50 small">Punya poster edukasi, motivasi belajar, atau pamflet karya seni? Unggah sekarang agar tayang di Dashboard utama madrasah.</p>
+                        <p class="mb-0 text-white-50 small">Punya poster edukasi, motivasi belajar, atau pamflet karya seni? Unggah sekarang agar tayang di Dashboard utama sekolah.</p>
                     </div>
                 </div>
                 <div class="flex-shrink-0">

@@ -289,7 +289,7 @@
                     <i class="bi bi-shield-lock-fill text-warning"></i> Kerahasiaan Dilindungi
                 </div>
                 <div class="text-white-50" style="font-size: 0.72rem; line-height: 1.5;">
-                    Hasil asesmen ini disimpan secara aman dan hanya dapat dipelajari oleh Guru BK madrasah untuk keperluan bimbingan dan pendampinganmu.
+                    Hasil asesmen ini disimpan secara aman dan hanya dapat dipelajari oleh Guru BK sekolah untuk keperluan bimbingan dan pendampinganmu.
                 </div>
             </div>
         </div>

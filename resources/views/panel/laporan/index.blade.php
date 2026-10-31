@@ -14,7 +14,7 @@
                         <span class="badge bg-primary-subtle text-primary px-2.5 py-1 fs-xxs fw-semibold rounded-pill">Data Aktual & Rekapitulasi</span>
                     </div>
                     <h1 class="h5 h4-md fw-extrabold text-dark mb-1">Laporan & Rekapitulasi Bimbingan Konseling</h1>
-                    <p class="text-muted fs-xs mb-0">Cetak dokumen laporan berkop resmi madrasah untuk arsip dan evaluasi periodik BK.</p>
+                    <p class="text-muted fs-xs mb-0">Cetak dokumen laporan berkop resmi sekolah untuk arsip dan evaluasi periodik BK.</p>
                 </div>
                 <div>
                     <a href="{{ route('panel.laporan.print', request()->query()) }}" target="_blank" class="btn btn-mint text-white btn-sm rounded-pill px-3.5 py-2 fw-bold shadow-xs fs-xs text-nowrap d-inline-flex align-items-center gap-1.5">

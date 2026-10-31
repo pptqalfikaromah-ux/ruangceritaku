@@ -38,7 +38,7 @@
                 </div>
                 <div class="min-w-0">
                     <div class="fw-bold text-dark fs-sm" style="line-height: 1.3; letter-spacing: 0.01em;">Portal Guru BK & Admin</div>
-                    <div class="text-muted fs-xs mt-0.5" style="line-height: 1.4;">Akses panel bimbingan konseling dan tata kelola madrasah.</div>
+                    <div class="text-muted fs-xs mt-0.5" style="line-height: 1.4;">Akses panel bimbingan konseling dan tata kelola sekolah.</div>
                 </div>
             </div>
 

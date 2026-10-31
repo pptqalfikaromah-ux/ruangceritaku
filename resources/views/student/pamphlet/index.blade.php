@@ -15,7 +15,7 @@
                         </div>
                         <h4 class="fw-bold mb-1">Galeri Pamflet & Kreativitas Siswa</h4>
                         <p class="mb-0 text-white-50 small">
-                            Bagikan poster, pamflet motivasi, tips belajar, atau karya seni kreatifmu. Karya yang disetujui Guru BK akan tayang di Dashboard seluruh madrasah!
+                            Bagikan poster, pamflet motivasi, tips belajar, atau karya seni kreatifmu. Karya yang disetujui Guru BK akan tayang di Dashboard seluruh sekolah!
                         </p>
                     </div>
                     <div>
@@ -109,7 +109,7 @@
 
                                 @if($pamphlet->status === 'disetujui')
                                     <div class="p-2 rounded-3 bg-success-subtle text-success small mb-3">
-                                        <i class="bi bi-check-all me-1"></i> Telah disetujui dan aktif tampil di carousel Dashboard seluruh warga madrasah.
+                                        <i class="bi bi-check-all me-1"></i> Telah disetujui dan aktif tampil di carousel Dashboard seluruh warga sekolah.
                                     </div>
                                 @endif
 

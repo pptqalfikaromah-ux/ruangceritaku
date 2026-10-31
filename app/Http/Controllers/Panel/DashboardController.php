@@ -24,7 +24,7 @@ class DashboardController extends Controller
         $activeYear = active_academic_year();
         $counselor = Counselor::where('user_id', $user->id)->first();
 
-        // Data statistik madrasah/sekolah untuk Admin & seluruh Guru BK
+        // Data statistik sekolah untuk Admin & seluruh Guru BK
         $totalStudents = Student::where('status', 'aktif')->count();
         $totalClassrooms = Classroom::count();
         $totalCounselors = Counselor::where('status', 'aktif')->count();

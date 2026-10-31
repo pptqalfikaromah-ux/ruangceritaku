@@ -25,7 +25,7 @@
                 Selamat Datang, {{ $teacher?->name ?? $user->name }}!
             </h3>
             <div class="small opacity-90 fs-xs">
-                <i class="bi bi-building me-1"></i>{{ app_setting('school_name', 'Madrasah / Sekolah') }}
+                <i class="bi bi-building me-1"></i>{{ app_setting('school_name', 'Sekolah') }}
                 @if($classroom)
                     &bull; {{ $totalStudents }} Murid Binaan
                 @endif
@@ -241,7 +241,7 @@
     </div>
 </div>
 
-{{-- 5. PAMFLET KREATIVITAS & PENGUMUMAN MADRASAH (Di Tempatkan di Bawah Agar Fokus Utama Tugas Wali Kelas Muncul Lebih Dulu) --}}
+{{-- 5. PAMFLET KREATIVITAS & PENGUMUMAN SEKOLAH (Di Tempatkan di Bawah Agar Fokus Utama Tugas Wali Kelas Muncul Lebih Dulu) --}}
 <div class="mb-4">
     <x-pamphlet-carousel />
     <x-announcements-widget />

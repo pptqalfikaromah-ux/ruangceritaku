@@ -752,7 +752,7 @@
                     @if($currentUser?->isAdmin())
                         <li>
                             <a class="dropdown-item py-2" href="{{ route('panel.setting.index') }}" style="font-size: .83rem;">
-                                <i class="bi bi-gear me-2 text-success"></i> Pengaturan Madrasah
+                                <i class="bi bi-gear me-2 text-success"></i> Pengaturan Sekolah
                             </a>
                         </li>
                     @endif

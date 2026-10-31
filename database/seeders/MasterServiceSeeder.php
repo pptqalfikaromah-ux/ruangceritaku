@@ -17,7 +17,7 @@ class MasterServiceSeeder extends Seeder
                 'code' => 'LAY-01',
                 'name' => 'Layanan Orientasi',
                 'category' => 'layanan',
-                'description' => 'Layanan bimbingan untuk membantu peserta didik memahami lingkungan baru, terutama lingkungan sekolah/madrasah dan obyek-obyek yang dipelajari.',
+                'description' => 'Layanan bimbingan untuk membantu peserta didik memahami lingkungan baru, terutama lingkungan sekolah dan obyek-obyek yang dipelajari.',
             ],
             [
                 'code' => 'LAY-02',

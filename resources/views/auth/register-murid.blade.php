@@ -24,7 +24,7 @@
                         <img src="{{ app_logo() }}" alt="{{ app_setting('app_name', 'Ruang Ceritaku') }}" style="height: 38px; width: auto; object-fit: contain;">
                     </div>
                     <span class="fs-6 fw-extrabold text-dark mt-1" style="letter-spacing: -0.02em;">{{ app_setting('app_name', 'Ruang Ceritaku') }}</span>
-                    <span class="text-muted small fs-xs">{{ app_setting('school_name', 'Madrasah / Sekolah') }}</span>
+                    <span class="text-muted small fs-xs">{{ app_setting('school_name', 'Sekolah') }}</span>
                 </a>
                 <div class="mt-2">
                     <h5 class="fw-extrabold text-dark mb-1">Formulir Pendaftaran Akun</h5>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="small">
                     <span class="fw-bold text-dark d-block" style="font-size: 0.82rem;">Daftar Akun Siswa</span>
-                    <span class="text-muted" style="font-size: 0.72rem;">Akun Guru BK dan Wali Kelas dikelola langsung oleh Administrator madrasah/sekolah.</span>
+                    <span class="text-muted" style="font-size: 0.72rem;">Akun Guru BK dan Wali Kelas dikelola langsung oleh Administrator sekolah.</span>
                 </div>
             </div>
 
@@ -321,7 +321,7 @@
 
     <!-- Footer Note -->
     <div class="text-center text-muted small mt-3">
-        &copy; {{ date('Y') }} {{ app_setting('app_name', 'Ruang Ceritaku') }} &bull; {{ app_setting('school_name', 'Madrasah / Sekolah') }}
+        &copy; {{ date('Y') }} {{ app_setting('app_name', 'Ruang Ceritaku') }} &bull; {{ app_setting('school_name', 'Sekolah') }}
     </div>
 </div>
 

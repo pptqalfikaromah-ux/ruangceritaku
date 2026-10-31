@@ -15,7 +15,7 @@
                 <div class="rounded-circle d-flex align-items-center justify-content-center text-white" style="width: 32px; height: 32px; background: linear-gradient(135deg, #0d9488, #14b8a6);">
                     <i class="bi bi-broadcast fs-6"></i>
                 </div>
-                <h6 class="fw-bold text-dark mb-0">Pengumuman & Informasi Madrasah</h6>
+                <h6 class="fw-bold text-dark mb-0">Pengumuman & Informasi Sekolah</h6>
             </div>
             <span class="badge bg-teal-subtle text-teal rounded-pill px-3 py-1 small" style="background-color: #ccfbf1; color: #0f766e;">
                 {{ $announcements->count() }} Pengumuman
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="mt-2 text-muted small d-flex align-items-center gap-2" style="font-size: .75rem;">
-                            <span><i class="bi bi-person-fill me-1"></i> Diterbitkan oleh: <strong>{{ $announcement->author?->name ?? 'Admin Madrasah' }}</strong></span>
+                            <span><i class="bi bi-person-fill me-1"></i> Diterbitkan oleh: <strong>{{ $announcement->author?->name ?? 'Admin Sekolah' }}</strong></span>
                             @if($announcement->target_role !== 'all')
                                 <span>&bull;</span>
                                 <span class="badge bg-secondary-subtle text-secondary rounded-pill">Target: {{ $announcement->target_role_label }}</span>

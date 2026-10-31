@@ -198,13 +198,13 @@
                         </div>
                     @endif
 
-                    <!-- Catatan Resmi Konselor / Madrasah (Jika Ada) -->
+                    <!-- Catatan Resmi Konselor / Sekolah (Jika Ada) -->
                     @if($konseling->status_notes)
                         <div class="p-3 rounded-3 border bg-info-subtle border-info-subtle text-info-emphasis">
                             <div class="d-flex align-items-start gap-2">
                                 <i class="bi bi-info-circle-fill fs-5 flex-shrink-0 mt-0.5"></i>
                                 <div>
-                                    <span class="fw-bold fs-xs text-uppercase tracking-wide d-block">Catatan Respon Konselor / Madrasah Terakhir:</span>
+                                    <span class="fw-bold fs-xs text-uppercase tracking-wide d-block">Catatan Respon Konselor / Sekolah Terakhir:</span>
                                     <p class="fs-sm mb-0 mt-1 text-dark">{{ $konseling->status_notes }}</p>
                                 </div>
                             </div>

@@ -76,7 +76,7 @@
                         <div class="alert alert-warning border-0 rounded-3 small mb-0 d-flex align-items-center gap-2">
                             <i class="bi bi-hourglass-split fs-5"></i>
                             <div>
-                                Laporan ini telah diterima sistem dan sedang dalam antrean peninjauan oleh tim Guru BK madrasah.
+                                Laporan ini telah diterima sistem dan sedang dalam antrean peninjauan oleh tim Guru BK sekolah.
                             </div>
                         </div>
                     @endif

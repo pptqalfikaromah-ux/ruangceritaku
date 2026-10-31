@@ -200,10 +200,10 @@
         <table class="kop-table">
             <tr>
                 <td style="width: 85px;">
-                    <img src="{{ app_logo() }}" alt="Logo Madrasah" class="kop-logo">
+                    <img src="{{ app_logo() }}" alt="Logo Sekolah" class="kop-logo">
                 </td>
                 <td class="kop-text">
-                    <div class="kop-school">{{ app_setting('school_name', 'MADRASAH TSANAWIYAH AL-FALAH') }}</div>
+                    <div class="kop-school">{{ app_setting('school_name', 'SMP / SEKOLAH UNGGULAN') }}</div>
                     <div class="kop-address">
                         {{ app_setting('school_address', 'Jl. Raya Pendidikan No. 45, Kecamatan Sumpiuh, Kabupaten Banyumas') }}<br>
                         Telp/HP: {{ app_setting('school_phone', '(0281) 123456') }} &bull; Email: {{ app_setting('school_email', 'admin@ruangceritaku.sch.id') }}
@@ -263,7 +263,7 @@
                     <td class="col-label">Waktu & Tempat Kejadian</td>
                     <td class="col-content">
                         Waktu: {{ $complaint->incident_date ? $complaint->incident_date->translatedFormat('d F Y') : '-' }}<br>
-                        Tempat: {{ $complaint->incident_location ?? 'Lingkungan Madrasah' }}
+                        Tempat: {{ $complaint->incident_location ?? 'Lingkungan Sekolah' }}
                     </td>
                 </tr>
                 <tr>
@@ -301,7 +301,7 @@
             </tbody>
         </table>
 
-        <!-- TANDA TANGAN (3 PIHAK: WALI KELAS, GURU BK, KEPALA MADRASAH) -->
+        <!-- TANDA TANGAN (3 PIHAK: WALI KELAS, GURU BK, KEPALA SEKOLAH) -->
         <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 10pt;">
             <tr>
                 <td style="width: 33%; vertical-align: top; text-align: center;"></td>
@@ -319,7 +319,7 @@
                 </td>
                 <td style="width: 33%; vertical-align: top; text-align: center;">
                     Mengetahui,<br>
-                    Kepala {{ app_setting('school_name', 'Madrasah') }}
+                    Kepala {{ app_setting('school_name', 'Sekolah') }}
                 </td>
             </tr>
             <tr>

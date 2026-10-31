@@ -15,7 +15,7 @@
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
             <div>
                 <h4 class="fw-extrabold text-dark mb-1 d-flex align-items-center gap-2 fs-5 fs-md-4">
-                    <i class="bi bi-megaphone-fill text-mint"></i> Pengumuman Madrasah
+                    <i class="bi bi-megaphone-fill text-mint"></i> Pengumuman Sekolah
                 </h4>
                 <p class="text-muted fs-xs mb-0">
                     Kelola pengumuman resmi yang akan ditayangkan langsung di dashboard seluruh akun pengguna (Admin, Guru BK, Wali Kelas, dan Murid) lengkap dengan dukungan poster/gambar.

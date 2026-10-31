@@ -699,7 +699,7 @@
                         <span class="fw-bold text-dark">{{ app_setting('app_name', 'Ruang Ceritaku') }}</span>
                     </div>
                     <div class="text-muted small">
-                        Layanan Bimbingan & Konseling Sekolah Terpadu &bull; {{ app_setting('school_name', 'Madrasah / Sekolah') }}
+                        Layanan Bimbingan & Konseling Sekolah Terpadu &bull; {{ app_setting('school_name', 'Sekolah') }}
                     </div>
                 </div>
                 <div class="col-md-6 text-center text-md-end text-muted small">

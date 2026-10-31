@@ -345,7 +345,7 @@
             <tr>
                 <td style="width: 50%; vertical-align: top; text-align: center;">
                     Mengetahui,<br>
-                    Kepala {{ app_setting('school_name', "Madrasah / Sekolah") }}
+                    Kepala {{ app_setting('school_name', "Sekolah") }}
                 </td>
                 <td style="width: 50%; vertical-align: top; text-align: center;">
                     {{ app_setting('school_city', 'Sumpiuh') }}, {{ $assessment->submitted_at ? $assessment->submitted_at->translatedFormat('d F Y') : now()->translatedFormat('d F Y') }}<br>

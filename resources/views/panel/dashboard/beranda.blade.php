@@ -9,7 +9,7 @@
 @section('content')
 @php
     $counselorName = $counselor?->name ?? $user->name;
-    $schoolName = app_setting('school_name', 'Madrasah / Sekolah');
+    $schoolName = app_setting('school_name', 'Sekolah');
 @endphp
 
 {{-- 1. WELCOME PROFILE BANNER (Android App Style) --}}
@@ -69,7 +69,7 @@
     </div>
 </div>
 
-{{-- Etalase Pamflet Kreativitas Siswa & Pengumuman Madrasah --}}
+{{-- Etalase Pamflet Kreativitas Siswa & Pengumuman Sekolah --}}
 <x-pamphlet-carousel />
 <x-announcements-widget />
 

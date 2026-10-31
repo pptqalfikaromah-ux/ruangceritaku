@@ -43,7 +43,7 @@
                         </div>
                         <div class="col-md-6">
                             <span class="text-muted fs-xs d-block mb-1">Lokasi Kejadian</span>
-                            <div class="fw-medium text-dark">{{ $pengaduan->incident_location ?? 'Lingkungan Madrasah' }}</div>
+                            <div class="fw-medium text-dark">{{ $pengaduan->incident_location ?? 'Lingkungan Sekolah' }}</div>
                         </div>
                     </div>
 

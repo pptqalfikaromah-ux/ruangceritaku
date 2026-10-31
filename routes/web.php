@@ -214,12 +214,12 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
     Route::post('/pamflet-kreatifitas/{pamphlet}/toggle', [PamphletModerationController::class, 'togglePublish'])->name('pamflet-kreatifitas.toggle');
     Route::delete('/pamflet-kreatifitas/{pamphlet}', [PamphletModerationController::class, 'destroy'])->name('pamflet-kreatifitas.destroy');
 
-    // 13. Pengaturan Madrasah & Aplikasi (Khusus Admin)
+    // 13. Pengaturan Sekolah & Aplikasi (Khusus Admin)
     Route::middleware('role:admin')->group(function () {
         Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
         Route::put('/setting', [SettingController::class, 'updateSettings'])->name('setting.update');
 
-        // 14. Pengumuman Madrasah
+        // 14. Pengumuman Sekolah
         Route::resource('pengumuman', AnnouncementController::class)->except(['create', 'show', 'edit']);
     });
 });

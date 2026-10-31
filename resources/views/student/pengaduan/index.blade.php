@@ -109,7 +109,7 @@
                     <div class="card-sub mb-3">
                         <div class="d-flex align-items-center gap-2 flex-wrap">
                             <span class="badge bg-light text-dark border px-2.5 py-1 rounded-pill fs-xxs">
-                                <i class="bi bi-geo-alt me-1 text-danger"></i>{{ $item->incident_location ?? 'Madrasah' }}
+                                <i class="bi bi-geo-alt me-1 text-danger"></i>{{ $item->incident_location ?? 'Sekolah' }}
                             </span>
                             <span class="text-muted fs-xs">&bull;</span>
                             <span class="text-muted fs-xs">

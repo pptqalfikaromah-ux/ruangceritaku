@@ -361,7 +361,7 @@
             <div class="yr-label">Rombel Binaan Aktif</div>
             <div class="yr-val">{{ $classroom ? 'Kelas ' . $classroom->name : 'Belum Ditugaskan' }}</div>
             <div class="small opacity-75 mt-1 fs-xs">
-                {{ app_setting('school_name', 'Madrasah / Sekolah') }}
+                {{ app_setting('school_name', 'Sekolah') }}
             </div>
         </div>
 

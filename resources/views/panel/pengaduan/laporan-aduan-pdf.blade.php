@@ -200,10 +200,10 @@
         <table class="kop-table">
             <tr>
                 <td style="width: 85px;">
-                    <img src="{{ app_logo() }}" alt="Logo Madrasah" class="kop-logo">
+                    <img src="{{ app_logo() }}" alt="Logo Sekolah" class="kop-logo">
                 </td>
                 <td class="kop-text">
-                    <div class="kop-school">{{ app_setting('school_name', 'MADRASAH TSANAWIYAH AL-FALAH') }}</div>
+                    <div class="kop-school">{{ app_setting('school_name', 'SMP / SEKOLAH UNGGULAN') }}</div>
                     <div class="kop-address">
                         {{ app_setting('school_address', 'Jl. Raya Pendidikan No. 45, Kecamatan Sumpiuh, Kabupaten Banyumas') }}<br>
                         Telp/HP: {{ app_setting('school_phone', '(0281) 123456') }} &bull; Email: {{ app_setting('school_email', 'admin@ruangceritaku.sch.id') }}
@@ -261,7 +261,7 @@
                     <td class="col-label">Waktu & Tempat Kejadian</td>
                     <td class="col-content">
                         Waktu: {{ $pengaduan->incident_date ? $pengaduan->incident_date->translatedFormat('d F Y') : '-' }}<br>
-                        Lokasi: {{ $pengaduan->incident_location ?? 'Lingkungan Madrasah' }}
+                        Lokasi: {{ $pengaduan->incident_location ?? 'Lingkungan Sekolah' }}
                     </td>
                 </tr>
                 <tr>
@@ -298,7 +298,7 @@
             <tr>
                 <td style="width: 50%; vertical-align: top; text-align: center;">
                     Mengetahui,<br>
-                    Kepala {{ app_setting('school_name', 'Madrasah / Sekolah') }}
+                    Kepala {{ app_setting('school_name', 'Sekolah') }}
                 </td>
                 <td style="width: 50%; vertical-align: top; text-align: center;">
                     {{ app_setting('school_city', 'Sumpiuh') }}, {{ now()->translatedFormat('d F Y') }}<br>

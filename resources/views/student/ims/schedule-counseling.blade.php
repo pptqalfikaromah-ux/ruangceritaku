@@ -29,7 +29,7 @@
                     Pengajuan Konseling Berdasarkan Hasil Temuan IMS
                 </h1>
                 <p class="text-muted fs-xs mb-0" style="line-height: 1.6;">
-                    Diskusikan butir masalah yang kamu temukan di lembar IMS bersama Guru BK / Konselor madrasah. Waktu dan jadwal sesi akan ditentukan dan disetujui langsung oleh Guru BK.
+                    Diskusikan butir masalah yang kamu temukan di lembar IMS bersama Guru BK / Konselor sekolah. Waktu dan jadwal sesi akan ditentukan dan disetujui langsung oleh Guru BK.
                 </p>
             </div>
             <div>
@@ -148,7 +148,7 @@
                     <i class="bi bi-shield-check text-mint fs-5"></i> Kerahasiaan Terjamin Sepenuhnya
                 </div>
                 <p class="mb-0 text-muted fs-xs lh-base">
-                    Sesi konseling tindak lanjut IMS dilaksanakan secara empat mata bersama Guru BK dengan memegang teguh asas kerahasiaan bimbingan konseling madrasah. Teman kelasmu tidak akan mengetahui isi masalah yang kamu tandai.
+                    Sesi konseling tindak lanjut IMS dilaksanakan secara empat mata bersama Guru BK dengan memegang teguh asas kerahasiaan bimbingan konseling sekolah. Teman kelasmu tidak akan mengetahui isi masalah yang kamu tandai.
                 </p>
             </div>
         </div>
@@ -158,7 +158,7 @@
             <div class="card border-0 shadow-sm rounded-4 bg-white p-3.5 p-md-4" style="border: 1px solid #E2ECE9 !important;">
                 <div class="border-bottom pb-3 mb-3">
                     <h5 class="fw-bold text-dark mb-1">Form Pengajuan Konseling IMS</h5>
-                    <p class="text-muted fs-xs mb-0">Kirimkan permohonan konseling ini ke Guru BK. Jadwal pertemuan akan disesuaikan dan ditetapkan oleh Guru BK madrasah.</p>
+                    <p class="text-muted fs-xs mb-0">Kirimkan permohonan konseling ini ke Guru BK. Jadwal pertemuan akan disesuaikan dan ditetapkan oleh Guru BK sekolah.</p>
                 </div>
 
                 <!-- Informasi Penentuan Jadwal oleh Guru BK / Admin -->
@@ -171,7 +171,7 @@
                     <div>
                         <div class="fw-bold text-dark fs-sm mb-1">Jadwal Ditentukan & Disetujui Guru BK / Admin</div>
                         <div class="text-muted fs-xs lh-base">
-                            Kamu tidak perlu repot memilih jam dan tanggal. Guru BK / Konselor madrasah akan <strong>menentukan tanggal dan jam sesi yang paling kondusif</strong> (misal saat jam luang atau istirahat) agar belajarmu di kelas tetap lancar. Jadwal resmi akan muncul di tiketmu.
+                            Kamu tidak perlu repot memilih jam dan tanggal. Guru BK / Konselor sekolah akan <strong>menentukan tanggal dan jam sesi yang paling kondusif</strong> (misal saat jam luang atau istirahat) agar belajarmu di kelas tetap lancar. Jadwal resmi akan muncul di tiketmu.
                         </div>
                     </div>
                 </div>
@@ -215,7 +215,7 @@
                                         </span>
                                     </div>
                                     <div class="text-muted fs-xxs lh-base ps-4">
-                                        Sesi langsung di Ruang BK madrasah. Guru BK akan menentukan waktu dan ruangan.
+                                        Sesi langsung di Ruang BK sekolah. Guru BK akan menentukan waktu dan ruangan.
                                     </div>
                                 </label>
                             </div>

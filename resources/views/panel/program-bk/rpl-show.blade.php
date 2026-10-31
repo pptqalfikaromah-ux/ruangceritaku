@@ -37,7 +37,7 @@
         <!-- Document Kop -->
         <div class="text-center pb-4 border-bottom mb-4">
             <h5 class="fw-bold text-dark text-uppercase mb-1">Rencana Pelaksanaan Layanan (RPL) Bimbingan Dan Konseling</h5>
-            <h6 class="fw-semibold text-muted text-uppercase mb-0">Format Kurikulum Merdeka / Standar Operasional BK Madrasah</h6>
+            <h6 class="fw-semibold text-muted text-uppercase mb-0">Format Kurikulum Merdeka / Standar Operasional BK Sekolah</h6>
         </div>
 
         <!-- Section A: Identitas -->
@@ -138,7 +138,7 @@
             <tr>
                 <td style="width: 50%; vertical-align: top; text-align: center;">
                     Mengetahui,<br>
-                    Kepala {{ app_setting('school_name', 'Madrasah / Sekolah') }}
+                    Kepala {{ app_setting('school_name', 'Sekolah') }}
                 </td>
                 <td style="width: 50%; vertical-align: top; text-align: center;">
                     {{ app_setting('school_city', 'Sumpiuh') }}, {{ now()->translatedFormat('d F Y') }}<br>

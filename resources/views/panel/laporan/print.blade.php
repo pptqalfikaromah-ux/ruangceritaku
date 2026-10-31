@@ -48,7 +48,7 @@
             <img src="{{ app_logo() }}" alt="Logo" style="height: 65px; width: auto; max-width: 80px; object-fit: contain;">
             <div>
                 <h6 class="fw-bold text-uppercase mb-1" style="font-size: 0.85rem;">Kementerian Agama Republik Indonesia</h6>
-                <h4 class="fw-bold text-uppercase mb-1" style="font-size: 1.25rem;">{{ app_setting('school_name', 'Nama Madrasah / Sekolah') }}</h4>
+                <h4 class="fw-bold text-uppercase mb-1" style="font-size: 1.25rem;">{{ app_setting('school_name', 'Nama Sekolah') }}</h4>
                 <div class="fs-xs text-muted">
                     {{ app_setting('school_address', 'Alamat Sekolah Lengkap') }}
                     @if(app_setting('school_phone')) &bull; Telp: {{ app_setting('school_phone') }} @endif
@@ -203,7 +203,7 @@
             <tr>
                 <td style="width: 50%; vertical-align: top; text-align: center;">
                     Mengetahui,<br>
-                    Kepala {{ app_setting('school_name', 'Madrasah / Sekolah') }}
+                    Kepala {{ app_setting('school_name', 'Sekolah') }}
                 </td>
                 <td style="width: 50%; vertical-align: top; text-align: center;">
                     {{ app_setting('school_city', 'Sumpiuh') }}, {{ now()->translatedFormat('d F Y') }}<br>

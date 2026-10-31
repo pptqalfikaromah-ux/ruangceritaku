@@ -73,7 +73,7 @@
                                             </span>
                                         </div>
                                         <div class="text-muted small ps-4" style="font-size: 0.78rem; line-height: 1.5;">
-                                            Pertemuan langsung di Ruang BK sekolah/madrasah.
+                                            Pertemuan langsung di Ruang BK sekolah.
                                         </div>
                                     </label>
                                 </div>
@@ -166,7 +166,7 @@
                     Jika kamu sedang dalam kondisi darurat, sangat tertekan, atau membutuhkan pendampingan segera:
                 </p>
                 <div class="fs-xs fw-semibold bg-white bg-opacity-20 p-2 rounded-2">
-                    Langsung datangi Ruang BK di sekolah atau hubungi kontak darurat madrasah.
+                    Langsung datangi Ruang BK di sekolah atau hubungi kontak darurat sekolah.
                 </div>
             </div>
         </div>

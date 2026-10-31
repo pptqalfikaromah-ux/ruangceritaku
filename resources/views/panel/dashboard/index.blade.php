@@ -64,7 +64,7 @@
                     {{ $isAdmin ? 'TOTAL MURID' : 'MURID BINAAN' }}
                 </div>
                 <div class="fw-extrabold text-mint my-0.5" style="font-size:clamp(1.2rem, 3.5vw, 1.45rem);line-height:1.1;">{{ $totalStudents }}</div>
-                <div class="text-muted text-truncate" style="font-size:.68rem;">{{ $isAdmin ? 'Seluruh madrasah' : 'Rombel aktif' }}</div>
+                <div class="text-muted text-truncate" style="font-size:.68rem;">{{ $isAdmin ? 'Seluruh sekolah' : 'Rombel aktif' }}</div>
             </div>
         </div>
     </div>
@@ -165,8 +165,8 @@
                         <i class="bi bi-building"></i>
                     </div>
                     <div class="emis-feature-info">
-                        <div class="emis-feature-title">Madrasah Saya</div>
-                        <p class="emis-feature-desc">Lihat madrasah/sekolah tempat bertugas</p>
+                        <div class="emis-feature-title">Sekolah Saya</div>
+                        <p class="emis-feature-desc">Lihat sekolah tempat bertugas</p>
                     </div>
                 </div>
                 <i class="bi bi-arrow-right emis-feature-arrow"></i>
@@ -365,7 +365,7 @@
                     </div>
                     <div class="emis-feature-info">
                         <div class="emis-feature-title">Laporan & Rekapitulasi</div>
-                        <p class="emis-feature-desc"><span class="badge bg-emerald-subtle text-emerald me-1">Cetak Kop</span> Laporan berkala & arsip madrasah</p>
+                        <p class="emis-feature-desc"><span class="badge bg-emerald-subtle text-emerald me-1">Cetak Kop</span> Laporan berkala & arsip sekolah</p>
                     </div>
                 </div>
                 <i class="bi bi-arrow-right emis-feature-arrow"></i>
@@ -414,7 +414,7 @@
                             <i class="bi bi-building-gear"></i>
                         </div>
                         <div class="emis-feature-info">
-                            <div class="emis-feature-title">Pengaturan Madrasah/Sekolah</div>
+                            <div class="emis-feature-title">Pengaturan Sekolah/Sekolah</div>
                             <p class="emis-feature-desc">NPSN, kepala sekolah, logo, dan branding</p>
                         </div>
                     </div>
@@ -440,7 +440,7 @@
                     <div>
                         <div class="text-muted smaller fw-semibold">{{ $isAdmin ? 'TOTAL MURID AKTIF' : 'MURID BINAAN AKTIF' }}</div>
                         <div class="fs-4 fw-bold text-dark">{{ $totalStudents }}</div>
-                        <div class="text-muted smaller">{{ $isAdmin ? 'Seluruh madrasah/sekolah' : 'Rombel binaan Anda' }}</div>
+                        <div class="text-muted smaller">{{ $isAdmin ? 'Seluruh sekolah' : 'Rombel binaan Anda' }}</div>
                     </div>
                 </div>
             </div>

@@ -110,7 +110,7 @@
                     Menghadapi perundungan atau ancaman keselamatan bukan hal yang mudah. Kami di sini untuk mendengarmu tanpa menghakimi dan melindungimu dari perlakuan yang tidak adil.
                 </p>
                 <div class="p-3 bg-danger-subtle text-danger-emphasis rounded-3 fs-xs">
-                    <strong>Penting:</strong> Jika kamu atau temanmu sedang dalam ancaman bahaya fisik mendesak saat ini juga, segera temui bapak/ibu guru terdekat atau petugas madrasah secara langsung.
+                    <strong>Penting:</strong> Jika kamu atau temanmu sedang dalam ancaman bahaya fisik mendesak saat ini juga, segera temui bapak/ibu guru terdekat atau petugas sekolah secara langsung.
                 </div>
             </div>
         </div>

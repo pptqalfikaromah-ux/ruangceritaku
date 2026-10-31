@@ -173,7 +173,7 @@
 
     <!-- Footer Note -->
     <div class="text-center text-muted small mt-4" style="letter-spacing: 0.015em;">
-        &copy; {{ date('Y') }} {{ app_setting('app_name', 'Ruang Ceritaku') }} &bull; {{ app_setting('school_name', 'Madrasah / Sekolah') }}
+        &copy; {{ date('Y') }} {{ app_setting('app_name', 'Ruang Ceritaku') }} &bull; {{ app_setting('school_name', 'Sekolah') }}
     </div>
 </div>
 
