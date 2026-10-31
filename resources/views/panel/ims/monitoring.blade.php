@@ -29,44 +29,44 @@
     </div>
 
     <!-- Global Feature Toggle Banner (Aktif / Nonaktifkan IMS untuk Murid) -->
-    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white" style="border-left: 5px solid {{ $isImsGloballyEnabled ? '#0d9488' : '#f59e0b' }} !important;">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-            <div class="d-flex align-items-start align-items-md-center gap-3">
-                <div class="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0" style="width: 42px; height: 42px; background: {{ $isImsGloballyEnabled ? '#0d9488' : '#d97706' }};">
-                    <i class="bi {{ $isImsGloballyEnabled ? 'bi-toggle-on fs-4' : 'bi-toggle-off fs-4' }}"></i>
+    <div class="card border-0 shadow-sm rounded-4 p-3.5 p-sm-4 bg-white" style="border-left: 5px solid {{ $isImsGloballyEnabled ? '#0d9488' : '#f59e0b' }} !important;">
+        <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3">
+            <div class="d-flex align-items-start gap-3 flex-grow-1 min-w-0">
+                <div class="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0 mt-0.5" style="width: 44px; height: 44px; background: {{ $isImsGloballyEnabled ? '#0d9488' : '#d97706' }};">
+                    <i class="bi {{ $isImsGloballyEnabled ? 'bi-toggle-on fs-3' : 'bi-toggle-off fs-3' }}"></i>
                 </div>
-                <div>
-                    <div class="d-flex flex-wrap align-items-center gap-2">
-                        <span class="fw-bold text-dark fs-xs">Status Akses Fitur IMS:</span>
+                <div class="flex-grow-1 min-w-0">
+                    <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+                        <span class="fw-bold text-dark fs-6">Status Akses Fitur IMS Siswa:</span>
                         @if($isImsGloballyEnabled)
-                            <span class="badge bg-success text-white px-2.5 py-0.5 rounded-pill fw-bold fs-xxs">
-                                <i class="bi bi-check-circle-fill me-1"></i> AKTIF DI AKUN SISWA
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded-pill fw-bold fs-xs d-inline-flex align-items-center text-nowrap">
+                                <i class="bi bi-check-circle-fill me-1"></i> AKTIF (DITAMPILKAN)
                             </span>
                         @else
-                            <span class="badge bg-secondary text-white px-2.5 py-0.5 rounded-pill fw-bold fs-xxs">
-                                <i class="bi bi-slash-circle-fill me-1"></i> NONAKTIF / TERKUNCI
+                            <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2.5 py-1 rounded-pill fw-bold fs-xs d-inline-flex align-items-center text-nowrap">
+                                <i class="bi bi-slash-circle-fill me-1"></i> NONAKTIF (DISEMBUNYIKAN)
                             </span>
                         @endif
                     </div>
-                    <p class="text-muted fs-xxs mb-0 mt-0.5">
+                    <p class="text-muted fs-xs mb-0 lh-base" style="line-height: 1.55;">
                         @if($isImsGloballyEnabled)
-                            Fitur IMS sedang aktif. Menu "Asesmen Masalah (IMS)" dan instrumen asesmen dapat diisi oleh murid.
+                            Fitur IMS sedang aktif. Menu "Instrumen Masalah (IMS)" dan asesmen butir masalah tampil di akun seluruh siswa.
                         @else
                             Fitur IMS sedang dinonaktifkan. Seluruh menu dan instrumen IMS dikunci dari portal siswa.
                         @endif
                     </p>
                 </div>
             </div>
-            <div>
+            <div class="flex-shrink-0 w-100 w-lg-auto text-end">
                 <form action="{{ route('panel.ims.toggle-status') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin {{ $isImsGloballyEnabled ? 'MENONAKTIFKAN' : 'MENGAKTIFKAN' }} fitur IMS untuk akun murid?')">
                     @csrf
                     @if($isImsGloballyEnabled)
-                        <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3.5 py-1.5 fw-bold shadow-xs fs-xs">
-                            <i class="bi bi-power me-1"></i> Nonaktifkan Fitur IMS
+                        <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3.5 py-2 fw-semibold shadow-xs d-inline-flex align-items-center justify-content-center w-100 w-lg-auto text-nowrap">
+                            <i class="bi bi-power me-1.5"></i> Nonaktifkan Fitur IMS
                         </button>
                     @else
-                        <button type="submit" class="btn btn-mint btn-sm rounded-pill px-3.5 py-1.5 fw-bold shadow-xs text-white fs-xs">
-                            <i class="bi bi-check-lg me-1"></i> Aktifkan Fitur IMS
+                        <button type="submit" class="btn btn-emerald btn-sm rounded-pill px-3.5 py-2 fw-semibold shadow-xs text-white d-inline-flex align-items-center justify-content-center w-100 w-lg-auto text-nowrap" style="background-color: #0d9488;">
+                            <i class="bi bi-check-lg me-1.5"></i> Aktifkan Fitur IMS
                         </button>
                     @endif
                 </form>
