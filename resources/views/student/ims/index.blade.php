@@ -179,8 +179,8 @@
             @endphp
 
             <a href="{{ route('murid.ims.service', $svc->id) }}" class="ims-list-link text-decoration-none">
-                <div class="card border rounded-3 p-3 p-md-3.5 ims-service-row {{ $isCompleted ? 'ims-row-completed' : 'ims-row-pending' }}">
-                    <div class="d-flex align-items-center justify-content-between gap-3">
+                <div class="card border rounded-4 p-3.5 p-md-4 ims-service-row {{ $isCompleted ? 'ims-row-completed' : 'ims-row-pending' }}">
+                    <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap flex-sm-nowrap">
                         
                         <!-- Sisi Kiri: Nomor + Ikon + Info Layanan -->
                         <div class="d-flex align-items-center gap-3 min-w-0 flex-grow-1">
@@ -195,55 +195,55 @@
 
                             <!-- Ikon Layanan -->
                             <div class="service-icon-box flex-shrink-0 d-none d-sm-flex align-items-center justify-content-center rounded-3" 
-                                 style="background: {{ $item['bg'] }}; color: {{ $item['color'] }}; width: 38px; height: 38px;">
+                                 style="background: {{ $item['bg'] }}; color: {{ $item['color'] }}; width: 42px; height: 42px;">
                                 <i class="bi {{ $item['icon'] }} fs-5"></i>
                             </div>
 
                             <!-- Teks Nama Layanan & Deskripsi -->
                             <div class="min-w-0">
-                                <div class="d-flex align-items-center gap-2 flex-wrap mb-0.5">
-                                    <h6 class="fw-bold text-dark mb-0 service-name-title" style="letter-spacing: -0.01em;">
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+                                    <h6 class="fw-bold text-dark mb-0 service-name-title" style="letter-spacing: 0.01em;">
                                         {{ $svc->name }}
                                     </h6>
-                                    <span class="badge bg-light text-muted border rounded-pill px-2 py-0.5" style="font-size: 0.68rem;">
+                                    <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1" style="font-size: 0.72rem;">
                                         20 Butir
                                     </span>
                                 </div>
-                                <p class="text-muted fs-xs mb-0 text-truncate service-desc" style="max-width: 580px; line-height: 1.4;">
+                                <p class="text-muted fs-xs mb-0 text-truncate service-desc" style="max-width: 580px; line-height: 1.5;">
                                     {{ $item['desc'] }}
                                 </p>
                             </div>
                         </div>
 
                         <!-- Sisi Kanan: Status & Tombol Aksi -->
-                        <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                        <div class="d-flex align-items-center gap-2 flex-shrink-0 ms-auto ms-sm-0">
                             <!-- Badge Status -->
                             @if($isCompleted)
-                                <span class="badge bg-emerald-subtle text-emerald border border-emerald-subtle rounded-pill px-2.5 py-1.5 fw-bold fs-xs d-inline-flex align-items-center gap-1">
+                                <span class="badge bg-emerald-subtle text-emerald border border-emerald-subtle rounded-pill px-3 py-1.5 fw-bold fs-xs d-inline-flex align-items-center gap-1.5">
                                     <i class="bi bi-check-circle-fill"></i>
                                     <span>{{ $answeredCount }} Dipilih</span>
                                 </span>
                                 @if($heavyNum)
-                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill px-2 py-1.5 fw-bold fs-xs d-none d-md-inline-flex align-items-center gap-1" title="Masalah Paling Mengganggu">
+                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill px-2.5 py-1.5 fw-bold fs-xs d-none d-md-inline-flex align-items-center gap-1" title="Masalah Paling Mengganggu">
                                         <i class="bi bi-star-fill text-warning"></i>
                                         <span>#{{ $heavyNum }}</span>
                                     </span>
                                 @endif
-                                <span class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 fs-xs fw-semibold d-none d-sm-inline-flex align-items-center gap-1 text-nowrap">
+                                <span class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1.5 fs-xs fw-semibold d-none d-sm-inline-flex align-items-center gap-1 text-nowrap">
                                     Ubah <i class="bi bi-chevron-right" style="font-size: 0.65rem;"></i>
                                 </span>
                             @else
-                                <span class="badge bg-light text-secondary border rounded-pill px-2.5 py-1.5 fw-medium fs-xs d-inline-flex align-items-center gap-1">
+                                <span class="badge bg-light text-secondary border rounded-pill px-3 py-1.5 fw-medium fs-xs d-inline-flex align-items-center gap-1.5">
                                     <i class="bi bi-circle"></i>
                                     <span>Belum Diisi</span>
                                 </span>
-                                <span class="btn btn-sm btn-emerald rounded-pill px-3 py-1 fs-xs fw-semibold text-white d-none d-sm-inline-flex align-items-center gap-1 text-nowrap shadow-xs">
+                                <span class="btn btn-sm btn-emerald rounded-pill px-3 py-1.5 fs-xs fw-semibold text-white d-none d-sm-inline-flex align-items-center gap-1 text-nowrap shadow-xs">
                                     Mulai <i class="bi bi-arrow-right" style="font-size: 0.65rem;"></i>
                                 </span>
                             @endif
 
                             <!-- Panah Mobile / Akses Cepat -->
-                            <div class="row-arrow-circle d-flex align-items-center justify-content-center text-muted rounded-circle ms-1" style="width: 24px; height: 24px;">
+                            <div class="row-arrow-circle d-flex align-items-center justify-content-center text-muted rounded-circle ms-1" style="width: 26px; height: 26px;">
                                 <i class="bi bi-chevron-right" style="font-size: 0.75rem;"></i>
                             </div>
                         </div>
@@ -362,8 +362,8 @@
             line-height: 1.35;
         }
         .ims-service-row {
-            padding: 12px 14px !important;
-            border-radius: 12px !important;
+            padding: 16px 18px !important;
+            border-radius: 16px !important;
         }
     }
 </style>

@@ -216,8 +216,8 @@
         background-color: #f8fafc;
         border: 1.5px solid #e2e8f0;
         border-radius: 50rem;
-        padding: 6px 14px;
-        min-height: 52px;
+        padding: 8px 18px;
+        min-height: 54px;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .auth-field-group:focus-within {
@@ -232,12 +232,12 @@
     }
     .auth-field-icon {
         color: #2563eb;
-        font-size: 1.25rem;
+        font-size: 1.3rem;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        margin-right: 10px;
+        margin-right: 12px;
     }
     .auth-field-input {
         flex-grow: 1;
@@ -246,23 +246,23 @@
         outline: none !important;
         background: transparent !important;
         box-shadow: none !important;
-        font-size: 0.95rem;
+        font-size: 0.98rem;
         color: #1e293b;
-        padding: 8px 8px;
+        padding: 8px 10px;
         font-family: inherit;
-        letter-spacing: 0.015em;
-        line-height: 1.5;
+        letter-spacing: 0.025em;
+        line-height: 1.55;
     }
     .auth-field-input::placeholder {
         color: #94a3b8;
-        font-size: 0.9rem;
+        font-size: 0.92rem;
     }
     .auth-field-toggle {
         background: transparent;
         border: none;
         color: #94a3b8;
         padding: 8px 12px;
-        font-size: 1.15rem;
+        font-size: 1.2rem;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -278,9 +278,9 @@
 
     /* SUBMIT BUTTON */
     .btn-portal-submit {
-        height: 50px;
-        font-size: 0.96rem;
-        letter-spacing: 0.025em;
+        height: 54px;
+        font-size: 0.98rem;
+        letter-spacing: 0.03em;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         border: none;
     }

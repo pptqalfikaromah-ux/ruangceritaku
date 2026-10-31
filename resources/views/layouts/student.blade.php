@@ -9,7 +9,7 @@
     <link rel="icon" href="{{ app_logo() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
@@ -22,7 +22,7 @@
             --gold-light: #fef3c7;
             --sidebar-w: 230px;
             --topbar-h: 60px;
-            --font-main: 'Nunito', 'Inter', system-ui, sans-serif;
+            --font-main: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             --text-dark: #1e293b;
             --text-mid: #475569;
             --text-muted: #94a3b8;
@@ -38,8 +38,10 @@
             margin: 0; padding: 0;
             overflow-x: hidden;
             font-size: 14px;
-            letter-spacing: 0.012em;
-            line-height: 1.58;
+            letter-spacing: 0.022em;
+            word-spacing: 0.03em;
+            line-height: 1.62;
+            -webkit-font-smoothing: antialiased;
         }
         /* TOPBAR */
         .sk-topbar {
@@ -226,13 +228,55 @@
         .shadow-xs { box-shadow: 0 1px 3px rgba(15,23,42,0.06) !important; }
 
         /* Utility spacing shims & breathing typography */
-        .fs-xs { font-size: .84rem !important; letter-spacing: 0.018em !important; line-height: 1.5 !important; }
-        .fs-xxs { font-size: .77rem !important; letter-spacing: 0.022em !important; line-height: 1.48 !important; }
-        .fs-sm { font-size: .93rem !important; letter-spacing: 0.012em !important; line-height: 1.55 !important; }
+        .fs-xs { font-size: .85rem !important; letter-spacing: 0.022em !important; line-height: 1.55 !important; }
+        .fs-xxs { font-size: .78rem !important; letter-spacing: 0.026em !important; line-height: 1.5 !important; }
+        .fs-sm { font-size: .94rem !important; letter-spacing: 0.015em !important; line-height: 1.58 !important; }
         .fw-extrabold { font-weight: 800 !important; }
-        .tracking-tight { letter-spacing: 0.005em !important; }
-        .lh-base { line-height: 1.62 !important; }
-        .badge { padding: 0.4rem 0.75rem !important; letter-spacing: 0.02em !important; line-height: 1.35 !important; }
+        .tracking-tight { letter-spacing: 0.01em !important; }
+        .lh-base { line-height: 1.65 !important; }
+
+        /* GLOBAL BADGE POLISH - Mencegah Teks Menempel Garis Tepi */
+        .badge {
+            padding: 0.42rem 0.85rem !important;
+            letter-spacing: 0.025em !important;
+            line-height: 1.35 !important;
+            border-radius: 50rem !important;
+            font-weight: 700 !important;
+        }
+        .badge.fs-xxs, .fs-xxs.badge, .badge-xxs {
+            padding: 0.35rem 0.75rem !important;
+            font-size: 0.78rem !important;
+            letter-spacing: 0.025em !important;
+        }
+        .badge.fs-xs, .fs-xs.badge {
+            padding: 0.4rem 0.82rem !important;
+            font-size: 0.85rem !important;
+            letter-spacing: 0.025em !important;
+        }
+
+        /* GLOBAL FORM CONTROLS POLISH - Lega & Nyaman di Android */
+        .form-control, .form-select {
+            padding: 10px 14px !important;
+            min-height: 48px !important;
+            border-radius: 12px !important;
+            font-size: 0.93rem !important;
+            letter-spacing: 0.02em !important;
+            line-height: 1.55 !important;
+            border: 1.5px solid #cbd5e1 !important;
+        }
+        .form-control-sm, .form-select-sm {
+            padding: 8px 12px !important;
+            min-height: 42px !important;
+            border-radius: 10px !important;
+            font-size: 0.88rem !important;
+            letter-spacing: 0.02em !important;
+        }
+        textarea.form-control {
+            min-height: 120px !important;
+            padding: 12px 16px !important;
+            line-height: 1.6 !important;
+        }
+
         .space-y-1.5 > * + * { margin-top: 0.4rem !important; }
         .space-y-2 > * + * { margin-top: 0.5rem !important; }
         .space-y-2.5 > * + * { margin-top: 0.65rem !important; }
@@ -242,55 +286,55 @@
 
         /* RESPONSIVE MOBILE FEED CARDS POLISH (Breathing Room, Clear Hierarchy) */
         .mobile-card {
-            border-radius: 1.25rem !important;
-            padding: 1.25rem 1.35rem !important;
-            border: 1px solid #e2e8f0 !important;
+            border-radius: 1.35rem !important;
+            padding: 1.35rem 1.45rem !important;
+            border: 1.5px solid #e2e8f0 !important;
             background: #ffffff !important;
-            box-shadow: 0 3px 12px rgba(15,23,42,0.04) !important;
+            box-shadow: 0 4px 16px rgba(15,23,42,0.04) !important;
             transition: all 0.2s ease;
-            margin-bottom: 1.1rem !important;
+            margin-bottom: 1.25rem !important;
         }
         .mobile-card:active {
             transform: scale(0.995);
         }
         .mobile-card .card-name {
-            font-size: 1.04rem !important;
+            font-size: 1.06rem !important;
             font-weight: 800 !important;
             color: #1e293b !important;
             line-height: 1.4 !important;
-            letter-spacing: 0.008em !important;
+            letter-spacing: 0.012em !important;
         }
         .mobile-card .card-sub {
-            font-size: 0.84rem !important;
+            font-size: 0.86rem !important;
             color: #64748b !important;
-            line-height: 1.5 !important;
-            letter-spacing: 0.012em !important;
+            line-height: 1.55 !important;
+            letter-spacing: 0.015em !important;
         }
         .mobile-card .card-info-box {
             background: #f8fafc !important;
             border: 1px solid #e2e8f0 !important;
-            border-radius: 0.95rem !important;
-            padding: 0.85rem 1.1rem !important;
-            font-size: 0.85rem !important;
+            border-radius: 12px !important;
+            padding: 12px 16px !important;
+            font-size: 0.86rem !important;
             color: #334155 !important;
             line-height: 1.65 !important;
-            letter-spacing: 0.015em !important;
+            letter-spacing: 0.018em !important;
         }
         .mobile-card .btn-card-action {
-            min-height: 44px !important;
-            font-size: 0.88rem !important;
+            min-height: 46px !important;
+            font-size: 0.9rem !important;
             font-weight: 700 !important;
             border-radius: 50rem !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             gap: 0.5rem !important;
-            padding: 0.6rem 1.25rem !important;
-            letter-spacing: 0.02em !important;
+            padding: 0.65rem 1.35rem !important;
+            letter-spacing: 0.025em !important;
         }
         .mobile-card .btn-card-icon {
-            width: 44px !important;
-            height: 44px !important;
+            width: 46px !important;
+            height: 46px !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
@@ -298,10 +342,10 @@
             flex-shrink: 0 !important;
         }
         .badge-pill-custom {
-            font-size: 0.77rem !important;
+            font-size: 0.78rem !important;
             font-weight: 700 !important;
-            padding: 0.38rem 0.85rem !important;
-            letter-spacing: 0.02em !important;
+            padding: 0.4rem 0.9rem !important;
+            letter-spacing: 0.025em !important;
             border-radius: 50rem !important;
         }
     </style>

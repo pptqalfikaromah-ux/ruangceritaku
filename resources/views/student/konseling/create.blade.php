@@ -17,21 +17,21 @@
         <!-- Form Utama -->
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
-                <div class="card-header bg-white py-3 px-3 px-sm-4 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div class="card-header bg-white py-3.5 px-3.5 px-sm-4 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
                     <span class="fw-bold text-dark fs-sm">
-                        <i class="bi bi-person-heart text-emerald me-1"></i> Formulir Pengajuan Konseling Pribadi
+                        <i class="bi bi-person-heart text-emerald me-1.5"></i> Formulir Pengajuan Konseling Pribadi
                     </span>
-                    <span class="badge bg-light text-muted border fs-xs rounded-pill px-2.5 py-1">
-                        <i class="bi bi-shield-lock text-success me-1"></i> Rahasia & Aman
+                    <span class="badge bg-light text-muted border fs-xs rounded-pill px-3 py-1.5">
+                        <i class="bi bi-shield-lock text-success me-1"></i> 100% Rahasia & Aman
                     </span>
                 </div>
-                <div class="card-body p-3 p-sm-4">
+                <div class="card-body p-3.5 p-sm-4">
                     <form method="POST" action="{{ route('murid.konseling.store') }}" class="space-y-4">
                         @csrf
 
                         <!-- Dropdown 4 Bidang Masalah Konseling -->
-                        <div class="mb-3">
-                            <label class="form-label fw-bold small text-slate-700">
+                        <div class="mb-3.5">
+                            <label class="form-label fw-bold small text-slate-700 mb-1.5">
                                 Bidang Masalah yang Ingin Dikonsultasikan <span class="text-danger">*</span>
                             </label>
                             <select name="guidance_field_id" id="guidanceFieldSelect" class="form-select @error('guidance_field_id') is-invalid @enderror" required onchange="updatePurpose(this)">
@@ -55,37 +55,37 @@
                             @error('guidance_field_id')
                                 <div class="invalid-feedback small">{{ $message }}</div>
                             @enderror
-                            <div class="form-text text-muted fs-xxs mt-1">Pilih bidang bimbingan yang paling menggambarkan kendala yang sedang kamu rasakan.</div>
+                            <div class="form-text text-muted fs-xxs mt-1.5 ps-1">Pilih bidang bimbingan yang paling menggambarkan kendala yang sedang kamu rasakan.</div>
                         </div>
 
                         <!-- Pilihan Metode Konseling (Tatap Muka vs Online Meet) -->
-                        <div class="mb-3">
+                        <div class="mb-3.5">
                             <label class="form-label fw-bold small text-slate-700 mb-2">
                                 Metode Konseling yang Diinginkan <span class="text-danger">*</span>
                             </label>
-                            <div class="row g-2.5">
+                            <div class="row g-3">
                                 <div class="col-sm-6">
-                                    <label class="card h-100 p-3 rounded-3 border text-decoration-none" style="cursor: pointer; background: #fafafa;">
-                                        <div class="d-flex align-items-center gap-2 mb-1">
-                                            <input type="radio" name="counseling_method" value="tatap_muka" class="form-check-input mt-0" {{ old('counseling_method', 'tatap_muka') === 'tatap_muka' ? 'checked' : '' }} required>
+                                    <label class="card h-100 p-3.5 rounded-4 border text-decoration-none transition-all" style="cursor: pointer; background: #fafafa;">
+                                        <div class="d-flex align-items-center gap-2.5 mb-1.5">
+                                            <input type="radio" name="counseling_method" value="tatap_muka" class="form-check-input mt-0" {{ old('counseling_method', 'tatap_muka') === 'tatap_muka' ? 'checked' : '' }} required style="width: 18px; height: 18px;">
                                             <span class="fw-bold text-dark small d-flex align-items-center gap-1.5">
                                                 <i class="bi bi-door-open text-teal fs-5"></i> Tatap Muka di Sekolah
                                             </span>
                                         </div>
-                                        <div class="text-muted small ps-4" style="font-size: 0.75rem;">
+                                        <div class="text-muted small ps-4" style="font-size: 0.78rem; line-height: 1.5;">
                                             Pertemuan langsung di Ruang BK sekolah/madrasah.
                                         </div>
                                     </label>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label class="card h-100 p-3 rounded-3 border text-decoration-none" style="cursor: pointer; background: #fafafa;">
-                                        <div class="d-flex align-items-center gap-2 mb-1">
-                                            <input type="radio" name="counseling_method" value="online_meet" class="form-check-input mt-0" {{ old('counseling_method') === 'online_meet' ? 'checked' : '' }}>
+                                    <label class="card h-100 p-3.5 rounded-4 border text-decoration-none transition-all" style="cursor: pointer; background: #fafafa;">
+                                        <div class="d-flex align-items-center gap-2.5 mb-1.5">
+                                            <input type="radio" name="counseling_method" value="online_meet" class="form-check-input mt-0" {{ old('counseling_method') === 'online_meet' ? 'checked' : '' }} style="width: 18px; height: 18px;">
                                             <span class="fw-bold text-dark small d-flex align-items-center gap-1.5">
                                                 <i class="bi bi-camera-video text-primary fs-5"></i> Online (Google Meet)
                                             </span>
                                         </div>
-                                        <div class="text-muted small ps-4" style="font-size: 0.75rem;">
+                                        <div class="text-muted small ps-4" style="font-size: 0.78rem; line-height: 1.5;">
                                             Sesi daring via Google Meet (link diberikan oleh Guru BK).
                                         </div>
                                     </label>
@@ -94,8 +94,8 @@
                         </div>
 
                         <!-- Pilihan Konselor / Guru BK -->
-                        <div class="mb-3">
-                            <label class="form-label fw-bold small text-slate-700">Pilihan Guru BK / Konselor (Opsional)</label>
+                        <div class="mb-3.5">
+                            <label class="form-label fw-bold small text-slate-700 mb-1.5">Pilihan Guru BK / Konselor (Opsional)</label>
                             <select name="counselor_id" class="form-select">
                                 <option value="">-- Bebas / Siapa saja Guru BK yang bertugas --</option>
                                 @foreach($counselors ?? [] as $c)
@@ -104,12 +104,12 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <div class="form-text text-muted fs-xxs mt-1">Kamu bisa memilih Guru BK yang membuatmu paling nyaman bercerita.</div>
+                            <div class="form-text text-muted fs-xxs mt-1.5 ps-1">Kamu bisa memilih Guru BK yang membuatmu paling nyaman bercerita.</div>
                         </div>
 
                         <!-- Deskripsi Keluhan / Masalah -->
                         <div class="mb-4">
-                            <label class="form-label fw-bold small text-slate-700">
+                            <label class="form-label fw-bold small text-slate-700 mb-1.5">
                                 Ceritakan Masalah / Keluhan yang Sedang Kamu Hadapi <span class="text-danger">*</span>
                             </label>
                             <textarea name="description" 
@@ -117,7 +117,7 @@
                                       rows="7" 
                                       placeholder="Tuliskan dengan nyaman dan leluasa apa yang kamu rasakan, apa yang terjadi, atau bantuan apa yang kamu harapkan dari Guru BK..." 
                                       required>{{ old('description', $prefilledDescription ?? '') }}</textarea>
-                            <div class="form-text text-muted small mt-1">
+                            <div class="form-text text-muted small mt-1.5 ps-1" style="line-height: 1.5;">
                                 <i class="bi bi-info-circle me-1"></i>Cerita dan keluhanmu dijaga kerahasiaannya dan hanya dapat dibaca oleh Guru BK untuk pendampingan.
                             </div>
                             @error('description')
@@ -126,12 +126,12 @@
                         </div>
 
                         <!-- Buttons: Responsif Mobile -->
-                        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-stretch align-items-sm-center gap-2 pt-3 border-top">
-                            <a href="{{ route('murid.konseling.index') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3.5 py-2 text-center order-2 order-sm-1">
+                        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-stretch align-items-sm-center gap-2 pt-3.5 border-top">
+                            <a href="{{ route('murid.konseling.index') }}" class="btn btn-outline-secondary rounded-pill px-4 py-2.5 text-center order-2 order-sm-1 fw-semibold">
                                 <i class="bi bi-arrow-left me-1"></i> Kembali ke Riwayat
                             </a>
-                            <button type="submit" class="btn btn-emerald btn-sm rounded-pill px-4 py-2.5 fw-bold shadow-sm order-1 order-sm-2">
-                                <i class="bi bi-send-check me-1"></i> Kirimkan Pengajuan Konseling
+                            <button type="submit" class="btn btn-emerald rounded-pill px-4 py-2.5 fw-bold shadow-sm order-1 order-sm-2 text-white">
+                                <i class="bi bi-send-check me-1.5"></i> Kirimkan Pengajuan Konseling
                             </button>
                         </div>
                     </form>

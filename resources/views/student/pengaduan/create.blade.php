@@ -39,58 +39,60 @@
                     <form method="POST" action="{{ route('murid.pengaduan.store') }}" class="space-y-4">
                         @csrf
 
-                        <div class="row g-3">
+                        <div class="row g-3.5">
                             <div class="col-md-6">
-                                <label class="form-label fs-xs text-muted fw-semibold">Kategori Permasalahan <span class="text-danger">*</span></label>
-                                <select name="category" class="form-select form-select-sm" required>
+                                <label class="form-label fs-xs text-muted fw-semibold mb-1.5">Kategori Permasalahan <span class="text-danger">*</span></label>
+                                <select name="category" class="form-select" required>
                                     @foreach($categories as $cat)
                                         <option value="{{ $cat }}" {{ old('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fs-xs text-muted fw-semibold">Tanggal / Waktu Laporan (Otomatis)</label>
-                                <input type="date" name="incident_date" value="{{ old('incident_date', date('Y-m-d')) }}" class="form-control form-control-sm bg-light" readonly title="Waktu kejadian terisi otomatis saat Anda mengirimkan pelayanan ini">
+                                <label class="form-label fs-xs text-muted fw-semibold mb-1.5">Tanggal / Waktu Laporan (Otomatis)</label>
+                                <input type="date" name="incident_date" value="{{ old('incident_date', date('Y-m-d')) }}" class="form-control bg-light" readonly title="Waktu kejadian terisi otomatis saat Anda mengirimkan pelayanan ini">
                             </div>
                         </div>
 
-                        <div class="row g-3">
+                        <div class="row g-3.5 mt-1">
                             <div class="col-12">
-                                <label class="form-label fs-xs text-muted fw-semibold">Tempat / Lokasi Terjadinya (Opsional)</label>
-                                <input type="text" name="incident_location" value="{{ old('incident_location') }}" class="form-control form-control-sm" placeholder="Contoh: Di lorong kelas, toilet, media sosial, atau perjalanan...">
+                                <label class="form-label fs-xs text-muted fw-semibold mb-1.5">Tempat / Lokasi Terjadinya (Opsional)</label>
+                                <input type="text" name="incident_location" value="{{ old('incident_location') }}" class="form-control" placeholder="Contoh: Di lorong kelas, toilet, media sosial, atau perjalanan...">
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label fs-xs text-muted fw-semibold">Ceritakan Peristiwa yang Terjadi Secara Jelas <span class="text-danger">*</span></label>
-                            <textarea name="description" class="form-control" rows="5" placeholder="Jelaskan apa yang terjadi, siapa saja pihak yang terlibat (jika kamu tahu), dan bantuan mendesak apa yang kamu perlukan..." required>{{ old('description') }}</textarea>
+                        <div class="mb-3.5 mt-2">
+                            <label class="form-label fs-xs text-muted fw-semibold mb-1.5">Ceritakan Peristiwa yang Terjadi Secara Jelas <span class="text-danger">*</span></label>
+                            <textarea name="description" class="form-control" rows="6" placeholder="Jelaskan apa yang terjadi, siapa saja pihak yang terlibat (jika kamu tahu), dan bantuan mendesak apa yang kamu perlukan..." required>{{ old('description') }}</textarea>
                         </div>
 
                         <!-- Identitas Siswa Pelapor Resmi -->
-                        <div class="p-3 bg-light rounded-3 border">
-                            <div class="d-flex align-items-center gap-2 mb-2">
+                        <div class="p-3.5 bg-light rounded-4 border">
+                            <div class="d-flex align-items-center gap-2 mb-2.5">
                                 <i class="bi bi-person-badge-fill text-primary-teal fs-5"></i>
                                 <span class="fw-bold text-dark fs-xs">Identitas Murid Pelapor (Resmi & Terverifikasi)</span>
                             </div>
-                            <div class="row g-2 small text-muted">
+                            <div class="row g-2.5 small text-muted">
                                 <div class="col-sm-6">
-                                    <span class="d-block text-slate-500 fs-xxs text-uppercase fw-bold">Nama Murid:</span>
-                                    <span class="fw-bold text-slate-800">{{ auth()->user()->student?->name ?? auth()->user()->name }}</span>
+                                    <span class="d-block text-slate-500 fs-xxs text-uppercase fw-bold mb-1">Nama Murid:</span>
+                                    <div class="fw-bold text-slate-800 p-2 bg-white rounded-3 border">{{ auth()->user()->student?->name ?? auth()->user()->name }}</div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <span class="d-block text-slate-500 fs-xxs text-uppercase fw-bold">NISN / Akun:</span>
-                                    <code class="text-primary-teal fw-bold">{{ auth()->user()->student?->nisn ?? auth()->user()->username }}</code>
+                                    <span class="d-block text-slate-500 fs-xxs text-uppercase fw-bold mb-1">NISN / Akun:</span>
+                                    <div class="p-2 bg-white rounded-3 border">
+                                        <code class="text-primary-teal fw-bold font-monospace">{{ auth()->user()->student?->nisn ?? auth()->user()->username }}</code>
+                                    </div>
                                 </div>
                             </div>
-                            <span class="text-muted fs-xxs d-block mt-2 pt-2 border-top">
+                            <span class="text-muted fs-xxs d-block mt-2.5 pt-2 border-top" style="line-height: 1.5;">
                                 <i class="bi bi-info-circle me-1"></i> Pengaduan dikirimkan menggunakan identitas resmi Anda agar Guru BK dapat segera memberikan perlindungan dan pendampingan yang tepat.
                             </span>
                         </div>
 
-                        <div class="d-flex justify-content-end gap-2 pt-3 border-top">
-                            <a href="{{ route('murid.pengaduan.index') }}" class="btn btn-light btn-sm border">Batal</a>
-                            <button type="submit" class="btn btn-danger btn-sm px-4 fw-bold">
-                                <i class="bi bi-shield-fill-check me-1"></i> Kirimkan Laporan
+                        <div class="d-flex justify-content-end gap-2.5 pt-3.5 border-top">
+                            <a href="{{ route('murid.pengaduan.index') }}" class="btn btn-light rounded-pill px-4 py-2 border fw-semibold text-muted">Batal</a>
+                            <button type="submit" class="btn btn-danger rounded-pill px-4 py-2.5 fw-bold shadow-sm">
+                                <i class="bi bi-shield-fill-check me-1.5"></i> Kirimkan Laporan
                             </button>
                         </div>
                     </form>

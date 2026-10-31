@@ -195,10 +195,10 @@
         display: flex;
         align-items: center;
         gap: 16px;
-        padding: 16px 18px;
+        padding: 18px 20px;
         background: #ffffff;
         border: 1.5px solid #e2e8f0;
-        border-radius: 16px;
+        border-radius: 18px;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02);
@@ -210,13 +210,13 @@
 
     /* ICON */
     .portal-card-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.35rem;
+        font-size: 1.45rem;
         color: #ffffff;
         flex-shrink: 0;
         transition: transform 0.2s ease;
@@ -230,35 +230,35 @@
         min-width: 0;
     }
     .portal-role-title {
-        font-size: 1.02rem;
+        font-size: 1.05rem;
         font-weight: 800;
         color: #1e293b;
-        letter-spacing: 0.015em;
-        line-height: 1.3;
+        letter-spacing: 0.02em;
+        line-height: 1.35;
     }
     .portal-role-tag {
-        font-size: 0.74rem;
+        font-size: 0.76rem;
         font-weight: 700;
-        padding: 4px 10px;
+        padding: 6px 14px;
         border-radius: 50rem;
-        line-height: 1.3;
-        letter-spacing: 0.02em;
+        line-height: 1.35;
+        letter-spacing: 0.025em;
         flex-shrink: 0;
     }
     .portal-role-desc {
-        font-size: 0.82rem;
+        font-size: 0.84rem;
         color: #64748b;
-        margin-top: 3px;
-        line-height: 1.45;
-        letter-spacing: 0.01em;
+        margin-top: 4px;
+        line-height: 1.5;
+        letter-spacing: 0.015em;
     }
 
     /* ARROW */
     .portal-card-arrow {
         color: #94a3b8;
-        font-size: 1.15rem;
+        font-size: 1.25rem;
         flex-shrink: 0;
-        width: 20px;
+        width: 22px;
         text-align: right;
         transition: all 0.2s ease;
     }
@@ -326,11 +326,11 @@
         border: 1.5px solid var(--primary, #0d9488);
         color: var(--primary, #0d9488);
         border-radius: 50rem;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         font-weight: 700;
-        padding: 12px 20px;
+        padding: 14px 22px;
         transition: all 0.2s ease;
-        letter-spacing: 0.02em;
+        letter-spacing: 0.025em;
     }
     .portal-register-btn:hover {
         background: var(--primary, #0d9488);

@@ -44,11 +44,11 @@
                      style="object-fit: cover; background: #fff;">
                 <div class="min-w-0">
                     <h5 class="fw-bold text-dark mb-0 fs-6 fs-sm-5 text-truncate">{{ $user->name }}</h5>
-                    <div class="d-flex align-items-center flex-wrap gap-2 mt-0.5">
-                        <span class="badge {{ $classroom ? 'bg-primary' : 'bg-secondary' }} text-white fs-xxs">
+                    <div class="d-flex align-items-center flex-wrap gap-2 mt-1">
+                        <span class="badge {{ $classroom ? 'bg-primary' : 'bg-secondary' }} text-white rounded-pill px-3 py-1.5 fs-xs fw-semibold">
                             {{ $classroom ? 'Wali Kelas ' . $classroom->name : 'Wali Kelas (Belum Ditugaskan)' }}
                         </span>
-                        <span class="text-muted small fs-xs">Username: <code>{{ $user->username }}</code></span>
+                        <span class="text-muted small fs-xs">Username: <code class="px-2 py-0.5 bg-white rounded border">{{ $user->username }}</code></span>
                     </div>
                 </div>
             </div>

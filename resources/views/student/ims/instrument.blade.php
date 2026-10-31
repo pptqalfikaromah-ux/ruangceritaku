@@ -100,13 +100,13 @@
 
                 <input type="hidden" name="scope_statement_ids[]" value="{{ $stmt->id }}">
 
-                <div class="card border-0 rounded-4 modern-statement-item p-2.5 p-sm-3.5 {{ $isSelected ? 'statement-active' : '' }} {{ $isHeavy ? 'statement-heavy' : '' }}"
+                <div class="card border-0 rounded-4 modern-statement-item p-3.5 p-sm-4 {{ $isSelected ? 'statement-active' : '' }} {{ $isHeavy ? 'statement-heavy' : '' }}"
                      id="card-stmt-{{ $stmt->id }}"
                      style="background: #ffffff; border: 1.5px solid {{ $isHeavy ? '#f59e0b' : ($isSelected ? '#00B894' : '#E2ECE9') }} !important;">
                     
-                    <div class="d-flex align-items-start gap-2.5">
+                    <div class="d-flex align-items-start gap-3">
                         <!-- Checkbox Pilihan Butir -->
-                        <div class="pt-0.5 flex-shrink-0">
+                        <div class="pt-1 flex-shrink-0">
                             <div class="form-check m-0 p-0">
                                 <input class="form-check-input modern-checkbox cursor-pointer m-0"
                                        type="checkbox"
@@ -117,24 +117,24 @@
                                        data-radio-id="radio_heavy_{{ $stmt->id }}"
                                        {{ $isSelected ? 'checked' : '' }}
                                        {{ $assessment->isSubmitted() ? 'disabled' : '' }}
-                                       style="width: 20px; height: 20px; cursor: pointer;">
+                                       style="width: 22px; height: 22px; cursor: pointer;">
                             </div>
                         </div>
 
                         <!-- Konten Butir: Nomor, Badge Bidang, Pernyataan Memanjang ke Samping -->
                         <div class="flex-grow-1 min-w-0">
                             <label for="chk_{{ $stmt->id }}" class="text-dark mb-0 fs-sm cursor-pointer lh-base d-block" style="user-select: none;">
-                                <span class="badge bg-light text-dark border rounded px-1.5 py-0.5 me-1 fs-xxs fw-bold font-monospace align-middle">#{{ $stmt->statement_number }}</span>
-                                <span class="badge rounded px-1.5 py-0.5 me-1.5 fs-xxs fw-semibold align-middle"
+                                <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1 me-1.5 fs-xxs fw-bold font-monospace align-middle">#{{ $stmt->statement_number }}</span>
+                                <span class="badge rounded-pill px-2.5 py-1 me-2 fs-xxs fw-semibold align-middle"
                                       style="background: {{ $badgeStyle['bg'] }}; color: {{ $badgeStyle['text'] }}; border: 1px solid {{ $badgeStyle['border'] }};">
                                     {{ $fieldName }}
                                 </span>
-                                <span class="statement-text fw-medium align-middle">{{ $stmt->statement_text }}</span>
+                                <span class="statement-text fw-medium align-middle" style="line-height: 1.65;">{{ $stmt->statement_text }}</span>
                             </label>
 
                             <!-- Indikator Visual Masalah Paling Mengganggu -->
-                            <div class="heavy-badge-label mt-1" id="heavyLabel_{{ $stmt->id }}" style="display: {{ $isHeavy ? 'inline-flex' : 'none' }};">
-                                <span class="badge rounded-pill px-2 py-0.5 fs-xxs fw-bold text-white" style="background: #d97706;">
+                            <div class="heavy-badge-label mt-1.5" id="heavyLabel_{{ $stmt->id }}" style="display: {{ $isHeavy ? 'inline-flex' : 'none' }};">
+                                <span class="badge rounded-pill px-3 py-1 fs-xxs fw-bold text-white shadow-xs" style="background: #d97706;">
                                     <i class="bi bi-star-fill text-warning me-1"></i> Masalah Terberat di Layanan Ini
                                 </span>
                             </div>

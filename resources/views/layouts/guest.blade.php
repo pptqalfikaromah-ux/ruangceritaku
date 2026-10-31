@@ -43,8 +43,9 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            letter-spacing: 0.012em;
-            line-height: 1.55;
+            letter-spacing: 0.024em;
+            word-spacing: 0.03em;
+            line-height: 1.62;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -56,9 +57,24 @@
         .btn-mint, .btn-emerald { background: var(--primary); border: none; color: #fff; font-weight: 700; }
         .btn-mint:hover, .btn-emerald:hover { background: var(--primary-dark); color: #fff; }
 
-        .form-control:focus {
+        .form-control, .form-select {
+            min-height: 50px;
+            padding: 10px 16px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            line-height: 1.5;
+        }
+
+        .form-control:focus, .form-select:focus {
             border-color: var(--primary) !important;
             box-shadow: 0 0 0 0.25rem rgba(13, 148, 136, 0.2) !important;
+        }
+
+        .badge {
+            padding: 0.42rem 0.85rem !important;
+            letter-spacing: 0.025em;
+            line-height: 1.35;
         }
     </style>
     @stack('styles')

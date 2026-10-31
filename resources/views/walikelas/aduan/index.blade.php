@@ -89,48 +89,48 @@
         </div>
 
         {{-- MOBILE CARDS VIEW (Spacious & Clean Mobile UI) --}}
-        <div class="d-md-none p-2 p-sm-3">
+        <div class="d-md-none p-3 p-sm-3.5">
             @forelse($complaints as $comp)
-                <div class="mobile-card mb-3 shadow-xs">
-                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2 pb-2 border-bottom">
-                        <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1 fs-xs fw-semibold">
+                <div class="mobile-card mb-3.5 shadow-xs">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2.5 pb-2.5 border-bottom">
+                        <span class="badge bg-light text-dark border rounded-pill px-3 py-1.5 fs-xs fw-semibold">
                             <i class="bi bi-tag me-1 text-muted"></i>{{ $comp->category_label }}
                         </span>
-                        <span class="badge rounded-pill {{ $comp->status_badge_class }} px-2.5 py-1 fs-xs fw-bold">
+                        <span class="badge rounded-pill {{ $comp->status_badge_class }} px-3 py-1.5 fs-xs fw-bold">
                             {{ $comp->status_label }}
                         </span>
                     </div>
 
-                    <div class="card-name mb-1">{{ $comp->title }}</div>
+                    <div class="card-name mb-1.5 fs-6 fw-bold text-dark">{{ $comp->title }}</div>
                     
-                    <div class="card-sub mb-2.5">
-                        <div class="d-flex align-items-center gap-1.5 flex-wrap">
+                    <div class="card-sub mb-3">
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
                             <span class="fw-bold text-dark"><i class="bi bi-person-fill text-primary me-1"></i>{{ $comp->student?->name }}</span>
                             <span class="text-muted fs-xs">NISN: {{ $comp->student?->nisn }}</span>
                         </div>
-                        <div class="text-muted fs-xs mt-1">
+                        <div class="text-muted fs-xs mt-1.5">
                             <i class="bi bi-calendar3 me-1 text-muted"></i>Kejadian: <strong class="text-dark">{{ $comp->incident_date->format('d M Y') }}</strong>
                         </div>
                     </div>
 
-                    <div class="card-info-box mb-2.5 fs-xs">
-                        <div class="fw-bold text-muted fs-xxs text-uppercase mb-1">Kronologi Singkat:</div>
-                        <div class="text-dark">{{ Str::limit($comp->description, 110) }}</div>
+                    <div class="card-info-box mb-3 fs-xs p-3 rounded-4 bg-light border">
+                        <div class="fw-bold text-muted fs-xxs text-uppercase mb-1.5">Kronologi Singkat:</div>
+                        <div class="text-dark lh-base">{{ Str::limit($comp->description, 130) }}</div>
                     </div>
 
                     @if($comp->counselor_response)
-                        <div class="p-2.5 rounded-3 mb-2.5 border" style="background: #f0fdf4; border-color: #bbf7d0 !important;">
-                            <div class="d-flex align-items-center gap-1.5 fs-xs fw-bold text-success mb-1">
+                        <div class="p-3.5 rounded-4 mb-3 border" style="background: #f0fdf4; border-color: #bbf7d0 !important;">
+                            <div class="d-flex align-items-center gap-1.5 fs-xs fw-bold text-success mb-1.5">
                                 <i class="bi bi-check-circle-fill"></i> Respon & Solusi Guru BK:
                             </div>
-                            <div class="fs-xs text-dark lh-base">{{ Str::limit($comp->counselor_response, 90) }}</div>
-                            <div class="fs-xxs text-muted mt-1">Ditangani oleh: <strong>{{ $comp->handledByCounselor?->name ?? 'Guru BK' }}</strong></div>
+                            <div class="fs-xs text-dark lh-base">{{ Str::limit($comp->counselor_response, 110) }}</div>
+                            <div class="fs-xxs text-muted mt-1.5">Ditangani oleh: <strong>{{ $comp->handledByCounselor?->name ?? 'Guru BK' }}</strong></div>
                         </div>
                     @endif
 
-                    <div class="pt-2 border-top">
-                        <a href="{{ route('walikelas.aduan.show', $comp) }}" class="btn btn-card-action w-100 text-center">
-                            <i class="bi bi-eye me-1 text-warning"></i> Lihat Rincian Kasus
+                    <div class="pt-2.5 border-top">
+                        <a href="{{ route('walikelas.aduan.show', $comp) }}" class="btn btn-card-action w-100 text-center py-2.5 rounded-pill">
+                            <i class="bi bi-eye me-1.5 text-warning"></i> Lihat Rincian Kasus
                         </a>
                     </div>
                 </div>

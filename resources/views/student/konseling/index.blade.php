@@ -37,28 +37,28 @@
 
     @if(app_setting('ims_enabled', '1') === '1')
         <!-- Filter Tab: Bedakan Konseling Pribadi vs Tindak Lanjut IMS (Scrollable di Mobile) -->
-        <div class="card border-0 shadow-sm rounded-3 bg-white p-2">
-            <ul class="nav nav-pills gap-1 flex-nowrap overflow-x-auto pb-1 pb-sm-0" style="-webkit-overflow-scrolling: touch;">
+        <div class="card border-0 shadow-sm rounded-4 bg-white p-2.5">
+            <ul class="nav nav-pills gap-2 flex-nowrap overflow-x-auto pb-1 pb-sm-0" style="-webkit-overflow-scrolling: touch;">
                 <li class="nav-item flex-shrink-0">
-                    <a class="nav-link rounded-pill fs-xs py-1.5 px-3 {{ !request('source') ? 'active bg-emerald text-white' : 'text-muted' }}" 
+                    <a class="nav-link rounded-pill fs-xs py-2 px-3.5 fw-semibold {{ !request('source') ? 'active bg-emerald text-white' : 'text-muted' }}" 
                        href="{{ route('murid.konseling.index') }}">
-                        <i class="bi bi-grid me-1"></i> Semua Permohonan
-                        <span class="badge bg-light text-dark rounded-pill ms-1">{{ $counts['all'] ?? 0 }}</span>
+                        <i class="bi bi-grid me-1.5"></i> Semua Permohonan
+                        <span class="badge bg-light text-dark rounded-pill ms-1.5 px-2 py-0.5">{{ $counts['all'] ?? 0 }}</span>
                     </a>
                 </li>
                 <li class="nav-item flex-shrink-0">
-                    <a class="nav-link rounded-pill fs-xs py-1.5 px-3 {{ request('source') === 'pribadi' ? 'active bg-primary text-white' : 'text-muted' }}" 
+                    <a class="nav-link rounded-pill fs-xs py-2 px-3.5 fw-semibold {{ request('source') === 'pribadi' ? 'active bg-primary text-white' : 'text-muted' }}" 
                        href="{{ route('murid.konseling.index', ['source' => 'pribadi']) }}">
-                        <i class="bi bi-person-fill me-1"></i> Konseling Pribadi (Mandiri)
-                        <span class="badge bg-light text-dark rounded-pill ms-1">{{ $counts['pribadi'] ?? 0 }}</span>
+                        <i class="bi bi-person-fill me-1.5"></i> Konseling Pribadi (Mandiri)
+                        <span class="badge bg-light text-dark rounded-pill ms-1.5 px-2 py-0.5">{{ $counts['pribadi'] ?? 0 }}</span>
                     </a>
                 </li>
                 <li class="nav-item flex-shrink-0">
-                    <a class="nav-link rounded-pill fs-xs py-1.5 px-3 {{ request('source') === 'ims' ? 'active bg-purple text-white' : 'text-muted' }}" 
+                    <a class="nav-link rounded-pill fs-xs py-2 px-3.5 fw-semibold {{ request('source') === 'ims' ? 'active bg-purple text-white' : 'text-muted' }}" 
                        style="{{ request('source') === 'ims' ? 'background-color: #7c3aed !important;' : '' }}"
                        href="{{ route('murid.konseling.index', ['source' => 'ims']) }}">
-                        <i class="bi bi-clipboard2-check me-1"></i> Tindak Lanjut Masalah IMS
-                        <span class="badge bg-light text-dark rounded-pill ms-1">{{ $counts['ims'] ?? 0 }}</span>
+                        <i class="bi bi-clipboard2-check me-1.5"></i> Tindak Lanjut Masalah IMS
+                        <span class="badge bg-light text-dark rounded-pill ms-1.5 px-2 py-0.5">{{ $counts['ims'] ?? 0 }}</span>
                     </a>
                 </li>
             </ul>
@@ -157,34 +157,34 @@
         </div>
 
         {{-- MOBILE CARDS VIEW (Spacious & Clean Mobile UI) --}}
-        <div class="d-md-none p-2 p-sm-3">
+        <div class="d-md-none p-3 p-sm-3.5">
             @forelse($requests as $item)
-                <div class="mobile-card mb-3 shadow-xs">
-                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2 pb-2 border-bottom">
-                        <div class="d-flex align-items-center gap-1.5 flex-wrap">
-                            <span class="fw-bold font-monospace text-emerald fs-xs">
+                <div class="mobile-card mb-3.5 shadow-xs">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2.5 pb-2.5 border-bottom">
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <span class="fw-bold font-monospace text-emerald fs-xs p-1 bg-light rounded-3">
                                 <i class="bi bi-ticket-perforated me-1"></i>#{{ $item->ticket_number }}
                             </span>
                             @if($item->source === 'ims')
-                                <span class="badge bg-purple-subtle text-purple border-purple px-2 py-0.5 rounded-pill fs-xxs fw-semibold">
-                                    <i class="bi bi-clipboard2-check me-0.5"></i>Hasil IMS
+                                <span class="badge bg-purple-subtle text-purple border-purple px-2.5 py-1 rounded-pill fs-xxs fw-semibold">
+                                    <i class="bi bi-clipboard2-check me-1"></i>Hasil IMS
                                 </span>
                             @else
-                                <span class="badge bg-primary-subtle text-primary border-primary px-2 py-0.5 rounded-pill fs-xxs fw-semibold">
-                                    <i class="bi bi-person me-0.5"></i>Pribadi
+                                <span class="badge bg-primary-subtle text-primary border-primary px-2.5 py-1 rounded-pill fs-xxs fw-semibold">
+                                    <i class="bi bi-person me-1"></i>Pribadi
                                 </span>
                             @endif
                         </div>
-                        <span class="badge {{ $item->status_badge_class }} px-2.5 py-1 rounded-pill fs-xs fw-bold">
+                        <span class="badge {{ $item->status_badge_class }} px-3 py-1.5 rounded-pill fs-xs fw-bold">
                             {{ $item->status_label }}
                         </span>
                     </div>
 
-                    <div class="card-name mb-1">{{ $item->purpose }}</div>
+                    <div class="card-name mb-1.5 fs-6 fw-bold text-dark">{{ $item->purpose }}</div>
 
-                    <div class="card-sub mb-2.5">
-                        <div class="d-flex align-items-center gap-1.5 flex-wrap">
-                            <span class="badge bg-light text-dark border px-2 py-0.5 rounded-pill fs-xxs">
+                    <div class="card-sub mb-3">
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <span class="badge bg-light text-dark border px-2.5 py-1 rounded-pill fs-xxs">
                                 {{ $item->guidanceField?->name ?? 'Umum' }}
                             </span>
                             <span class="text-muted fs-xs">&bull;</span>
@@ -193,40 +193,40 @@
                     </div>
 
                     @if($item->description)
-                        <div class="card-info-box mb-2.5 fs-xs">
-                            <div class="fw-bold text-muted fs-xxs text-uppercase mb-1">Catatan Kebutuhan:</div>
-                            <div class="text-dark">{{ Str::limit($item->description, 120) }}</div>
+                        <div class="card-info-box mb-3 fs-xs p-3 rounded-4 bg-light border">
+                            <div class="fw-bold text-muted fs-xxs text-uppercase mb-1.5">Catatan Kebutuhan:</div>
+                            <div class="text-dark lh-base">{{ Str::limit($item->description, 130) }}</div>
                         </div>
                     @endif
 
                     {{-- JADWAL SESI KONSELING --}}
-                    <div class="p-2.5 rounded-3 mb-2.5 border" style="background: #f0fdfa; border-color: #ccfbf1 !important;">
-                        <div class="fw-bold text-muted fs-xxs text-uppercase mb-1">Jadwal Sesi Konseling:</div>
+                    <div class="p-3.5 rounded-4 mb-3 border" style="background: #f0fdfa; border-color: #ccfbf1 !important;">
+                        <div class="fw-bold text-muted fs-xxs text-uppercase mb-1.5">Jadwal Sesi Konseling:</div>
                         @if($item->schedule)
-                            <div class="d-flex align-items-center gap-1.5 fs-xs text-dark fw-bold mb-1">
-                                <i class="bi bi-calendar-check text-emerald"></i>
+                            <div class="d-flex align-items-center gap-2 fs-xs text-dark fw-bold mb-2">
+                                <i class="bi bi-calendar-check text-emerald fs-6"></i>
                                 <span>{{ $item->schedule->scheduled_date->translatedFormat('l, d M Y') }} &bull; {{ $item->schedule->start_time }} WIB</span>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-1 fs-xs">
-                                <span class="text-muted fs-xxs">Tempat: {{ $item->schedule->location ?? 'Ruang BK' }}</span>
+                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 fs-xs">
+                                <span class="text-muted fs-xxs">Tempat: <strong>{{ $item->schedule->location ?? 'Ruang BK' }}</strong></span>
                                 @if($item->schedule->student_confirmation === 'confirmed')
-                                    <span class="badge bg-success text-white rounded-pill fs-xxs px-2"><i class="bi bi-check2"></i> Siap Hadir</span>
+                                    <span class="badge bg-success text-white rounded-pill fs-xxs px-2.5 py-1"><i class="bi bi-check2"></i> Siap Hadir</span>
                                 @elseif($item->schedule->student_confirmation === 'reschedule_requested')
-                                    <span class="badge bg-warning text-dark rounded-pill fs-xxs px-2">Minta Jadwal Lain</span>
+                                    <span class="badge bg-warning text-dark rounded-pill fs-xxs px-2.5 py-1">Minta Jadwal Lain</span>
                                 @else
-                                    <span class="badge bg-primary text-white rounded-pill fs-xxs px-2">Perlu Konfirmasi</span>
+                                    <span class="badge bg-primary text-white rounded-pill fs-xxs px-2.5 py-1">Perlu Konfirmasi</span>
                                 @endif
                             </div>
                         @else
-                            <div class="text-muted fs-xs fst-italic">
+                            <div class="text-muted fs-xs fst-italic py-1">
                                 <i class="bi bi-hourglass-split me-1 text-warning"></i>Jadwal sedang ditinjau & ditetapkan oleh Guru BK.
                             </div>
                         @endif
                     </div>
 
-                    <div class="pt-2 border-top">
-                        <a href="{{ route('murid.konseling.show', $item->id) }}" class="btn btn-card-action w-100 text-center">
-                            <i class="bi bi-eye me-1 text-emerald"></i> Lihat Rincian Tiket & Jadwal
+                    <div class="pt-2.5 border-top">
+                        <a href="{{ route('murid.konseling.show', $item->id) }}" class="btn btn-card-action w-100 text-center py-2.5 rounded-pill">
+                            <i class="bi bi-eye me-1.5 text-emerald"></i> Lihat Rincian Tiket & Jadwal
                         </a>
                     </div>
                 </div>

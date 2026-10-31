@@ -205,29 +205,29 @@
                         <label class="form-label fw-bold text-dark fs-xs mb-2">
                             Pilih Metode Konseling yang Kamu Inginkan <span class="text-danger">*</span>
                         </label>
-                        <div class="row g-2.5">
+                        <div class="row g-3">
                             <div class="col-sm-6">
-                                <label class="card h-100 p-3 rounded-3 border method-card text-decoration-none" style="cursor: pointer; background: #fafafa;">
-                                    <div class="d-flex align-items-center gap-2 mb-1">
-                                        <input type="radio" name="counseling_method" value="tatap_muka" class="form-check-input mt-0" {{ old('counseling_method', 'tatap_muka') === 'tatap_muka' ? 'checked' : '' }} required>
+                                <label class="card h-100 p-3.5 rounded-4 border method-card text-decoration-none" style="cursor: pointer; background: #fafafa;">
+                                    <div class="d-flex align-items-center gap-2.5 mb-1.5">
+                                        <input type="radio" name="counseling_method" value="tatap_muka" class="form-check-input mt-0" {{ old('counseling_method', 'tatap_muka') === 'tatap_muka' ? 'checked' : '' }} required style="width: 18px; height: 18px;">
                                         <span class="fw-bold text-dark fs-xs d-flex align-items-center gap-1.5">
                                             <i class="bi bi-door-open text-mint fs-5"></i> Tatap Muka di Sekolah
                                         </span>
                                     </div>
-                                    <div class="text-muted fs-xxs lh-sm ps-4">
+                                    <div class="text-muted fs-xxs lh-base ps-4">
                                         Sesi langsung di Ruang BK madrasah. Guru BK akan menentukan waktu dan ruangan.
                                     </div>
                                 </label>
                             </div>
                             <div class="col-sm-6">
-                                <label class="card h-100 p-3 rounded-3 border method-card text-decoration-none" style="cursor: pointer; background: #fafafa;">
-                                    <div class="d-flex align-items-center gap-2 mb-1">
-                                        <input type="radio" name="counseling_method" value="online_meet" class="form-check-input mt-0" {{ old('counseling_method') === 'online_meet' ? 'checked' : '' }}>
+                                <label class="card h-100 p-3.5 rounded-4 border method-card text-decoration-none" style="cursor: pointer; background: #fafafa;">
+                                    <div class="d-flex align-items-center gap-2.5 mb-1.5">
+                                        <input type="radio" name="counseling_method" value="online_meet" class="form-check-input mt-0" {{ old('counseling_method') === 'online_meet' ? 'checked' : '' }} style="width: 18px; height: 18px;">
                                         <span class="fw-bold text-dark fs-xs d-flex align-items-center gap-1.5">
                                             <i class="bi bi-camera-video text-primary fs-5"></i> Online (Google Meet)
                                         </span>
                                     </div>
-                                    <div class="text-muted fs-xxs lh-sm ps-4">
+                                    <div class="text-muted fs-xxs lh-base ps-4">
                                         Sesi daring dari perangkatmu. Guru BK akan mengisi Link Google Meet pada tiketmu.
                                     </div>
                                 </label>

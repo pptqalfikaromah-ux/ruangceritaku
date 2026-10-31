@@ -38,32 +38,32 @@
             </div>
 
             <!-- Role Selector Tabs (Mobile Touch Friendly & Spacious) -->
-            <div class="role-selector-wrap p-1.5 rounded-pill bg-light border d-flex mb-3.5" style="gap: 6px;">
+            <div class="role-selector-wrap p-2 rounded-pill bg-light border d-flex mb-3.5" style="gap: 6px;">
                 <button type="button" 
-                        class="btn btn-sm flex-fill rounded-pill py-2 px-2 fw-bold role-tab-btn {{ $currentRole === 'murid' ? 'active' : '' }}" 
+                        class="btn flex-fill rounded-pill py-2.5 px-3 fw-bold role-tab-btn {{ $currentRole === 'murid' ? 'active' : '' }}" 
                         onclick="setRoleTab('murid')">
                     <i class="bi bi-person-heart me-1"></i> Murid
                 </button>
                 <button type="button" 
-                        class="btn btn-sm flex-fill rounded-pill py-2 px-2 fw-bold role-tab-btn {{ $currentRole === 'bk' ? 'active' : '' }}" 
+                        class="btn flex-fill rounded-pill py-2.5 px-3 fw-bold role-tab-btn {{ $currentRole === 'bk' ? 'active' : '' }}" 
                         onclick="setRoleTab('bk')">
                     <i class="bi bi-shield-check me-1"></i> Guru BK
                 </button>
                 <button type="button" 
-                        class="btn btn-sm flex-fill rounded-pill py-2 px-2 fw-bold role-tab-btn {{ $currentRole === 'wali_kelas' ? 'active' : '' }}" 
+                        class="btn flex-fill rounded-pill py-2.5 px-3 fw-bold role-tab-btn {{ $currentRole === 'wali_kelas' ? 'active' : '' }}" 
                         onclick="setRoleTab('wali_kelas')">
                     <i class="bi bi-mortarboard-fill me-1"></i> Wali Kelas
                 </button>
             </div>
 
             <!-- Active Portal Indicator Box -->
-            <div class="role-info-banner p-3 rounded-4 mb-3.5 border d-flex align-items-center gap-3" id="roleBanner" style="background: #f0fdfa; border-color: #ccfbf1 !important;">
-                <div class="role-banner-icon d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 38px; height: 38px; background: #ffffff; color: var(--primary);">
+            <div class="role-info-banner p-3.5 rounded-4 mb-3.5 border d-flex align-items-center gap-3" id="roleBanner" style="background: #f0fdfa; border-color: #ccfbf1 !important;">
+                <div class="role-banner-icon d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 44px; height: 44px; background: #ffffff; color: var(--primary);">
                     <i class="bi bi-person-heart fs-5" id="bannerIcon"></i>
                 </div>
                 <div>
-                    <div class="fw-bold text-dark" id="bannerTitle" style="font-size: 0.88rem; letter-spacing: 0.01em;">Portal Masuk Siswa</div>
-                    <div class="text-muted" style="font-size: 0.78rem; line-height: 1.45;" id="bannerDesc">Silakan masuk menggunakan NISN resmi Anda.</div>
+                    <div class="fw-bold text-dark" id="bannerTitle" style="font-size: 0.92rem; letter-spacing: 0.015em;">Portal Masuk Siswa</div>
+                    <div class="text-muted" style="font-size: 0.8rem; line-height: 1.5;" id="bannerDesc">Silakan masuk menggunakan NISN resmi Anda.</div>
                 </div>
             </div>
 
@@ -80,20 +80,20 @@
                         Username
                     </label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0 text-muted rounded-start-pill ps-3 pe-2" style="padding-top: 10px; padding-bottom: 10px;">
+                        <span class="input-group-text bg-light border-end-0 text-muted rounded-start-pill ps-3.5 pe-2.5" style="padding-top: 12px; padding-bottom: 12px;">
                             <i class="bi bi-person text-mint fs-5" id="inputIcon"></i>
                         </span>
                         <input type="text"
-                               class="form-control border-start-0 ps-2 pe-3 rounded-end-pill @error('login') is-invalid @enderror"
+                               class="form-control border-start-0 ps-2 pe-3.5 rounded-end-pill @error('login') is-invalid @enderror"
                                id="login"
                                name="login"
                                value="{{ old('login') }}"
                                placeholder="Masukkan username"
-                               style="padding-top: 10px; padding-bottom: 10px; font-size: 0.94rem; letter-spacing: 0.015em;"
+                               style="padding-top: 12px; padding-bottom: 12px; min-height: 52px; font-size: 0.96rem; letter-spacing: 0.02em;"
                                required
                                autofocus>
                     </div>
-                    <div class="form-text text-muted fs-xs mt-1.5 ps-1" id="loginHelpText" style="line-height: 1.45;">
+                    <div class="form-text text-muted fs-xs mt-1.5 ps-1" id="loginHelpText" style="line-height: 1.5;">
                         <i class="bi bi-info-circle me-1"></i>Masuk dengan username terdaftar (atau NISN bagi siswa).
                     </div>
                     @error('login')
@@ -106,7 +106,7 @@
                         <label for="password" class="form-label fw-bold small text-slate-700 mb-0">Password</label>
                     </div>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0 text-muted rounded-start-pill ps-3 pe-2" style="padding-top: 10px; padding-bottom: 10px;">
+                        <span class="input-group-text bg-light border-end-0 text-muted rounded-start-pill ps-3.5 pe-2.5" style="padding-top: 12px; padding-bottom: 12px;">
                             <i class="bi bi-shield-lock text-mint fs-5"></i>
                         </span>
                         <input type="password"
@@ -114,13 +114,13 @@
                                id="password"
                                name="password"
                                placeholder="Masukkan password Anda"
-                               style="padding-top: 10px; padding-bottom: 10px; font-size: 0.94rem; letter-spacing: 0.015em;"
+                               style="padding-top: 12px; padding-bottom: 12px; min-height: 52px; font-size: 0.96rem; letter-spacing: 0.02em;"
                                required>
-                        <button class="btn btn-light border border-start-0 rounded-end-pill pe-3.5 text-muted" type="button" id="togglePasswordBtn" onclick="togglePasswordVisibility()">
+                        <button class="btn btn-light border border-start-0 rounded-end-pill pe-3.5 text-muted" type="button" id="togglePasswordBtn" onclick="togglePasswordVisibility()" style="padding-top: 12px; padding-bottom: 12px;">
                             <i class="bi bi-eye" id="togglePasswordIcon"></i>
                         </button>
                     </div>
-                    <div class="form-text text-muted fs-xs mt-1.5 ps-1" id="passwordHelpText" style="line-height: 1.45;">
+                    <div class="form-text text-muted fs-xs mt-1.5 ps-1" id="passwordHelpText" style="line-height: 1.5;">
                         Password bawaan akun sama dengan username masing-masing.
                     </div>
                     @error('password')
@@ -130,7 +130,7 @@
 
                 <div class="d-flex align-items-center justify-content-between mb-4 ps-1">
                     <div class="form-check d-flex align-items-center gap-2 mb-0">
-                        <input class="form-check-input mt-0 cursor-pointer" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} style="width: 16px; height: 16px;">
+                        <input class="form-check-input mt-0 cursor-pointer" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} style="width: 17px; height: 17px;">
                         <label class="form-check-label small text-muted cursor-pointer user-select-none" for="remember">
                             Ingat saya di perangkat ini
                         </label>
@@ -138,7 +138,7 @@
                 </div>
 
                 <div class="d-grid mb-3.5">
-                    <button type="submit" class="btn btn-mint py-3 rounded-pill fw-bold shadow-sm" id="btnSubmitLogin" style="font-size: 0.96rem; letter-spacing: 0.03em;">
+                    <button type="submit" class="btn btn-mint py-3 rounded-pill fw-bold shadow-sm" id="btnSubmitLogin" style="font-size: 0.98rem; letter-spacing: 0.03em;">
                         <i class="bi bi-box-arrow-in-right me-1.5"></i> MASUK SEKARANG
                     </button>
                 </div>
