@@ -59,6 +59,9 @@
                         </span>
                         <span class="text-muted small fs-xs">NISN: <code class="text-dark fw-bold px-1.5 py-0.5 bg-light rounded">{{ $student->nisn }}</code></span>
                         <span class="text-muted small fs-xs">&bull; Status: <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded-pill">Aktif</span></span>
+                        <span id="headerZodiacBadge" class="badge rounded-pill px-3 py-1.5 fw-bold text-white shadow-xs" style="background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); font-size: 0.76rem; {{ $student->zodiac ? '' : 'display:none;' }}">
+                            <span id="headerZodiacIcon" class="me-1">{{ $student->zodiac_icon ?? '✨' }}</span> Zodiak: <span id="headerZodiacName">{{ $student->zodiac ?? '-' }}</span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -91,6 +94,21 @@
                         <div class="col-6 col-md-3">
                             <div class="text-muted fs-xxs mb-1">Tahun Ajaran / Sem</div>
                             <div class="fw-bold text-dark fs-xs p-2 bg-white rounded-3 border">{{ $activeYear?->name ?? '-' }} ({{ $activeSem?->name ?? '-' }})</div>
+                        </div>
+                        <div class="col-12 col-md-6 mt-2 pt-2 border-top">
+                            <div class="text-muted fs-xxs mb-1">Tempat & Tanggal Lahir</div>
+                            <div class="fw-bold text-dark fs-xs p-2 bg-white rounded-3 border">
+                                <span id="readOnlyBirthPlace">{{ $student->birth_place ?? '-' }}</span>, 
+                                <span id="readOnlyBirthDate">{{ $student->birth_date ? $student->birth_date->isoFormat('D MMMM Y') : 'Belum diisi' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mt-2 pt-2 border-top">
+                            <div class="text-muted fs-xxs mb-1">Zodiak (Otomatis)</div>
+                            <div class="fw-bold text-dark fs-xs p-2 bg-white rounded-3 border d-flex align-items-center gap-2">
+                                <span id="readOnlyZodiacIcon" class="fs-6" style="color: #8b5cf6;">{{ $student->zodiac_icon ?? '✨' }}</span>
+                                <span id="readOnlyZodiacName" class="badge rounded-pill bg-purple-subtle text-purple px-2.5 py-1 fw-bold fs-xs">{{ $student->zodiac ?? 'Belum terdeteksi' }}</span>
+                                <span class="text-muted fs-xxs ms-auto">Mengikuti tgl lahir</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -158,14 +176,34 @@
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <label class="form-label fw-bold small text-slate-700 mb-1.5">Tanggal Lahir</label>
-                        <input type="date" 
-                               name="birth_date" 
-                               class="form-control @error('birth_date') is-invalid @enderror" 
-                               value="{{ old('birth_date', $student->birth_date?->format('Y-m-d')) }}">
+                        <div class="d-flex justify-content-between align-items-center mb-1.5">
+                            <label for="birthDateInput" class="form-label fw-bold small text-slate-700 mb-0">Tanggal Lahir</label>
+                            <span id="fieldZodiacBadge" class="badge rounded-pill px-2.5 py-1 fw-bold fs-xxs shadow-xs" style="background: linear-gradient(135deg, #f5f3ff 0%, #fdf2f8 100%); color: #7c3aed; border: 1px solid #ddd6fe; {{ $student->zodiac ? '' : 'display:none;' }}">
+                                <span id="fieldZodiacIcon">{{ $student->zodiac_icon ?? '✨' }}</span> Zodiak: <span id="fieldZodiacName">{{ $student->zodiac ?? '-' }}</span>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 text-muted ps-3">
+                                <i class="bi bi-calendar-event text-mint"></i>
+                            </span>
+                            <input type="date" 
+                                   name="birth_date" 
+                                   id="birthDateInput"
+                                   class="form-control border-start-0 @error('birth_date') is-invalid @enderror" 
+                                   value="{{ old('birth_date', $student->birth_date?->format('Y-m-d')) }}"
+                                   onchange="updateZodiacDisplay(this.value)"
+                                   oninput="updateZodiacDisplay(this.value)">
+                        </div>
                         @error('birth_date')
                             <div class="invalid-feedback small">{{ $message }}</div>
                         @enderror
+                        <div class="form-text text-muted fs-xxs mt-1" id="zodiacHelpText">
+                            @if($student->zodiac)
+                                Zodiak Anda: <strong class="text-purple">{{ $student->zodiac_icon }} {{ $student->zodiac }}</strong> (otomatis mengikuti tanggal lahir).
+                            @else
+                                Pilih tanggal lahir Anda untuk memunculkan zodiak otomatis.
+                            @endif
+                        </div>
                     </div>
 
                     <!-- AGAMA -->
@@ -271,6 +309,94 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    function calculateZodiac(dateStr) {
+        if (!dateStr) return null;
+        const parts = dateStr.split('-');
+        if (parts.length < 3) return null;
+        const month = parseInt(parts[1], 10);
+        const day = parseInt(parts[2], 10);
+        if (!month || !day || isNaN(month) || isNaN(day)) return null;
+
+        let name = '';
+        switch (month) {
+            case 1:  name = day <= 19 ? 'Capricorn' : 'Aquarius'; break;
+            case 2:  name = day <= 18 ? 'Aquarius' : 'Pisces'; break;
+            case 3:  name = day <= 20 ? 'Pisces' : 'Aries'; break;
+            case 4:  name = day <= 19 ? 'Aries' : 'Taurus'; break;
+            case 5:  name = day <= 20 ? 'Taurus' : 'Gemini'; break;
+            case 6:  name = day <= 20 ? 'Gemini' : 'Cancer'; break;
+            case 7:  name = day <= 22 ? 'Cancer' : 'Leo'; break;
+            case 8:  name = day <= 22 ? 'Leo' : 'Virgo'; break;
+            case 9:  name = day <= 22 ? 'Virgo' : 'Libra'; break;
+            case 10: name = day <= 22 ? 'Libra' : 'Scorpio'; break;
+            case 11: name = day <= 21 ? 'Scorpio' : 'Sagittarius'; break;
+            case 12: name = day <= 21 ? 'Sagittarius' : 'Capricorn'; break;
+            default: return null;
+        }
+
+        const icons = {
+            'Aries': '♈', 'Taurus': '♉', 'Gemini': '♊', 'Cancer': '♋',
+            'Leo': '♌', 'Virgo': '♍', 'Libra': '♎', 'Scorpio': '♏',
+            'Sagittarius': '♐', 'Capricorn': '♑', 'Aquarius': '♒', 'Pisces': '♓'
+        };
+
+        return { name: name, icon: icons[name] || '✨' };
+    }
+
+    function updateZodiacDisplay(dateVal) {
+        const z = calculateZodiac(dateVal);
+        const headerBadge = document.getElementById('headerZodiacBadge');
+        const headerIcon  = document.getElementById('headerZodiacIcon');
+        const headerName  = document.getElementById('headerZodiacName');
+        
+        const fieldBadge  = document.getElementById('fieldZodiacBadge');
+        const fieldIcon   = document.getElementById('fieldZodiacIcon');
+        const fieldName   = document.getElementById('fieldZodiacName');
+
+        const readOnlyIcon = document.getElementById('readOnlyZodiacIcon');
+        const readOnlyName = document.getElementById('readOnlyZodiacName');
+        const helpText     = document.getElementById('zodiacHelpText');
+
+        if (z) {
+            if (headerBadge) {
+                headerBadge.style.display = 'inline-flex';
+                if (headerIcon) headerIcon.textContent = z.icon;
+                if (headerName) headerName.textContent = z.name;
+            }
+            if (fieldBadge) {
+                fieldBadge.style.display = 'inline-flex';
+                if (fieldIcon) fieldIcon.textContent = z.icon;
+                if (fieldName) fieldName.textContent = z.name;
+            }
+            if (readOnlyIcon) readOnlyIcon.textContent = z.icon;
+            if (readOnlyName) {
+                readOnlyName.textContent = z.name;
+                readOnlyName.className = 'badge rounded-pill bg-purple-subtle text-purple px-2.5 py-1 fw-bold fs-xs';
+            }
+            if (helpText) {
+                helpText.innerHTML = `Zodiak Anda: <strong class="text-purple">${z.icon} ${z.name}</strong> (otomatis mengikuti tanggal lahir).`;
+            }
+        } else {
+            if (headerBadge) headerBadge.style.display = 'none';
+            if (fieldBadge) fieldBadge.style.display = 'none';
+            if (readOnlyIcon) readOnlyIcon.textContent = '✨';
+            if (readOnlyName) {
+                readOnlyName.textContent = 'Belum terdeteksi';
+                readOnlyName.className = 'text-muted fs-xs';
+            }
+            if (helpText) {
+                helpText.textContent = 'Pilih tanggal lahir Anda untuk memunculkan zodiak otomatis.';
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const birthInput = document.getElementById('birthDateInput');
+        if (birthInput && birthInput.value) {
+            updateZodiacDisplay(birthInput.value);
+        }
+    });
 </script>
 @endpush
 @endsection

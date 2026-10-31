@@ -79,6 +79,11 @@
                         <div class="fw-semibold">
                             {{ $murid->birth_place ?? '-' }},
                             {{ $murid->birth_date ? $murid->birth_date->isoFormat('D MMMM Y') : '-' }}
+                            @if($murid->zodiac)
+                                <span class="badge rounded-pill bg-purple-subtle text-purple ms-1.5 fs-xxs">
+                                    {{ $murid->zodiac_icon }} {{ $murid->zodiac }}
+                                </span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-6">

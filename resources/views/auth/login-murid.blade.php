@@ -125,7 +125,7 @@
             <div class="mt-4 pt-3.5 border-top text-center">
                 <span class="fs-xs text-muted">Belum punya akun murid?</span>
                 <a href="{{ route('register.murid') }}" class="fs-xs fw-bold text-teal text-decoration-none ms-1 link-register">
-                    Daftar Akun Baru
+                    Daftar Akun
                 </a>
             </div>
 

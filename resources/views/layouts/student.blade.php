@@ -398,9 +398,9 @@
                     <li><a class="dropdown-item py-2" href="{{ route('murid.profile.index') }}" style="font-size:.83rem;"><i class="bi bi-person-gear me-2 text-primary"></i>Profil Saya</a></li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.konseling.pribadi') }}" style="font-size:.83rem;"><i class="bi bi-person-heart me-2 text-primary"></i>Konseling Pribadi</a></li>
                     @if(app_setting('ims_enabled', '1') === '1')
-                        <li><a class="dropdown-item py-2" href="{{ route('murid.ims.index') }}" style="font-size:.83rem;"><i class="bi bi-clipboard2-check me-2" style="color:#7c3aed;"></i>Asesmen Masalah (IMS)</a></li>
+                        <li><a class="dropdown-item py-2" href="{{ route('murid.ims.index') }}" style="font-size:.83rem;"><i class="bi bi-clipboard2-check me-2" style="color:#7c3aed;"></i>Asesmen</a></li>
                     @else
-                        <li><a class="dropdown-item py-2 text-muted" href="javascript:void(0)" onclick="alert('Layanan Asesmen IMS sedang dinonaktifkan sementara oleh Guru BK.')" style="font-size:.83rem;opacity:0.65;cursor:not-allowed;" title="Asesmen dinonaktifkan"><i class="bi bi-lock me-2 text-secondary"></i>Asesmen Masalah (IMS) <span class="badge bg-secondary ms-1" style="font-size:.65rem;">Terkunci</span></a></li>
+                        <li><a class="dropdown-item py-2 text-muted" href="javascript:void(0)" onclick="alert('Layanan Asesmen sedang dinonaktifkan sementara oleh Guru BK.')" style="font-size:.83rem;opacity:0.65;cursor:not-allowed;" title="Asesmen dinonaktifkan"><i class="bi bi-lock me-2 text-secondary"></i>Asesmen <span class="badge bg-secondary ms-1" style="font-size:.65rem;">Terkunci</span></a></li>
                     @endif
                     <li><a class="dropdown-item py-2" href="{{ route('murid.konseling.index') }}" style="font-size:.83rem;"><i class="bi bi-chat-heart me-2" style="color:#e11d48;"></i>Riwayat Konseling</a></li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.pengaduan.index') }}" style="font-size:.83rem;"><i class="bi bi-shield-fill-exclamation me-2 text-danger"></i>Pelayanan Darurat</a></li>
@@ -456,11 +456,11 @@
                 <div class="sk-nav-heading mt-3">Asesmen Siswa</div>
                 @if(app_setting('ims_enabled', '1') === '1')
                     <a href="{{ route('murid.ims.index') }}" class="sk-nav-item {{ request()->routeIs('murid.ims.*') ? 'active' : '' }}">
-                        <i class="bi bi-clipboard2-check"></i><span>Asesmen Masalah (IMS)</span>
+                        <i class="bi bi-clipboard2-check"></i><span>Asesmen</span>
                     </a>
                 @else
-                    <a href="javascript:void(0)" onclick="alert('Layanan Asesmen Masalah (IMS) saat ini sedang dinonaktifkan oleh pihak sekolah / Guru BK.')" class="sk-nav-item" style="opacity:0.6;cursor:not-allowed;" title="Layanan dinonaktifkan oleh Guru BK">
-                        <i class="bi bi-lock"></i><span>Asesmen Masalah (IMS)</span>
+                    <a href="javascript:void(0)" onclick="alert('Layanan Asesmen saat ini sedang dinonaktifkan oleh pihak sekolah / Guru BK.')" class="sk-nav-item" style="opacity:0.6;cursor:not-allowed;" title="Layanan dinonaktifkan oleh Guru BK">
+                        <i class="bi bi-lock"></i><span>Asesmen</span>
                         <span class="badge bg-secondary ms-auto" style="font-size:.65rem;font-weight:600;">Terkunci</span>
                     </a>
                 @endif

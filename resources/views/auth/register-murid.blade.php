@@ -303,7 +303,7 @@
                 <!-- Submit Button -->
                 <div class="d-grid mb-3">
                     <button type="submit" class="btn btn-mint py-2.5 rounded-pill fw-bold shadow-sm" style="font-size: 0.95rem; letter-spacing: 0.02em;">
-                        <i class="bi bi-person-plus-fill me-1.5"></i> DAFTAR AKUN
+                        <i class="bi bi-person-plus-fill me-1.5"></i> Daftar Akun
                     </button>
                 </div>
             </form>

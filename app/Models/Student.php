@@ -126,6 +126,58 @@ class Student extends Model
     }
 
     /**
+     * Hitung Zodiak berdasarkan tanggal lahir
+     */
+    public function getZodiacAttribute(): ?string
+    {
+        if (!$this->birth_date) {
+            return null;
+        }
+
+        $month = (int) $this->birth_date->format('n');
+        $day   = (int) $this->birth_date->format('j');
+
+        return match ($month) {
+            1  => ($day <= 19) ? 'Capricorn' : 'Aquarius',
+            2  => ($day <= 18) ? 'Aquarius' : 'Pisces',
+            3  => ($day <= 20) ? 'Pisces' : 'Aries',
+            4  => ($day <= 19) ? 'Aries' : 'Taurus',
+            5  => ($day <= 20) ? 'Taurus' : 'Gemini',
+            6  => ($day <= 20) ? 'Gemini' : 'Cancer',
+            7  => ($day <= 22) ? 'Cancer' : 'Leo',
+            8  => ($day <= 22) ? 'Leo' : 'Virgo',
+            9  => ($day <= 22) ? 'Virgo' : 'Libra',
+            10 => ($day <= 22) ? 'Libra' : 'Scorpio',
+            11 => ($day <= 21) ? 'Scorpio' : 'Sagittarius',
+            12 => ($day <= 21) ? 'Sagittarius' : 'Capricorn',
+            default => null,
+        };
+    }
+
+    /**
+     * Icon / Simbol Zodiak
+     */
+    public function getZodiacIconAttribute(): ?string
+    {
+        $zodiac = $this->zodiac;
+        return match ($zodiac) {
+            'Aries' => '♈',
+            'Taurus' => '♉',
+            'Gemini' => '♊',
+            'Cancer' => '♋',
+            'Leo' => '♌',
+            'Virgo' => '♍',
+            'Libra' => '♎',
+            'Scorpio' => '♏',
+            'Sagittarius' => '♐',
+            'Capricorn' => '♑',
+            'Aquarius' => '♒',
+            'Pisces' => '♓',
+            default => '✨',
+        };
+    }
+
+    /**
      * Scope untuk menyaring murid:
      * Seluruh akun Guru BK dan Admin dapat mengakses semua murid
      */
