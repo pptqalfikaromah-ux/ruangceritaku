@@ -413,24 +413,29 @@
         </table>
 
         <!-- TANDA TANGAN (KIRI KEPALA SEKOLAH, KANAN GURU BK) -->
-        <table class="signature-table">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 10.5pt;">
             <tr>
-                <td style="width: 50%;"></td>
-                <td style="width: 50%;">
-                    {{ app_setting('school_city', 'Sumpiuh') }}, {{ \Carbon\Carbon::parse($execDate)->translatedFormat('d F Y') }}
+                <td style="width: 50%; vertical-align: top; text-align: center;">
+                    Mengetahui,<br>
+                    Kepala {{ app_setting('school_name', 'Madrasah / Sekolah') }}
+                </td>
+                <td style="width: 50%; vertical-align: top; text-align: center;">
+                    {{ app_setting('school_city', 'Sumpiuh') }}, {{ \Carbon\Carbon::parse($execDate)->translatedFormat('d F Y') }}<br>
+                    Guru Bimbingan Konseling
                 </td>
             </tr>
             <tr>
-                <td>
-                    Mengetahui,<br>
-                    Kepala {{ app_setting('school_name', 'Madrasah / Sekolah') }}<br><br><br><br>
+                <td style="height: 65px;"></td>
+                <td style="height: 65px;"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; text-align: center;">
                     <strong><u>{{ app_setting('headmaster_name', "H. Ahmad Bachjatul 'Ulum, S.Ag., M.Pd.I.") }}</u></strong><br>
-                    NIP. {{ app_setting('headmaster_nip', '197508142005011004') }}
+                    <span>NIP. {{ app_setting('headmaster_nip', '197508142005011004') }}</span>
                 </td>
-                <td>
-                    Guru Bimbingan Konseling<br><br><br><br><br>
+                <td style="vertical-align: top; text-align: center;">
                     <strong><u>{{ ($counselor ?? null)?->user?->name ?? (($counselor ?? null)?->name ?? (auth()->user()?->name ?? 'Guru Bimbingan Konseling')) }}</u></strong><br>
-                    NIP. {{ ($counselor ?? null)?->nip ?? (($counselor ?? null)?->nuptk ?? '-') }}
+                    <span>NIP. {{ ($counselor ?? null)?->nip ?? (($counselor ?? null)?->nuptk ?? '-') }}</span>
                 </td>
             </tr>
         </table>

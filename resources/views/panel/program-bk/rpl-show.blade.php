@@ -134,18 +134,32 @@
         </div>
 
         <!-- Tanda Tangan Pengesahan -->
-        <div class="row pt-4 text-center fs-sm">
-            <div class="col-6">
-                <div class="text-muted mb-5">Mengetahui,<br>Kepala Madrasah / Sekolah</div>
-                <div class="fw-bold text-dark text-decoration-underline">(...................................................)</div>
-                <div class="text-muted fs-xs">NIP. ...................................................</div>
-            </div>
-            <div class="col-6">
-                <div class="text-muted mb-5">Guru Bimbingan dan Konseling,</div>
-                <div class="fw-bold text-dark text-decoration-underline">{{ $rpl->counselor?->name ?? '(...................................................)' }}</div>
-                <div class="text-muted fs-xs">NIP. {{ $rpl->counselor?->nip ?? '...................................................' }}</div>
-            </div>
-        </div>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 10pt;">
+            <tr>
+                <td style="width: 50%; vertical-align: top; text-align: center;">
+                    Mengetahui,<br>
+                    Kepala {{ app_setting('school_name', 'Madrasah / Sekolah') }}
+                </td>
+                <td style="width: 50%; vertical-align: top; text-align: center;">
+                    {{ app_setting('school_city', 'Sumpiuh') }}, {{ now()->translatedFormat('d F Y') }}<br>
+                    Guru Bimbingan dan Konseling
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 65px;"></td>
+                <td style="height: 65px;"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; text-align: center;">
+                    <strong><u>{{ app_setting('headmaster_name', '(...................................................)') }}</u></strong><br>
+                    <span class="text-muted fs-xs">NIP. {{ app_setting('headmaster_nip', '...................................................') }}</span>
+                </td>
+                <td style="vertical-align: top; text-align: center;">
+                    <strong><u>{{ $rpl->counselor?->name ?? '(...................................................)' }}</u></strong><br>
+                    <span class="text-muted fs-xs">NIP. {{ $rpl->counselor?->nip ?? '...................................................' }}</span>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 @endsection

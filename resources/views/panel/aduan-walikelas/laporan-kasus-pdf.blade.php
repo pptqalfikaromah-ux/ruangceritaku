@@ -302,24 +302,43 @@
         </table>
 
         <!-- TANDA TANGAN (3 PIHAK: WALI KELAS, GURU BK, KEPALA MADRASAH) -->
-        <table class="signature-table">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 10pt;">
             <tr>
-                <td style="width: 33%;">
-                    Pelapor (Wali Kelas),<br><br><br><br><br>
-                    <strong><u>{{ $teacher->name ?? ($complaint->teacher?->name ?? 'Wali Kelas') }}</u></strong><br>
-                    NIP. {{ $teacher->nip_nuptk ?? '-' }}
+                <td style="width: 33%; vertical-align: top; text-align: center;"></td>
+                <td style="width: 34%; vertical-align: top; text-align: center;"></td>
+                <td style="width: 33%; vertical-align: top; text-align: center;">
+                    {{ app_setting('school_city', 'Sumpiuh') }}, {{ now()->translatedFormat('d F Y') }}
                 </td>
-                <td style="width: 34%;">
-                    Guru Bimbingan Konseling,<br><br><br><br><br>
-                    <strong><u>{{ $counselor->name ?? (auth()->user()->name ?? 'Guru BK') }}</u></strong><br>
-                    NIP. {{ $counselor->nip_nuptk ?? '-' }}
+            </tr>
+            <tr>
+                <td style="width: 33%; vertical-align: top; text-align: center;">
+                    Pelapor (Wali Kelas),
                 </td>
-                <td style="width: 33%;">
-                    {{ app_setting('school_city', 'Sumpiuh') }}, {{ now()->translatedFormat('d F Y') }}<br>
+                <td style="width: 34%; vertical-align: top; text-align: center;">
+                    Guru Bimbingan Konseling,
+                </td>
+                <td style="width: 33%; vertical-align: top; text-align: center;">
                     Mengetahui,<br>
-                    Kepala {{ app_setting('school_name', 'Madrasah') }}<br><br><br><br>
+                    Kepala {{ app_setting('school_name', 'Madrasah') }}
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 60px;"></td>
+                <td style="height: 60px;"></td>
+                <td style="height: 60px;"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; text-align: center;">
+                    <strong><u>{{ $teacher->name ?? ($complaint->teacher?->name ?? 'Wali Kelas') }}</u></strong><br>
+                    <span>NIP. {{ $teacher->nip_nuptk ?? '-' }}</span>
+                </td>
+                <td style="vertical-align: top; text-align: center;">
+                    <strong><u>{{ $counselor->name ?? (auth()->user()->name ?? 'Guru BK') }}</u></strong><br>
+                    <span>NIP. {{ $counselor->nip_nuptk ?? '-' }}</span>
+                </td>
+                <td style="vertical-align: top; text-align: center;">
                     <strong><u>{{ app_setting('headmaster_name', "H. Ahmad Bachjatul 'Ulum, S.Ag., M.Pd.I.") }}</u></strong><br>
-                    NIP. {{ app_setting('headmaster_nip', '197508142005011004') }}
+                    <span>NIP. {{ app_setting('headmaster_nip', '197508142005011004') }}</span>
                 </td>
             </tr>
         </table>

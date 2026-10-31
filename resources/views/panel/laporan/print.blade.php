@@ -199,18 +199,32 @@
         </div>
 
         <!-- Kolom Pengesahan Tanda Tangan -->
-        <div class="row pt-3 text-center fs-xs">
-            <div class="col-6">
-                <div class="text-muted mb-5">Mengetahui,<br>Kepala {{ app_setting('school_name', 'Madrasah / Sekolah') }}</div>
-                <div class="fw-bold text-dark text-decoration-underline">{{ app_setting('headmaster_name', '( .................................................... )') }}</div>
-                <div class="text-muted">NIP. {{ app_setting('headmaster_nip', '....................................................') }}</div>
-            </div>
-            <div class="col-6">
-                <div class="text-muted mb-5">{{ date('d F Y') }}<br>Koordinator Guru BK / Konselor</div>
-                <div class="fw-bold text-dark text-decoration-underline">( .................................................... )</div>
-                <div class="text-muted">NIP. ....................................................</div>
-            </div>
-        </div>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 11pt;">
+            <tr>
+                <td style="width: 50%; vertical-align: top; text-align: center;">
+                    Mengetahui,<br>
+                    Kepala {{ app_setting('school_name', 'Madrasah / Sekolah') }}
+                </td>
+                <td style="width: 50%; vertical-align: top; text-align: center;">
+                    {{ app_setting('school_city', 'Sumpiuh') }}, {{ now()->translatedFormat('d F Y') }}<br>
+                    Koordinator Guru BK / Konselor
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 65px;"></td>
+                <td style="height: 65px;"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; text-align: center;">
+                    <strong><u>{{ app_setting('headmaster_name', '( .................................................... )') }}</u></strong><br>
+                    <span>NIP. {{ app_setting('headmaster_nip', '....................................................') }}</span>
+                </td>
+                <td style="vertical-align: top; text-align: center;">
+                    <strong><u>( .................................................... )</u></strong><br>
+                    <span>NIP. ....................................................</span>
+                </td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>

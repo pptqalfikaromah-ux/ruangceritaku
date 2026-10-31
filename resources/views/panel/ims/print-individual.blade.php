@@ -341,19 +341,29 @@
         </div>
 
         <!-- Kolom Tanda Tangan -->
-        <table class="signature-box">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 25px; font-size: 10pt;">
             <tr>
-                <td style="text-align: center; width: 50%;">
+                <td style="width: 50%; vertical-align: top; text-align: center;">
                     Mengetahui,<br>
-                    Kepala {{ app_setting('school_name', "Madrasah / Sekolah") }}<br><br><br><br>
-                    <strong><u>{{ app_setting('headmaster_name', "H. Ahmad Bachjatul 'Ulum, S.Ag., M.Pd.I.") }}</u></strong><br>
-                    NIP. {{ app_setting('headmaster_nip', '197508142005011004') }}
+                    Kepala {{ app_setting('school_name', "Madrasah / Sekolah") }}
                 </td>
-                <td style="text-align: center; width: 50%;">
-                    Sumpiuh, {{ $assessment->submitted_at ? $assessment->submitted_at->translatedFormat('d F Y') : now()->translatedFormat('d F Y') }}<br>
-                    Guru Bimbingan dan Konseling / Konselor<br><br><br><br>
+                <td style="width: 50%; vertical-align: top; text-align: center;">
+                    {{ app_setting('school_city', 'Sumpiuh') }}, {{ $assessment->submitted_at ? $assessment->submitted_at->translatedFormat('d F Y') : now()->translatedFormat('d F Y') }}<br>
+                    Guru Bimbingan dan Konseling / Konselor
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 60px;"></td>
+                <td style="height: 60px;"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; text-align: center;">
+                    <strong><u>{{ app_setting('headmaster_name', "H. Ahmad Bachjatul 'Ulum, S.Ag., M.Pd.I.") }}</u></strong><br>
+                    <span>NIP. {{ app_setting('headmaster_nip', '197508142005011004') }}</span>
+                </td>
+                <td style="vertical-align: top; text-align: center;">
                     <strong><u>{{ $counselor->name ?? auth()->user()->name }}</u></strong><br>
-                    NIP. {{ $counselor->nip ?? ($counselor->nuptk ?? '-') }}
+                    <span>NIP. {{ $counselor->nip ?? ($counselor->nuptk ?? '-') }}</span>
                 </td>
             </tr>
         </table>
