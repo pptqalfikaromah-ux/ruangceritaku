@@ -256,8 +256,8 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
     Route::post('/ims/submit', [StudentImsController::class, 'submit'])->name('ims.submit');
     Route::get('/ims/hasil-akhir', [StudentImsController::class, 'result'])->name('ims.result'); // Halaman Hasil Akhir Asesmen Murid
     Route::get('/ims/cetak-hasil', [StudentImsController::class, 'printResult'])->name('ims.print'); // Cetak Dokumen AUM Siswa
-    Route::get('/ims/jadwal-konseling', [StudentImsController::class, 'result'])->name('ims.counseling.create');
-    Route::post('/ims/jadwal-konseling', [StudentImsController::class, 'result'])->name('ims.counseling.store');
+    Route::get('/ims/jadwal-konseling', [StudentImsController::class, 'scheduleCounselingForm'])->name('ims.counseling.create');
+    Route::post('/ims/jadwal-konseling', [StudentImsController::class, 'storeCounselingFromIms'])->name('ims.counseling.store');
 
     // 3. Jalur Pengaduan Aman & Perlindungan Diri
     Route::get('/pengaduan', [StudentComplaintController::class, 'index'])->name('pengaduan.index');

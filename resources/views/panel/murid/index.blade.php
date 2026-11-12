@@ -4,7 +4,7 @@
 
 @section('content')
 <x-page-header title="Data Murid"
-               subtitle="Daftar peserta didik dan riwayat rombel. Guru BK hanya dapat mengakses murid binaannya.">
+               subtitle="Daftar peserta didik dan riwayat rombel kelas.">
     <x-slot:actions>
         @if(auth()->user()->isAdmin())
             <div class="d-flex flex-wrap gap-1.5">

@@ -1,0 +1,1082 @@
+[
+    {
+        "number": 1,
+        "layanan": "ORIENTASI",
+        "bidang": "PRIBADI",
+        "statement": "Ingin mengenal lebih dalam tentang fasilitas kesehatan yang disediakan sekolah."
+    },
+    {
+        "number": 2,
+        "layanan": "ORIENTASI",
+        "bidang": "PRIBADI",
+        "statement": "Sukar menyesuaikan diri dengan keadaan sekolah."
+    },
+    {
+        "number": 3,
+        "layanan": "ORIENTASI",
+        "bidang": "PRIBADI",
+        "statement": "Ingin mengenali lebih dalam pada sarana dan kegiatan ibadah yang ada di sekolah."
+    },
+    {
+        "number": 4,
+        "layanan": "ORIENTASI",
+        "bidang": "PRIBADI",
+        "statement": "Kurang mengenal  jenis kegiatan sekolah yang bisa digunakan untuk mengisi waktu senggang."
+    },
+    {
+        "number": 5,
+        "layanan": "ORIENTASI",
+        "bidang": "PRIBADI",
+        "statement": "Kurang mengenal tentang  koperasi dan kantin sekolah."
+    },
+    {
+        "number": 6,
+        "layanan": "ORIENTASI",
+        "bidang": "SOSIAL",
+        "statement": "Ingin mengenal lebih dalam dengan teman dalam satu kelas."
+    },
+    {
+        "number": 7,
+        "layanan": "ORIENTASI",
+        "bidang": "SOSIAL",
+        "statement": "Ingin mengetahui tentang kegiatan solidaritas yang menjadi program sekolah."
+    },
+    {
+        "number": 8,
+        "layanan": "ORIENTASI",
+        "bidang": "SOSIAL",
+        "statement": "Kurang mengetahui organisasi yang ada di sekolah."
+    },
+    {
+        "number": 9,
+        "layanan": "ORIENTASI",
+        "bidang": "SOSIAL",
+        "statement": "Ingin  mengenal lebih dalam dengan semua guru dan karyawan di sekolah."
+    },
+    {
+        "number": 10,
+        "layanan": "ORIENTASI",
+        "bidang": "SOSIAL",
+        "statement": "Ingin mengenal dengan keanggotaan komite sekolah."
+    },
+    {
+        "number": 11,
+        "layanan": "ORIENTASI",
+        "bidang": "BELAJAR",
+        "statement": "Ingin mengenal tentang struktur kurikulum yang berlaku saat ini."
+    },
+    {
+        "number": 12,
+        "layanan": "ORIENTASI",
+        "bidang": "BELAJAR",
+        "statement": "Ingin mengenal program yang diselenggarakan sekolah dalam meningkatkan kemampuan berbahasa asing."
+    },
+    {
+        "number": 13,
+        "layanan": "ORIENTASI",
+        "bidang": "BELAJAR",
+        "statement": "Ingin mengetahui sarana multimedia yang ada di sekolah."
+    },
+    {
+        "number": 14,
+        "layanan": "ORIENTASI",
+        "bidang": "BELAJAR",
+        "statement": "Ingin mengenal program sekolah berkaitan dengan kemampuan TIK siswa."
+    },
+    {
+        "number": 15,
+        "layanan": "ORIENTASI",
+        "bidang": "BELAJAR",
+        "statement": "Kurang mengenal  semua fasilitas yang mendukung proses belajar di sekolah."
+    },
+    {
+        "number": 16,
+        "layanan": "ORIENTASI",
+        "bidang": "KARIR",
+        "statement": "Membutuhkan pengenalan ekstrakurikuler yang menunjang belajar saya."
+    },
+    {
+        "number": 17,
+        "layanan": "ORIENTASI",
+        "bidang": "KARIR",
+        "statement": "Ingin mengenal pekerjaan yang berkaitan dengan kesehatan yang mendukung cita-cita saya."
+    },
+    {
+        "number": 18,
+        "layanan": "ORIENTASI",
+        "bidang": "KARIR",
+        "statement": "Ingin mengenal tentang jenis pekerjaan jasa."
+    },
+    {
+        "number": 19,
+        "layanan": "ORIENTASI",
+        "bidang": "KARIR",
+        "statement": "Ingin mengenal tentang sistem  belajar di perguruan tinggi."
+    },
+    {
+        "number": 20,
+        "layanan": "ORIENTASI",
+        "bidang": "KARIR",
+        "statement": "Ingin  mengetahui syarat memasuki pada studi lanjut."
+    },
+    {
+        "number": 21,
+        "layanan": "INFORMASI",
+        "bidang": "PRIBADI",
+        "statement": "Membutuhkan informasi tentang kesehatan reproduksi remaja."
+    },
+    {
+        "number": 22,
+        "layanan": "INFORMASI",
+        "bidang": "PRIBADI",
+        "statement": "Ingin mengetahui tentang obat-obatan terlarang dan dampaknya."
+    },
+    {
+        "number": 23,
+        "layanan": "INFORMASI",
+        "bidang": "PRIBADI",
+        "statement": "Membutuhkan informasi tentang  kultur sekolah."
+    },
+    {
+        "number": 24,
+        "layanan": "INFORMASI",
+        "bidang": "PRIBADI",
+        "statement": "Kekurangan informasi tentang cara mengisi waktu luang."
+    },
+    {
+        "number": 25,
+        "layanan": "INFORMASI",
+        "bidang": "PRIBADI",
+        "statement": "Membutuhkan informasi pekerjaan yang bisa dilakukan sambil belajar."
+    },
+    {
+        "number": 26,
+        "layanan": "INFORMASI",
+        "bidang": "SOSIAL",
+        "statement": "Membutuhkan informasi tentang cara berkomunikasi yang baik."
+    },
+    {
+        "number": 27,
+        "layanan": "INFORMASI",
+        "bidang": "SOSIAL",
+        "statement": "Ingin mengetahui cara membina hubungan baik dengan teman lawan jenis."
+    },
+    {
+        "number": 28,
+        "layanan": "INFORMASI",
+        "bidang": "SOSIAL",
+        "statement": "Membutuhkan keterangan tentang persoalan seks, pacaran, dan perkawinan."
+    },
+    {
+        "number": 29,
+        "layanan": "INFORMASI",
+        "bidang": "SOSIAL",
+        "statement": "Membutuhkan informasi tentang bagaimana melepaskan diri dari lingkungan pertemanan yang kurang mendukung cita-cita."
+    },
+    {
+        "number": 30,
+        "layanan": "INFORMASI",
+        "bidang": "SOSIAL",
+        "statement": "Ingin mengetahui tentang sikap yang harus dilakukan saat berbeda pendapat dengan orang tua."
+    },
+    {
+        "number": 31,
+        "layanan": "INFORMASI",
+        "bidang": "BELAJAR",
+        "statement": "Kekurangan informasi tentang kesulitan menumbuhkan semangat belajar yang menurun."
+    },
+    {
+        "number": 32,
+        "layanan": "INFORMASI",
+        "bidang": "BELAJAR",
+        "statement": "Membutuhkan informasi tentang cara belajar yang efektif dan efisien."
+    },
+    {
+        "number": 33,
+        "layanan": "INFORMASI",
+        "bidang": "BELAJAR",
+        "statement": "Kurang mengetahui cara memanfaatkan TIK dalam belajar."
+    },
+    {
+        "number": 34,
+        "layanan": "INFORMASI",
+        "bidang": "BELAJAR",
+        "statement": "Membutuhkan informasi tentang cara mempersiapkan diri menghadapi tes \/ ujian."
+    },
+    {
+        "number": 35,
+        "layanan": "INFORMASI",
+        "bidang": "BELAJAR",
+        "statement": "Membutuhkan informasi cara belajar kelompok."
+    },
+    {
+        "number": 36,
+        "layanan": "INFORMASI",
+        "bidang": "KARIR",
+        "statement": "Kekurangan informasi tentang bagaimana memilih kegiatan ekstra kurikuler yang cocok."
+    },
+    {
+        "number": 37,
+        "layanan": "INFORMASI",
+        "bidang": "KARIR",
+        "statement": "Membutuhkan informasi tentang berbagai jenis pekerjaan yang memiliki prospek bagus di masa depan."
+    },
+    {
+        "number": 38,
+        "layanan": "INFORMASI",
+        "bidang": "KARIR",
+        "statement": "Ingin mengetahui tentang cara menyusun persyaratan melamar pekerjaan."
+    },
+    {
+        "number": 39,
+        "layanan": "INFORMASI",
+        "bidang": "KARIR",
+        "statement": "Kekurangan informasi tentang pendidikan lanjutan yang dapat dimasuki setamat sekolah ini."
+    },
+    {
+        "number": 40,
+        "layanan": "INFORMASI",
+        "bidang": "KARIR",
+        "statement": "Membutuhkan informasi tentang strategi memasuki pendidikan lanjutan."
+    },
+    {
+        "number": 41,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "PRIBADI",
+        "statement": "Memiliki kelemahan pada  pendengaran \/ penglihatan,  untuk itu ingin pindah duduk di depan."
+    },
+    {
+        "number": 42,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "PRIBADI",
+        "statement": "Kurang senang  dengan kondisi kelas."
+    },
+    {
+        "number": 43,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "PRIBADI",
+        "statement": "Tidak mempunyai kawan akrab untuk bersama dalam beribadah."
+    },
+    {
+        "number": 44,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "PRIBADI",
+        "statement": "Tidak mempunyai kawan akrab untuk bersama-sama mengisi waktu senggang."
+    },
+    {
+        "number": 45,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "PRIBADI",
+        "statement": "Bingung memilih antara melanjutkan atau tidak,  karena keadaan ekonomi keluarga yang sedang menurun."
+    },
+    {
+        "number": 46,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "SOSIAL",
+        "statement": "Kurang senang dengan teman sebangku."
+    },
+    {
+        "number": 47,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "SOSIAL",
+        "statement": "Tidak lincah dan kurang mengetahui tata krama pergaulan."
+    },
+    {
+        "number": 48,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "SOSIAL",
+        "statement": "Bingung memilih di antara dua orang yang sama-sama disenangi."
+    },
+    {
+        "number": 49,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "SOSIAL",
+        "statement": "Tidak betah dengan keadaan lingkungan rumah yang ramai."
+    },
+    {
+        "number": 50,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "SOSIAL",
+        "statement": "Sulit memilih antara ikut ayah atau ibu yang sekarang sudah berpisah."
+    },
+    {
+        "number": 51,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "BELAJAR",
+        "statement": "Kurang meminati pelajaran atau program jurusan yang dimasuki."
+    },
+    {
+        "number": 52,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "BELAJAR",
+        "statement": "Sulit menentukan teknik belajar yang sesuai dengan diri saya."
+    },
+    {
+        "number": 53,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "BELAJAR",
+        "statement": "Tidak nyaman belajar di rumah yang kondisinya sempit."
+    },
+    {
+        "number": 54,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "BELAJAR",
+        "statement": "Kelompok belajar tidak cocok."
+    },
+    {
+        "number": 55,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "BELAJAR",
+        "statement": "Tidak tenang bila duduk di depan, untuk itu ingin pindah ke belakang."
+    },
+    {
+        "number": 56,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "KARIR",
+        "statement": "Ingin mengikuti kegiatan pelatihan atau kursus tertentu yang benar-benar menunjang proses mencari dan melamar pekerjaan setamat pendidikan."
+    },
+    {
+        "number": 57,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "KARIR",
+        "statement": "Bingung memilih lembaga kursus belajar yang sesuai."
+    },
+    {
+        "number": 58,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "KARIR",
+        "statement": "Wajib mengikuti kegiatan ekstra kurikuler yang tidak saya sukai."
+    },
+    {
+        "number": 59,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "KARIR",
+        "statement": "Pesimis masuk di sekolah karena masa depan tidak jelas."
+    },
+    {
+        "number": 60,
+        "layanan": "PENEMPATAN DAN PENYALURAN",
+        "bidang": "KARIR",
+        "statement": "Belum memiliki rencana yang pasti untuk pemilihan pendidikan lanjutan."
+    },
+    {
+        "number": 61,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "PRIBADI",
+        "statement": "Kurang percaya diri dengan bentuk tubuh yang saya miliki."
+    },
+    {
+        "number": 62,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "PRIBADI",
+        "statement": "Kurang  mampu mengendalikan diri, berpikir dan bersikap positif."
+    },
+    {
+        "number": 63,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "PRIBADI",
+        "statement": "Ingin bisa meningkatkan ibadah keagamaan."
+    },
+    {
+        "number": 64,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "PRIBADI",
+        "statement": "Kurang bisa memanfaatkan waktu senggang."
+    },
+    {
+        "number": 65,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "PRIBADI",
+        "statement": "Tidak mampu mengelola uang saku dengan baik."
+    },
+    {
+        "number": 66,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "SOSIAL",
+        "statement": "Sulit  mematuhi tata tertib sekolah."
+    },
+    {
+        "number": 67,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "SOSIAL",
+        "statement": "Sulit  mendengarkan dan memahami pendapat orang lain."
+    },
+    {
+        "number": 68,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "SOSIAL",
+        "statement": "Kesulitan bila berbicara dengan lawan jenis."
+    },
+    {
+        "number": 69,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "SOSIAL",
+        "statement": "Tidak bisa melihat kebaikan orang lain dan menirunya."
+    },
+    {
+        "number": 70,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "SOSIAL",
+        "statement": "Sulit  memelihara pakaian dan peralatan rumah tangga yang dimiliki."
+    },
+    {
+        "number": 71,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "BELAJAR",
+        "statement": "Sulit  menyusun jadwal belajar di rumah dan di sekolah."
+    },
+    {
+        "number": 72,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "BELAJAR",
+        "statement": "Sering kali tidak siap menghadapi ujian."
+    },
+    {
+        "number": 73,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "BELAJAR",
+        "statement": "Sulit  membuat laporan kegiatan \/ tugas pelajaran."
+    },
+    {
+        "number": 74,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "BELAJAR",
+        "statement": "Ingin  menghilangkan rasa takut saat mengikuti pelajaran."
+    },
+    {
+        "number": 75,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "BELAJAR",
+        "statement": "Sulit  bertanya dan menjawab di dalam kelas."
+    },
+    {
+        "number": 76,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "KARIR",
+        "statement": "Banyak pamflet sekolah lanjutan yang saya baca, tetapi belum satupun yang menarik perhatian dan minat saya."
+    },
+    {
+        "number": 77,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "KARIR",
+        "statement": "Ingin  menyalurkan bakat yang mengarah karier tertentu."
+    },
+    {
+        "number": 78,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "KARIR",
+        "statement": "Mengalami kesulitan menyalurkan hobi karena keterbatasan fisik."
+    },
+    {
+        "number": 79,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "KARIR",
+        "statement": "Saya memiliki kebiasaan-kebiasaan kurang baik yang menghambat dalam menyalurkan bakat."
+    },
+    {
+        "number": 80,
+        "layanan": "PENGUASAAN KONTEN",
+        "bidang": "KARIR",
+        "statement": "Tidak memiliki kemampuan mengirim pendaftaran pendidikan lanjutan secara online."
+    },
+    {
+        "number": 81,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "PRIBADI",
+        "statement": "Saya  malu dan kurang terbuka dalam membicarakan masalah seks, pacar dan jodoh."
+    },
+    {
+        "number": 82,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "PRIBADI",
+        "statement": "Saya selalu khawatir tidak mendapatkan pacar atau jodoh yang baik\/cocok."
+    },
+    {
+        "number": 83,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "PRIBADI",
+        "statement": "Saya mengalami masalah setiap hendak pergi ke tempat peribadatan."
+    },
+    {
+        "number": 84,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "PRIBADI",
+        "statement": "Saya merasa bingung akan melakukan kegiatan apa, sepulang sekolah atau saat libur sekolah."
+    },
+    {
+        "number": 85,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "PRIBADI",
+        "statement": "Saya mengalami kesulitan masalah keuangan keluarga."
+    },
+    {
+        "number": 86,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "SOSIAL",
+        "statement": "Merasa diperhatikan, dibicarakan atau diperolokkan orang lain."
+    },
+    {
+        "number": 87,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "SOSIAL",
+        "statement": "Cinta saya tidak ditanggapi oleh orang yang saya cintai."
+    },
+    {
+        "number": 88,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "SOSIAL",
+        "statement": "Bingung ingin memutus hubungan dengan pacar yang sekarang tidak ada kecocokan."
+    },
+    {
+        "number": 89,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "SOSIAL",
+        "statement": "Minder dengan teman di kelas."
+    },
+    {
+        "number": 90,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "SOSIAL",
+        "statement": "Orang tua tidak menghendaki saya sekolah di sekolah ini."
+    },
+    {
+        "number": 91,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "BELAJAR",
+        "statement": "Takut bertanya \/ menjawab di kelas."
+    },
+    {
+        "number": 92,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "BELAJAR",
+        "statement": "Setiap belajar sulit  masuk \/ memahami."
+    },
+    {
+        "number": 93,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "BELAJAR",
+        "statement": "Tidak semangat belajar karena fasilitas belajar kurang memadai."
+    },
+    {
+        "number": 94,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "BELAJAR",
+        "statement": "Merasa sebagai anak yang paling bodoh di kelas."
+    },
+    {
+        "number": 95,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "BELAJAR",
+        "statement": "Orang tua kurang peduli terhadap kegiatan belajar saya."
+    },
+    {
+        "number": 96,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "KARIR",
+        "statement": "Saya khawatir akan pekerjaan yang dijabat nantinya tidak memberikan penghasilan yang mencukupi."
+    },
+    {
+        "number": 97,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "KARIR",
+        "statement": "Bingung belum memiliki cita-cita."
+    },
+    {
+        "number": 98,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "KARIR",
+        "statement": "Ragu pada tercapainya cita-cita karena orang tua tidak sejalan."
+    },
+    {
+        "number": 99,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "KARIR",
+        "statement": "Pesimis untuk melanjutkan pendidikan karena biaya sekolah mahal."
+    },
+    {
+        "number": 100,
+        "layanan": "KONSELING PERORANGAN",
+        "bidang": "KARIR",
+        "statement": "Merasa tidak memiliki kemampuan kecerdasan yang cukup untuk melanjutkan pendidikan."
+    },
+    {
+        "number": 101,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "PRIBADI",
+        "statement": "Ingin mengetahui  bahaya rokok, miras dan narkoba."
+    },
+    {
+        "number": 102,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "PRIBADI",
+        "statement": "Kurang memahami adanya perbedaan individu."
+    },
+    {
+        "number": 103,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "PRIBADI",
+        "statement": "Ingin tahu penyebab dan dampak  tawuran."
+    },
+    {
+        "number": 104,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "PRIBADI",
+        "statement": "Ingin mengetahui cara mengisi waktu luang dengan kegiatan positif."
+    },
+    {
+        "number": 105,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "PRIBADI",
+        "statement": "Ingin mengetahui bagaimana caranya untuk memperoleh beasiswa untuk meringankan beban biaya sekolah"
+    },
+    {
+        "number": 106,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "SOSIAL",
+        "statement": "Ingin tahu  tentang toleransi dan solidaritas."
+    },
+    {
+        "number": 107,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "SOSIAL",
+        "statement": "Kurang mengetahui tentang  bagaimana hubungan muda-mudi yang wajar dan sehat."
+    },
+    {
+        "number": 108,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "SOSIAL",
+        "statement": "Membutuhkan penjelasan tentang mengendalikan perasaan cinta dan pacaran."
+    },
+    {
+        "number": 109,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "SOSIAL",
+        "statement": "Kurang mengetahui bagaimana sebaiknya saya berperan dalam lingkungan di sekitar rumah."
+    },
+    {
+        "number": 110,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "SOSIAL",
+        "statement": "Kurang tahu  dampak kebiasaan sehari-hari  di rumah terhadap cita-cita."
+    },
+    {
+        "number": 111,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "BELAJAR",
+        "statement": "Tidak tahu kiat-kiat belajar mandiri."
+    },
+    {
+        "number": 112,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "BELAJAR",
+        "statement": "Ingin  memanfaatkan secara maksimal buku-buku yang ada di perpustakaan."
+    },
+    {
+        "number": 113,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "BELAJAR",
+        "statement": "Ingin tahu cara membuat suasana belajar di kelas menjadi nyaman."
+    },
+    {
+        "number": 114,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "BELAJAR",
+        "statement": "Ingin mengetahui dampak menyontek pada saat ulangan bagi masa depan."
+    },
+    {
+        "number": 115,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "BELAJAR",
+        "statement": "Kurang yakin terhadap kemampuan pendidikan sekarang ini dalam menyiapkan jabatan tertentu."
+    },
+    {
+        "number": 116,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "KARIR",
+        "statement": "Kurang memahami tentang bagaimana cara  memilih pekerjaan."
+    },
+    {
+        "number": 117,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "KARIR",
+        "statement": "Ingin lebih tahu lebih dalam mengenai banyaknya penipuan lowongan pekerjaan yang ada pada media."
+    },
+    {
+        "number": 118,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "KARIR",
+        "statement": "Ingin tahu lebih dalam mengenai pasar bursa dan persyaratannya."
+    },
+    {
+        "number": 119,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "KARIR",
+        "statement": "Kurang memahami pengaruh pendidikan dengan keberhasilan dalam karier."
+    },
+    {
+        "number": 120,
+        "layanan": "BIMBINGAN KELOMPOK",
+        "bidang": "KARIR",
+        "statement": "Memiliki  rasa pesimis dengan semakin ketatnya persaingan dalam masuk pendidikan lanjutan."
+    },
+    {
+        "number": 121,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "PRIBADI",
+        "statement": "Merasa secara jasmaniah kurang menarik."
+    },
+    {
+        "number": 122,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "PRIBADI",
+        "statement": "Sering murung dan merasa tidak bahagia."
+    },
+    {
+        "number": 123,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "PRIBADI",
+        "statement": "Dilanda ketakutan akibat pernah melanggar norma agama."
+    },
+    {
+        "number": 124,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "PRIBADI",
+        "statement": "Kurang berminat atau tidak ada hal yang menarik dalam memanfaatkan waktu senggang yang ada."
+    },
+    {
+        "number": 125,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "PRIBADI",
+        "statement": "Mengalami masalah karena ingin berpenghasilan sendiri."
+    },
+    {
+        "number": 126,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "SOSIAL",
+        "statement": "Mudah tersinggung atau sakit hati dalam berhubungan dengan orang lain."
+    },
+    {
+        "number": 127,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "SOSIAL",
+        "statement": "Kurang mendapat perhatian dari lawan jenis."
+    },
+    {
+        "number": 128,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "SOSIAL",
+        "statement": "Pernyataan cinta saya ditolak secara terang-terangan."
+    },
+    {
+        "number": 129,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "SOSIAL",
+        "statement": "Bermasalah karena di rumah ada anggota keluarga lain."
+    },
+    {
+        "number": 130,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "SOSIAL",
+        "statement": "Ingin mengatasi kondisi keluarga yang sedang dilanda prahara."
+    },
+    {
+        "number": 131,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "BELAJAR",
+        "statement": "Mengalami masalah  dalam pemahaman penggunaan bahasa \/ istilah asing."
+    },
+    {
+        "number": 132,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "BELAJAR",
+        "statement": "Kesulitan membaca cepat atau memahami isi buku pelajaran."
+    },
+    {
+        "number": 133,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "BELAJAR",
+        "statement": "Memiliki masalah dengan sarana belajar yang sering digunakan oleh anggota keluarga lain."
+    },
+    {
+        "number": 134,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "BELAJAR",
+        "statement": "Sering gelisah saat pelajaran berlangsung, sehingga  berusaha menghilangkannya dengan melakukan kegiatan lain."
+    },
+    {
+        "number": 135,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "BELAJAR",
+        "statement": "Khawatir tugas-tugas pelajaran hasilnya kurang memuaskan."
+    },
+    {
+        "number": 136,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "KARIR",
+        "statement": "Cemas kalau menjadi penganggur setelah menyelesaikan pendidikan."
+    },
+    {
+        "number": 137,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "KARIR",
+        "statement": "Khawatir tidak mampu menamatkan sekolah dan harus segera bekerja."
+    },
+    {
+        "number": 138,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "KARIR",
+        "statement": "Untuk memenuhi keuangan terpaksa sekolah sambil bekerja."
+    },
+    {
+        "number": 139,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "KARIR",
+        "statement": "Tidak bersemangat untuk melanjutkan sekolah."
+    },
+    {
+        "number": 140,
+        "layanan": "KONSELING KELOMPOK",
+        "bidang": "KARIR",
+        "statement": "Lulus sekolah ingin bekerja, tetapi orang tua menghendaki untuk melanjutkan pendidikan."
+    },
+    {
+        "number": 141,
+        "layanan": "KONSULTASI",
+        "bidang": "PRIBADI",
+        "statement": "Memiliki teman yang selalu mengeluhkan dirinya memiliki tubuh terlalu gemuk \/ kurus."
+    },
+    {
+        "number": 142,
+        "layanan": "KONSULTASI",
+        "bidang": "PRIBADI",
+        "statement": "Ingin membantu teman yang memiliki kebiasaan latah."
+    },
+    {
+        "number": 143,
+        "layanan": "KONSULTASI",
+        "bidang": "PRIBADI",
+        "statement": "Ingin membatu teman yang belum mau melaksanakan ibadah sesuai dengan agamanya."
+    },
+    {
+        "number": 144,
+        "layanan": "KONSULTASI",
+        "bidang": "PRIBADI",
+        "statement": "Memiliki sahabat yang tidak pernah memiliki waktu senggang untuk rekreasi."
+    },
+    {
+        "number": 145,
+        "layanan": "KONSULTASI",
+        "bidang": "PRIBADI",
+        "statement": "Ingin membantu kawan yang karena terlalu berhemat menjadi sering sakit-sakitan."
+    },
+    {
+        "number": 146,
+        "layanan": "KONSULTASI",
+        "bidang": "SOSIAL",
+        "statement": "Memiliki kawan akrab yang merasa dirinya lebih hebat dari lainnya, sehingga sering konflik dengan lingkungan."
+    },
+    {
+        "number": 147,
+        "layanan": "KONSULTASI",
+        "bidang": "SOSIAL",
+        "statement": "Ingin membantu teman yang selalu minder bila bertemu lawan jenis,"
+    },
+    {
+        "number": 148,
+        "layanan": "KONSULTASI",
+        "bidang": "SOSIAL",
+        "statement": "Ingin membantu kawan akrab yang baru saja diputus oleh pacarnya."
+    },
+    {
+        "number": 149,
+        "layanan": "KONSULTASI",
+        "bidang": "SOSIAL",
+        "statement": "Ingin membantu teman yang tidak betah di rumah."
+    },
+    {
+        "number": 150,
+        "layanan": "KONSULTASI",
+        "bidang": "SOSIAL",
+        "statement": "Ada teman yang memiliki masalah dengan orang tuanya."
+    },
+    {
+        "number": 151,
+        "layanan": "KONSULTASI",
+        "bidang": "BELAJAR",
+        "statement": "Ingin membantu teman yang sulit belajar karena memiliki cacat fisik."
+    },
+    {
+        "number": 152,
+        "layanan": "KONSULTASI",
+        "bidang": "BELAJAR",
+        "statement": "Bingung memikirkan teman saya yang setiap kali diajar sulit memperhatikan dan cenderung mengganggu yang lain."
+    },
+    {
+        "number": 153,
+        "layanan": "KONSULTASI",
+        "bidang": "BELAJAR",
+        "statement": "Bingung pada teman yang tidak memiliki sarana belajar yang memadai, sehingga sering menggunakan peralatan saya."
+    },
+    {
+        "number": 154,
+        "layanan": "KONSULTASI",
+        "bidang": "BELAJAR",
+        "statement": "Kesulitan menghadapi teman sebangku yang tidak memiliki motivasi belajar."
+    },
+    {
+        "number": 155,
+        "layanan": "KONSULTASI",
+        "bidang": "BELAJAR",
+        "statement": "Saya memiliki teman yang setiap hari melemahkan semangat belajar saya."
+    },
+    {
+        "number": 156,
+        "layanan": "KONSULTASI",
+        "bidang": "KARIR",
+        "statement": "Ingin membantu teman yang sampai sekarang masih bingung menyusun cita-cita masa depan."
+    },
+    {
+        "number": 157,
+        "layanan": "KONSULTASI",
+        "bidang": "KARIR",
+        "statement": "Ingin membantu teman yang masih kesulitan dalam memilih jenis ekstra kurikuler yang harus diikuti."
+    },
+    {
+        "number": 158,
+        "layanan": "KONSULTASI",
+        "bidang": "KARIR",
+        "statement": "Memiliki teman yang setiap hari mengeluhkan keadaan dirinya yang saat ini disuruh bekerja oleh orang tuanya."
+    },
+    {
+        "number": 159,
+        "layanan": "KONSULTASI",
+        "bidang": "KARIR",
+        "statement": "Memiliki teman yang tidak berminat melanjutkan padahal menurut saya dia mampu."
+    },
+    {
+        "number": 160,
+        "layanan": "KONSULTASI",
+        "bidang": "KARIR",
+        "statement": "Ingin membantu teman yang mengalami kesulitan memperoleh informasi tentang pendidikan lanjutan."
+    },
+    {
+        "number": 161,
+        "layanan": "MEDIASI",
+        "bidang": "PRIBADI",
+        "statement": "Saya memiliki masalah dengan salah seorang guru yang tidak mengetahui bahwa saya memiliki kelemahan fisik."
+    },
+    {
+        "number": 162,
+        "layanan": "MEDIASI",
+        "bidang": "PRIBADI",
+        "statement": "Dimusuhi \/ dibenci  guru tanpa tahu sebabnya."
+    },
+    {
+        "number": 163,
+        "layanan": "MEDIASI",
+        "bidang": "PRIBADI",
+        "statement": "Saya sedang punya masalah dengan salah seorang guru yang mengetahui di HP saya ada gambar tidak layak."
+    },
+    {
+        "number": 164,
+        "layanan": "MEDIASI",
+        "bidang": "PRIBADI",
+        "statement": "Saya punya masalah dengan teman sepermainan."
+    },
+    {
+        "number": 165,
+        "layanan": "MEDIASI",
+        "bidang": "PRIBADI",
+        "statement": "Saya memiliki masalah dengan orang tua berkaitan dengan keuangan."
+    },
+    {
+        "number": 166,
+        "layanan": "MEDIASI",
+        "bidang": "SOSIAL",
+        "statement": "Saya memiliki masalah dengan teman sekelas."
+    },
+    {
+        "number": 167,
+        "layanan": "MEDIASI",
+        "bidang": "SOSIAL",
+        "statement": "Saya sedang konflik dengan seseorang dari kakak \/ adik kelas."
+    },
+    {
+        "number": 168,
+        "layanan": "MEDIASI",
+        "bidang": "SOSIAL",
+        "statement": "Saya sedang bermasalah dengan pacar saya."
+    },
+    {
+        "number": 169,
+        "layanan": "MEDIASI",
+        "bidang": "SOSIAL",
+        "statement": "Saya memiliki masalah dengan tetangga."
+    },
+    {
+        "number": 170,
+        "layanan": "MEDIASI",
+        "bidang": "SOSIAL",
+        "statement": "Saya sedang didiamkan salah seorang anggota keluarga."
+    },
+    {
+        "number": 171,
+        "layanan": "MEDIASI",
+        "bidang": "BELAJAR",
+        "statement": "Saya memiliki masalah dengan petugas perpustakaan, sehingga menjadikan berkunjung masuk ke sana."
+    },
+    {
+        "number": 172,
+        "layanan": "MEDIASI",
+        "bidang": "BELAJAR",
+        "statement": "Saya sedih karena memiliki masalah dengan salah seorang guru mata pelajaran."
+    },
+    {
+        "number": 173,
+        "layanan": "MEDIASI",
+        "bidang": "BELAJAR",
+        "statement": "Kurang semangat belajar karena orang tua tidak membelikan sarana belajar yang pernah dijanjikan."
+    },
+    {
+        "number": 174,
+        "layanan": "MEDIASI",
+        "bidang": "BELAJAR",
+        "statement": "Guru pilih kasih, dan saya tidak diikutkan dalam olimpiade \/ kejuaraan."
+    },
+    {
+        "number": 175,
+        "layanan": "MEDIASI",
+        "bidang": "BELAJAR",
+        "statement": "Saya sedang memiliki masalah dengan petugas laboratorium, berkaitan dengan peralatan sekolah."
+    },
+    {
+        "number": 176,
+        "layanan": "MEDIASI",
+        "bidang": "KARIR",
+        "statement": "Merasa disisihkan pembina ekstra kurikuler dalam berbagai kegiatan."
+    },
+    {
+        "number": 177,
+        "layanan": "MEDIASI",
+        "bidang": "KARIR",
+        "statement": "Orang tua memaksa untuk mengikuti pilihan karier  masa depan saya."
+    },
+    {
+        "number": 178,
+        "layanan": "MEDIASI",
+        "bidang": "KARIR",
+        "statement": "Saya memiliki masalah dengan teman berkaitan dengan pilihan ekstra kurikuler yang saya ambil."
+    },
+    {
+        "number": 179,
+        "layanan": "MEDIASI",
+        "bidang": "KARIR",
+        "statement": "Orang tua tidak setuju pada rencana pendidikan lanjutan pilihan saya."
+    },
+    {
+        "number": 180,
+        "layanan": "MEDIASI",
+        "bidang": "KARIR",
+        "statement": "Beda pendapat dengan saudara berkaitan dengan pilihan jurusan yang saya ambil."
+    }
+]

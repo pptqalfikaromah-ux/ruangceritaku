@@ -24,7 +24,7 @@
                     </span>
                     <span class="badge bg-light text-dark border px-2 py-1 fs-xs fw-medium rounded-pill">Prioritas Penanganan Cepat</span>
                 </div>
-                <h1 class="h4 fw-bold text-dark mb-0">Formulir Pelayanan Darurat & Perlindungan Murid</h1>
+                <h1 class="h4 fw-bold text-dark mb-0">Formulir Pengaduan & Perlindungan Diri</h1>
             </div>
         </div>
     </div>

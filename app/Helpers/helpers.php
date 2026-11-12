@@ -67,6 +67,10 @@ if (!function_exists('active_academic_year')) {
     function active_academic_year(): ?AcademicYear
     {
         return Cache::remember('active_academic_year_model', 300, function () {
+            $sem = active_semester();
+            if ($sem && $sem->academicYear && $sem->academicYear->is_active) {
+                return $sem->academicYear;
+            }
             return AcademicYear::where('is_active', true)->first();
         });
     }

@@ -62,6 +62,27 @@ class Teacher extends Model
         return $query->whereHas('classroom')->latest('id');
     }
 
+    /**
+     * Accessor untuk mendapatkan penugasan rombel aktif saat ini,
+     * dengan fallback cerdas ke penugasan terakhir jika semester aktif belum terplot
+     */
+    public function getCurrentAssignmentAttribute(): ?HomeroomAssignment
+    {
+        $activeSemester = active_semester();
+        if ($activeSemester) {
+            $assigned = $this->assignments()
+                ->where('semester_id', $activeSemester->id)
+                ->whereHas('classroom')
+                ->latest('id')
+                ->first();
+            if ($assigned) {
+                return $assigned;
+            }
+        }
+
+        return $this->assignments()->whereHas('classroom')->latest('id')->first();
+    }
+
     public function complaints()
     {
         return $this->hasMany(HomeroomComplaint::class);

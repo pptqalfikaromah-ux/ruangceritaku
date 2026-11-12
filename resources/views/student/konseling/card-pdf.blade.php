@@ -324,7 +324,7 @@
 
         <!-- Strip Nomor Tiket -->
         <div class="ticket-strip">
-            <span class="ticket-title"><i class="bi bi-ticket-perforated me-1"></i> Kartu Tiket Konseling</span>
+            <span class="ticket-title"><i class="bi bi-ticket-perforated me-1"></i> KARTU BUKTI LAYANAN KONSELING SISWA</span>
             <span class="ticket-num">{{ $konseling->ticket_number }}</span>
         </div>
 
@@ -369,6 +369,11 @@
                         <div class="schedule-text">
                             @if($konseling->isOnlineMeet())
                                 Google Meet (Online)
+                                @if($sched?->meeting_link)
+                                    <div class="mt-1" style="font-size: 0.72rem; word-break: break-all;">
+                                        <a href="{{ $sched->meeting_link }}" target="_blank" style="color: #0d9488; text-decoration: underline;">{{ $sched->meeting_link }}</a>
+                                    </div>
+                                @endif
                             @else
                                 {{ $sched?->location ?? 'Ruang Bimbingan Konseling' }}
                             @endif

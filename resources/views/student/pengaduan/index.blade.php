@@ -19,7 +19,7 @@
                 </span>
                 <span class="badge bg-light text-dark border px-2 py-1 fs-xs fw-medium rounded-pill">Perlindungan Murid</span>
             </div>
-            <h1 class="h4 fw-bold text-dark mb-1">Pelayanan Darurat & Perlindungan Diri</h1>
+            <h1 class="h4 fw-bold text-dark mb-1">Pengaduan & Perlindungan Diri</h1>
             <p class="text-muted small mb-0">Laporkan kendala darurat, perundungan, kekerasan, atau ancaman keselamatan dengan aman, cepat, dan rahasia.</p>
         </div>
         <div class="d-flex gap-2">

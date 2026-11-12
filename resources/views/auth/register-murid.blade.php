@@ -27,7 +27,7 @@
                     <span class="text-muted small fs-xs">{{ app_setting('school_name', 'Sekolah') }}</span>
                 </a>
                 <div class="mt-2">
-                    <h5 class="fw-extrabold text-dark mb-1">Formulir Pendaftaran Akun</h5>
+                    <h5 class="fw-extrabold text-dark mb-1">Formulir Pendaftaran Murid Baru</h5>
                     <p class="text-muted small mb-0">Lengkapi data diri dan ajukan username akun Anda untuk memulai bimbingan konseling.</p>
                 </div>
             </div>

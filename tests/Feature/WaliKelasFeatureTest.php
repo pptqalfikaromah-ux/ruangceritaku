@@ -23,11 +23,15 @@ class WaliKelasFeatureTest extends TestCase
             ['name' => '2025/2026'],
             ['is_active' => true]
         );
+        AcademicYear::where('id', '!=', $year->id)->update(['is_active' => false]);
+        $year->update(['is_active' => true]);
 
         $semester = Semester::firstOrCreate(
             ['academic_year_id' => $year->id, 'name' => 'Ganjil'],
             ['is_active' => true]
         );
+        Semester::where('id', '!=', $semester->id)->update(['is_active' => false]);
+        $semester->update(['is_active' => true]);
 
         $admin = User::firstOrCreate(
             ['username' => 'admin_test'],
@@ -166,9 +170,9 @@ class WaliKelasFeatureTest extends TestCase
         $dashRes->assertSee('VII-Z');
         $dashRes->assertSee($data['student']->name);
 
-        // Access Monitoring
+        // Access Monitoring (dialihkan ke Dashboard)
         $monRes = $this->actingAs($waliUser)->get(route('walikelas.monitoring.index'));
-        $monRes->assertStatus(200);
+        $monRes->assertRedirect(route('walikelas.dashboard.index'));
     }
 
     public function test_wali_kelas_can_submit_complaint_and_counselor_can_respond(): void

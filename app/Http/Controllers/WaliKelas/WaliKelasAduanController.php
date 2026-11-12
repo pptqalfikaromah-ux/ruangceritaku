@@ -62,7 +62,7 @@ class WaliKelasAduanController extends Controller
         $classroom = $teacher?->currentAssignment?->classroom;
 
         if (!$classroom) {
-            return back()->with('error', 'Rombel binaan tidak ditemukan.');
+            return redirect()->route('walikelas.aduan.index')->with('error', 'Rombel binaan tidak ditemukan.');
         }
 
         $activeSemester = active_semester();
@@ -73,6 +73,9 @@ class WaliKelasAduanController extends Controller
             'incident_date' => ['required', 'date'],
             'category' => ['required', 'in:kedisiplinan,pelanggaran_aturan,akademik,sosial_pertemanan,perilaku_sikap,bullying_konflik,lainnya'],
             'description' => ['required', 'string', 'min:5'],
+            'title' => ['nullable', 'string', 'max:255'],
+            'initial_action' => ['nullable', 'string'],
+            'teacher_notes' => ['nullable', 'string'],
         ], [
             'student_id.required' => 'Pilih murid yang terkait kasus.',
             'incident_date.required' => 'Tanggal kejadian wajib diisi.',
@@ -91,7 +94,7 @@ class WaliKelasAduanController extends Controller
             'lainnya' => 'Kasus Lainnya',
         ];
         $categoryTitle = $categoryLabels[$validated['category']] ?? 'Kasus Murid';
-        $autoTitle = $categoryTitle . ' - ' . ($student?->name ?? 'Murid');
+        $autoTitle = $request->input('title') ?: ($categoryTitle . ' - ' . ($student?->name ?? 'Murid'));
 
         HomeroomComplaint::create([
             'teacher_id' => $teacher->id,
@@ -103,8 +106,8 @@ class WaliKelasAduanController extends Controller
             'category' => $validated['category'],
             'title' => $autoTitle,
             'description' => $validated['description'],
-            'initial_action' => null,
-            'teacher_notes' => null,
+            'initial_action' => $request->input('initial_action') ?? null,
+            'teacher_notes' => $request->input('teacher_notes') ?? null,
             'status' => 'menunggu_tindak_lanjut',
         ]);
 

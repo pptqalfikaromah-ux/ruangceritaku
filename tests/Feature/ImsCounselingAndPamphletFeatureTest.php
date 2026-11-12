@@ -40,12 +40,14 @@ class ImsCounselingAndPamphletFeatureTest extends TestCase
                 'is_active' => true,
             ]
         );
+        AcademicYear::where('id', '!=', $this->year->id)->update(['is_active' => false]);
         $this->year->update(['is_active' => true]);
 
         $this->semester = Semester::firstOrCreate(
             ['academic_year_id' => $this->year->id, 'name' => 'Ganjil'],
             ['is_active' => true]
         );
+        Semester::where('id', '!=', $this->semester->id)->update(['is_active' => false]);
         $this->semester->update(['is_active' => true]);
 
         $this->adminUser = User::firstOrCreate(
@@ -121,9 +123,9 @@ class ImsCounselingAndPamphletFeatureTest extends TestCase
             );
 
         $this->service = ServiceType::firstOrCreate(
-            ['name' => 'Bimbingan Pribadi'],
+            ['code' => 'BP-01'],
             [
-                'code' => 'BP-01',
+                'name' => 'Bimbingan Pribadi',
                 'description' => 'Layanan bimbingan masalah pribadi',
                 'is_active' => true,
             ]

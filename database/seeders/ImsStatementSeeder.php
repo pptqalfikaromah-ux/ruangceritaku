@@ -33,11 +33,15 @@ class ImsStatementSeeder extends Seeder
             'KARIER' => GuidanceField::where('code', 'BID-04')->first()?->id,
         ];
 
-        // 3. Sumber Data: Buka BK.xlsx atau fallback ke cache JSON
+        // 3. Sumber Data: database/data/all_180_items.json (repo portable) atau Excel desktop
+        $repoJson = database_path('data/all_180_items.json');
         $excelPath = 'C:/Users/MyBook 11 Plus/Desktop/BK.xlsx';
+        $scratchJson = 'C:/Users/MyBook 11 Plus/.gemini/antigravity-ide/brain/00db48c0-0c5d-4bad-ae1a-0ef56291dbe9/scratch/all_180_items.json';
         $items = [];
 
-        if (file_exists($excelPath)) {
+        if (file_exists($repoJson)) {
+            $items = json_decode(file_get_contents($repoJson), true) ?? [];
+        } elseif (file_exists($excelPath)) {
             $zip = new ZipArchive();
             if ($zip->open($excelPath) === true) {
                 $sharedStrings = [];
@@ -95,12 +99,8 @@ class ImsStatementSeeder extends Seeder
                 }
                 $zip->close();
             }
-        }
-
-        // Fallback JSON jika pembacaan file excel gagal
-        $jsonPath = 'C:/Users/MyBook 11 Plus/.gemini/antigravity-ide/brain/00db48c0-0c5d-4bad-ae1a-0ef56291dbe9/scratch/all_180_items.json';
-        if (empty($items) && file_exists($jsonPath)) {
-            $items = json_decode(file_get_contents($jsonPath), true);
+        } elseif (file_exists($scratchJson)) {
+            $items = json_decode(file_get_contents($scratchJson), true) ?? [];
         }
 
         foreach ($items as $item) {

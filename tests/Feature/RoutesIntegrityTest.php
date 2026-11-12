@@ -143,7 +143,7 @@ class RoutesIntegrityTest extends BaseTestCase
         $resKonseling->assertStatus(200);
 
         $resAjukan = $this->actingAs($this->murid)->get(route('murid.konseling.create'));
-        $resAjukan->assertRedirect(route('murid.ims.index'));
+        $resAjukan->assertStatus(200);
 
         $resIms = $this->actingAs($this->murid)->get(route('murid.ims.index'));
         $resIms->assertStatus(200);

@@ -25,6 +25,7 @@ class StudentRegistrationTest extends TestCase
                 'is_active' => true,
             ]
         );
+        AcademicYear::where('id', '!=', $this->year->id)->update(['is_active' => false]);
         $this->year->update(['is_active' => true]);
 
         $this->classroom = Classroom::firstOrCreate(

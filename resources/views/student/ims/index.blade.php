@@ -157,7 +157,7 @@
     <!-- Header Daftar Layanan -->
     <div class="d-flex align-items-center justify-content-between pt-1">
         <h5 class="fw-bold text-dark mb-0 fs-sm d-flex align-items-center gap-2">
-            <span>Daftar 8 Layanan Bimbingan & Konseling</span>
+            <span>Pilih Menu Layanan Konseling</span>
             <span class="badge bg-light text-muted border rounded-pill fs-xxs fw-medium">Format 20 Butir / Layanan</span>
         </h5>
         <span class="text-muted fs-xs d-none d-sm-inline">Klik layanan untuk membuka butir asesmen</span>

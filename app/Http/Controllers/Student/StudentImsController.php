@@ -219,7 +219,7 @@ class StudentImsController extends Controller
         $heavyStatementId = $request->input('heavy_statement_id'); // single statement ID (opsional)
         $scopeStatementIds = $request->input('scope_statement_ids', []); // seluruh statement IDs layanan ini
 
-        DB::transaction(function () use ($assessment, $selectedStatements, $heavyStatementId, $scopeStatementIds) {
+        DB::transaction(function () use ($assessment, $selectedStatements, $heavyStatementId, $scopeStatementIds, $request) {
             foreach ($scopeStatementIds as $stmtId) {
                 $isSelected = in_array($stmtId, $selectedStatements);
                 // Hanya bisa menjadi masalah terberat jika butir tersebut juga dipilih!
@@ -241,6 +241,10 @@ class StudentImsController extends Controller
                         ->where('ims_statement_id', $stmtId)
                         ->delete();
                 }
+            }
+
+            if ($request->has('wide_note')) {
+                $assessment->update(['notes' => $request->input('wide_note')]);
             }
         });
 
@@ -265,7 +269,13 @@ class StudentImsController extends Controller
      */
     public function saveInstrument(Request $request, $serviceId, $fieldId = null): RedirectResponse
     {
-        return $this->saveServiceInstrument($request, $serviceId);
+        $this->saveServiceInstrument($request, $serviceId);
+        if ($fieldId) {
+            return redirect()->route('murid.ims.instrument', [$serviceId, $fieldId])
+                ->with('success', 'Pilihan butir masalah berhasil disimpan.');
+        }
+        return redirect()->route('murid.ims.service', $serviceId)
+            ->with('success', 'Pilihan butir masalah berhasil disimpan.');
     }
 
     /**

@@ -112,10 +112,13 @@ class ComplaintController extends Controller
             'safety_risk_flag' => ['nullable', 'boolean'],
         ]);
 
+        $counselorId = $request->input('handled_by_counselor_id')
+            ?: ($pengaduan->handled_by_counselor_id ?: current_counselor()?->id);
+
         $pengaduan->update([
             'status' => $request->input('status'),
             'handling_notes' => $request->input('handling_notes'),
-            'handled_by_counselor_id' => $request->input('handled_by_counselor_id') ?: $pengaduan->handled_by_counselor_id,
+            'handled_by_counselor_id' => $counselorId,
             'safety_risk_flag' => $request->boolean('safety_risk_flag'),
         ]);
 

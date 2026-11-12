@@ -127,7 +127,7 @@
                                 <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1 me-1.5 fs-xxs fw-bold font-monospace align-middle">#{{ $stmt->statement_number }}</span>
                                 <span class="badge rounded-pill px-2.5 py-1 me-2 fs-xxs fw-semibold align-middle"
                                       style="background: {{ $badgeStyle['bg'] }}; color: {{ $badgeStyle['text'] }}; border: 1px solid {{ $badgeStyle['border'] }};">
-                                    {{ $fieldName }}
+                                    Bidang {{ $fieldName }}
                                 </span>
                                 <span class="statement-text fw-medium align-middle" style="line-height: 1.65;">{{ $stmt->statement_text }}</span>
                             </label>
@@ -168,6 +168,16 @@
                 </div>
             @endforeach
         </div>
+
+        <!-- Catatan Siswa untuk Masalah di Atas (Opsional) -->
+        @if(!$assessment->isSubmitted())
+            <div class="card border-0 shadow-xs rounded-4 bg-white p-3.5 mt-3 mb-4">
+                <label for="wide_note" class="form-label fw-bold text-dark fs-xs mb-1.5 d-flex align-items-center gap-1.5">
+                    <i class="bi bi-chat-left-dots text-emerald"></i> Catatan Siswa untuk Masalah di Atas (Opsional)
+                </label>
+                <textarea name="wide_note" id="wide_note" class="form-control fs-xs" rows="3" placeholder="Tuliskan catatan atau penjelasan singkat jika ada hal khusus yang ingin kamu sampaikan terkait butir masalah di atas...">{{ old('wide_note', $assessment->notes ?? '') }}</textarea>
+            </div>
+        @endif
 
         <!-- Floating Action Bar Modern (Mobile & Desktop Responsive) -->
         @if(!$assessment->isSubmitted())
