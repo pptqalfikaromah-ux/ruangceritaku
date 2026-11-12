@@ -455,6 +455,9 @@
                 <a href="{{ route('murid.pamflet.index') }}" class="sk-nav-item {{ request()->routeIs('murid.pamflet.*') ? 'active' : '' }}">
                     <i class="bi bi-images"></i><span>Pamflet Kreativitas</span>
                 </a>
+                <a href="{{ route('murid.game-konseling.index') }}" class="sk-nav-item {{ request()->routeIs('murid.game-konseling.*') ? 'active' : '' }}">
+                    <i class="bi bi-controller"></i><span>Game Konseling (Ruang Rasa)</span>
+                </a>
 
                 <div class="sk-nav-heading mt-3">Asesmen Siswa</div>
                 @if(app_setting('ims_enabled', '1') === '1')

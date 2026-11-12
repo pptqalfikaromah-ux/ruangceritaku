@@ -96,6 +96,13 @@ return [
                     'roles' => ['admin', 'guru_bk'],
                 ],
                 [
+                    'label' => 'Game & Alat Konseling',
+                    'icon' => 'bi-controller',
+                    'route' => 'panel.game-konseling.index',
+                    'active' => 'panel.game-konseling.*',
+                    'roles' => ['admin', 'guru_bk'],
+                ],
+                [
                     'label' => 'Program BK (RPL)',
                     'icon' => 'bi-calendar-week',
                     'route' => 'panel.program-bk.index',

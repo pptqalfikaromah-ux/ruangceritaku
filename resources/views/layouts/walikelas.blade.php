@@ -377,6 +377,10 @@
                 <i class="bi bi-exclamation-octagon-fill"></i>
                 <span>Aduan Kasus ke BK</span>
             </a>
+            <a href="{{ route('walikelas.game-konseling.index') }}" class="sk-nav-item {{ request()->routeIs('walikelas.game-konseling.*') ? 'active' : '' }}">
+                <i class="bi bi-controller"></i>
+                <span>Game & Media Konseling</span>
+            </a>
 
             <div class="sk-nav-heading">AKUN & SISTEM</div>
             <a href="{{ route('walikelas.profile.index') }}" class="sk-nav-item {{ request()->routeIs('walikelas.profile.*') ? 'active' : '' }}">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\StudentRegisterController;
+use App\Http\Controllers\CounselingGameController;
 use App\Http\Controllers\Panel\AcademicYearController;
 use App\Http\Controllers\Panel\AccountController;
 use App\Http\Controllers\Panel\BkProgramController;
@@ -240,6 +241,9 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
         Route::post('/spinner/reset', [SpinnerController::class, 'resetToDefault'])->name('spinner.reset');
         Route::post('/spinner/winner', [SpinnerController::class, 'recordWinner'])->name('spinner.record-winner');
     });
+
+    // 16. Game & Alat Media Konseling (Ruang Rasa)
+    Route::get('/game-konseling', [CounselingGameController::class, 'panelIndex'])->name('game-konseling.index');
 });
 
 /*
@@ -299,6 +303,9 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
     // 5. Profil Murid (Kelola Profil Mandiri)
     Route::get('/profil', [StudentProfileController::class, 'index'])->name('profile.index');
     Route::put('/profil', [StudentProfileController::class, 'update'])->name('profile.update');
+
+    // 6. Game Konseling (Ruang Rasa & Empati)
+    Route::get('/game-konseling', [CounselingGameController::class, 'studentIndex'])->name('game-konseling.index');
 });
 
 /*
@@ -324,4 +331,7 @@ Route::prefix('walikelas')->name('walikelas.')->middleware(['auth', 'role:wali_k
     // Profil Wali Kelas
     Route::get('/profil', [\App\Http\Controllers\WaliKelas\WaliKelasProfileController::class, 'index'])->name('profile.index');
     Route::put('/profil', [\App\Http\Controllers\WaliKelas\WaliKelasProfileController::class, 'update'])->name('profile.update');
+
+    // Game & Media Pembinaan Konseling
+    Route::get('/game-konseling', [CounselingGameController::class, 'waliKelasIndex'])->name('game-konseling.index');
 });
