@@ -83,6 +83,17 @@ class HomeroomComplaintController extends Controller
     }
 
     /**
+     * Hapus Data Aduan Kasus Murid dari Wali Kelas
+     */
+    public function destroy(HomeroomComplaint $aduanWalikela): RedirectResponse
+    {
+        $title = $aduanWalikela->title ?? 'Laporan Kasus';
+        $aduanWalikela->delete();
+
+        return redirect()->route('panel.aduan-walikelas.index')->with('success', 'Data aduan kasus "' . $title . '" berhasil dihapus.');
+    }
+
+    /**
      * Cetak Arsip PDF Laporan Penanganan Aduan Kasus Wali Kelas
      */
     public function printReport(HomeroomComplaint $aduanWalikela): View

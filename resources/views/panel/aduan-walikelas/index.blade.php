@@ -134,6 +134,13 @@
                     <a href="{{ route('panel.aduan-walikelas.show', $comp) }}" class="btn btn-mint text-white btn-card-action flex-grow-1 shadow-sm">
                         <i class="bi bi-reply-fill me-1"></i> Tinjau & Respon Kasus <i class="bi bi-arrow-right ms-1"></i>
                     </a>
+                    <form action="{{ route('panel.aduan-walikelas.destroy', $comp) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus aduan kasus ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger btn-card-icon" title="Hapus Aduan Kasus">
+                            <i class="bi bi-trash fs-5"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         @empty
@@ -151,67 +158,71 @@
         <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden mb-3">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light fs-xxs text-uppercase text-muted" style="letter-spacing: 0.04em;">
+                    <thead class="table-light fs-xxs text-uppercase text-muted" style="letter-spacing: 0.03em;">
                         <tr>
-                            <th style="width: 50px;" class="ps-3.5 text-center">No</th>
-                            <th style="width: 110px;">Tanggal</th>
-                            <th>Wali Kelas Pelapor</th>
-                            <th>Murid Terkait</th>
-                            <th style="width: 110px;">Rombel</th>
-                            <th>Kategori Kasus</th>
-                            <th>Pokok Masalah</th>
-                            <th class="text-center" style="width: 150px;">Status</th>
-                            <th class="text-end pe-3.5" style="width: 110px;">Aksi</th>
+                            <th style="width: 4%;" class="ps-3 text-center">No</th>
+                            <th style="width: 11%;">Tanggal</th>
+                            <th style="width: 17%;">Wali Kelas Pelapor</th>
+                            <th style="width: 17%;">Murid Terkait</th>
+                            <th style="width: 9%;">Rombel</th>
+                            <th style="width: 22%;">Kasus & Masalah</th>
+                            <th class="text-center" style="width: 10%;">Status</th>
+                            <th class="text-end pe-3" style="width: 10%;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="fs-xs">
                         @forelse($complaints as $index => $comp)
                             <tr>
-                                <td class="text-center fw-bold text-muted ps-3.5">{{ $complaints->firstItem() + $index }}</td>
-                                <td class="fw-semibold text-muted">{{ $comp->incident_date->format('d M Y') }}</td>
+                                <td class="text-center fw-bold text-muted ps-3">{{ $complaints->firstItem() + $index }}</td>
+                                <td class="fw-semibold text-muted fs-xxs">{{ $comp->incident_date->format('d M Y') }}</td>
                                 <td>
-                                    <div class="fw-bold text-dark">{{ $comp->teacher?->name }}</div>
+                                    <div class="fw-bold text-dark fs-xs">{{ $comp->teacher?->name }}</div>
                                     <div class="text-muted fs-xxs">NIP: {{ $comp->teacher?->nip_nuptk ?? '-' }}</div>
                                 </td>
                                 <td>
-                                    <div class="fw-bold text-dark">{{ $comp->student?->name }}</div>
+                                    <div class="fw-bold text-dark fs-xs">{{ $comp->student?->name }}</div>
                                     <div class="text-muted fs-xxs">NISN: <code class="text-mint">{{ $comp->student?->nisn }}</code></div>
                                 </td>
                                 <td>
-                                    <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1">
+                                    <span class="badge bg-light text-dark border rounded-pill px-2 py-0.5 fs-xxs">
                                         Kelas {{ $comp->classroom?->name }}
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1">
+                                    <span class="badge bg-light text-dark border rounded px-1.5 py-0.5 fs-xxs fw-semibold mb-0.5 d-inline-block">
                                         {{ $comp->category_label }}
                                     </span>
-                                </td>
-                                <td>
-                                    <div class="fw-bold text-dark small text-truncate" style="max-width: 200px;">{{ $comp->title }}</div>
-                                    <div class="text-muted fs-xxs text-truncate" style="max-width: 200px;">{{ $comp->teacher_notes }}</div>
+                                    <div class="fw-bold text-dark fs-xs text-truncate" style="max-width: 220px;" title="{{ $comp->title }}">{{ $comp->title }}</div>
+                                    <div class="text-muted fs-xxs text-truncate" style="max-width: 220px;" title="{{ $comp->teacher_notes }}">{{ $comp->teacher_notes }}</div>
                                 </td>
                                 <td class="text-center">
-                                    <span class="badge rounded-pill {{ $comp->status_badge_class }} px-2.5 py-1">
+                                    <span class="badge rounded-pill {{ $comp->status_badge_class }} px-2 py-0.5 fs-xxs text-nowrap">
                                         {{ $comp->status_label }}
                                     </span>
                                 </td>
-                                <td class="text-end pe-3.5">
-                                    <div class="d-flex align-items-center justify-content-end gap-1.5">
+                                <td class="text-end pe-3">
+                                    <div class="d-flex align-items-center justify-content-end gap-1">
                                         @if($comp->status === 'selesai')
-                                            <a href="{{ route('panel.aduan-walikelas.printReport', $comp) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill px-2.5 py-1 fw-bold fs-xxs" title="Cetak Arsip Laporan PDF">
-                                                <i class="bi bi-file-earmark-pdf me-1"></i> Cetak
+                                            <a href="{{ route('panel.aduan-walikelas.printReport', $comp) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-circle d-flex align-items-center justify-content-center p-0 flex-shrink-0" style="width: 28px; height: 28px;" title="Cetak Arsip Laporan PDF">
+                                                <i class="bi bi-file-earmark-pdf fs-6"></i>
                                             </a>
                                         @endif
-                                        <a href="{{ route('panel.aduan-walikelas.show', $comp) }}" class="btn btn-sm btn-mint text-white rounded-pill px-3 py-1 fw-bold fs-xxs shadow-xs">
-                                            <i class="bi bi-reply-fill me-1"></i> Respon
+                                        <a href="{{ route('panel.aduan-walikelas.show', $comp) }}" class="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center p-0 flex-shrink-0" style="width: 28px; height: 28px;" title="Tinjau & Respon Kasus">
+                                            <i class="bi bi-reply-fill fs-6"></i>
                                         </a>
+                                        <form action="{{ route('panel.aduan-walikelas.destroy', $comp) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus aduan kasus ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle d-flex align-items-center justify-content-center p-0 flex-shrink-0" style="width: 28px; height: 28px;" title="Hapus Aduan Kasus">
+                                                <i class="bi bi-trash fs-6"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9" class="text-center py-5 text-muted">
+                                <td colspan="8" class="text-center py-5 text-muted">
                                     <i class="bi bi-inbox fs-2 d-block mb-2 text-muted opacity-50"></i>
                                     Belum ada laporan kasus murid dari Wali Kelas.
                                 </td>

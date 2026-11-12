@@ -340,6 +340,9 @@ class SipekaExpansionFeatureTest extends TestCase
         $responseHandle->assertRedirect();
         $complaint->refresh();
         $this->assertEquals('investigating', $complaint->status);
+
+        // Hapus data uji pengaduan agar database tetap bersih
+        $complaint->forceDelete();
     }
 
     public function test_reports_and_print_view(): void
@@ -351,5 +354,14 @@ class SipekaExpansionFeatureTest extends TestCase
         $responsePrint = $this->actingAs($this->admin)->get(route('panel.laporan.print', ['type' => 'konseling']));
         $responsePrint->assertStatus(200);
         $responsePrint->assertSee('Kementerian Agama Republik Indonesia');
+    }
+
+    protected function tearDown(): void
+    {
+        \App\Models\StudentComplaint::where('description', 'like', '%pemalakan uang saku%')->forceDelete();
+        if (isset($this->student)) {
+            \App\Models\CounselingRequest::where('student_id', $this->student->id)->forceDelete();
+        }
+        parent::tearDown();
     }
 }

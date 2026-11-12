@@ -233,6 +233,13 @@
                        class="btn btn-mint text-white btn-card-action flex-grow-1 shadow-sm">
                         <i class="bi bi-shield-check me-1"></i> Periksa Detail & Tindak Lanjut <i class="bi bi-arrow-right ms-1"></i>
                     </a>
+                    <form action="{{ route('panel.pengaduan.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengaduan {{ $item->ticket_number }}?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger btn-card-icon" title="Hapus Pengaduan">
+                            <i class="bi bi-trash fs-5"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         @empty
@@ -253,22 +260,22 @@
         <div class="card card-app border-0 shadow-sm rounded-4 overflow-hidden">
             <div class="table-responsive mb-0">
                 <table class="table table-hover align-middle table-pengaduan mb-0">
-                    <thead class="table-light fs-xxs text-uppercase text-muted" style="letter-spacing: 0.04em;">
+                    <thead class="table-light fs-xxs text-uppercase text-muted" style="letter-spacing: 0.03em;">
                         <tr>
-                            <th style="min-width: 140px;" class="ps-3.5">No. Tiket</th>
-                            <th style="min-width: 180px;">Murid Pelapor</th>
-                            <th style="min-width: 250px;">Kategori & Kronologi</th>
-                            <th style="min-width: 110px;" class="text-center">Risiko Keamanan</th>
-                            <th style="min-width: 140px;">Waktu & Lokasi</th>
-                            <th style="min-width: 130px;" class="text-center">Status</th>
-                            <th style="min-width: 90px;" class="text-end pe-3.5">Aksi</th>
+                            <th style="width: 14%;" class="ps-3">Tiket & Waktu</th>
+                            <th style="width: 18%;">Murid Pelapor</th>
+                            <th style="width: 24%;">Kategori & Kronologi</th>
+                            <th style="width: 10%;" class="text-center">Keamanan</th>
+                            <th style="width: 14%;">Waktu & Lokasi</th>
+                            <th style="width: 10%;" class="text-center">Status</th>
+                            <th style="width: 10%;" class="text-end pe-3">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="fs-xs">
                         @forelse($complaints as $item)
                             <tr class="{{ $item->safety_risk_flag ? 'table-danger-subtle' : '' }}">
                                 <!-- No. Tiket & Waktu Kirim -->
-                                <td class="ps-3.5">
+                                <td class="ps-3">
                                     <span class="fw-bold font-monospace text-mint fs-xs d-block">
                                         {{ $item->ticket_number }}
                                     </span>
@@ -279,9 +286,9 @@
 
                                 <!-- Murid Pelapor -->
                                 <td>
-                                    <div class="d-flex align-items-center gap-2">
+                                    <div class="d-flex align-items-center gap-1.5">
                                         <div class="rounded-circle bg-teal-subtle text-mint d-flex align-items-center justify-content-center fw-bold shadow-xs flex-shrink-0" 
-                                             style="width: 32px; height: 32px; font-size: 0.85rem;">
+                                             style="width: 28px; height: 28px; font-size: 0.8rem;">
                                             {{ strtoupper(substr($item->student?->name ?? $item->reporter_name ?? 'M', 0, 1)) }}
                                         </div>
                                         <div class="overflow-hidden">
@@ -299,10 +306,10 @@
                                 <!-- Kategori & Kronologi -->
                                 <td>
                                     <div>
-                                        <span class="badge bg-light text-dark border px-2 py-0.5 rounded fs-xxs fw-semibold mb-1 d-inline-block">
+                                        <span class="badge bg-light text-dark border px-2 py-0.5 rounded fs-xxs fw-semibold mb-0.5 d-inline-block">
                                             {{ $item->category }}
                                         </span>
-                                        <div class="text-muted fs-xs text-truncate" style="max-width: 280px;" title="{{ $item->description }}">
+                                        <div class="text-muted fs-xxs text-truncate" style="max-width: 240px;" title="{{ $item->description }}">
                                             {{ $item->description }}
                                         </div>
                                     </div>
@@ -311,7 +318,7 @@
                                 <!-- Risiko Keamanan -->
                                 <td class="text-center">
                                     @if($item->safety_risk_flag)
-                                        <span class="badge bg-danger text-white px-2.5 py-1 rounded-pill fs-xxs fw-bold">
+                                        <span class="badge bg-danger text-white px-2 py-0.5 rounded-pill fs-xxs fw-bold">
                                             <i class="bi bi-shield-fill-exclamation me-0.5"></i>Bahaya
                                         </span>
                                     @else
@@ -326,7 +333,7 @@
                                             <i class="bi bi-calendar-event me-0.5 text-mint"></i>
                                             {{ $item->incident_date ? $item->incident_date->translatedFormat('d M Y') : '-' }}
                                         </div>
-                                        <div class="text-muted fs-xxs text-truncate" style="max-width: 140px;" title="{{ $item->incident_location ?? 'Sekolah' }}">
+                                        <div class="text-muted fs-xxs text-truncate" style="max-width: 130px;" title="{{ $item->incident_location ?? 'Sekolah' }}">
                                             <i class="bi bi-geo-alt me-0.5 text-danger"></i>{{ $item->incident_location ?? 'Sekolah' }}
                                         </div>
                                     </div>
@@ -334,23 +341,30 @@
 
                                 <!-- Status -->
                                 <td class="text-center">
-                                    <span class="badge {{ $item->status_badge_class }} px-2.5 py-1 rounded-pill fs-xxs fw-semibold">
+                                    <span class="badge {{ $item->status_badge_class }} px-2 py-0.5 rounded-pill fs-xxs fw-semibold text-nowrap">
                                         {{ $item->status_label }}
                                     </span>
                                 </td>
 
                                 <!-- Aksi -->
-                                <td class="text-end pe-3.5">
-                                    <div class="d-flex align-items-center justify-content-end gap-1.5">
+                                <td class="text-end pe-3">
+                                    <div class="d-flex align-items-center justify-content-end gap-1">
                                         @if($item->status === 'resolved' || $item->status === 'closed')
-                                            <a href="{{ route('panel.pengaduan.printReport', $item->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill px-2.5 py-1 fs-xxs fw-semibold shadow-xs" title="Cetak Arsip Laporan PDF">
-                                                <i class="bi bi-file-earmark-pdf me-1"></i> Cetak
+                                            <a href="{{ route('panel.pengaduan.printReport', $item->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-circle d-flex align-items-center justify-content-center p-0 flex-shrink-0" style="width: 28px; height: 28px;" title="Cetak Arsip Laporan PDF">
+                                                <i class="bi bi-file-earmark-pdf fs-6"></i>
                                             </a>
                                         @endif
                                         <a href="{{ route('panel.pengaduan.show', $item->id) }}" 
-                                           class="btn btn-sm btn-outline-primary rounded-pill py-1 px-3 fs-xxs fw-semibold shadow-xs text-nowrap">
-                                            <i class="bi bi-eye me-1"></i> Detail
+                                           class="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center p-0 flex-shrink-0" style="width: 28px; height: 28px;" title="Detail & Tindak Lanjut">
+                                            <i class="bi bi-eye fs-6"></i>
                                         </a>
+                                        <form action="{{ route('panel.pengaduan.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengaduan {{ $item->ticket_number }}?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle d-flex align-items-center justify-content-center p-0 flex-shrink-0" style="width: 28px; height: 28px;" title="Hapus Pengaduan">
+                                                <i class="bi bi-trash fs-6"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

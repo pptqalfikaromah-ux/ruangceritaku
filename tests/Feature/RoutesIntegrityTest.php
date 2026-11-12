@@ -67,19 +67,17 @@ class RoutesIntegrityTest extends BaseTestCase
             $classroom->id => ['academic_year_id' => $year->id],
         ]);
 
-        $this->complaint = StudentComplaint::firstOrCreate(
-            ['ticket_number' => 'PGD-TEST-001'],
-            [
-                'student_id' => $this->student->id,
-                'category' => 'Perundungan / Bullying',
-                'urgency_level' => 'darurat',
-                'description' => 'Test laporan pengaduan',
-                'status' => 'submitted',
-                'is_anonymous' => false,
-                'safety_risk_flag' => true,
-            ]
-        );
-        $this->complaint->update(['student_id' => $this->student->id]);
+        StudentComplaint::withTrashed()->where('ticket_number', 'PGD-TEST-001')->forceDelete();
+        $this->complaint = StudentComplaint::create([
+            'ticket_number' => 'PGD-TEST-001',
+            'student_id' => $this->student->id,
+            'category' => 'Perundungan / Bullying',
+            'urgency_level' => 'darurat',
+            'description' => 'Test laporan pengaduan',
+            'status' => 'submitted',
+            'is_anonymous' => false,
+            'safety_risk_flag' => true,
+        ]);
 
         $guidance = GuidanceField::where('code', 'BID-01')->first()
             ?? GuidanceField::firstOrCreate(['code' => 'BID-01'], ['name' => 'Pribadi']);
@@ -162,5 +160,12 @@ class RoutesIntegrityTest extends BaseTestCase
 
         $resShow = $this->actingAs($this->admin)->get(route('panel.konseling.show', $this->counseling));
         $resShow->assertStatus(200);
+    }
+
+    protected function tearDown(): void
+    {
+        StudentComplaint::withTrashed()->where('ticket_number', 'PGD-TEST-001')->forceDelete();
+        CounselingRequest::withTrashed()->where('ticket_number', 'AGD-TEST-001')->forceDelete();
+        parent::tearDown();
     }
 }

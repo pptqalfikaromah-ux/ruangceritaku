@@ -194,6 +194,13 @@ return [
             'roles' => ['admin', 'guru_bk'],
             'children' => [
                 [
+                    'label' => 'Roda Undian (Spinner)',
+                    'icon' => 'bi-pie-chart-fill',
+                    'route' => 'panel.spinner.index',
+                    'active' => 'panel.spinner.*',
+                    'roles' => ['admin'],
+                ],
+                [
                     'label' => 'Pengumuman Sekolah',
                     'icon' => 'bi-broadcast',
                     'route' => 'panel.pengumuman.index',

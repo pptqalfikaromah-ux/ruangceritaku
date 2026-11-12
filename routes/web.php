@@ -18,6 +18,7 @@ use App\Http\Controllers\Panel\ImsController;
 use App\Http\Controllers\Panel\MasterServiceController;
 use App\Http\Controllers\Panel\ReportController;
 use App\Http\Controllers\Panel\SettingController;
+use App\Http\Controllers\Panel\SpinnerController;
 use App\Http\Controllers\Panel\StudentController;
 use App\Http\Controllers\Student\StudentComplaintController;
 use App\Http\Controllers\Student\StudentCounselingController;
@@ -180,6 +181,7 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
     Route::get('/aduan-walikelas/{aduanWalikela}', [HomeroomComplaintController::class, 'show'])->name('aduan-walikelas.show');
     Route::get('/aduan-walikelas/{aduanWalikela}/cetak-arsip', [HomeroomComplaintController::class, 'printReport'])->name('aduan-walikelas.printReport');
     Route::put('/aduan-walikelas/{aduanWalikela}', [HomeroomComplaintController::class, 'update'])->name('aduan-walikelas.update');
+    Route::delete('/aduan-walikelas/{aduanWalikela}', [HomeroomComplaintController::class, 'destroy'])->name('aduan-walikelas.destroy');
 
     // 10. Program BK & RPL
     Route::get('/program-bk', [BkProgramController::class, 'index'])->name('program-bk.index');
@@ -221,6 +223,12 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
 
         // 14. Pengumuman Sekolah
         Route::resource('pengumuman', AnnouncementController::class)->except(['create', 'show', 'edit']);
+
+        // 15. Alat Roda Undian (Spinner)
+        Route::get('/spinner', [SpinnerController::class, 'index'])->name('spinner.index');
+        Route::post('/spinner/participants', [SpinnerController::class, 'updateParticipants'])->name('spinner.update-participants');
+        Route::post('/spinner/reset', [SpinnerController::class, 'resetToDefault'])->name('spinner.reset');
+        Route::post('/spinner/winner', [SpinnerController::class, 'recordWinner'])->name('spinner.record-winner');
     });
 });
 
