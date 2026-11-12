@@ -64,6 +64,17 @@ class Student extends Model
         return $this->hasMany(StudentPamphlet::class);
     }
 
+    public function ledGroupCounselings()
+    {
+        return $this->hasMany(GroupCounseling::class, 'leader_student_id');
+    }
+
+    public function joinedGroupCounselings()
+    {
+        return $this->belongsToMany(GroupCounseling::class, 'group_counseling_members', 'student_id', 'group_counseling_id')
+            ->withTimestamps();
+    }
+
     /**
      * Rombel pada tahun ajaran aktif saat ini
      */

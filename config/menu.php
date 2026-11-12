@@ -89,6 +89,13 @@ return [
                     'roles' => ['admin', 'guru_bk'],
                 ],
                 [
+                    'label' => 'Layanan Kelompok (BKP & KKP)',
+                    'icon' => 'bi-people-fill',
+                    'route' => 'panel.layanan-kelompok.index',
+                    'active' => 'panel.layanan-kelompok.*',
+                    'roles' => ['admin', 'guru_bk'],
+                ],
+                [
                     'label' => 'Program BK (RPL)',
                     'icon' => 'bi-calendar-week',
                     'route' => 'panel.program-bk.index',

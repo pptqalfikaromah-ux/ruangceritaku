@@ -446,6 +446,9 @@
                 <a href="{{ route('murid.konseling.index') }}" class="sk-nav-item {{ request()->routeIs('murid.konseling.index*') || request()->routeIs('murid.konseling.show*') ? 'active' : '' }}">
                     <i class="bi bi-chat-heart"></i><span>Riwayat Konseling</span>
                 </a>
+                <a href="{{ route('murid.layanan-kelompok.index') }}" class="sk-nav-item {{ request()->routeIs('murid.layanan-kelompok.*') ? 'active' : '' }}">
+                    <i class="bi bi-people-fill"></i><span>Layanan Kelompok (BKP/KKP)</span>
+                </a>
                 <a href="{{ route('murid.pengaduan.index') }}" class="sk-nav-item {{ request()->routeIs('murid.pengaduan.*') ? 'active' : '' }}">
                     <i class="bi bi-shield-fill-exclamation text-danger"></i><span>Pelayanan Darurat</span>
                 </a>

@@ -11,6 +11,7 @@ use App\Http\Controllers\Panel\CounselingRequestController;
 use App\Http\Controllers\Panel\CounselorAssignmentController;
 use App\Http\Controllers\Panel\CounselorController;
 use App\Http\Controllers\Panel\DashboardController;
+use App\Http\Controllers\Panel\GroupCounselingController;
 use App\Http\Controllers\Panel\HomeroomAssignmentController;
 use App\Http\Controllers\Panel\HomeroomComplaintController;
 use App\Http\Controllers\Panel\HomeroomTeacherController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\Panel\StudentController;
 use App\Http\Controllers\Student\StudentComplaintController;
 use App\Http\Controllers\Student\StudentCounselingController;
 use App\Http\Controllers\Student\StudentDashboardController;
+use App\Http\Controllers\Student\StudentGroupCounselingController;
 use App\Http\Controllers\Student\StudentImsController;
 use App\Http\Controllers\Panel\AnnouncementController;
 use App\Http\Controllers\Panel\PamphletModerationController;
@@ -169,6 +171,14 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
     Route::get('/konseling/{konseling}/laporan-individual', [CounselingRequestController::class, 'printReport'])->name('konseling.printReport');
     Route::delete('/konseling/{konseling}', [CounselingRequestController::class, 'destroy'])->name('konseling.destroy');
 
+    // 8b. Layanan Bimbingan & Konseling Kelompok (BKP & KKP)
+    Route::get('/layanan-kelompok', [GroupCounselingController::class, 'index'])->name('layanan-kelompok.index');
+    Route::get('/layanan-kelompok/{layananKelompok}', [GroupCounselingController::class, 'show'])->name('layanan-kelompok.show');
+    Route::post('/layanan-kelompok/{layananKelompok}/jadwalkan', [GroupCounselingController::class, 'schedule'])->name('layanan-kelompok.schedule');
+    Route::post('/layanan-kelompok/{layananKelompok}/selesai', [GroupCounselingController::class, 'complete'])->name('layanan-kelompok.complete');
+    Route::get('/layanan-kelompok/{layananKelompok}/cetak-laporan', [GroupCounselingController::class, 'printReport'])->name('layanan-kelompok.printReport');
+    Route::delete('/layanan-kelompok/{layananKelompok}', [GroupCounselingController::class, 'destroy'])->name('layanan-kelompok.destroy');
+
     // 9. Layanan Pengaduan & Perlindungan Anak
     Route::get('/pengaduan', [ComplaintController::class, 'index'])->name('pengaduan.index');
     Route::get('/pengaduan/{pengaduan}', [ComplaintController::class, 'show'])->name('pengaduan.show');
@@ -253,6 +263,13 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
     Route::get('/konseling/{konseling}/cetak-kartu', [StudentCounselingController::class, 'printCard'])->name('konseling.printCard');
     Route::post('/konseling/{konseling}/konfirmasi', [StudentCounselingController::class, 'confirmSchedule'])->name('konseling.confirmSchedule');
     Route::post('/konseling/{konseling}/reschedule', [StudentCounselingController::class, 'requestReschedule'])->name('konseling.requestReschedule');
+
+    // 1b. Layanan Bimbingan & Konseling Kelompok (BKP & KKP)
+    Route::get('/layanan-kelompok', [StudentGroupCounselingController::class, 'index'])->name('layanan-kelompok.index');
+    Route::get('/layanan-kelompok/ajukan', [StudentGroupCounselingController::class, 'create'])->name('layanan-kelompok.create');
+    Route::post('/layanan-kelompok', [StudentGroupCounselingController::class, 'store'])->name('layanan-kelompok.store');
+    Route::get('/layanan-kelompok/{layananKelompok}', [StudentGroupCounselingController::class, 'show'])->name('layanan-kelompok.show');
+    Route::get('/layanan-kelompok/{layananKelompok}/cetak-kartu', [StudentGroupCounselingController::class, 'printCard'])->name('layanan-kelompok.printCard');
 
     // 2. Instrumen Masalah Siswa (IMS) - Modul Asesmen Mandiri
     Route::get('/ims', [StudentImsController::class, 'index'])->name('ims.index'); // Halaman 1: Pilih Layanan (8 Layanan)
