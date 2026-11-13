@@ -109,3 +109,23 @@ if (!function_exists('panel_recent_notifications')) {
         return app(\App\Services\PanelNotificationService::class)->getRecentNotifications($limit);
     }
 }
+
+if (!function_exists('student_notifications')) {
+    /**
+     * Mengambil ringkasan hitungan notifikasi akun murid
+     */
+    function student_notifications(): array
+    {
+        return app(\App\Services\StudentNotificationService::class)->getCounts();
+    }
+}
+
+if (!function_exists('student_recent_notifications')) {
+    /**
+     * Mengambil daftar item notifikasi terbaru untuk lonceng akun murid
+     */
+    function student_recent_notifications(int $limit = 8): \Illuminate\Support\Collection
+    {
+        return app(\App\Services\StudentNotificationService::class)->getRecentNotifications($limit);
+    }
+}

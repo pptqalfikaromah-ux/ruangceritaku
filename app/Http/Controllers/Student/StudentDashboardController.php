@@ -70,4 +70,13 @@ class StudentDashboardController extends Controller
             'scheduledGroup'
         ));
     }
+
+    /**
+     * Tandai semua notifikasi murid sebagai telah dibaca
+     */
+    public function markAllNotificationsRead(\App\Services\StudentNotificationService $service): \Illuminate\Http\RedirectResponse
+    {
+        $service->markAllAsRead();
+        return back()->with('success', 'Semua notifikasi berhasil ditandai telah dibaca.');
+    }
 }

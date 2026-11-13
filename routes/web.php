@@ -257,9 +257,10 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
 |--------------------------------------------------------------------------
 */
 Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->group(function () {
-    // Beranda Murid
+    // Beranda & Notifikasi Murid
     Route::get('/', [StudentDashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard.index');
+    Route::post('/notifikasi/mark-all-read', [StudentDashboardController::class, 'markAllNotificationsRead'])->name('notifikasi.mark-all-read');
 
     // 1. Pengajuan Konseling Mandiri / Pribadi
     Route::get('/ajukan-konseling', [StudentCounselingController::class, 'ajukan'])->name('konseling.ajukan');
