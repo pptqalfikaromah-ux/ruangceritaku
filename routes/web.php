@@ -276,6 +276,7 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
     Route::get('/layanan-kelompok', [StudentGroupCounselingController::class, 'index'])->name('layanan-kelompok.index');
     Route::get('/layanan-kelompok/ajukan', [StudentGroupCounselingController::class, 'create'])->name('layanan-kelompok.create');
     Route::post('/layanan-kelompok', [StudentGroupCounselingController::class, 'store'])->name('layanan-kelompok.store');
+    Route::delete('/layanan-kelompok/pengajuan/{groupCounselingRequest}', [StudentGroupCounselingController::class, 'cancelRequest'])->name('layanan-kelompok.cancel-request');
     Route::get('/layanan-kelompok/{layananKelompok}', [StudentGroupCounselingController::class, 'show'])->name('layanan-kelompok.show');
     Route::get('/layanan-kelompok/{layananKelompok}/cetak-kartu', [StudentGroupCounselingController::class, 'printCard'])->name('layanan-kelompok.printCard');
 

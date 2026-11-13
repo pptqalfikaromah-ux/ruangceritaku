@@ -30,31 +30,42 @@ class StudentGroupCounselingController extends Controller
                 ->with('error', 'Layanan Bimbingan Kelompok dan Konseling Kelompok sedang dinonaktifkan oleh pihak sekolah.');
         }
 
-        // Tentukan filter tipe yang aktif
+        // Tentukan filter tipe yang aktif secara tegas satu-per-satu
         $filterType = $request->input('type');
-        if ($filterType === 'bimbingan_kelompok' && !$bkpEnabled) {
-            $filterType = $kkpEnabled ? 'konseling_kelompok' : null;
-        } elseif ($filterType === 'konseling_kelompok' && !$kkpEnabled) {
-            $filterType = $bkpEnabled ? 'bimbingan_kelompok' : null;
+        if (!$filterType) {
+            $filterType = $bkpEnabled ? 'bimbingan_kelompok' : 'konseling_kelompok';
         }
+
+        // Validasi ketersediaan fitur
+        if ($filterType === 'bimbingan_kelompok' && !$bkpEnabled) {
+            return redirect()->route('murid.layanan-kelompok.index', ['type' => 'konseling_kelompok'])
+                ->with('warning', 'Layanan Bimbingan Kelompok (BKP) sedang dinonaktifkan oleh sekolah.');
+        }
+        if ($filterType === 'konseling_kelompok' && !$kkpEnabled) {
+            return redirect()->route('murid.layanan-kelompok.index', ['type' => 'bimbingan_kelompok'])
+                ->with('warning', 'Layanan Konseling Kelompok (KKP) sedang dinonaktifkan oleh sekolah.');
+        }
+
+        // Cek pengajuan aktif siswa yang masih menunggu pengelompokan
+        $pendingRequest = GroupCounselingRequest::where('student_id', $student->id)
+            ->where('service_type', $filterType)
+            ->where('status', 'menunggu_kelompok')
+            ->latest()
+            ->first();
 
         // 1. Ambil sesi kelompok terjadwal / aktif di mana siswa terdaftar sebagai anggota
         $activeGroups = GroupCounseling::with(['members.classrooms', 'counselor.user'])
             ->whereHas('members', function ($q) use ($student) {
                 $q->where('students.id', $student->id);
             })
-            ->when($filterType, function ($q, $t) {
-                $q->where('service_type', $t);
-            })
+            ->where('service_type', $filterType)
             ->latest()
             ->get();
 
-        // 2. Ambil riwayat pengajuan mandiri siswa (menunggu pengelompokan atau sudah dikelompokkan)
+        // 2. Ambil riwayat pengajuan mandiri siswa untuk tipe ini
         $myRequests = GroupCounselingRequest::with(['groupCounseling.members.classrooms', 'groupCounseling.counselor.user'])
             ->where('student_id', $student->id)
-            ->when($filterType, function ($q, $t) {
-                $q->where('service_type', $t);
-            })
+            ->where('service_type', $filterType)
             ->latest()
             ->paginate(10);
 
@@ -63,6 +74,7 @@ class StudentGroupCounselingController extends Controller
             'bkpEnabled',
             'kkpEnabled',
             'filterType',
+            'pendingRequest',
             'activeGroups',
             'myRequests'
         ));
@@ -70,31 +82,16 @@ class StudentGroupCounselingController extends Controller
 
     /**
      * Formulir Pengajuan Bimbingan / Konseling Kelompok Mandiri
+     * (Dialihkan langsung ke halaman utama layanan yang dipilih untuk 1-klik pengajuan)
      */
-    public function create(Request $request): View|RedirectResponse
+    public function create(Request $request): RedirectResponse
     {
-        $student = Auth::user()->student;
-        abort_unless($student, 403, 'Profil siswa tidak ditemukan.');
-
-        $bkpEnabled = app_setting('bkp_enabled', '1') === '1';
-        $kkpEnabled = app_setting('kkp_enabled', '1') === '1';
-
-        if (!$bkpEnabled && !$kkpEnabled) {
-            return redirect()->route('murid.dashboard')
-                ->with('error', 'Layanan Kelompok sedang dinonaktifkan sementara oleh Guru BK.');
-        }
-
-        // Tentukan pilihan default layanan
-        $selectedType = $request->input('type');
-        if (!$selectedType || ($selectedType === 'bimbingan_kelompok' && !$bkpEnabled)) {
-            $selectedType = $kkpEnabled ? 'konseling_kelompok' : 'bimbingan_kelompok';
-        }
-
-        return view('student.layanan-kelompok.create', compact('student', 'bkpEnabled', 'kkpEnabled', 'selectedType'));
+        $selectedType = $request->input('type', 'bimbingan_kelompok');
+        return redirect()->route('murid.layanan-kelompok.index', ['type' => $selectedType]);
     }
 
     /**
-     * Simpan Pengajuan Mandiri Sesi Kelompok Siswa
+     * Simpan Pengajuan Mandiri Sesi Kelompok Siswa (Cukup 1 Klik Tanpa Input Rumit)
      */
     public function store(Request $request): RedirectResponse
     {
@@ -106,27 +103,31 @@ class StudentGroupCounselingController extends Controller
 
         $serviceType = $request->input('service_type', 'bimbingan_kelompok');
         if ($serviceType === 'bimbingan_kelompok' && !$bkpEnabled) {
-            return back()->withInput()->with('error', 'Layanan Bimbingan Kelompok (BKP) sedang dinonaktifkan oleh sekolah.');
+            return back()->with('error', 'Layanan Bimbingan Kelompok (BKP) sedang dinonaktifkan oleh sekolah.');
         }
         if ($serviceType === 'konseling_kelompok' && !$kkpEnabled) {
-            return back()->withInput()->with('error', 'Layanan Konseling Kelompok (KKP) sedang dinonaktifkan oleh sekolah.');
+            return back()->with('error', 'Layanan Konseling Kelompok (KKP) sedang dinonaktifkan oleh sekolah.');
         }
 
-        $request->validate([
-            'service_type' => 'required|in:bimbingan_kelompok,konseling_kelompok',
-            'topic' => 'required|string|max:255',
-            'description' => 'required|string',
-            'preferred_date' => 'nullable|date|after_or_equal:today',
-            'preferred_session' => 'nullable|string|max:100',
-        ], [
-            'service_type.required' => 'Pilih jenis layanan (BKP atau KKP).',
-            'topic.required' => 'Topik bahasan yang ingin kamu ikuti harus diisi.',
-            'description.required' => 'Alasan atau kebutuhan bimbingan harus dijelaskan.',
-            'preferred_date.after_or_equal' => 'Usulan tanggal pelaksanaan tidak boleh tanggal yang sudah lewat.',
-        ]);
+        // Cek jika siswa sudah mengajukan dan statusnya masih menunggu_kelompok
+        $existing = GroupCounselingRequest::where('student_id', $student->id)
+            ->where('service_type', $serviceType)
+            ->where('status', 'menunggu_kelompok')
+            ->first();
+
+        if ($existing) {
+            return redirect()->route('murid.layanan-kelompok.index', ['type' => $serviceType])
+                ->with('info', 'Anda sudah memiliki pengajuan aktif yang sedang diproses oleh Guru BK.');
+        }
 
         $activeSemester = active_semester();
         $ticket = GroupCounselingRequest::generateTicketNumber($serviceType);
+
+        $defaultTopic = $serviceType === 'konseling_kelompok'
+            ? 'Pengajuan Konseling Kelompok (KKP)'
+            : 'Pengajuan Bimbingan Kelompok (BKP)';
+
+        $defaultDesc = 'Pengajuan mandiri dari siswa. Waktu, tempat, dan pembagian kelompok ditentukan oleh Guru BK.';
 
         GroupCounselingRequest::create([
             'ticket_number' => $ticket,
@@ -134,17 +135,40 @@ class StudentGroupCounselingController extends Controller
             'academic_year_id' => $activeSemester?->academic_year_id,
             'semester_id' => $activeSemester?->id,
             'service_type' => $serviceType,
-            'topic' => $request->input('topic'),
-            'description' => $request->input('description'),
+            'topic' => $request->input('topic', $defaultTopic) ?: $defaultTopic,
+            'description' => $request->input('description', $defaultDesc) ?: $defaultDesc,
             'preferred_date' => $request->input('preferred_date'),
-            'preferred_session' => $request->input('preferred_session'),
+            'preferred_session' => $request->input('preferred_session') ?: 'Ditentukan Guru BK',
             'status' => 'menunggu_kelompok',
         ]);
 
         $serviceLabel = $serviceType === 'konseling_kelompok' ? 'Konseling Kelompok (KKP)' : 'Bimbingan Kelompok (BKP)';
 
         return redirect()->route('murid.layanan-kelompok.index', ['type' => $serviceType])
-            ->with('success', "Pengajuan mandiri {$serviceLabel} berhasil dikirim! Guru BK akan mengelompokkan Anda dengan teman yang memiliki topik serupa dan menetapkan jadwalnya.");
+            ->with('success', "Pengajuan mandiri {$serviceLabel} berhasil dikirim! Guru BK akan menyatukanmu ke dalam kelompok dan menetapkan jadwal serta ruangannya.");
+    }
+
+    /**
+     * Batalkan Pengajuan Mandiri Siswa
+     */
+    public function cancelRequest(GroupCounselingRequest $groupCounselingRequest): RedirectResponse
+    {
+        $student = Auth::user()->student;
+        abort_unless($student, 403, 'Profil siswa tidak ditemukan.');
+
+        if ($groupCounselingRequest->student_id !== $student->id) {
+            abort(403, 'Anda tidak memiliki hak untuk membatalkan pengajuan ini.');
+        }
+
+        if ($groupCounselingRequest->status !== 'menunggu_kelompok') {
+            return back()->with('error', 'Pengajuan ini tidak dapat dibatalkan karena telah diproses/dijadwalkan oleh Guru BK.');
+        }
+
+        $serviceType = $groupCounselingRequest->service_type;
+        $groupCounselingRequest->delete();
+
+        return redirect()->route('murid.layanan-kelompok.index', ['type' => $serviceType])
+            ->with('success', 'Pengajuan mandiri Anda berhasil dibatalkan.');
     }
 
     /**

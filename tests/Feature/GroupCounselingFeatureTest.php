@@ -44,7 +44,8 @@ class GroupCounselingFeatureTest extends TestCase
     protected function tearDown(): void
     {
         // Bersihkan data uji agar database remote tetap bersih
-        GroupCounselingRequest::where('topic', 'like', '%Tes%')->orWhere('topic', 'like', '%Kiat%')->delete();
+        GroupCounselingRequest::where('student_id', $this->student->id)->delete();
+        GroupCounselingRequest::where('topic', 'like', '%Tes%')->orWhere('topic', 'like', '%Kiat%')->orWhere('ticket_number', 'like', '%REQ%')->delete();
         $testGroups = GroupCounseling::where('topic', 'like', '%Tes%')->orWhere('ticket_number', 'like', '%TEST%')->get();
         foreach ($testGroups as $g) {
             $g->members()->detach();
@@ -163,5 +164,31 @@ class GroupCounselingFeatureTest extends TestCase
         $responseDashboard->assertSee('Jadwal &amp; Anggota Kelompok Anda Telah Ditetapkan!', false);
         $responseDashboard->assertSee('Sesi Terjadwal Kelompok Belajar (Tes)');
         $responseDashboard->assertSee($this->memberStudent->name);
+    }
+
+    public function test_student_can_submit_with_single_click_without_inputs(): void
+    {
+        Setting::set('bkp_enabled', '1');
+        Setting::set('kkp_enabled', '1');
+
+        $response = $this->actingAs($this->studentUser)->post(route('murid.layanan-kelompok.store'), [
+            'service_type' => 'konseling_kelompok',
+        ]);
+
+        $response->assertRedirect(route('murid.layanan-kelompok.index', ['type' => 'konseling_kelompok']));
+
+        $req = GroupCounselingRequest::where('student_id', $this->student->id)
+            ->where('service_type', 'konseling_kelompok')
+            ->first();
+
+        $this->assertNotNull($req);
+        $this->assertEquals('konseling_kelompok', $req->service_type);
+        $this->assertEquals('menunggu_kelompok', $req->status);
+        $this->assertNotEmpty($req->topic);
+
+        // Uji pembatalan pengajuan mandiri
+        $cancelResponse = $this->actingAs($this->studentUser)->delete(route('murid.layanan-kelompok.cancel-request', $req->id));
+        $cancelResponse->assertRedirect(route('murid.layanan-kelompok.index', ['type' => 'konseling_kelompok']));
+        $this->assertNull($req->fresh());
     }
 }
