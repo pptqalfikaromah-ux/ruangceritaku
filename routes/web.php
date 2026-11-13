@@ -174,11 +174,15 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
 
     // 8b. Layanan Bimbingan & Konseling Kelompok (BKP & KKP)
     Route::get('/layanan-kelompok', [GroupCounselingController::class, 'index'])->name('layanan-kelompok.index');
+    Route::post('/layanan-kelompok/bentuk-kelompok', [GroupCounselingController::class, 'formGroup'])->name('layanan-kelompok.form-group');
     Route::get('/layanan-kelompok/{layananKelompok}', [GroupCounselingController::class, 'show'])->name('layanan-kelompok.show');
     Route::post('/layanan-kelompok/{layananKelompok}/jadwalkan', [GroupCounselingController::class, 'schedule'])->name('layanan-kelompok.schedule');
+    Route::post('/layanan-kelompok/{layananKelompok}/tambah-anggota', [GroupCounselingController::class, 'addMember'])->name('layanan-kelompok.add-member');
+    Route::delete('/layanan-kelompok/{layananKelompok}/anggota/{student}', [GroupCounselingController::class, 'removeMember'])->name('layanan-kelompok.remove-member');
     Route::post('/layanan-kelompok/{layananKelompok}/selesai', [GroupCounselingController::class, 'complete'])->name('layanan-kelompok.complete');
     Route::get('/layanan-kelompok/{layananKelompok}/cetak-laporan', [GroupCounselingController::class, 'printReport'])->name('layanan-kelompok.printReport');
     Route::delete('/layanan-kelompok/{layananKelompok}', [GroupCounselingController::class, 'destroy'])->name('layanan-kelompok.destroy');
+    Route::delete('/layanan-kelompok/pengajuan/{groupCounselingRequest}', [GroupCounselingController::class, 'destroyRequest'])->name('layanan-kelompok.destroy-request');
 
     // 9. Layanan Pengaduan & Perlindungan Anak
     Route::get('/pengaduan', [ComplaintController::class, 'index'])->name('pengaduan.index');

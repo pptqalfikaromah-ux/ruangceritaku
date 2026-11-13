@@ -52,8 +52,10 @@ class SettingController extends Controller
             }
         }
 
-        // Simpan status IMS (checkbox boolean)
+        // Simpan status modul layanan murid (checkbox boolean)
         Setting::set('ims_enabled', $request->has('ims_enabled') ? '1' : '0', 'features', 'Status pengaktifan fitur IMS untuk murid');
+        Setting::set('bkp_enabled', $request->has('bkp_enabled') ? '1' : '0', 'features', 'Status pengaktifan fitur Bimbingan Kelompok (BKP) untuk murid');
+        Setting::set('kkp_enabled', $request->has('kkp_enabled') ? '1' : '0', 'features', 'Status pengaktifan fitur Konseling Kelompok (KKP) untuk murid');
 
         // Upload logo pengganti jika ada
         if ($request->hasFile('app_logo')) {

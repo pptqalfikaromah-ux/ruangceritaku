@@ -183,27 +183,27 @@
                 <th style="width: 8%;">No</th>
                 <th style="width: 44%;">Nama Peserta</th>
                 <th style="width: 20%;">NISN</th>
-                <th style="width: 16%;">Kelas</th>
-                <th style="width: 12%;">Peran</th>
+                <th style="width: 14%;">Kelas</th>
+                <th style="width: 14%;">Zodiak</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td style="text-align: center;">1</td>
-                <td><strong>{{ $group->leader?->name }}</strong></td>
-                <td style="text-align: center;">{{ $group->leader?->nisn ?? '-' }}</td>
-                <td style="text-align: center;">{{ $group->leader?->classrooms->first()?->name ?? '-' }}</td>
-                <td style="text-align: center; font-weight: bold;">Ketua</td>
-            </tr>
-            @foreach($group->members as $idx => $m)
+            @php
+                $allMembers = $group->members->isNotEmpty() ? $group->members : ($group->leader ? collect([$group->leader]) : collect());
+            @endphp
+            @forelse($allMembers as $idx => $m)
                 <tr>
-                    <td style="text-align: center;">{{ $idx + 2 }}</td>
-                    <td>{{ $m->name }}</td>
+                    <td style="text-align: center;">{{ $idx + 1 }}</td>
+                    <td><strong>{{ $m->name }}</strong></td>
                     <td style="text-align: center;">{{ $m->nisn ?? '-' }}</td>
                     <td style="text-align: center;">{{ $m->classrooms->first()?->name ?? '-' }}</td>
-                    <td style="text-align: center;">Anggota</td>
+                    <td style="text-align: center;">{{ $m->zodiac_label ?? '-' }}</td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="5" style="text-align: center;">Belum ada peserta terdaftar.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 

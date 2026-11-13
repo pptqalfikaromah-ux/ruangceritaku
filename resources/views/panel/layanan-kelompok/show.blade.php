@@ -87,35 +87,40 @@
                         <i class="bi bi-people-fill me-1 text-mint"></i> Susunan Anggota Kelompok
                     </h6>
                     <span class="badge bg-teal-subtle text-mint px-2.5 py-1 rounded-pill fs-xxs fw-bold">
-                        Total {{ $group->members->count() + 1 }} Peserta
+                        Total {{ $group->members->count() }} Peserta
                     </span>
                 </div>
 
-                <!-- Ketua Kelompok -->
-                <div class="p-3 rounded-3 bg-light border mb-3 d-flex align-items-center justify-content-between">
-                    <div class="d-flex align-items-center gap-2.5">
-                        <div class="rounded-circle bg-mint text-white d-flex align-items-center justify-content-center fw-bold shadow-xs" style="width: 38px; height: 38px;">
-                            <i class="bi bi-star-fill fs-6 text-warning"></i>
-                        </div>
-                        <div>
-                            <span class="badge bg-warning text-dark px-2 py-0.5 rounded-pill fs-xxs fw-bold mb-0.5">Ketua / Pemohon</span>
-                            <div class="fw-bold text-dark fs-sm">{{ $group->leader?->name }}</div>
-                            <div class="text-muted fs-xxs">
-                                NISN: <code class="text-mint">{{ $group->leader?->nisn ?? '-' }}</code> &bull; Kelas: {{ $group->leader?->classrooms->first()?->name ?? 'Siswa' }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Form Tambah Anggota Siswa Baru -->
+                @if($group->status !== 'selesai' && isset($allStudents) && $allStudents->isNotEmpty())
+                    <form action="{{ route('panel.layanan-kelompok.add-member', $group) }}" method="POST" class="d-flex gap-2 mb-3 p-2.5 rounded-3 bg-light border">
+                        @csrf
+                        <select name="student_id" class="form-select form-select-sm fs-xs" required>
+                            <option value="">-- Tambah Anggota Murid Lainnya --</option>
+                            @foreach($allStudents as $ast)
+                                <option value="{{ $ast->id }}">
+                                    {{ $ast->name }} ({{ $ast->classrooms->first()?->name ?? '-' }}) {{ $ast->zodiac_label ? ' - ' . $ast->zodiac_label : '' }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-mint text-white rounded-pill px-3 py-1 fs-xxs fw-bold text-nowrap">
+                            <i class="bi bi-person-plus-fill me-1"></i> Tambah
+                        </button>
+                    </form>
+                @endif
 
-                <!-- Anggota Lainnya -->
+                <!-- Tabel Anggota -->
                 <div class="table-responsive">
                     <table class="table table-sm table-hover align-middle mb-0 fs-xs">
                         <thead class="table-light text-muted fs-xxs text-uppercase">
                             <tr>
-                                <th style="width: 40px;" class="text-center">#</th>
-                                <th>Nama Anggota Teman</th>
+                                <th style="width: 35px;" class="text-center">#</th>
+                                <th>Nama Siswa</th>
                                 <th>Kelas</th>
-                                <th>NISN</th>
+                                <th>Zodiak</th>
+                                @if($group->status !== 'selesai')
+                                    <th class="text-end pe-2">Aksi</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -123,7 +128,13 @@
                                 <tr>
                                     <td class="text-center fw-bold text-muted">{{ $idx + 1 }}</td>
                                     <td>
-                                        <div class="fw-bold text-dark">{{ $member->name }}</div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <img src="{{ $member->photo_url }}" alt="{{ $member->name }}" class="rounded-circle shadow-xs" width="28" height="28" style="object-fit: cover;">
+                                            <div>
+                                                <div class="fw-bold text-dark">{{ $member->name }}</div>
+                                                <div class="text-muted fs-xxs">NISN: {{ $member->nisn ?? '-' }}</div>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td>
                                         <span class="badge bg-light text-dark border rounded-pill px-2 py-0.5 fs-xxs">
@@ -131,13 +142,30 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <code class="text-mint">{{ $member->nisn ?? '-' }}</code>
+                                        @if($member->zodiac_label)
+                                            <span class="badge bg-purple-subtle text-purple border-0 rounded-pill px-2 py-0.5 fs-xxs" title="Zodiak: {{ $member->zodiac_name }}">
+                                                {{ $member->zodiac_label }}
+                                            </span>
+                                        @else
+                                            <span class="text-muted fs-xxs">-</span>
+                                        @endif
                                     </td>
+                                    @if($group->status !== 'selesai')
+                                        <td class="text-end pe-2">
+                                            <form action="{{ route('panel.layanan-kelompok.remove-member', [$group, $member]) }}" method="POST" onsubmit="return confirm('Keluarkan siswa {{ $member->name }} dari kelompok ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle p-0" style="width: 24px; height: 24px;" title="Keluarkan dari kelompok">
+                                                    <i class="bi bi-x fs-6"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    @endif
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center py-3 text-muted fs-xs">
-                                        Tidak ada anggota tambahan terdaftar.
+                                    <td colspan="5" class="text-center py-3 text-muted fs-xs">
+                                        Belum ada anggota terdaftar dalam kelompok ini.
                                     </td>
                                 </tr>
                             @endforelse

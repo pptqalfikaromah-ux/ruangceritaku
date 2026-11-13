@@ -75,6 +75,11 @@ class Student extends Model
             ->withTimestamps();
     }
 
+    public function groupCounselingRequests()
+    {
+        return $this->hasMany(GroupCounselingRequest::class);
+    }
+
     /**
      * Rombel pada tahun ajaran aktif saat ini
      */
@@ -186,6 +191,21 @@ class Student extends Model
             'Pisces' => '♓',
             default => '✨',
         };
+    }
+
+    public function getZodiacNameAttribute(): ?string
+    {
+        return $this->zodiac;
+    }
+
+    public function getZodiacSymbolAttribute(): ?string
+    {
+        return $this->zodiac_icon;
+    }
+
+    public function getZodiacLabelAttribute(): ?string
+    {
+        return $this->zodiac ? "{$this->zodiac_icon} {$this->zodiac}" : null;
     }
 
     /**

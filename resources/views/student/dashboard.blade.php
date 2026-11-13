@@ -22,10 +22,16 @@
                 <i class="bi bi-mortarboard-fill me-1"></i>{{ app_setting('school_name', 'Sekolah') }} &bull; Siswa Aktif
             </div>
             <div style="font-size:1.3rem;font-weight:800;line-height:1.2;margin-bottom:4px;">{{ $student->name }}</div>
-            <div style="font-size:.8rem;opacity:.85;">
-                <i class="bi bi-building me-1"></i>Kelas {{ $student->classrooms->first()?->name ?? 'Siswa' }}
-                &nbsp;&bull;&nbsp;
-                <i class="bi bi-card-text me-1"></i>NISN: {{ $student->nisn }}
+            <div style="font-size:.8rem;opacity:.85;" class="d-flex flex-wrap align-items-center gap-2 mt-1">
+                <span><i class="bi bi-building me-1"></i>Kelas {{ $student->classrooms->first()?->name ?? 'Siswa' }}</span>
+                <span>&bull;</span>
+                <span><i class="bi bi-card-text me-1"></i>NISN: {{ $student->nisn }}</span>
+                @if($student->zodiac_label)
+                    <span>&bull;</span>
+                    <span style="background:rgba(255,255,255,.2);padding:2px 10px;border-radius:20px;font-weight:700;font-size:.78rem;" title="Zodiak: {{ $student->zodiac_name }}">
+                        <i class="bi bi-stars me-1 text-warning"></i>{{ $student->zodiac_label }}
+                    </span>
+                @endif
             </div>
         </div>
         <div class="col-md-auto text-md-end mt-2 mt-md-0">
@@ -36,6 +42,72 @@
         </div>
     </div>
 </div>
+
+{{-- Notifikasi Jadwal & Anggota Kelompok (BKP / KKP) --}}
+@if($scheduledGroup)
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4" style="background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border-left: 5px solid #0d9488 !important;">
+        <div class="card-body p-3.5 p-md-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">
+                <div class="d-flex align-items-start gap-3">
+                    <div class="p-2.5 rounded-circle bg-mint text-white d-flex align-items-center justify-content-center flex-shrink-0 shadow-xs" style="width: 44px; height: 44px;">
+                        <i class="bi bi-bell-fill fs-5"></i>
+                    </div>
+                    <div>
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                            <span class="badge bg-mint text-white px-2.5 py-1 rounded-pill fs-xxs fw-bold">
+                                🔔 PEMBERITAHUAN JADWAL
+                            </span>
+                            <span class="badge {{ $scheduledGroup->service_type_badge_class }} rounded-pill px-2.5 py-1 fs-xxs fw-bold">
+                                {{ $scheduledGroup->service_type_label }}
+                            </span>
+                            <span class="badge bg-light text-dark border rounded-pill px-2 py-0.5 fs-xxs">
+                                Tiket: {{ $scheduledGroup->ticket_number }}
+                            </span>
+                        </div>
+                        <h5 class="fw-extrabold text-dark mb-1 fs-6">Jadwal &amp; Anggota Kelompok Anda Telah Ditetapkan!</h5>
+                        <p class="text-dark fs-xs mb-2">
+                            Topik: <strong>{{ $scheduledGroup->topic }}</strong> &bull; Guru BK: <strong>{{ $scheduledGroup->counselor?->user?->name ?? 'Guru BK' }}</strong>
+                        </p>
+
+                        <div class="d-flex flex-wrap align-items-center gap-3 text-muted fs-xs mb-3">
+                            <span><i class="bi bi-calendar-event me-1 text-mint"></i><strong>{{ $scheduledGroup->scheduled_date->translatedFormat('l, d F Y') }}</strong></span>
+                            <span><i class="bi bi-clock me-1 text-mint"></i><strong>{{ $scheduledGroup->start_time }} - {{ $scheduledGroup->end_time }} WIB</strong></span>
+                            <span><i class="bi bi-geo-alt me-1 text-mint"></i><strong>{{ $scheduledGroup->location ?? 'Ruang BK' }}</strong></span>
+                        </div>
+
+                        <!-- Teman 1 Kelompok -->
+                        <div>
+                            <div class="text-dark fw-bold fs-xxs text-uppercase mb-1.5">
+                                <i class="bi bi-people-fill text-mint me-1"></i> Teman Anggota dalam Kelompok Ini ({{ $scheduledGroup->members->count() }} Siswa):
+                            </div>
+                            <div class="d-flex flex-wrap gap-1.5">
+                                @foreach($scheduledGroup->members as $mem)
+                                    @php $isMe = $mem->id === $student->id; @endphp
+                                    <span class="badge {{ $isMe ? 'bg-mint text-white' : 'bg-white text-dark border' }} rounded-pill px-2.5 py-1 fs-xxs d-inline-flex align-items-center gap-1 shadow-xs">
+                                        <i class="bi bi-person-fill"></i>
+                                        {{ $mem->name }} {{ $isMe ? '(Kamu)' : '' }}
+                                        @if($mem->zodiac_label)
+                                            <span class="opacity-75">({{ $mem->zodiac_label }})</span>
+                                        @endif
+                                    </span>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column gap-2 flex-shrink-0 w-100 w-md-auto text-end">
+                    <a href="{{ route('murid.layanan-kelompok.show', $scheduledGroup) }}" class="btn btn-mint text-white rounded-pill px-3.5 py-2 fs-xs fw-bold shadow-xs">
+                        <i class="bi bi-eye me-1"></i> Buka Detail Kelompok
+                    </a>
+                    <a href="{{ route('murid.layanan-kelompok.printCard', $scheduledGroup) }}" target="_blank" class="btn btn-outline-secondary rounded-pill px-3 py-1.5 fs-xxs fw-bold bg-white">
+                        <i class="bi bi-printer me-1"></i> Cetak Kartu Undangan
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
 
 {{-- Etalase Pamflet Kreativitas Siswa & Pengumuman Sekolah --}}
 <x-pamphlet-carousel />

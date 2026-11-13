@@ -79,6 +79,11 @@ class GroupCounseling extends Model
             ->withTimestamps();
     }
 
+    public function requests(): HasMany
+    {
+        return $this->hasMany(GroupCounselingRequest::class, 'group_counseling_id');
+    }
+
     /**
      * Label jenis layanan
      */

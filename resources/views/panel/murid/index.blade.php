@@ -225,11 +225,18 @@
                                         <a href="{{ route('panel.murid.show', $student->id) }}" class="fw-bold text-dark text-decoration-none">
                                             {{ $student->name }}
                                         </a>
-                                        @if($student->user_id)
-                                            <span class="badge bg-teal-subtle text-mint smaller d-block" style="width: fit-content; font-size: 0.65rem;">
-                                                <i class="bi bi-person-check"></i> Punya Akun
-                                            </span>
-                                        @endif
+                                        <div class="d-flex flex-wrap align-items-center gap-1 mt-0.5">
+                                            @if($student->zodiac_label)
+                                                <span class="badge bg-purple-subtle text-purple border-0 px-2 py-0.5 rounded-pill" style="font-size: 0.65rem;" title="Zodiak: {{ $student->zodiac_name }}">
+                                                    {{ $student->zodiac_label }}
+                                                </span>
+                                            @endif
+                                            @if($student->user_id)
+                                                <span class="badge bg-teal-subtle text-mint px-2 py-0.5 rounded-pill" style="font-size: 0.65rem;">
+                                                    <i class="bi bi-person-check"></i> Punya Akun
+                                                </span>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </td>

@@ -32,6 +32,11 @@
                 <span class="badge {{ $murid->gender === 'L' ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger' }}">
                     {{ $murid->gender_label }}
                 </span>
+                @if($murid->zodiac_label)
+                    <span class="badge bg-purple-subtle text-purple">
+                        {{ $murid->zodiac_label }}
+                    </span>
+                @endif
             </div>
 
             <!-- Login Account Card -->
@@ -79,9 +84,9 @@
                         <div class="fw-semibold">
                             {{ $murid->birth_place ?? '-' }},
                             {{ $murid->birth_date ? $murid->birth_date->isoFormat('D MMMM Y') : '-' }}
-                            @if($murid->zodiac)
+                            @if($murid->zodiac_label)
                                 <span class="badge rounded-pill bg-purple-subtle text-purple ms-1.5 fs-xxs">
-                                    {{ $murid->zodiac_icon }} {{ $murid->zodiac }}
+                                    {{ $murid->zodiac_label }}
                                 </span>
                             @endif
                         </div>

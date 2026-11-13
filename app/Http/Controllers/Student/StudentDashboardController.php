@@ -49,6 +49,16 @@ class StudentDashboardController extends Controller
             ->limit(3)
             ->get();
 
+        // 5. Scheduled Group Counseling (BKP / KKP) untuk Notifikasi Siswa
+        $scheduledGroup = \App\Models\GroupCounseling::with(['members.classrooms', 'counselor.user'])
+            ->whereHas('members', function ($q) use ($student) {
+                $q->where('students.id', $student->id);
+            })
+            ->where('status', 'dijadwalkan')
+            ->whereNotNull('scheduled_date')
+            ->latest('scheduled_date')
+            ->first();
+
         return view('student.dashboard', compact(
             'student',
             'activeSemester',
@@ -56,7 +66,8 @@ class StudentDashboardController extends Controller
             'currentAssessment',
             'activeCounseling',
             'recentCounselings',
-            'recentComplaints'
+            'recentComplaints',
+            'scheduledGroup'
         ));
     }
 }

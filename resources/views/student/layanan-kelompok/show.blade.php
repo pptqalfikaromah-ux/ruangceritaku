@@ -69,35 +69,40 @@
             <!-- Susunan Peserta -->
             <div class="card card-app border-0 shadow-sm rounded-4 p-3.5 p-md-4">
                 <h6 class="fw-extrabold text-dark mb-3 pb-2 border-bottom fs-sm">
-                    <i class="bi bi-people-fill me-1 text-mint"></i> Peserta Sesi Kelompok
+                    <i class="bi bi-people-fill me-1 text-mint"></i> Seluruh Anggota Kelompok ({{ $group->members->count() }} Siswa)
                 </h6>
 
-                <!-- Ketua -->
-                <div class="p-2.5 rounded-3 bg-light border mb-2 d-flex align-items-center gap-2.5">
-                    <div class="rounded-circle bg-mint text-white d-flex align-items-center justify-content-center fw-bold shadow-xs flex-shrink-0" style="width: 34px; height: 34px;">
-                        <i class="bi bi-star-fill text-warning fs-6"></i>
-                    </div>
-                    <div>
-                        <div class="d-flex align-items-center gap-1.5">
-                            <strong class="text-dark fs-xs">{{ $group->leader?->name }}</strong>
-                            <span class="badge bg-warning text-dark rounded-pill px-2 py-0.2 fs-xxs fw-bold">Ketua</span>
-                        </div>
-                        <div class="text-muted fs-xxs">
-                            NISN: {{ $group->leader?->nisn ?? '-' }} &bull; Kelas: {{ $group->leader?->classrooms->first()?->name ?? 'Siswa' }}
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Anggota -->
-                <div class="space-y-1.5">
-                    @foreach($group->members as $idx => $m)
-                        <div class="p-2.5 rounded-3 border d-flex align-items-center justify-content-between fs-xs">
-                            <div class="d-flex align-items-center gap-2">
-                                <span class="badge bg-light text-muted border rounded-circle" style="width: 22px; height: 22px; line-height: 18px; text-align: center;">{{ $idx + 1 }}</span>
+                <div class="space-y-2">
+                    @forelse($group->members as $idx => $m)
+                        @php $isMe = $m->id === $student->id; @endphp
+                        <div class="p-2.5 rounded-3 border d-flex align-items-center justify-content-between fs-xs {{ $isMe ? 'bg-teal-subtle border-teal' : 'bg-white' }}">
+                            <div class="d-flex align-items-center gap-2.5">
+                                <span class="badge bg-light text-muted border rounded-circle flex-shrink-0" style="width: 24px; height: 24px; line-height: 20px; text-align: center;">{{ $idx + 1 }}</span>
+                                <img src="{{ $m->photo_url }}" alt="{{ $m->name }}" class="rounded-circle shadow-xs flex-shrink-0" width="32" height="32" style="object-fit: cover;">
                                 <div>
-                                    <span class="fw-semibold text-dark">{{ $m->name }}</span>
-                                    <div class="text-muted fs-xxs">Kelas: {{ $m->classrooms->first()?->name ?? '-' }}</div>
+                                    <div class="d-flex align-items-center gap-1.5">
+                                        <span class="fw-bold text-dark">{{ $m->name }}</span>
+                                        @if($isMe)
+                                            <span class="badge bg-mint text-white rounded-pill px-2 py-0.2" style="font-size: 0.62rem;">Kamu</span>
+                                        @endif
+                                    </div>
+                                    <div class="text-muted fs-xxs">
+                                        NISN: {{ $m->nisn }} &bull; Kelas: {{ $m->classrooms->first()?->name ?? '-' }}
+                                    </div>
                                 </div>
+                            </div>
+
+                            @if($m->zodiac_label)
+                                <span class="badge bg-purple-subtle text-purple border-0 rounded-pill px-2 py-1 fs-xxs">
+                                    {{ $m->zodiac_label }}
+                                </span>
+                            @endif
+                        </div>
+                    @empty
+                        <div class="text-muted fs-xs text-center py-3">Belum ada anggota yang dimasukkan oleh Guru BK.</div>
+                    @endforelse
+                </div>
                             </div>
                             <span class="badge bg-light text-muted border rounded-pill px-2 py-0.5 fs-xxs">Anggota</span>
                         </div>

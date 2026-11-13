@@ -110,7 +110,7 @@
                     </h6>
                 </div>
                 <div class="card-body p-4">
-                    <div class="d-flex align-items-center justify-content-between p-3 rounded-3 border bg-light">
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded-3 border bg-light mb-3">
                         <div class="me-3">
                             <div class="fw-bold text-dark fs-sm d-flex align-items-center gap-2">
                                 <i class="bi bi-clipboard2-check text-emerald fs-5"></i> Fitur Instrumen Masalah Siswa (IMS 180 Butir)
@@ -121,6 +121,36 @@
                         </div>
                         <div class="form-check form-switch fs-4 mb-0">
                             <input class="form-check-input" type="checkbox" role="switch" name="ims_enabled" value="1" id="switchImsEnabled" {{ app_setting('ims_enabled', '1') === '1' ? 'checked' : '' }}>
+                        </div>
+                    </div>
+
+                    <!-- Switch Fitur Bimbingan Kelompok (BKP) -->
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded-3 border bg-light mb-3">
+                        <div class="me-3">
+                            <div class="fw-bold text-dark fs-sm d-flex align-items-center gap-2">
+                                <i class="bi bi-people-fill text-mint fs-5"></i> Fitur Bimbingan Kelompok (BKP)
+                            </div>
+                            <div class="text-muted fs-xs mt-1">
+                                Jika diaktifkan, murid dapat melihat menu dan mengajukan permohonan sesi Bimbingan Kelompok secara mandiri untuk dikelompokkan oleh Guru BK.
+                            </div>
+                        </div>
+                        <div class="form-check form-switch fs-4 mb-0">
+                            <input class="form-check-input" type="checkbox" role="switch" name="bkp_enabled" value="1" id="switchBkpEnabled" {{ app_setting('bkp_enabled', '1') === '1' ? 'checked' : '' }}>
+                        </div>
+                    </div>
+
+                    <!-- Switch Fitur Konseling Kelompok (KKP) -->
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded-3 border bg-light">
+                        <div class="me-3">
+                            <div class="fw-bold text-dark fs-sm d-flex align-items-center gap-2">
+                                <i class="bi bi-heart-pulse-fill text-purple fs-5"></i> Fitur Konseling Kelompok (KKP)
+                            </div>
+                            <div class="text-muted fs-xs mt-1">
+                                Jika diaktifkan, murid dapat melihat menu dan mengajukan permohonan sesi Konseling Kelompok secara mandiri untuk dikelompokkan dan dijadwalkan oleh Guru BK.
+                            </div>
+                        </div>
+                        <div class="form-check form-switch fs-4 mb-0">
+                            <input class="form-check-input" type="checkbox" role="switch" name="kkp_enabled" value="1" id="switchKkpEnabled" {{ app_setting('kkp_enabled', '1') === '1' ? 'checked' : '' }}>
                         </div>
                     </div>
                 </div>
