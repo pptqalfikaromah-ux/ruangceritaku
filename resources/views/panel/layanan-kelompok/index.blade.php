@@ -118,7 +118,7 @@
                                                 <div class="d-flex align-items-center gap-1 mt-0.5">
                                                     <span class="text-muted fs-xxs">Kelas {{ $req->student->classrooms->first()?->name ?? '-' }}</span>
                                                     @if($req->student->zodiac_label)
-                                                        <span class="badge bg-purple-subtle text-purple rounded-pill px-1.5 py-0 fs-xxs" title="Zodiak: {{ $req->student->zodiac_name }}">
+                                                        <span class="badge-zodiac" style="font-size: 0.65rem; padding: 0.1rem 0.45rem;" title="Zodiak: {{ $req->student->zodiac_name }}">
                                                             {{ $req->student->zodiac_label }}
                                                         </span>
                                                     @endif
@@ -275,7 +275,7 @@
                                                 <span class="badge bg-light text-dark border rounded-pill px-1.5 py-0.5 fs-xxs">
                                                     {{ Str::words($mem->name, 1, '') }}
                                                     @if($mem->zodiac_icon)
-                                                        <span class="text-purple">{{ $mem->zodiac_icon }}</span>
+                                                        <span class="badge-zodiac px-1 py-0 fs-xxs" style="font-size: 0.62rem;">{{ $mem->zodiac_icon }}</span>
                                                     @endif
                                                 </span>
                                             @endforeach
@@ -434,7 +434,7 @@
                                                         <span class="text-muted fs-xxs">{{ $st->classrooms->first()?->name ?? '-' }} &bull; NISN: {{ $st->nisn }}</span>
                                                     </div>
                                                     @if($st->zodiac_label)
-                                                        <span class="badge bg-purple-subtle text-purple rounded-pill px-1.5 py-0 fs-xxs flex-shrink-0" title="Zodiak: {{ $st->zodiac_name }}">
+                                                        <span class="badge-zodiac flex-shrink-0" style="font-size: 0.65rem; padding: 0.1rem 0.45rem;" title="Zodiak: {{ $st->zodiac_name }}">
                                                             {{ $st->zodiac_label }}
                                                         </span>
                                                     @endif

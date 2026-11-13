@@ -59,7 +59,7 @@
                         </span>
                         <span class="text-muted small fs-xs">NISN: <code class="text-dark fw-bold px-1.5 py-0.5 bg-light rounded">{{ $student->nisn }}</code></span>
                         <span class="text-muted small fs-xs">&bull; Status: <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded-pill">Aktif</span></span>
-                        <span id="headerZodiacBadge" class="badge rounded-pill px-3 py-1.5 fw-bold text-white shadow-xs" style="background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); font-size: 0.76rem; {{ $student->zodiac ? '' : 'display:none;' }}">
+                        <span id="headerZodiacBadge" class="badge rounded-pill px-3 py-1.5 fw-bold text-white shadow-xs" style="background: linear-gradient(135deg, #7c3aed 0%, #c026d3 100%); font-size: 0.76rem; text-shadow: 0 1px 2px rgba(0,0,0,0.25); {{ $student->zodiac ? '' : 'display:none;' }}">
                             <span id="headerZodiacIcon" class="me-1">{{ $student->zodiac_icon ?? '✨' }}</span> Zodiak: <span id="headerZodiacName">{{ $student->zodiac ?? '-' }}</span>
                         </span>
                     </div>
@@ -105,8 +105,8 @@
                         <div class="col-12 col-md-6 mt-2 pt-2 border-top">
                             <div class="text-muted fs-xxs mb-1">Zodiak (Otomatis)</div>
                             <div class="fw-bold text-dark fs-xs p-2 bg-white rounded-3 border d-flex align-items-center gap-2">
-                                <span id="readOnlyZodiacIcon" class="fs-6" style="color: #8b5cf6;">{{ $student->zodiac_icon ?? '✨' }}</span>
-                                <span id="readOnlyZodiacName" class="badge rounded-pill bg-purple-subtle text-purple px-2.5 py-1 fw-bold fs-xs">{{ $student->zodiac ?? 'Belum terdeteksi' }}</span>
+                                <span id="readOnlyZodiacIcon" class="fs-6" style="color: #6b21a8;">{{ $student->zodiac_icon ?? '✨' }}</span>
+                                <span id="readOnlyZodiacName" class="badge-zodiac px-2.5 py-1">{{ $student->zodiac ?? 'Belum terdeteksi' }}</span>
                                 <span class="text-muted fs-xxs ms-auto">Mengikuti tgl lahir</span>
                             </div>
                         </div>
@@ -178,7 +178,7 @@
                     <div class="col-12 col-md-6">
                         <div class="d-flex justify-content-between align-items-center mb-1.5">
                             <label for="birthDateInput" class="form-label fw-bold small text-slate-700 mb-0">Tanggal Lahir</label>
-                            <span id="fieldZodiacBadge" class="badge rounded-pill px-2.5 py-1 fw-bold fs-xxs shadow-xs" style="background: linear-gradient(135deg, #f5f3ff 0%, #fdf2f8 100%); color: #7c3aed; border: 1px solid #ddd6fe; {{ $student->zodiac ? '' : 'display:none;' }}">
+                            <span id="fieldZodiacBadge" class="badge-zodiac shadow-xs" style="{{ $student->zodiac ? '' : 'display:none !important;' }}">
                                 <span id="fieldZodiacIcon">{{ $student->zodiac_icon ?? '✨' }}</span> Zodiak: <span id="fieldZodiacName">{{ $student->zodiac ?? '-' }}</span>
                             </span>
                         </div>
@@ -365,21 +365,21 @@
                 if (headerName) headerName.textContent = z.name;
             }
             if (fieldBadge) {
-                fieldBadge.style.display = 'inline-flex';
+                fieldBadge.style.setProperty('display', 'inline-flex', 'important');
                 if (fieldIcon) fieldIcon.textContent = z.icon;
                 if (fieldName) fieldName.textContent = z.name;
             }
             if (readOnlyIcon) readOnlyIcon.textContent = z.icon;
             if (readOnlyName) {
                 readOnlyName.textContent = z.name;
-                readOnlyName.className = 'badge rounded-pill bg-purple-subtle text-purple px-2.5 py-1 fw-bold fs-xs';
+                readOnlyName.className = 'badge-zodiac px-2.5 py-1';
             }
             if (helpText) {
                 helpText.innerHTML = `Zodiak Anda: <strong class="text-purple">${z.icon} ${z.name}</strong> (otomatis mengikuti tanggal lahir).`;
             }
         } else {
             if (headerBadge) headerBadge.style.display = 'none';
-            if (fieldBadge) fieldBadge.style.display = 'none';
+            if (fieldBadge) fieldBadge.style.setProperty('display', 'none', 'important');
             if (readOnlyIcon) readOnlyIcon.textContent = '✨';
             if (readOnlyName) {
                 readOnlyName.textContent = 'Belum terdeteksi';

@@ -150,7 +150,7 @@
                             <div class="fw-bold text-dark fs-xs">{{ $student->name }}</div>
                             <div class="text-muted fs-xxs">NISN: {{ $student->nisn }} &bull; Kelas {{ $student->classrooms->first()?->name ?? '-' }}</div>
                             @if($student->zodiac_label)
-                                <span class="badge bg-purple-subtle text-purple border-0 rounded-pill px-2 py-0.5 mt-1 fs-xxs">
+                                <span class="badge-zodiac mt-1">
                                     {{ $student->zodiac_label }}
                                 </span>
                             @endif

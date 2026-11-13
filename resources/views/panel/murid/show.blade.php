@@ -33,7 +33,7 @@
                     {{ $murid->gender_label }}
                 </span>
                 @if($murid->zodiac_label)
-                    <span class="badge bg-purple-subtle text-purple">
+                    <span class="badge-zodiac">
                         {{ $murid->zodiac_label }}
                     </span>
                 @endif
@@ -85,7 +85,7 @@
                             {{ $murid->birth_place ?? '-' }},
                             {{ $murid->birth_date ? $murid->birth_date->isoFormat('D MMMM Y') : '-' }}
                             @if($murid->zodiac_label)
-                                <span class="badge rounded-pill bg-purple-subtle text-purple ms-1.5 fs-xxs">
+                                <span class="badge-zodiac ms-1.5" style="font-size: 0.68rem; padding: 0.15rem 0.5rem;">
                                     {{ $murid->zodiac_label }}
                                 </span>
                             @endif

@@ -128,7 +128,7 @@
                                             <div class="d-flex align-items-center gap-1.5 mt-0.5">
                                                 <span class="text-muted" style="font-size: 0.68rem;">{{ $mem->classrooms->first()?->name ?? 'Siswa' }}</span>
                                                 @if($mem->zodiac_label)
-                                                    <span class="badge bg-purple-subtle text-purple rounded-pill px-1.5 py-0" style="font-size: 0.62rem;">
+                                                    <span class="badge-zodiac" style="font-size: 0.65rem; padding: 0.1rem 0.45rem;">
                                                         {{ $mem->zodiac_label }}
                                                     </span>
                                                 @endif

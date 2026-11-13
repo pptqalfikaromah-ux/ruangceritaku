@@ -143,7 +143,7 @@
                                     </td>
                                     <td>
                                         @if($member->zodiac_label)
-                                            <span class="badge bg-purple-subtle text-purple border-0 rounded-pill px-2 py-0.5 fs-xxs" title="Zodiak: {{ $member->zodiac_name }}">
+                                            <span class="badge-zodiac" style="font-size: 0.68rem; padding: 0.15rem 0.5rem;" title="Zodiak: {{ $member->zodiac_name }}">
                                                 {{ $member->zodiac_label }}
                                             </span>
                                         @else

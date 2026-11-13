@@ -28,7 +28,7 @@
                 <span><i class="bi bi-card-text me-1"></i>NISN: {{ $student->nisn }}</span>
                 @if($student->zodiac_label)
                     <span>&bull;</span>
-                    <span style="background:rgba(255,255,255,.2);padding:2px 10px;border-radius:20px;font-weight:700;font-size:.78rem;" title="Zodiak: {{ $student->zodiac_name }}">
+                    <span class="badge-zodiac shadow-sm" style="background: #ffffff !important; color: #6b21a8 !important; border: 1px solid #e9d5ff !important; font-size: 0.76rem !important; padding: 0.22rem 0.65rem !important;" title="Zodiak: {{ $student->zodiac_name }}">
                         <i class="bi bi-stars me-1 text-warning"></i>{{ $student->zodiac_label }}
                     </span>
                 @endif
@@ -83,13 +83,15 @@
                             <div class="d-flex flex-wrap gap-1.5">
                                 @foreach($scheduledGroup->members as $mem)
                                     @php $isMe = $mem->id === $student->id; @endphp
-                                    <span class="badge {{ $isMe ? 'bg-mint text-white' : 'bg-white text-dark border' }} rounded-pill px-2.5 py-1 fs-xxs d-inline-flex align-items-center gap-1 shadow-xs">
+                                    <div class="d-inline-flex align-items-center gap-1.5 p-1 px-2.5 rounded-pill {{ $isMe ? 'bg-mint text-white' : 'bg-white text-dark border' }} shadow-xs fs-xxs">
                                         <i class="bi bi-person-fill"></i>
-                                        {{ $mem->name }} {{ $isMe ? '(Kamu)' : '' }}
+                                        <span class="fw-bold">{{ $mem->name }} {{ $isMe ? '(Kamu)' : '' }}</span>
                                         @if($mem->zodiac_label)
-                                            <span class="opacity-75">({{ $mem->zodiac_label }})</span>
+                                            <span class="badge-zodiac" style="font-size: 0.65rem; padding: 0.1rem 0.45rem;">
+                                                {{ $mem->zodiac_label }}
+                                            </span>
                                         @endif
-                                    </span>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>

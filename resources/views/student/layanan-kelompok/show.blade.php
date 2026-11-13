@@ -94,7 +94,7 @@
                             </div>
 
                             @if($m->zodiac_label)
-                                <span class="badge bg-purple-subtle text-purple border-0 rounded-pill px-2 py-1 fs-xxs">
+                                <span class="badge-zodiac">
                                     {{ $m->zodiac_label }}
                                 </span>
                             @endif
@@ -102,11 +102,6 @@
                     @empty
                         <div class="text-muted fs-xs text-center py-3">Belum ada anggota yang dimasukkan oleh Guru BK.</div>
                     @endforelse
-                </div>
-                            </div>
-                            <span class="badge bg-light text-muted border rounded-pill px-2 py-0.5 fs-xxs">Anggota</span>
-                        </div>
-                    @endforeach
                 </div>
             </div>
         </div>

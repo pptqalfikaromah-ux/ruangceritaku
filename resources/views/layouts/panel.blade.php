@@ -387,6 +387,33 @@
         .bg-primary-teal, .bg-teal { background-color: var(--primary) !important; }
         .bg-teal-subtle { background-color: var(--primary-bg) !important; color: var(--primary-dark) !important; }
         .border-teal { border-color: var(--primary) !important; }
+        .text-purple { color: #6b21a8 !important; }
+        .bg-purple { background-color: #7c3aed !important; color: #ffffff !important; }
+        .bg-purple-subtle { background-color: #f3e8ff !important; color: #6b21a8 !important; }
+        .border-purple, .border-purple-subtle { border-color: #d8b4fe !important; }
+
+        /* Badge Zodiak Berkontras Tinggi (Tajam di Laptop & HP) */
+        .badge-zodiac {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.28rem !important;
+            background-color: #f3e8ff !important;
+            color: #6b21a8 !important;
+            border: 1px solid #d8b4fe !important;
+            font-weight: 700 !important;
+            border-radius: 50rem !important;
+            padding: 0.2rem 0.6rem !important;
+            font-size: 0.72rem !important;
+            letter-spacing: 0.015em !important;
+            line-height: 1.25 !important;
+            white-space: nowrap !important;
+            box-shadow: 0 1px 2px rgba(107, 33, 168, 0.08) !important;
+            text-decoration: none !important;
+        }
+        .badge-zodiac:hover {
+            background-color: #e9d5ff !important;
+            color: #581c87 !important;
+        }
         .text-slate-800 { color: #1e293b !important; }
         .fs-xs { font-size: .84rem !important; letter-spacing: 0.018em !important; line-height: 1.5 !important; }
         .fs-xxs { font-size: .77rem !important; letter-spacing: 0.022em !important; line-height: 1.48 !important; }

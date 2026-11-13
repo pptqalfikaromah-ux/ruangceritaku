@@ -137,6 +137,12 @@
                     {{ $student->gender_label }}
                 </span>
 
+                @if($student->zodiac_label)
+                    <span class="badge-zodiac">
+                        {{ $student->zodiac_label }}
+                    </span>
+                @endif
+
                 @if($student->user_id)
                     <span class="badge bg-success-subtle text-success badge-pill-custom">
                         <i class="bi bi-person-check me-1"></i>Punya Akun
@@ -225,14 +231,14 @@
                                         <a href="{{ route('panel.murid.show', $student->id) }}" class="fw-bold text-dark text-decoration-none">
                                             {{ $student->name }}
                                         </a>
-                                        <div class="d-flex flex-wrap align-items-center gap-1 mt-0.5">
+                                        <div class="d-flex flex-wrap align-items-center gap-1.5 mt-1">
                                             @if($student->zodiac_label)
-                                                <span class="badge bg-purple-subtle text-purple border-0 px-2 py-0.5 rounded-pill" style="font-size: 0.65rem;" title="Zodiak: {{ $student->zodiac_name }}">
+                                                <span class="badge-zodiac" title="Zodiak: {{ $student->zodiac_name }}">
                                                     {{ $student->zodiac_label }}
                                                 </span>
                                             @endif
                                             @if($student->user_id)
-                                                <span class="badge bg-teal-subtle text-mint px-2 py-0.5 rounded-pill" style="font-size: 0.65rem;">
+                                                <span class="badge bg-teal-subtle text-mint px-2 py-0.5 rounded-pill" style="font-size: 0.68rem; font-weight: 600;">
                                                     <i class="bi bi-person-check"></i> Punya Akun
                                                 </span>
                                             @endif
