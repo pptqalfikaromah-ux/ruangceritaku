@@ -414,34 +414,99 @@
 
                         <!-- Pemilihan Siswa Anggota Kelompok -->
                         <div class="col-12">
-                            <label class="form-label fw-bold small text-dark d-flex justify-content-between align-items-center">
-                                <span>Pilih Siswa Anggota Kelompok <span class="text-danger">*</span></span>
-                                <span class="text-muted fs-xxs">Bisa centang beberapa siswa</span>
+                            <label class="form-label fw-bold small text-dark d-flex justify-content-between align-items-center mb-1">
+                                <span><i class="bi bi-people-fill text-mint me-1"></i> Pilih Siswa Anggota Kelompok <span class="text-danger">*</span></span>
+                                <span class="text-muted fs-xxs">Antrean siswa yang telah mengajukan</span>
                             </label>
+
+                            <div class="p-2 mb-2 rounded-3 bg-teal-subtle text-mint fs-xxs">
+                                <i class="bi bi-info-circle-fill me-1"></i> Menampilkan antrean siswa yang <strong>telah mengajukan permohonan mandiri</strong>. Centang siswa-siswa yang ingin disatukan dalam kelompok ini.
+                            </div>
 
                             <!-- Hidden container for linked request IDs -->
                             <div id="hiddenRequestIdsContainer"></div>
 
-                            <div class="border rounded-3 p-2.5 bg-light" style="max-height: 220px; overflow-y: auto;">
-                                <div class="row g-2" id="modalStudentListContainer">
-                                    @foreach($allStudents as $st)
-                                        <div class="col-12 col-sm-6 modal-student-col" data-student-id="{{ $st->id }}">
-                                            <div class="form-check p-2 bg-white rounded-2 border">
-                                                <input class="form-check-input modal-student-check ms-1" type="checkbox" name="student_ids[]" value="{{ $st->id }}" id="modalSt{{ $st->id }}">
-                                                <label class="form-check-label ms-2 d-flex align-items-center justify-content-between w-100 fs-xs cursor-pointer" for="modalSt{{ $st->id }}">
-                                                    <div>
-                                                        <span class="fw-bold text-dark d-block" style="line-height: 1.2;">{{ $st->name }}</span>
-                                                        <span class="text-muted fs-xxs">{{ $st->classrooms->first()?->name ?? '-' }} &bull; NISN: {{ $st->nisn }}</span>
+                            <div class="border rounded-3 p-2.5 bg-light" style="max-height: 240px; overflow-y: auto;">
+                                <div class="row g-2" id="modalApplicantListContainer">
+                                    @forelse($allPendingRequests as $pr)
+                                        @php $st = $pr->student; @endphp
+                                        <div class="col-12 col-sm-6 modal-applicant-col" 
+                                             data-service-type="{{ $pr->service_type }}" 
+                                             data-student-id="{{ $st->id }}"
+                                             data-request-id="{{ $pr->id }}">
+                                            <div class="form-check p-2 bg-white rounded-2 border h-100 d-flex align-items-center">
+                                                <input class="form-check-input modal-student-check ms-1 flex-shrink-0" 
+                                                       type="checkbox" 
+                                                       name="student_ids[]" 
+                                                       value="{{ $st->id }}" 
+                                                       data-request-id="{{ $pr->id }}"
+                                                       data-service-type="{{ $pr->service_type }}"
+                                                       id="modalSt{{ $st->id }}"
+                                                       onchange="syncRequestIds()">
+                                                <label class="form-check-label ms-2 d-flex align-items-center justify-content-between w-100 fs-xs cursor-pointer mb-0" for="modalSt{{ $st->id }}">
+                                                    <div class="overflow-hidden pe-1">
+                                                        <span class="fw-bold text-dark d-block text-truncate" style="line-height: 1.2;">{{ $st->name }}</span>
+                                                        <div class="text-muted fs-xxs mt-0.5">
+                                                            <span>Kelas {{ $st->classrooms->first()?->name ?? '-' }}</span>
+                                                            &bull;
+                                                            <span class="badge {{ $pr->service_type === 'konseling_kelompok' ? 'bg-purple-subtle text-purple' : 'bg-teal-subtle text-mint' }} px-1.5 py-0.2" style="font-size: 0.62rem;">
+                                                                {{ $pr->service_type === 'konseling_kelompok' ? 'KKP' : 'BKP' }}
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                     @if($st->zodiac_label)
-                                                        <span class="badge-zodiac flex-shrink-0" style="font-size: 0.65rem; padding: 0.1rem 0.45rem;" title="Zodiak: {{ $st->zodiac_name }}">
+                                                        <span class="badge-zodiac flex-shrink-0 ms-1" style="font-size: 0.65rem; padding: 0.1rem 0.45rem;" title="Zodiak: {{ $st->zodiac_name }}">
                                                             {{ $st->zodiac_label }}
                                                         </span>
                                                     @endif
                                                 </label>
                                             </div>
                                         </div>
-                                    @endforeach
+                                    @empty
+                                        <div class="col-12 text-center py-3 text-muted fs-xs">
+                                            <i class="bi bi-inbox fs-4 d-block mb-1 text-muted"></i>
+                                            Belum ada siswa yang mengajukan permohonan bimbingan/konseling kelompok.
+                                        </div>
+                                    @endforelse
+
+                                    <div id="noMatchingApplicantAlert" class="col-12 text-center py-3 text-muted fs-xs d-none">
+                                        <i class="bi bi-person-x fs-4 d-block mb-1 text-warning"></i>
+                                        Tidak ada antrean siswa lain yang mengajukan untuk jenis layanan ini.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Collapsible Tambahan: Siswa Lainnya (Manual) -->
+                            <div class="mt-2">
+                                <a class="text-decoration-none fs-xxs fw-bold text-muted d-inline-flex align-items-center" data-bs-toggle="collapse" href="#collapseOtherStudents" role="button" aria-expanded="false">
+                                    <i class="bi bi-plus-circle me-1 text-mint"></i> Ingin sertakan siswa lain yang belum mengajukan? (Manual Rekomendasi Guru BK)
+                                </a>
+                                <div class="collapse mt-2" id="collapseOtherStudents">
+                                    <div class="p-2.5 border rounded-3 bg-white" style="max-height: 160px; overflow-y: auto;">
+                                        <div class="row g-2">
+                                            @php 
+                                                $pendingStudentIds = $allPendingRequests->pluck('student_id')->toArray();
+                                            @endphp
+                                            @foreach($allStudents->whereNotIn('id', $pendingStudentIds) as $st)
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-check p-2 bg-light rounded-2 border">
+                                                        <input class="form-check-input modal-student-check ms-1" type="checkbox" name="student_ids[]" value="{{ $st->id }}" id="modalOtherSt{{ $st->id }}" onchange="syncRequestIds()">
+                                                        <label class="form-check-label ms-2 d-flex align-items-center justify-content-between w-100 fs-xs cursor-pointer mb-0" for="modalOtherSt{{ $st->id }}">
+                                                            <div>
+                                                                <span class="fw-semibold text-dark d-block text-truncate" style="line-height: 1.2;">{{ $st->name }}</span>
+                                                                <span class="text-muted fs-xxs">Kelas {{ $st->classrooms->first()?->name ?? '-' }}</span>
+                                                            </div>
+                                                            @if($st->zodiac_label)
+                                                                <span class="badge-zodiac flex-shrink-0" style="font-size: 0.65rem; padding: 0.1rem 0.45rem;">
+                                                                    {{ $st->zodiac_label }}
+                                                                </span>
+                                                            @endif
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -481,21 +546,64 @@
         }
     }
 
+    function filterApplicantsByServiceType(sType) {
+        let visibleCount = 0;
+        document.querySelectorAll('.modal-applicant-col').forEach(col => {
+            const itemType = col.getAttribute('data-service-type');
+            if (!sType || itemType === sType) {
+                col.classList.remove('d-none');
+                visibleCount++;
+            } else {
+                col.classList.add('d-none');
+            }
+        });
+
+        const alertEmpty = document.getElementById('noMatchingApplicantAlert');
+        if (alertEmpty) {
+            if (visibleCount === 0) {
+                alertEmpty.classList.remove('d-none');
+            } else {
+                alertEmpty.classList.add('d-none');
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const serviceSelect = document.getElementById('modalServiceType');
+        if (serviceSelect) {
+            serviceSelect.addEventListener('change', function() {
+                filterApplicantsByServiceType(this.value);
+            });
+        }
+    });
+
+    function syncRequestIds() {
+        const hiddenContainer = document.getElementById('hiddenRequestIdsContainer');
+        hiddenContainer.innerHTML = '';
+        document.querySelectorAll('.modal-student-check:checked').forEach(cb => {
+            const reqId = cb.getAttribute('data-request-id');
+            if (reqId) {
+                const inp = document.createElement('input');
+                inp.type = 'hidden';
+                inp.name = 'request_ids[]';
+                inp.value = reqId;
+                hiddenContainer.appendChild(inp);
+            }
+        });
+    }
+
     function openBatchGroupModal() {
         const checked = document.querySelectorAll('.request-checkbox:checked');
         if (checked.length === 0) return;
 
         // Reset check di modal
         document.querySelectorAll('.modal-student-check').forEach(cb => cb.checked = false);
-        const hiddenContainer = document.getElementById('hiddenRequestIdsContainer');
-        hiddenContainer.innerHTML = '';
 
         let suggestedTopic = '';
         let serviceType = 'bimbingan_kelompok';
 
         checked.forEach(cb => {
             const studentId = cb.value;
-            const reqId = cb.getAttribute('data-request-id');
             const topic = cb.getAttribute('data-topic');
             const sType = cb.getAttribute('data-service-type');
 
@@ -504,19 +612,18 @@
 
             const modalCb = document.getElementById('modalSt' + studentId);
             if (modalCb) modalCb.checked = true;
-
-            // Tambahkan hidden input request id
-            const inp = document.createElement('input');
-            inp.type = 'hidden';
-            inp.name = 'request_ids[]';
-            inp.value = reqId;
-            hiddenContainer.appendChild(inp);
         });
 
+        const typeSelect = document.getElementById('modalServiceType');
+        if (typeSelect) {
+            typeSelect.value = serviceType;
+        }
         if (suggestedTopic) {
             document.getElementById('modalGroupTopic').value = suggestedTopic;
         }
-        document.getElementById('modalServiceType').value = serviceType;
+
+        filterApplicantsByServiceType(serviceType);
+        syncRequestIds();
 
         const modal = new bootstrap.Modal(document.getElementById('modalCreateGroup'));
         modal.show();
@@ -524,14 +631,23 @@
 
     function singleFormGroup(studentId, studentName, serviceType, topic, reqId) {
         document.querySelectorAll('.modal-student-check').forEach(cb => cb.checked = false);
+
+        const sType = serviceType || 'bimbingan_kelompok';
+        const typeSelect = document.getElementById('modalServiceType');
+        if (typeSelect) {
+            typeSelect.value = sType;
+        }
+
+        document.getElementById('modalGroupTopic').value = topic || (sType === 'konseling_kelompok' ? 'Sesi Konseling Kelompok' : 'Sesi Bimbingan Kelompok');
+
+        filterApplicantsByServiceType(sType);
+
         const modalCb = document.getElementById('modalSt' + studentId);
-        if (modalCb) modalCb.checked = true;
+        if (modalCb) {
+            modalCb.checked = true;
+        }
 
-        const hiddenContainer = document.getElementById('hiddenRequestIdsContainer');
-        hiddenContainer.innerHTML = '<input type="hidden" name="request_ids[]" value="' + reqId + '">';
-
-        document.getElementById('modalGroupTopic').value = topic || '';
-        document.getElementById('modalServiceType').value = serviceType || 'bimbingan_kelompok';
+        syncRequestIds();
 
         const modal = new bootstrap.Modal(document.getElementById('modalCreateGroup'));
         modal.show();

@@ -66,10 +66,15 @@ class GroupCounselingController extends Controller
 
         $groups = $query->paginate(15, ['*'], 'group_page')->withQueryString();
         $counselors = Counselor::with('user')->get();
+        $allPendingRequests = GroupCounselingRequest::with(['student.classrooms'])
+            ->where('status', 'menunggu_kelompok')
+            ->latest()
+            ->get();
         $allStudents = Student::with('classrooms')->where('status', 'aktif')->orderBy('name')->get();
 
         return view('panel.layanan-kelompok.index', compact(
             'pendingRequests',
+            'allPendingRequests',
             'groups',
             'counters',
             'counselors',
