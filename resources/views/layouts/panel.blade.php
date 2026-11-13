@@ -384,9 +384,9 @@
 
         /* HELPER WARNA & UTILITY */
         .text-primary-teal, .text-teal, .text-mint, .text-emerald { color: var(--primary) !important; }
-        .bg-primary-teal, .bg-teal { background-color: var(--primary) !important; }
-        .bg-teal-subtle { background-color: var(--primary-bg) !important; color: var(--primary-dark) !important; }
-        .border-teal { border-color: var(--primary) !important; }
+        .bg-primary-teal, .bg-teal, .bg-mint, .bg-emerald { background-color: #0d9488 !important; color: #ffffff !important; }
+        .bg-teal-subtle, .bg-mint-subtle, .bg-emerald-subtle { background-color: #ccfbf1 !important; color: #0f766e !important; }
+        .border-teal, .border-mint, .border-emerald { border-color: #0d9488 !important; }
         .text-purple { color: #6b21a8 !important; }
         .bg-purple { background-color: #7c3aed !important; color: #ffffff !important; }
         .bg-purple-subtle { background-color: #f3e8ff !important; color: #6b21a8 !important; }

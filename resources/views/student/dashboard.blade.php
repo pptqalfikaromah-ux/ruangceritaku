@@ -45,66 +45,99 @@
 
 {{-- Notifikasi Jadwal & Anggota Kelompok (BKP / KKP) --}}
 @if($scheduledGroup)
-    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4" style="background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border-left: 5px solid #0d9488 !important;">
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4" style="background: #ffffff; border: 1.5px solid #0d9488 !important; box-shadow: 0 4px 20px rgba(13,148,136,0.08) !important;">
+        <!-- Top Header Bar -->
+        <div class="p-3 px-md-4 border-bottom d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2.5" style="background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%);">
+            <div class="d-flex flex-wrap align-items-center gap-2">
+                <span class="badge rounded-pill px-3 py-1.5 fw-bold text-white shadow-xs" style="background: #0d9488; font-size: 0.74rem; letter-spacing: 0.02em;">
+                    <i class="bi bi-bell-fill me-1 text-warning"></i> PEMBERITAHUAN JADWAL
+                </span>
+                <span class="badge {{ $scheduledGroup->service_type === 'konseling_kelompok' ? 'bg-purple text-white' : 'bg-mint text-white' }} rounded-pill px-3 py-1.5 fw-bold" style="font-size: 0.74rem;">
+                    {{ $scheduledGroup->service_type_label }}
+                </span>
+                <span class="badge bg-white text-muted border rounded-pill px-2.5 py-1 fw-bold font-monospace" style="font-size: 0.72rem;">
+                    Tiket: {{ $scheduledGroup->ticket_number }}
+                </span>
+            </div>
+
+            <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                <a href="{{ route('murid.layanan-kelompok.show', $scheduledGroup) }}" class="btn btn-mint text-white rounded-pill px-3.5 py-1.5 fs-xs fw-bold shadow-xs">
+                    <i class="bi bi-eye me-1"></i> Buka Detail
+                </a>
+                <a href="{{ route('murid.layanan-kelompok.printCard', $scheduledGroup) }}" target="_blank" class="btn btn-outline-secondary rounded-pill px-3 py-1.5 fs-xs fw-bold bg-white" title="Cetak Kartu Undangan">
+                    <i class="bi bi-printer me-1"></i> Cetak Kartu
+                </a>
+            </div>
+        </div>
+
         <div class="card-body p-3.5 p-md-4">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">
-                <div class="d-flex align-items-start gap-3">
-                    <div class="p-2.5 rounded-circle bg-mint text-white d-flex align-items-center justify-content-center flex-shrink-0 shadow-xs" style="width: 44px; height: 44px;">
-                        <i class="bi bi-bell-fill fs-5"></i>
-                    </div>
-                    <div>
-                        <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
-                            <span class="badge bg-mint text-white px-2.5 py-1 rounded-pill fs-xxs fw-bold">
-                                🔔 PEMBERITAHUAN JADWAL
-                            </span>
-                            <span class="badge {{ $scheduledGroup->service_type_badge_class }} rounded-pill px-2.5 py-1 fs-xxs fw-bold">
-                                {{ $scheduledGroup->service_type_label }}
-                            </span>
-                            <span class="badge bg-light text-dark border rounded-pill px-2 py-0.5 fs-xxs">
-                                Tiket: {{ $scheduledGroup->ticket_number }}
-                            </span>
-                        </div>
-                        <h5 class="fw-extrabold text-dark mb-1 fs-6">Jadwal &amp; Anggota Kelompok Anda Telah Ditetapkan!</h5>
-                        <p class="text-dark fs-xs mb-2">
-                            Topik: <strong>{{ $scheduledGroup->topic }}</strong> &bull; Guru BK: <strong>{{ $scheduledGroup->counselor?->user?->name ?? 'Guru BK' }}</strong>
-                        </p>
+            <div class="mb-3">
+                <h5 class="fw-extrabold text-dark mb-1 fs-5">
+                    Jadwal &amp; Anggota Kelompok Anda Telah Ditetapkan!
+                </h5>
+                <p class="text-muted fs-xs mb-0">
+                    Topik Bahasan: <strong class="text-dark">{{ $scheduledGroup->topic }}</strong> &bull; Guru BK Pendamping: <strong class="text-dark">{{ $scheduledGroup->counselor?->user?->name ?? 'Tim Guru BK' }}</strong>
+                </p>
+            </div>
 
-                        <div class="d-flex flex-wrap align-items-center gap-3 text-muted fs-xs mb-3">
-                            <span><i class="bi bi-calendar-event me-1 text-mint"></i><strong>{{ $scheduledGroup->scheduled_date->translatedFormat('l, d F Y') }}</strong></span>
-                            <span><i class="bi bi-clock me-1 text-mint"></i><strong>{{ $scheduledGroup->start_time }} - {{ $scheduledGroup->end_time }} WIB</strong></span>
-                            <span><i class="bi bi-geo-alt me-1 text-mint"></i><strong>{{ $scheduledGroup->location ?? 'Ruang BK' }}</strong></span>
+            <!-- Detail Jadwal: 3 Box Luas & Terbaca Jelas -->
+            <div class="row g-2.5 mb-3">
+                <div class="col-12 col-md-4">
+                    <div class="p-2.5 px-3 rounded-3 bg-light border d-flex align-items-center gap-2.5">
+                        <div class="rounded-circle bg-white text-mint d-flex align-items-center justify-content-center shadow-xs flex-shrink-0" style="width: 38px; height: 38px;">
+                            <i class="bi bi-calendar-event fs-5"></i>
                         </div>
-
-                        <!-- Teman 1 Kelompok -->
                         <div>
-                            <div class="text-dark fw-bold fs-xxs text-uppercase mb-1.5">
-                                <i class="bi bi-people-fill text-mint me-1"></i> Teman Anggota dalam Kelompok Ini ({{ $scheduledGroup->members->count() }} Siswa):
-                            </div>
-                            <div class="d-flex flex-wrap gap-1.5">
-                                @foreach($scheduledGroup->members as $mem)
-                                    @php $isMe = $mem->id === $student->id; @endphp
-                                    <div class="d-inline-flex align-items-center gap-1.5 p-1 px-2.5 rounded-pill {{ $isMe ? 'bg-mint text-white' : 'bg-white text-dark border' }} shadow-xs fs-xxs">
-                                        <i class="bi bi-person-fill"></i>
-                                        <span class="fw-bold">{{ $mem->name }} {{ $isMe ? '(Kamu)' : '' }}</span>
-                                        @if($mem->zodiac_label)
-                                            <span class="badge-zodiac" style="font-size: 0.65rem; padding: 0.1rem 0.45rem;">
-                                                {{ $mem->zodiac_label }}
-                                            </span>
-                                        @endif
-                                    </div>
-                                @endforeach
-                            </div>
+                            <span class="text-muted fs-xxs d-block fw-semibold">Tanggal Pelaksanaan</span>
+                            <strong class="text-dark fs-xs">{{ $scheduledGroup->scheduled_date->translatedFormat('l, d F Y') }}</strong>
                         </div>
                     </div>
                 </div>
 
-                <div class="d-flex flex-column gap-2 flex-shrink-0 w-100 w-md-auto text-end">
-                    <a href="{{ route('murid.layanan-kelompok.show', $scheduledGroup) }}" class="btn btn-mint text-white rounded-pill px-3.5 py-2 fs-xs fw-bold shadow-xs">
-                        <i class="bi bi-eye me-1"></i> Buka Detail Kelompok
-                    </a>
-                    <a href="{{ route('murid.layanan-kelompok.printCard', $scheduledGroup) }}" target="_blank" class="btn btn-outline-secondary rounded-pill px-3 py-1.5 fs-xxs fw-bold bg-white">
-                        <i class="bi bi-printer me-1"></i> Cetak Kartu Undangan
-                    </a>
+                <div class="col-12 col-md-4">
+                    <div class="p-2.5 px-3 rounded-3 bg-light border d-flex align-items-center gap-2.5">
+                        <div class="rounded-circle bg-white text-mint d-flex align-items-center justify-content-center shadow-xs flex-shrink-0" style="width: 38px; height: 38px;">
+                            <i class="bi bi-clock fs-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-muted fs-xxs d-block fw-semibold">Waktu / Sesi</span>
+                            <strong class="text-dark fs-xs">{{ $scheduledGroup->start_time }} - {{ $scheduledGroup->end_time }} WIB</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="p-2.5 px-3 rounded-3 bg-light border d-flex align-items-center gap-2.5">
+                        <div class="rounded-circle bg-white text-mint d-flex align-items-center justify-content-center shadow-xs flex-shrink-0" style="width: 38px; height: 38px;">
+                            <i class="bi bi-geo-alt fs-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-muted fs-xxs d-block fw-semibold">Tempat / Ruangan</span>
+                            <strong class="text-dark fs-xs">{{ $scheduledGroup->location ?? 'Ruang BK' }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teman 1 Kelompok -->
+            <div class="pt-2 border-top">
+                <div class="text-muted fw-bold fs-xxs text-uppercase mb-2">
+                    <i class="bi bi-people-fill text-mint me-1"></i> Teman Anggota dalam Kelompok Ini ({{ $scheduledGroup->members->count() }} Siswa):
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                    @foreach($scheduledGroup->members as $mem)
+                        @php $isMe = $mem->id === $student->id; @endphp
+                        <div class="d-inline-flex align-items-center gap-2 p-1.5 px-3 rounded-pill {{ $isMe ? 'bg-mint text-white' : 'bg-light text-dark border' }} shadow-xs fs-xs">
+                            <img src="{{ $mem->photo_url }}" alt="{{ $mem->name }}" class="rounded-circle flex-shrink-0" width="24" height="24" style="object-fit: cover;">
+                            <span class="fw-bold">{{ $mem->name }} {!! $isMe ? '<span class="badge bg-white text-mint rounded-pill ms-1 px-1.5 py-0.2" style="font-size: 0.65rem;">Kamu</span>' : '' !!}</span>
+                            <span class="{{ $isMe ? 'text-white-50' : 'text-muted' }} fs-xxs">&bull; Kelas {{ $mem->classrooms->first()?->name ?? '-' }}</span>
+                            @if($mem->zodiac_label)
+                                <span class="badge-zodiac ms-0.5" style="font-size: 0.68rem; padding: 0.15rem 0.5rem;">
+                                    {{ $mem->zodiac_label }}
+                                </span>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -220,11 +220,10 @@
         .pagination { gap: 2px; }
         .alert { border-radius: 8px; }
         /* Color helpers */
-        .text-primary-teal { color: var(--primary) !important; }
-        .bg-primary-teal { background-color: var(--primary) !important; }
-        .bg-teal-subtle { background-color: var(--primary-bg) !important; color: var(--primary-dark) !important; }
-        .text-emerald { color: var(--primary) !important; }
-        .text-mint { color: var(--primary) !important; }
+        .text-primary-teal, .text-teal, .text-mint, .text-emerald { color: var(--primary) !important; }
+        .bg-primary-teal, .bg-teal, .bg-mint, .bg-emerald { background-color: #0d9488 !important; color: #ffffff !important; }
+        .bg-teal-subtle, .bg-mint-subtle, .bg-emerald-subtle { background-color: #ccfbf1 !important; color: #0f766e !important; }
+        .border-teal, .border-mint, .border-emerald { border-color: #0d9488 !important; }
         .shadow-xs { box-shadow: 0 1px 3px rgba(15,23,42,0.06) !important; }
         .text-purple { color: #6b21a8 !important; }
         .bg-purple { background-color: #7c3aed !important; color: #ffffff !important; }
