@@ -60,4 +60,13 @@ class WaliKelasDashboardController extends Controller
             'activeYear'
         ));
     }
+
+    /**
+     * Tandai semua notifikasi wali kelas sebagai telah dibaca
+     */
+    public function markAllNotificationsRead(\App\Services\WaliKelasNotificationService $service): \Illuminate\Http\RedirectResponse
+    {
+        $service->markAllAsRead();
+        return back()->with('success', 'Semua notifikasi wali kelas berhasil ditandai telah dibaca.');
+    }
 }

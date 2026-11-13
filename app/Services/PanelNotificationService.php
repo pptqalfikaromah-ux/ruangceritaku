@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\CounselingRequest;
+use App\Models\GroupCounselingRequest;
 use App\Models\HomeroomComplaint;
 use App\Models\ImsAssessment;
 use App\Models\StudentComplaint;
@@ -17,6 +18,7 @@ class PanelNotificationService
     {
         try {
             $unreadCounseling = CounselingRequest::whereNull('read_at')->count();
+            $unreadGroups = GroupCounselingRequest::where('status', 'menunggu_kelompok')->count();
             $unreadComplaints = StudentComplaint::whereNull('read_at')->count();
             
             $highRiskComplaints = StudentComplaint::whereNull('read_at')
@@ -28,11 +30,13 @@ class PanelNotificationService
             $unreadHomeroom = HomeroomComplaint::whereNull('read_at')->count();
             $unreadIms = ImsAssessment::where('status', 'submitted')->whereNull('read_at')->count();
 
-            $totalUnread = $unreadCounseling + $unreadComplaints + $unreadHomeroom + $unreadIms;
+            $totalUnread = $unreadCounseling + $unreadGroups + $unreadComplaints + $unreadHomeroom + $unreadIms;
 
             return [
                 'total' => $totalUnread,
                 'counseling' => $unreadCounseling,
+                'groups' => $unreadGroups,
+                'all_counseling' => ($unreadCounseling + $unreadGroups),
                 'complaints' => $unreadComplaints,
                 'high_risk_complaints' => $highRiskComplaints,
                 'has_danger' => $highRiskComplaints > 0,
@@ -44,6 +48,8 @@ class PanelNotificationService
             return [
                 'total' => 0,
                 'counseling' => 0,
+                'groups' => 0,
+                'all_counseling' => 0,
                 'complaints' => 0,
                 'high_risk_complaints' => 0,
                 'has_danger' => false,
@@ -108,6 +114,30 @@ class PanelNotificationService
                     ];
                 });
             $items = $items->merge($counselings);
+
+            // 2b. Permohonan BKP & KKP (Layanan Kelompok)
+            $groupRequests = GroupCounselingRequest::with('student')
+                ->where('status', 'menunggu_kelompok')
+                ->latest()
+                ->take($limit)
+                ->get()
+                ->map(function ($gr) {
+                    $typeLabel = $gr->service_type === 'bimbingan_kelompok' ? 'BKP' : 'KKP';
+                    return [
+                        'id' => 'greq_' . $gr->id,
+                        'type' => 'layanan_kelompok',
+                        'title' => "Permohonan {$typeLabel}: " . \Illuminate\Support\Str::limit($gr->topic ?? $gr->service_type_label, 38),
+                        'sender' => $gr->student?->name ?? 'Murid',
+                        'time' => $gr->created_at,
+                        'time_ago' => $gr->created_at?->diffForHumans() ?? 'Baru saja',
+                        'url' => route('panel.layanan-kelompok.index'),
+                        'is_danger' => false,
+                        'icon' => $gr->service_type === 'bimbingan_kelompok' ? 'bi-people-fill text-mint' : 'bi-heart-pulse-fill text-purple',
+                        'badge_label' => "Antrean {$typeLabel}",
+                        'badge_class' => $gr->service_type === 'bimbingan_kelompok' ? 'bg-teal-subtle text-mint' : 'bg-purple-subtle text-purple',
+                    ];
+                });
+            $items = $items->merge($groupRequests);
 
             // 3. Aduan Kasus Wali Kelas Belum Dibaca
             $homerooms = HomeroomComplaint::with(['teacher', 'student'])

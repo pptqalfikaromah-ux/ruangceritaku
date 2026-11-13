@@ -211,6 +211,44 @@
         .bg-purple-subtle { background-color: #f3e8ff !important; color: #6b21a8 !important; }
         .border-purple, .border-purple-subtle { border-color: #d8b4fe !important; }
 
+        /* NOTIFICATION BELL DROPDOWN (Identik dengan Admin Panel & Siswa) */
+        .sk-bell-btn {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .sk-bell-btn:hover {
+            background: var(--gold-light);
+            color: var(--primary);
+            border-color: #fde68a;
+        }
+        .sk-bell-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 4px;
+            border-radius: 9px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            line-height: 18px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.4);
+        }
+        .hover-teal:hover {
+            color: var(--primary) !important;
+        }
+
         /* Badge Zodiak Berkontras Tinggi (Tajam di Laptop & HP) */
         .badge-zodiac {
             display: inline-flex !important;
@@ -353,6 +391,92 @@
             </div>
 
             <div class="sk-user-info">
+                {{-- TOMBOL NOTIFIKASI LONCENG WALI KELAS --}}
+                @php
+                    $walasNotifs = walikelas_notifications();
+                    $recentWalasNotifs = walikelas_recent_notifications(8);
+                @endphp
+                <div class="dropdown me-1">
+                    <button class="sk-bell-btn" 
+                            type="button" 
+                            id="dropdownWalasNotifBell" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false" 
+                            title="{{ $walasNotifs['total'] }} Notifikasi Baru">
+                        <i class="bi {{ $walasNotifs['total'] > 0 ? 'bi-bell-fill text-warning' : 'bi-bell' }} fs-5"></i>
+                        @if($walasNotifs['total'] > 0)
+                            <span class="sk-bell-badge bg-danger text-white">
+                                {{ $walasNotifs['total'] > 99 ? '99+' : $walasNotifs['total'] }}
+                            </span>
+                        @endif
+                    </button>
+
+                    <div class="dropdown-menu dropdown-menu-end shadow-lg border rounded-3 py-0 mt-2" 
+                         aria-labelledby="dropdownWalasNotifBell" 
+                         style="width: 360px; max-width: 90vw; z-index: 1060; border-color: var(--border-color) !important;">
+                        <div class="p-3 bg-light border-bottom d-flex align-items-center justify-content-between">
+                            <div>
+                                <div class="fw-bold text-dark fs-6 d-flex align-items-center gap-1.5">
+                                    <i class="bi bi-bell-fill text-warning"></i> Notifikasi Masuk
+                                    @if($walasNotifs['total'] > 0)
+                                        <span class="badge bg-warning text-dark rounded-pill fs-xxs">
+                                            {{ $walasNotifs['total'] }} Baru
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="text-muted fs-xxs mt-0.5">
+                                    Tanggapan kasus dari Guru BK &amp; pengumuman
+                                </div>
+                            </div>
+                            @if($walasNotifs['total'] > 0)
+                                <form action="{{ route('walikelas.notifikasi.mark-all-read') }}" method="POST" class="m-0">
+                                    @csrf
+                                    <button type="submit" class="btn btn-link btn-sm text-decoration-none p-0 text-muted fs-xxs hover-teal" title="Tandai semua dibaca">
+                                        <i class="bi bi-check2-all me-1"></i> Tandai Dibaca
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+
+                        <div class="list-group list-group-flush overflow-auto" style="max-height: 360px;">
+                            @forelse($recentWalasNotifs as $notif)
+                                <a href="{{ $notif['url'] }}" 
+                                   class="list-group-item list-group-item-action p-2.5 border-bottom transition-all {{ $notif['is_unread'] ? 'bg-light' : '' }}">
+                                    <div class="d-flex align-items-start gap-2.5">
+                                        <div class="rounded-circle p-2 d-flex align-items-center justify-content-center flex-shrink-0 bg-white shadow-xs border" style="width: 36px; height: 36px;">
+                                            <i class="bi {{ $notif['icon'] }} fs-5"></i>
+                                        </div>
+                                        <div class="flex-grow-1 min-w-0">
+                                            <div class="d-flex align-items-center justify-content-between gap-1 mb-1">
+                                                <span class="badge {{ $notif['badge_class'] }} rounded-pill fs-xxs px-2 py-0.5">
+                                                    {{ $notif['badge_label'] }}
+                                                </span>
+                                                <span class="text-muted fs-xxs">{{ $notif['time_ago'] }}</span>
+                                            </div>
+                                            <div class="fw-bold text-dark fs-xs text-truncate">{{ $notif['title'] }}</div>
+                                            <div class="text-muted fs-xxs text-truncate">
+                                                {{ $notif['subtitle'] }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            @empty
+                                <div class="p-4 text-center text-muted">
+                                    <i class="bi bi-check-circle-fill text-success fs-2 d-block mb-1"></i>
+                                    <div class="fw-bold fs-xs text-dark">Belum Ada Notifikasi Baru</div>
+                                    <div class="fs-xxs">Tanggapan kasus dan pengumuman sekolah akan muncul di sini.</div>
+                                </div>
+                            @endforelse
+                        </div>
+
+                        <div class="p-2 text-center bg-light border-top">
+                            <a href="{{ route('walikelas.dashboard') }}" class="text-decoration-none fw-bold text-dark fs-xxs hover-teal">
+                                Lihat Beranda &amp; Siswa Binaan <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="sk-user-text">
                     <div class="sk-user-name">{{ Str::words($currentUser?->name, 3, '') }}</div>
                     <div class="sk-user-role">{{ $classroom ? 'Rombel ' . $classroom->name : 'Wali Kelas' }}</div>
@@ -398,17 +522,27 @@
             <div class="sk-nav-heading">MENU UTAMA</div>
             <a href="{{ route('walikelas.dashboard') }}" class="sk-nav-item {{ request()->routeIs('walikelas.dashboard*') ? 'active' : '' }}">
                 <i class="bi bi-grid-1x2-fill"></i>
-                <span>Beranda & Siswa</span>
+                <span class="flex-grow-1">Beranda & Siswa</span>
+                @if(($walasNotifs['announcements'] ?? 0) > 0)
+                    <span class="badge bg-warning text-dark rounded-pill px-2 py-0.5 fs-xxs fw-bold">
+                        {{ $walasNotifs['announcements'] }} Baru
+                    </span>
+                @endif
             </a>
 
             <div class="sk-nav-heading">LAYANAN & ADUAN</div>
             <a href="{{ route('walikelas.aduan.index') }}" class="sk-nav-item {{ request()->routeIs('walikelas.aduan.*') ? 'active' : '' }}">
                 <i class="bi bi-exclamation-octagon-fill"></i>
-                <span>Aduan Kasus ke BK</span>
+                <span class="flex-grow-1">Aduan Kasus ke BK</span>
+                @if(($walasNotifs['complaints'] ?? 0) > 0)
+                    <span class="badge bg-danger text-white rounded-pill px-2 py-0.5 fs-xxs fw-bold">
+                        {{ $walasNotifs['complaints'] }}
+                    </span>
+                @endif
             </a>
             <a href="{{ route('walikelas.game-konseling.index') }}" class="sk-nav-item {{ request()->routeIs('walikelas.game-konseling.*') ? 'active' : '' }}">
-                <i class="bi bi-controller"></i>
-                <span>Game & Media Konseling</span>
+                <i class="bi bi-puzzle"></i>
+                <span>Game Puzzle Gambar (5x5)</span>
             </a>
 
             <div class="sk-nav-heading">AKUN & SISTEM</div>

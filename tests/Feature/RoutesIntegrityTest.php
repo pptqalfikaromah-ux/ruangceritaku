@@ -34,25 +34,21 @@ class RoutesIntegrityTest extends BaseTestCase
     {
         parent::setUp();
 
-        $this->admin = User::firstOrCreate(
-            ['username' => 'admin_test'],
-            ['name' => 'Admin Test', 'email' => 'admin_test@test.com', 'password' => bcrypt('password'), 'role' => 'admin', 'is_active' => true]
-        );
+        $this->admin = User::where('role', 'admin')->first()
+            ?? User::where('username', 'admin_test')->first()
+            ?? User::create(['username' => 'admin_test', 'name' => 'Admin Test', 'email' => 'admin_test@test.com', 'password' => bcrypt('password'), 'role' => 'admin', 'is_active' => true]);
 
-        $this->guruBk = User::firstOrCreate(
-            ['username' => 'gurubk_test'],
-            ['name' => 'Guru BK Test', 'email' => 'gurubk_test@test.com', 'password' => bcrypt('password'), 'role' => 'guru_bk', 'is_active' => true]
-        );
+        $this->guruBk = User::where('role', 'guru_bk')->first()
+            ?? User::where('username', 'gurubk_test')->first()
+            ?? User::create(['username' => 'gurubk_test', 'name' => 'Guru BK Test', 'email' => 'gurubk_test@test.com', 'password' => bcrypt('password'), 'role' => 'guru_bk', 'is_active' => true]);
 
-        $this->waliKelas = User::firstOrCreate(
-            ['username' => 'walikelas_test'],
-            ['name' => 'Wali Kelas Test', 'email' => 'walikelas_test@test.com', 'password' => bcrypt('password'), 'role' => 'wali_kelas', 'is_active' => true]
-        );
+        $this->waliKelas = User::where('role', 'wali_kelas')->first()
+            ?? User::where('username', 'walikelas_test')->first()
+            ?? User::create(['username' => 'walikelas_test', 'name' => 'Wali Kelas Test', 'email' => 'walikelas_test@test.com', 'password' => bcrypt('password'), 'role' => 'wali_kelas', 'is_active' => true]);
 
-        $this->murid = User::firstOrCreate(
-            ['username' => 'murid_test'],
-            ['name' => 'Murid Test', 'email' => 'murid_test@test.com', 'password' => bcrypt('password'), 'role' => 'murid', 'is_active' => true]
-        );
+        $this->murid = User::where('role', 'murid')->first()
+            ?? User::where('username', 'murid_test')->first()
+            ?? User::create(['username' => 'murid_test', 'name' => 'Murid Test', 'email' => 'murid_test@test.com', 'password' => bcrypt('password'), 'role' => 'murid', 'is_active' => true]);
 
         $this->student = $this->murid->student
             ?? Student::where('user_id', $this->murid->id)->first()

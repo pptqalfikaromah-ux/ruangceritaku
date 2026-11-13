@@ -129,3 +129,50 @@ if (!function_exists('student_recent_notifications')) {
         return app(\App\Services\StudentNotificationService::class)->getRecentNotifications($limit);
     }
 }
+
+if (!function_exists('walikelas_notifications')) {
+    /**
+     * Mengambil ringkasan hitungan notifikasi akun wali kelas
+     */
+    function walikelas_notifications(): array
+    {
+        return app(\App\Services\WaliKelasNotificationService::class)->getCounts();
+    }
+}
+
+if (!function_exists('walikelas_recent_notifications')) {
+    /**
+     * Mengambil daftar item notifikasi terbaru untuk lonceng akun wali kelas
+     */
+    function walikelas_recent_notifications(int $limit = 8): \Illuminate\Support\Collection
+    {
+        return app(\App\Services\WaliKelasNotificationService::class)->getRecentNotifications($limit);
+    }
+}
+
+if (!function_exists('puzzle_image_url')) {
+    /**
+     * Mengambil URL gambar aktif untuk Game Puzzle 5x5
+     */
+    function puzzle_image_url(): string
+    {
+        $custom = app_setting('puzzle_image');
+        if ($custom) {
+            if (\Illuminate\Support\Str::startsWith($custom, ['data:image', 'http://', 'https://'])) {
+                return $custom;
+            }
+            $disk = config('filesystems.default') === 's3' ? 's3' : 'public';
+            if (Storage::disk($disk)->exists($custom)) {
+                return Storage::disk($disk)->url($custom);
+            }
+            if (Storage::disk('public')->exists($custom)) {
+                return asset('storage/' . $custom);
+            }
+            if (file_exists(public_path($custom))) {
+                return asset($custom);
+            }
+        }
+
+        return asset('images/puzzle-default.svg');
+    }
+}

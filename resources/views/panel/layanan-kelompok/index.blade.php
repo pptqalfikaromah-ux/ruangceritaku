@@ -368,7 +368,7 @@
                             <select name="counselor_id" class="form-select form-select-sm" required>
                                 @foreach($counselors as $c)
                                     <option value="{{ $c->id }}" {{ $loop->first ? 'selected' : '' }}>
-                                        {{ $c->user->name }} ({{ $c->specialization ?? 'Guru BK' }})
+                                        {{ $c->user?->name ?? $c->name ?? 'Guru BK' }} ({{ $c->specialization ?? 'Guru BK' }})
                                     </option>
                                 @endforeach
                             </select>

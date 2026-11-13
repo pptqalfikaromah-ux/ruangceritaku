@@ -246,8 +246,10 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
         Route::post('/spinner/winner', [SpinnerController::class, 'recordWinner'])->name('spinner.record-winner');
     });
 
-    // 16. Game & Alat Media Konseling (Ruang Rasa)
+    // 16. Game & Alat Media Konseling (Puzzle Gambar 5x5)
     Route::get('/game-konseling', [CounselingGameController::class, 'panelIndex'])->name('game-konseling.index');
+    Route::post('/game-konseling/upload-image', [CounselingGameController::class, 'updatePuzzleImage'])->name('game-konseling.upload');
+    Route::post('/game-konseling/reset-image', [CounselingGameController::class, 'resetPuzzleImage'])->name('game-konseling.reset');
 });
 
 /*
@@ -321,9 +323,10 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
 |--------------------------------------------------------------------------
 */
 Route::prefix('walikelas')->name('walikelas.')->middleware(['auth', 'role:wali_kelas'])->group(function () {
-    // Beranda Wali Kelas
+    // Beranda & Notifikasi Wali Kelas
     Route::get('/', [WaliKelasDashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [WaliKelasDashboardController::class, 'index'])->name('dashboard.index');
+    Route::post('/notifikasi/mark-all-read', [WaliKelasDashboardController::class, 'markAllNotificationsRead'])->name('notifikasi.mark-all-read');
 
     // Monitoring Konseling dialihkan ke Dashboard
     Route::redirect('/monitoring', '/walikelas/dashboard')->name('monitoring.index');

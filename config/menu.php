@@ -77,7 +77,7 @@ return [
             'id' => 'menuKonseling',
             'label' => 'Layanan Konseling',
             'icon' => 'bi-chat-heart',
-            'badge_key' => 'counseling',
+            'badge_key' => 'all_counseling',
             'roles' => ['admin', 'guru_bk'],
             'children' => [
                 [
@@ -93,11 +93,12 @@ return [
                     'icon' => 'bi-people-fill',
                     'route' => 'panel.layanan-kelompok.index',
                     'active' => 'panel.layanan-kelompok.*',
+                    'badge_key' => 'groups',
                     'roles' => ['admin', 'guru_bk'],
                 ],
                 [
-                    'label' => 'Game & Alat Konseling',
-                    'icon' => 'bi-controller',
+                    'label' => 'Game Puzzle Gambar (5x5)',
+                    'icon' => 'bi-puzzle',
                     'route' => 'panel.game-konseling.index',
                     'active' => 'panel.game-konseling.*',
                     'roles' => ['admin', 'guru_bk'],

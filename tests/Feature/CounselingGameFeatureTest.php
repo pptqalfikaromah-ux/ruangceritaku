@@ -2,8 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Models\Setting;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class CounselingGameFeatureTest extends TestCase
@@ -48,37 +51,54 @@ class CounselingGameFeatureTest extends TestCase
         $this->get(route('murid.game-konseling.index'))->assertRedirect(route('login'));
     }
 
-    public function test_admin_can_access_counseling_game(): void
+    public function test_admin_can_access_puzzle_game(): void
     {
         $response = $this->actingAs($this->admin)->get(route('panel.game-konseling.index'));
 
         $response->assertStatus(200);
-        $response->assertSee('Ruang Rasa');
-        $response->assertSee('Kartu Ruang Rasa');
-        $response->assertSee('Gelembung Beban');
-        $response->assertSee('Pilihan Bijak');
+        $response->assertSee('Game Puzzle Gambar 5x5');
+        $response->assertSee('Kotak 5x5 (25 Keping)');
+        $response->assertSee('puzzleBoard');
+        $response->assertSee('Ganti Gambar Puzzle (Admin)');
     }
 
-    public function test_walikelas_can_access_counseling_game(): void
+    public function test_walikelas_can_access_puzzle_game(): void
     {
         $response = $this->actingAs($this->waliKelas)->get(route('walikelas.game-konseling.index'));
 
         $response->assertStatus(200);
-        $response->assertSee('Ruang Rasa');
+        $response->assertSee('Game Puzzle Gambar 5x5');
         $response->assertSee('Portal Wali Kelas');
-        $response->assertSee('Kartu Ruang Rasa');
-        $response->assertSee('Gelembung Beban');
+        $response->assertSee('puzzleBoard');
     }
 
-    public function test_student_can_access_counseling_game(): void
+    public function test_student_can_access_puzzle_game(): void
     {
         $response = $this->actingAs($this->studentUser)->get(route('murid.game-konseling.index'));
 
         $response->assertStatus(200);
-        $response->assertSee('Ruang Rasa');
+        $response->assertSee('Game Puzzle Gambar 5x5');
         $response->assertSee('Portal Murid');
-        $response->assertSee('Kartu Ruang Rasa');
-        $response->assertSee('Gelembung Beban');
-        $response->assertSee('Panduan Napas Rileks');
+        $response->assertSee('puzzleBoard');
+    }
+
+    public function test_admin_can_upload_and_reset_puzzle_image(): void
+    {
+        Storage::fake('public');
+
+        $fakeImage = UploadedFile::fake()->image('custom_puzzle.jpg', 600, 600);
+
+        // Upload custom image
+        $uploadRes = $this->actingAs($this->admin)->post(route('panel.game-konseling.upload'), [
+            'puzzle_image' => $fakeImage,
+        ]);
+
+        $uploadRes->assertRedirect();
+        $this->assertNotEmpty(app_setting('puzzle_image'));
+
+        // Reset custom image
+        $resetRes = $this->actingAs($this->admin)->post(route('panel.game-konseling.reset'));
+        $resetRes->assertRedirect();
+        $this->assertNull(app_setting('puzzle_image'));
     }
 }

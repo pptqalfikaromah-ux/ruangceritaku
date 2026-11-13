@@ -554,9 +554,13 @@
                     @endif
                     @if(app_setting('bkp_enabled', '1') === '1')
                         <li><a class="dropdown-item py-2" href="{{ route('murid.layanan-kelompok.index', ['type' => 'bimbingan_kelompok']) }}" style="font-size:.83rem;"><i class="bi bi-people-fill me-2 text-mint"></i>Bimbingan Kelompok (BKP)</a></li>
+                    @else
+                        <li><a class="dropdown-item py-2 text-muted" href="javascript:void(0)" onclick="alert('Layanan Bimbingan Kelompok (BKP) sedang dinonaktifkan sementara oleh Guru BK.')" style="font-size:.83rem;opacity:0.6;cursor:not-allowed;" title="BKP dinonaktifkan"><i class="bi bi-lock me-2 text-secondary"></i>BKP <span class="badge bg-secondary ms-1" style="font-size:.65rem;">Terkunci</span></a></li>
                     @endif
                     @if(app_setting('kkp_enabled', '1') === '1')
                         <li><a class="dropdown-item py-2" href="{{ route('murid.layanan-kelompok.index', ['type' => 'konseling_kelompok']) }}" style="font-size:.83rem;"><i class="bi bi-heart-pulse-fill me-2 text-purple"></i>Konseling Kelompok (KKP)</a></li>
+                    @else
+                        <li><a class="dropdown-item py-2 text-muted" href="javascript:void(0)" onclick="alert('Layanan Konseling Kelompok (KKP) sedang dinonaktifkan sementara oleh Guru BK.')" style="font-size:.83rem;opacity:0.6;cursor:not-allowed;" title="KKP dinonaktifkan"><i class="bi bi-lock me-2 text-secondary"></i>KKP <span class="badge bg-secondary ms-1" style="font-size:.65rem;">Terkunci</span></a></li>
                     @endif
                     <li><a class="dropdown-item py-2" href="{{ route('murid.konseling.index') }}" style="font-size:.83rem;"><i class="bi bi-chat-heart me-2" style="color:#e11d48;"></i>Riwayat Konseling</a></li>
                     <li><a class="dropdown-item py-2" href="{{ route('murid.pengaduan.index') }}" style="font-size:.83rem;"><i class="bi bi-shield-fill-exclamation me-2 text-danger"></i>Pelayanan Darurat</a></li>
@@ -588,9 +592,18 @@
                 <div class="sm-badge"><i class="bi bi-calendar2-week me-1"></i>Semester {{ $activeSem?->name ?? 'Ganjil' }}</div>
             </div>
             <div class="sk-nav-section">
+                @php
+                    $studentSideNotifs = student_notifications();
+                @endphp
                 <div class="sk-nav-heading">Menu Utama</div>
                 <a href="{{ route('murid.dashboard') }}" class="sk-nav-item {{ request()->routeIs('murid.dashboard*') ? 'active' : '' }}">
-                    <i class="bi bi-house-door"></i><span>Beranda</span>
+                    <i class="bi bi-house-door"></i>
+                    <span class="flex-grow-1">Beranda</span>
+                    @if(($studentSideNotifs['announcements'] ?? 0) > 0)
+                        <span class="badge bg-warning text-dark rounded-pill px-2 py-0.5 fs-xxs fw-bold">
+                            {{ $studentSideNotifs['announcements'] }} Baru
+                        </span>
+                    @endif
                 </a>
                 <a href="{{ route('murid.profile.index') }}" class="sk-nav-item {{ request()->routeIs('murid.profile*') ? 'active' : '' }}">
                     <i class="bi bi-person-gear"></i><span>Profil Saya</span>
@@ -600,26 +613,62 @@
                     <i class="bi bi-send-check"></i><span>Ajukan Konseling</span>
                 </a>
                 <a href="{{ route('murid.konseling.index') }}" class="sk-nav-item {{ request()->routeIs('murid.konseling.index*') || request()->routeIs('murid.konseling.show*') ? 'active' : '' }}">
-                    <i class="bi bi-chat-heart"></i><span>Riwayat Konseling</span>
+                    <i class="bi bi-chat-heart"></i>
+                    <span class="flex-grow-1">Riwayat Konseling</span>
+                    @if(($studentSideNotifs['counseling'] ?? 0) > 0)
+                        <span class="badge bg-mint text-white rounded-pill px-2 py-0.5 fs-xxs fw-bold">
+                            {{ $studentSideNotifs['counseling'] }}
+                        </span>
+                    @endif
                 </a>
                 @if(app_setting('bkp_enabled', '1') === '1')
                     <a href="{{ route('murid.layanan-kelompok.index', ['type' => 'bimbingan_kelompok']) }}" class="sk-nav-item {{ request()->routeIs('murid.layanan-kelompok.*') && request('type', 'bimbingan_kelompok') === 'bimbingan_kelompok' ? 'active' : '' }}">
-                        <i class="bi bi-people-fill text-mint"></i><span>Bimbingan Kelompok (BKP)</span>
+                        <i class="bi bi-people-fill text-mint"></i>
+                        <span class="flex-grow-1">Bimbingan Kelompok (BKP)</span>
+                        @if(($studentSideNotifs['groups'] ?? 0) > 0)
+                            <span class="badge bg-mint text-white rounded-pill px-2 py-0.5 fs-xxs fw-bold">
+                                {{ $studentSideNotifs['groups'] }}
+                            </span>
+                        @endif
+                    </a>
+                @else
+                    <a href="javascript:void(0)" onclick="alert('Layanan Bimbingan Kelompok (BKP) sedang dinonaktifkan sementara oleh pihak sekolah / Guru BK.')" class="sk-nav-item text-muted" style="opacity:0.55;cursor:not-allowed;" title="Layanan BKP dinonaktifkan">
+                        <i class="bi bi-lock text-secondary"></i>
+                        <span class="flex-grow-1">Bimbingan Kelompok (BKP)</span>
+                        <span class="badge bg-secondary ms-auto" style="font-size:.65rem;font-weight:600;">Terkunci</span>
                     </a>
                 @endif
                 @if(app_setting('kkp_enabled', '1') === '1')
                     <a href="{{ route('murid.layanan-kelompok.index', ['type' => 'konseling_kelompok']) }}" class="sk-nav-item {{ request()->routeIs('murid.layanan-kelompok.*') && request('type') === 'konseling_kelompok' ? 'active' : '' }}">
-                        <i class="bi bi-heart-pulse-fill text-purple"></i><span>Konseling Kelompok (KKP)</span>
+                        <i class="bi bi-heart-pulse-fill text-purple"></i>
+                        <span class="flex-grow-1">Konseling Kelompok (KKP)</span>
+                        @if(($studentSideNotifs['groups'] ?? 0) > 0)
+                            <span class="badge bg-purple text-white rounded-pill px-2 py-0.5 fs-xxs fw-bold">
+                                {{ $studentSideNotifs['groups'] }}
+                            </span>
+                        @endif
+                    </a>
+                @else
+                    <a href="javascript:void(0)" onclick="alert('Layanan Konseling Kelompok (KKP) sedang dinonaktifkan sementara oleh pihak sekolah / Guru BK.')" class="sk-nav-item text-muted" style="opacity:0.55;cursor:not-allowed;" title="Layanan KKP dinonaktifkan">
+                        <i class="bi bi-lock text-secondary"></i>
+                        <span class="flex-grow-1">Konseling Kelompok (KKP)</span>
+                        <span class="badge bg-secondary ms-auto" style="font-size:.65rem;font-weight:600;">Terkunci</span>
                     </a>
                 @endif
                 <a href="{{ route('murid.pengaduan.index') }}" class="sk-nav-item {{ request()->routeIs('murid.pengaduan.*') ? 'active' : '' }}">
-                    <i class="bi bi-shield-fill-exclamation text-danger"></i><span>Pelayanan Darurat</span>
+                    <i class="bi bi-shield-fill-exclamation text-danger"></i>
+                    <span class="flex-grow-1">Pelayanan Darurat</span>
+                    @if(($studentSideNotifs['complaints'] ?? 0) > 0)
+                        <span class="badge bg-danger text-white rounded-pill px-2 py-0.5 fs-xxs fw-bold">
+                            {{ $studentSideNotifs['complaints'] }}
+                        </span>
+                    @endif
                 </a>
                 <a href="{{ route('murid.pamflet.index') }}" class="sk-nav-item {{ request()->routeIs('murid.pamflet.*') ? 'active' : '' }}">
                     <i class="bi bi-images"></i><span>Pamflet Kreativitas</span>
                 </a>
                 <a href="{{ route('murid.game-konseling.index') }}" class="sk-nav-item {{ request()->routeIs('murid.game-konseling.*') ? 'active' : '' }}">
-                    <i class="bi bi-controller"></i><span>Game Konseling (Ruang Rasa)</span>
+                    <i class="bi bi-puzzle"></i><span>Game Puzzle Gambar (5x5)</span>
                 </a>
 
                 <div class="sk-nav-heading mt-3">Asesmen Siswa</div>
