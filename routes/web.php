@@ -97,30 +97,32 @@ Route::prefix('panel')->name('panel.')->middleware(['auth', 'role:admin,guru_bk'
 
     // 2. Data Rombel
     Route::get('/rombel', [ClassroomController::class, 'index'])->name('rombel.index');
-    Route::get('/rombel/{rombel}', [ClassroomController::class, 'show'])->name('rombel.show');
     Route::middleware('role:admin')->group(function () {
-        Route::get('/rombel-tambah/baru', [ClassroomController::class, 'create'])->name('rombel.create');
+        Route::get('/rombel/create', [ClassroomController::class, 'create'])->name('rombel.create');
+        Route::get('/rombel-tambah/baru', [ClassroomController::class, 'create']);
         Route::post('/rombel', [ClassroomController::class, 'store'])->name('rombel.store');
-        Route::get('/rombel/{rombel}/edit', [ClassroomController::class, 'edit'])->name('rombel.edit');
-        Route::put('/rombel/{rombel}', [ClassroomController::class, 'update'])->name('rombel.update');
-        Route::delete('/rombel/{rombel}', [ClassroomController::class, 'destroy'])->name('rombel.destroy');
-        Route::post('/rombel/{rombel}/murid', [ClassroomController::class, 'addStudent'])->name('rombel.student.add');
-        Route::delete('/rombel/{rombel}/murid/{student}', [ClassroomController::class, 'removeStudent'])->name('rombel.student.remove');
+        Route::get('/rombel/{rombel}/edit', [ClassroomController::class, 'edit'])->whereNumber('rombel')->name('rombel.edit');
+        Route::put('/rombel/{rombel}', [ClassroomController::class, 'update'])->whereNumber('rombel')->name('rombel.update');
+        Route::delete('/rombel/{rombel}', [ClassroomController::class, 'destroy'])->whereNumber('rombel')->name('rombel.destroy');
+        Route::post('/rombel/{rombel}/murid', [ClassroomController::class, 'addStudent'])->whereNumber('rombel')->name('rombel.student.add');
+        Route::delete('/rombel/{rombel}/murid/{student}', [ClassroomController::class, 'removeStudent'])->whereNumber('rombel')->name('rombel.student.remove');
     });
+    Route::get('/rombel/{rombel}', [ClassroomController::class, 'show'])->whereNumber('rombel')->name('rombel.show');
 
     // 3. Data Murid
     Route::get('/murid', [StudentController::class, 'index'])->name('murid.index');
     Route::middleware('role:admin')->group(function () {
-        Route::get('/murid-tambah/baru', [StudentController::class, 'create'])->name('murid.create');
+        Route::get('/murid/create', [StudentController::class, 'create'])->name('murid.create');
+        Route::get('/murid-tambah/baru', [StudentController::class, 'create']);
         Route::post('/murid', [StudentController::class, 'store'])->name('murid.store');
-        Route::get('/murid/{murid}/edit', [StudentController::class, 'edit'])->name('murid.edit');
-        Route::put('/murid/{murid}', [StudentController::class, 'update'])->name('murid.update');
-        Route::delete('/murid/{murid}', [StudentController::class, 'destroy'])->name('murid.destroy');
+        Route::get('/murid/{murid}/edit', [StudentController::class, 'edit'])->whereNumber('murid')->name('murid.edit');
+        Route::put('/murid/{murid}', [StudentController::class, 'update'])->whereNumber('murid')->name('murid.update');
+        Route::delete('/murid/{murid}', [StudentController::class, 'destroy'])->whereNumber('murid')->name('murid.destroy');
         Route::get('/murid-csv/template', [StudentController::class, 'downloadTemplate'])->name('murid.template');
         Route::post('/murid-csv/import', [StudentController::class, 'import'])->name('murid.import');
         Route::get('/murid-csv/export', [StudentController::class, 'export'])->name('murid.export');
     });
-    Route::get('/murid/{murid}', [StudentController::class, 'show'])->name('murid.show');
+    Route::get('/murid/{murid}', [StudentController::class, 'show'])->whereNumber('murid')->name('murid.show');
 
     // 4. Data Guru BK (Khusus Admin)
     Route::middleware('role:admin')->group(function () {
@@ -268,6 +270,8 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
     Route::get('/ajukan-konseling', [StudentCounselingController::class, 'ajukan'])->name('konseling.ajukan');
     Route::get('/konseling', [StudentCounselingController::class, 'index'])->name('konseling.index');
     Route::get('/konseling/tambah', [StudentCounselingController::class, 'create'])->name('konseling.create');
+    Route::get('/konseling/create', [StudentCounselingController::class, 'create']);
+    Route::get('/konseling/ajukan', [StudentCounselingController::class, 'create']);
     Route::get('/konseling/pribadi', [StudentCounselingController::class, 'create'])->name('konseling.pribadi');
     Route::post('/konseling', [StudentCounselingController::class, 'store'])->name('konseling.store');
     Route::get('/konseling/{konseling}', [StudentCounselingController::class, 'show'])->name('konseling.show');
@@ -299,12 +303,14 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
     // 3. Jalur Pengaduan Aman & Perlindungan Diri
     Route::get('/pengaduan', [StudentComplaintController::class, 'index'])->name('pengaduan.index');
     Route::get('/pengaduan/tambah', [StudentComplaintController::class, 'create'])->name('pengaduan.create');
+    Route::get('/pengaduan/create', [StudentComplaintController::class, 'create']);
     Route::post('/pengaduan', [StudentComplaintController::class, 'store'])->name('pengaduan.store');
     Route::get('/pengaduan/{pengaduan}', [StudentComplaintController::class, 'show'])->name('pengaduan.show');
 
     // 4. Pamflet Kreativitas Murid (Upload & Galeri Saya)
     Route::get('/pamflet', [StudentPamphletController::class, 'index'])->name('pamflet.index');
     Route::get('/pamflet/tambah', [StudentPamphletController::class, 'create'])->name('pamflet.create');
+    Route::get('/pamflet/create', [StudentPamphletController::class, 'create']);
     Route::post('/pamflet', [StudentPamphletController::class, 'store'])->name('pamflet.store');
     Route::delete('/pamflet/{pamphlet}', [StudentPamphletController::class, 'destroy'])->name('pamflet.destroy');
 
@@ -314,6 +320,7 @@ Route::prefix('murid')->name('murid.')->middleware(['auth', 'role:murid'])->grou
 
     // 6. Game Konseling (Ruang Rasa & Empati)
     Route::get('/game-konseling', [CounselingGameController::class, 'studentIndex'])->name('game-konseling.index');
+    Route::get('/game', [CounselingGameController::class, 'studentIndex'])->name('game.index');
 });
 
 /*
@@ -330,10 +337,12 @@ Route::prefix('walikelas')->name('walikelas.')->middleware(['auth', 'role:wali_k
 
     // Monitoring Konseling dialihkan ke Dashboard
     Route::redirect('/monitoring', '/walikelas/dashboard')->name('monitoring.index');
+    Route::redirect('/murid', '/walikelas/dashboard')->name('murid.index');
 
     // Fitur Aduan Kasus Murid untuk Ditindaklanjuti Guru BK
     Route::get('/aduan', [WaliKelasAduanController::class, 'index'])->name('aduan.index');
     Route::get('/aduan/tambah', [WaliKelasAduanController::class, 'create'])->name('aduan.create');
+    Route::get('/aduan/create', [WaliKelasAduanController::class, 'create']);
     Route::post('/aduan', [WaliKelasAduanController::class, 'store'])->name('aduan.store');
     Route::get('/aduan/{aduan}', [WaliKelasAduanController::class, 'show'])->name('aduan.show');
 
@@ -343,4 +352,5 @@ Route::prefix('walikelas')->name('walikelas.')->middleware(['auth', 'role:wali_k
 
     // Game & Media Pembinaan Konseling
     Route::get('/game-konseling', [CounselingGameController::class, 'waliKelasIndex'])->name('game-konseling.index');
+    Route::get('/game', [CounselingGameController::class, 'waliKelasIndex']);
 });

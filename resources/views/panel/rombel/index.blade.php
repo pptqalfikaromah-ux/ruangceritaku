@@ -62,7 +62,7 @@
             <div class="card-info-box mb-3">
                 <div class="d-flex align-items-center justify-content-between py-0.5">
                     <span class="text-muted"><i class="bi bi-person-video3 me-1.5 text-mint"></i>Wali Kelas</span>
-                    <span class="fw-semibold text-dark text-truncate ms-2">{{ $rombel->homeroom_teacher ?? 'Belum Ditugaskan' }}</span>
+                    <span class="fw-semibold text-dark text-truncate ms-2">{{ $rombel->currentHomeroomAssignment?->teacher?->name ?? $rombel->homeroom_teacher ?? 'Belum Ditugaskan' }}</span>
                 </div>
                 <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top">
                     <span class="text-muted"><i class="bi bi-calendar3 me-1.5 text-mint"></i>Tahun Ajaran</span>
@@ -133,7 +133,7 @@
                             </td>
                             <td>Kelas {{ $rombel->level }}</td>
                             <td>{{ $rombel->major ?? '-' }}</td>
-                            <td>{{ $rombel->homeroom_teacher ?? '-' }}</td>
+                            <td>{{ $rombel->currentHomeroomAssignment?->teacher?->name ?? $rombel->homeroom_teacher ?? '-' }}</td>
                             <td>
                                 <span class="badge {{ $rombel->academicYear?->is_active ? 'bg-success-subtle text-success border border-success-subtle' : 'bg-light text-muted border' }} rounded-pill">
                                     {{ $rombel->academicYear?->name ?? '-' }}

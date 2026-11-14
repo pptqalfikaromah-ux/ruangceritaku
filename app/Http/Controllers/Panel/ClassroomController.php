@@ -20,7 +20,7 @@ class ClassroomController extends Controller
         $academicYearId = $request->input('academic_year_id');
         $academicYears = AcademicYear::latest()->get();
 
-        $query = Classroom::with(['academicYear'])
+        $query = Classroom::with(['academicYear', 'currentHomeroomAssignment.teacher'])
             ->withCount('students')
             ->binaan();
 
@@ -55,7 +55,7 @@ class ClassroomController extends Controller
     {
         $this->authorize('view', $rombel);
 
-        $rombel->load(['academicYear', 'currentAssignment.counselor']);
+        $rombel->load(['academicYear', 'currentAssignment.counselor', 'currentHomeroomAssignment.teacher']);
         $students = $rombel->students()->paginate(15);
 
         // Murid aktif yang belum ada di rombel tahun ajaran ini (untuk opsi tambah murid)

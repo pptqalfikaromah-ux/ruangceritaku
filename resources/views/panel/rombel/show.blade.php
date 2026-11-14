@@ -42,7 +42,7 @@
                     </tr>
                     <tr>
                         <td class="text-muted small ps-0">Wali Kelas</td>
-                        <td class="fw-semibold">{{ $rombel->homeroom_teacher ?? '-' }}</td>
+                        <td class="fw-semibold">{{ $rombel->currentHomeroomAssignment?->teacher?->name ?? $rombel->homeroom_teacher ?? 'Belum Ditugaskan' }}</td>
                     </tr>
                     <tr>
                         <td class="text-muted small ps-0">Tahun Ajaran</td>
@@ -55,7 +55,7 @@
                     <tr>
                         <td class="text-muted small ps-0">Guru BK Pembina</td>
                         <td>
-                            @if($rombel->currentAssignment)
+                            @if($rombel->currentAssignment && $rombel->currentAssignment->counselor)
                                 <span class="badge bg-teal-subtle text-primary-teal">
                                     {{ $rombel->currentAssignment->counselor->name }}
                                 </span>

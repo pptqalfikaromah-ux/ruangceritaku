@@ -84,6 +84,11 @@ class CounselingRequest extends Model
         return $this->belongsTo(Counselor::class, 'assigned_counselor_id');
     }
 
+    public function counselor(): BelongsTo
+    {
+        return $this->belongsTo(Counselor::class, 'assigned_counselor_id');
+    }
+
     public function histories(): HasMany
     {
         return $this->hasMany(CounselingRequestHistory::class)->latest();
